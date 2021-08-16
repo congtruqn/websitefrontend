@@ -1,0 +1,96 @@
+.sm_report_1{
+	float: left;
+	width: 30%;
+	margin-left: 20px;
+}
+.sm_report_2{
+	float: left;
+	width: 30%;
+	margin-left: 20px;
+}
+.sm_report_3{
+	float: left;
+	width: 20%;
+	margin-left: 20px;
+}
+.sm_report_4{
+	float: left;
+	width: 20%;
+	margin-left: 20px;
+}
+.sm_report_10{
+	float: left;
+	width: 5%;
+	margin-left: 20px;
+}
+.reporttitle{padding: 10px;}
+.reporttitle h4{border-bottom: 2px solid #444}
+#reporttable{height: 300px;overflow-x:scroll; }
+.content-header{overflow: hidden;padding-top: 20px;}
+.content-header h1{font-size: 18px; text-transform: uppercase;float: left;width: 40%;}
+.icon-pencil {
+    background-position: 0 -72px !important;
+	cursor: pointer;
+}
+[class^="icon-"], [class*=" icon-"] {
+    background-image: url("../images/glyphicons-halflings.png");
+    background-position: 14px 14px;
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 14px;
+    line-height: 14px;
+    margin-top: 1px;
+    vertical-align: text-top;
+    width: 14px;
+}
+.icon-remove-circle {
+    background-position: -168px -96px !important;
+	cursor: pointer;
+}
+[class^="icon-"], [class*=" icon-"] {
+    background-image: url("../images/glyphicons-halflings.png");
+    background-position: 14px 14px;
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 14px;
+    line-height: 14px;
+    margin-top: 1px;
+    vertical-align: text-top;
+    width: 14px;
+}
+.productdetail{overflow: hidden;clear: both;}
+.images_edit img{max-height: 90px;}
+.sales_form{}
+.search_product{position: relative;}
+#searchlucene{position: absolute;top: 34px;background: #fff;display: none;padding: 0 5px 5px 5px;width: 100%;}
+.search_table{width: 100%;box-shadow: 2px 2px 2px #888888;border: 2px solid #111}
+.search_table tr td{padding:10px;border: 1px solid #ccc;cursor: pointer;}
+.search_table img{height: 60px;max-width: 90px;}
+.order_product{margin: 20px 5px;}
+.search_product:hover #searchlucene{display: block !important;}
+.choose_product{background: #fff;min-height: 500px;width: 66%;float: left;}
+.customer_info{float: right;width: 30%;min-height: 500px;background: #fff;padding: 15px;}
+.order_product_title{padding: 5px 10px;margin-top: 45px;border-bottom:1px solid #333;font-size: 14px;text-transform: uppercase; }
+.order_product_table{width: 100%}
+.order_product_table tr td{padding:10px;border-bottom: 1px solid #ccc;}
+.search_form{border: 2px solid #ddd;background: url("../images/search.png") right 7px no-repeat;margin:5px;}
+#searchtext{width: 90%;border: none;}
+.fa-mail-reply{cursor: pointer;}
+.text_content{padding: 15px;}
+.list_input_images img{height: 70px;}
+.list_images_uploads{float: left;width: 24%;margin: 4px;}
+.list_input_images{float: left;width: 18%;margin: 0 3px;}
+.list_input_images img{width: 100% !important;height: auto !important;}
+.search_product{width: 60%;float: left;}
+.search_product input{width: 90%;float: left;}
+.search_product button {width: 10%;float: left;border-radius:0;font-size:13px;padding: 7px 12px;  }
+.fa-trash{cursor: pointer;}
+.banner_image img{max-height: 60px;}
+
+
+
+
+
+
+
+

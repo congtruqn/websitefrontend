@@ -1,0 +1,32 @@
+<div class="bread_images" style="background: url(/static/template1/images/news/history.png) no-repeat center center transparent;background-size: cover;">
+	<div class="container">
+		<div class="breadcrumb">
+			<h1  class="title_page">Giao diện website mẫu</h1>
+				<nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a href="/">Trang Chủ</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Website mẫu</li>
+                    </ol>
+                </nav>
+		</div>
+	</div>
+</div>
+<div class="list_template">
+	<div class="container">
+		<div class="row">
+				{{#each listtemplates as |template|}}
+	                <div class="col-xs-6 col-sm-6 col-md-4 {{images.class}}">
+	                  <div class="list_template_item">
+	                      <div class="list_template_images">
+	                        <a href="http://{{template.website_url}}"><img src="{{template.website_image_path}}{{template.website_image}}" alt="{{template.title}}"></a>
+	                      </div>
+	                      <div class="list_template_detail">
+	                        <p class="product_name">{{{template.title}}}</p>
+							<p class="product_name"><a href="http://{{template.website_url}}">Xem demo >></a></p>
+	                      </div>
+	                    </div>
+	                </div>	
+				{{/each}}
+		</div>
+	</div>
+</div>

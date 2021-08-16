@@ -1,0 +1,190 @@
+@media (max-width: 1025px) {
+	#top {
+		display: none;
+	}
+	#top_mobile{
+		display: block;
+	}
+	header {
+		top: 0px;
+	}
+
+	#cart button.btn{
+		padding: 9px 10px 9px 15px;
+	}
+	.search {
+	    padding-left: 0;
+	    position: relative;
+	    width: 77%;
+	}
+	
+	.logo-mobile {
+		display: block;
+	}
+	.logo-cleansui {
+		margin-top: 7px;
+	}
+	.menu-haili li {
+		float: none;
+		overflow-y: hidden;
+	}
+	#navbar {
+		overflow-y: hidden;
+	}
+	.navbar{
+		background-color: white;
+	}
+	.navbar-header {
+		float: none;
+	}
+	.navbar-toggle {
+		display: block;
+	}
+	.navbar-collapse {
+		border-top: 1px solid transparent;
+		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+	}
+	.navbar-collapse.collapse {
+
+		display: none!important;
+	}
+	.navbar-nav {
+		float: none!important;
+		margin: 7.5px -15px;
+	}
+	.navbar-nav>li {
+		float: none;
+	}
+	.navbar-nav>li>a {
+		padding-top: 10px;
+		padding-bottom: 10px;
+	}
+	.navbar-text {
+		float: none;
+		margin: 15px 0;
+	}
+	.navbar-collapse.collapse.in {
+		height: 100vh!important;
+		display: block!important;
+	}
+	.collapsing {
+		overflow: hidden!important;
+	}
+	.nav-destop{
+		display: none;
+	}
+	.mobimenuicon{display: block !important;}
+	#top-links{
+		display: none;
+	}
+	.category_title{display: none;}
+	.new_product{display: none;}
+	.hot_product_cat{width: 100%;}
+	.center-block{display: none;}
+	.product_menu{display: none;}
+	#slider{width: 100%;}
+	.left_menu{display: none;}
+	.content_detail{width: 100%}
+	.product_image{width: 100%}
+	.product_info{width: 100%}
+	.product_content img{max-width: 100%;}
+	.product_cat{width: 100%}
+	.container {
+	    padding-right: 10px;
+	    padding-left: 10px;
+	    margin-right: auto;
+	    margin-left: auto;
+	}
+	.content_detail{padding: 0;}
+	.breadcrumbs .home{display: none;}
+	.class_fist{padding-right: 7px !important}
+	.class_end{padding-left: 7px !important}
+	.product_detail .product_name a{font-size: 12px;}
+	.col-xs-6{min-height: 240px;}
+	.fist_news_content img{width: 100%;}
+	.list_news_content{
+		border-top: 1px solid #ccc;
+		margin-top:10px;
+		padding-top: 10px !important;
+		margin-left: -10px;
+		margin-right: -10px;
+	}
+	.list_news_content .cont{margin-top: 15px;}
+	.newletter-title{padding-left: 15px;}
+	.productcat_title p a {
+	    font-size: 13px;
+	    text-transform: uppercase;
+	    padding: 0 5px;
+	    font-weight: 500;
+	    color: #333;
+	}
+	#wrap{z-index: 0 !important}
+	.pull-right{margin-top: 10px;cursor: pointer;font-size: 24px !important;display: block}
+	.product_images img {
+		width: 100%;
+		max-height: 245px;
+	}
+	.fa-caret-right{display: none !important;}
+	.list_policy .wrap-banner{width: 20%;}
+	.list_policy .wrap-banner img{width: 80%;}
+	.list_policy .wrap-text-content{width: 75%;padding: 0;}
+	.wrap-text-content span {
+		color: #666666;
+		font-size: 11px;
+		font-style: italic;
+		line-height: 17px;
+	}
+	.list_policy .wrap-text-content h3 {
+		margin-top: 10px;
+	}
+	.content_right{width: 100%;}
+	.header-left{width: 50%;margin: 25px 0 0 0px;}
+	.product_detail_image{width: 100%;border: 1px solid #ccc;}
+	.breadcrumbs li {
+		display: inline-block;
+		background-color: transparent;
+		padding-left: 10px;
+		background:none;
+		background-position: left center;
+		background-repeat: no-repeat;
+		border-bottom: 1px solid #ccc;
+	}
+	.breadcrumbs li strong{background: none;}
+	.addtocart{margin-top: 10px;width: 98%;}
+	#userNextStepBottom{width: 100%;margin-bottom: 10px;}
+	.cart_button_contin{margin-top: 20px;}
+}
+
+@media (max-width: 768px) {
+	.desktop_menu{display: none !important;;}
+	.home-html h4 {
+		font-size: 10px;
+	}
+	.home-aboutus .thuonghieu {
+		line-height: 1.3;
+	}
+	.home-html div:nth-child(2)>h4 {
+		border-right: none;
+	}
+	.header-about .text-whoiam {
+		font-size: 28px;
+	}
+	.home-aboutus .thuonghieu {
+		font-size: 25px;
+	}
+}
+
+@media (max-width: 415px) {
+	.desktop_menu{display: none;}
+	.logo-mitsu {
+	    max-width: 50% !important;
+	    display: block;
+	    margin-top: 0px;
+	    margin-left: 25% !important;
+	}
+	.logo-cleansui {
+		max-width: 20%;
+	    display: block;
+	    margin-left: 40%;
+	}
+}

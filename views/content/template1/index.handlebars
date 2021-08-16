@@ -1,0 +1,143 @@
+<div class="slider" id="slider">
+    {{>slider}}
+</div>
+<div id="clear"></div>
+<div class="block">
+	<div class="container">
+		<div class="about_us">
+			<div class="about_us_left">
+				<h1>Thiết kế web chỉ từ 1 triệu đồng</h1>
+				<p>TNS Solution là giải pháp tạo website thương mại điện tử và doanh nghiệp, nhằm giúp bạn tiết kiệm tối đa thời gian và chi phí cho việc thiết kế website.</p>
+			</div>
+			<div class="about_us_right">
+				<p>Chúng tôi đặt biệt chú trọng tới công nghệ và tốc độ trong việc thiết kế web, đây là một giải pháp giúp bạn có một trang web tốc độ cao thời gian tải trang chưa tới 1/10 giây, trên nền tảng công nghệ mới giúp trang web luôn ổn định. Đặt biệt trang web được thiết kế chuẩn SEO giúp bạn dễ dàng trong việc tiếp thị quảng cáo.</p>
+			</div>
+			<div id="clear"></div>
+		</div>
+	</div>
+</div>
+<div class="block">
+	<div class="contact_us">
+		<div class="container">
+			<div class="contact_us_left">
+				<h3>Tạo dựng website riêng trong 5 phút</br> Chỉ bằng 1 cú click chuột</h3>
+			</div>
+			<div class="contact_us_right">
+				<img src="/static/{{siteinfo.customer_username}}/images/Depositphotos_12506142_original-480x258.png">
+				<p><a href="/lien-he">Dùng thử 7 ngày</a></p>
+			</div>
+			<div id="clear"></div>
+		</div>
+	</div>
+</div>
+<div class="block">
+	<div class="container">
+		<div class="list_template">
+			<div class="list_template_title">
+				<p class="title"><a href="#">Mẫu website</a></p>
+				<p>Có rất nhiều giao diện website được thiết kế sẳn để lựa chọn</br>
+				Bạn chỉ cần lựa chọn giao diện website ưng ý và phù hợp với nhu cầu của bạn</br>
+				Chọn đăng ký website là bạn đã có 1 website cho doanh nghiệp</br>
+				</p>
+			</div>
+			
+		</div>
+	</div>
+</div>
+<div class="list_template">
+	<div class="container">
+		<div class="row">
+				{{#each listtemplates as |template|}}
+	                <div class="col-xs-6 col-sm-6 col-md-4 {{images.class}}">
+	                  <div class="list_template_item">
+	                      <div class="list_template_images">
+	                        <a href="http://{{template.website_url}}"><img src="{{template.website_image_path}}{{template.website_image}}" alt="{{template.title}}"></a>
+	                      </div>
+	                      <div class="list_template_detail">
+	                        <p class="product_name">{{{template.title}}}</p>
+							<p class="product_name"><a href="http://{{template.website_url}}">Xem demo >></a></p>
+	                      </div>
+	                    </div>
+	                </div>	
+				{{/each}}
+		</div>
+	</div>
+</div>
+<div class="list_quality">
+	<div class="container">
+		<div class="row">
+	        <div class="col-xs-6 col-sm-6 col-md-3 {{images.class}}">
+	            <div class="list_quality_item">
+	                <div class="list_quality_images">
+	                    <img src="/static/template1/images/icon1artboard_1_copy_10.png">
+	                </div>
+	                <div class="list_quality_detail">
+	                    <p class="quality_name">Tiết kiệm thời gian</p>
+						<p>Chỉ tốn vài tiếng cho việc cập nhật nội dung bạn đã có 1 website đẹp cho công ty.</p>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="col-xs-6 col-sm-6 col-md-3 {{images.class}}">
+	            <div class="list_quality_item">
+	                <div class="list_quality_images">
+	                    <img src="/static/template1/images/tinhnang2-min.png">
+	                </div>
+	                <div class="list_quality_detail">
+	                    <p class="quality_name">Tiết kiệm chi phí</p>
+						<p>Với chi phí chỉ từ 500k đén 1tr đồng cho 1 năm sử dụng.</p>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="col-xs-6 col-sm-6 col-md-3 {{images.class}}">
+	            <div class="list_quality_item">
+	                <div class="list_quality_images">
+	                    <img src="/static/template1/images/icon1artboard_1_copy_13.png">
+	                </div>
+	                <div class="list_quality_detail">
+	                    <p class="quality_name">Tốc độ, Chuẩn seo</p>
+						<p>Tốc độ load website cực nhanh, được thiết kế thân thiện với google.</p>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="col-xs-6 col-sm-6 col-md-3 {{images.class}}">
+	            <div class="list_quality_item">
+	                <div class="list_quality_images">
+	                    <img src="/static/template1/images/icon1artboard_1_copy_12.png">
+	                </div>
+	                <div class="list_quality_detail">
+	                    <p class="quality_name">An toàn, đẹp mắt</p>
+						<p>Nhiều giao diện website đẹp mắt, thiết kế trên nền tảng hiện đại, an toàn.</p>
+	                </div>
+	            </div>
+	        </div>			
+		</div>
+	</div>
+</div>
+<div class="block">
+	<div class="container">
+		<div class="list_template">
+			<div class="list_template_title">
+				<p class="title"><a href="#">Khách hàng nói về chúng tôi</a></p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="list_template">
+	<div class="container">
+		<div class="row">
+				{{#each testimonials as |testimonial|}}
+	                <div class="col-xs-6 col-sm-6 col-md-4">
+	                  <div class="list_quality_item">
+	                      <div class="list_quality_images">
+	                        <img src="/static{{testimonial.image_path}}" alt="{{testimonial.title}}">
+	                      </div>
+	                      <div class="list_template_detail">
+	                        <p class="quality_name">{{{testimonial.testimonial_title}}}</p>
+							<p>{{{testimonial.testimonial_description}}}</p>
+	                      </div>
+	                    </div>
+	                </div>	
+				{{/each}}
+		</div>
+	</div>
+</div>

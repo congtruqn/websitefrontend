@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" class="skin-blue sidebar-mini wysihtml5-supported" >
+<head>
+	<title>LoginApp</title>
+  <base href="/">
+	<link rel="stylesheet" href="/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/_all-skins.min.css" />
+  <link rel="stylesheet" href="/css/ngDialog.css" />
+  <link rel="stylesheet" href="/css/fonts.css" />
+
+  <script src="/js/bootstrap.min.js"></script>
+  <script src="/js/jquery-1.10.2.min.js"></script>
+  <script src="/js/respond.min.js"></script>
+  <script src="/js/html5shiv.js"></script>
+  <script src="/js/angular/angular.js"></script>
+
+  <script src="/app/lib/angular/angular.js"></script>
+  <script src="/app/lib/angular/angular-route.js"></script>
+  <script src="/app/angularApp.js" type="text/javascript"></script>
+  <script src="/app/angularApp/userController.js" type="text/javascript"></script>
+  <script src="/app/angularApp/userService.js" type="text/javascript"></script>
+  <script src="/app/angularApp/userDirective.js" type="text/javascript"></script>
+
+</head>
+<body  ng-app="myApp">
+	<div class="wrapper" id="wrapper">
+      <header class="main-header">
+        {{> header}}
+      </header>
+      <aside class="main-sidebar" id="leftmenu">
+          {{> adminmenu}}
+      </aside>
+      <div class="content-wrapper" style="min-height: 916px;" id="main_content">
+          {{{body}}}
+      </div>
+  </div>
+      <footer class="footer">
+        <p>&copy; 2015 LoginApp, Inc.</p>
+      </footer>
+</body>
+</html>

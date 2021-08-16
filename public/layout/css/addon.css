@@ -1,0 +1,47 @@
+.off-canvas > .cstm-shade {
+  width: 0;
+  height: 0;
+  position: fixed;
+  top: 145px;
+  left: 0;
+  transition: background 0.5s ease, width 0s ease 0.5s, height 0s ease 0.5s;
+  z-index: 100000;
+}
+
+.off-canvas > input[type="checkbox"] {
+  display: none;
+}
+
+.off-canvas > input[type="checkbox"]:checked ~ .cstm-shade {
+  background: rgba(0, 0, 0, 0.75);
+  width: 100%;
+  height: 100%;
+  transition: background 0.5s ease;
+}
+
+.off-canvas > .cstm-shade > .cstm-navi {
+  background: white;
+  width: 300px;
+  height: 100%;
+  position: fixed;
+  right: -300px;
+  transition: right 0.5s ease;
+}
+
+.off-canvas > input[type="checkbox"]:checked ~ .cstm-shade > .cstm-navi {
+  right: 0;
+}
+
+.cstm-navi-content {
+  padding: 15px;
+  padding-top: 15px;
+}
+.navbar-toggle .icon-bar {
+    background-color: #fff;
+}
+.navbar-toggle .icon-bar {
+    border-radius: 1px;
+    display: block;
+    height: 3px;
+    width: 22px;
+}

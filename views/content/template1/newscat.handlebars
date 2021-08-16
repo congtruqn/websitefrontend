@@ -1,0 +1,57 @@
+<div class="bread_images_con" style="background: url(/static/template1/images/news/child-banner.png)  right -5px no-repeat;">
+	<div class="container">
+		
+			<div class="breadcrumbs">
+				<div id="bread">
+					<ul class="items">
+						<li class="homes"><a href="/">Trang chủ</a></li>
+						<li class="homes"><a href="/{{{contents.seo_url}}}">{{{newcatdetail.name}}}</a></li>
+					</ul>
+				</div>
+			</div>
+		
+	</div>
+</div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12 col-sm-9">
+			<div class="newscat_content">
+				{{#each contents as |images|}}
+					<div class="col-lg-12 col-md-12 col-sm-12 list_news_item">
+					   <div class="cat_image">
+					   		<a href="/{{images.seo_url}}"><img src="{{images.image_path}}medium/{{images.image}}"></a>
+					   </div>
+					  	<div class="cat_detail">
+					   	{{#each images.detail as | listnews|}}
+					   		<h4><a href="/{{images.seo_url}}">{{{listnews.name}}}</a></h4>
+					   		<p>{{{listnews.shortdesc}}}...</p>
+					   		<i><a href="/{{images.seo_url}}">Xem thêm</a></i>
+					   	{{/each}}
+					   </div>
+					</div>	
+				{{/each}}
+				<div id="clear"></div>	
+				<div class="content_page">
+					<ul>
+					{{#each allpage as |page|}}
+						<li><a href="/{{{page.seo_url}}}?page={{page.pagecount}}">{{{page.pagecount}}}</a></li>
+					{{/each}}
+					</ul>
+				</div>
+			</div>
+		</div>
+		 <div class="col-xs-12 col-sm-6 col-md-3">
+			<div class="new_news_title">Tin nổi bật</div>
+			{{#each hotnews as |hotnew|}}
+                <div class="hot_news_item">
+                    <div class="hot_news_detail">
+                        {{#each hotnew.detail as |productdetail|}}
+                          <p class="hot_news_name"><a href="/{{hotnew.seo_url}}">{{{productdetail.name}}}</a></p>
+                        {{/each}}
+                    </div>
+                </div>
+  			{{/each}}
+		 </div>
+	</div>
+</div>

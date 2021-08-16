@@ -1,0 +1,201 @@
+var mongoose = require("mongoose")
+var ProductCat = require('../models/productcats');
+var NewsContents = require('../models/newscontents');
+var NewsCats = require('../models/newscats');
+var Productlists = require('../models/productlists');
+var ProductCat = require('../models/productcats');
+var Seourls = require('../models/seourl');
+var banners = require('../models/banners');
+var website = require('../models/websites');
+var menu = require('../models/menu');
+var footer = require('../models/footer');
+var caches = require('../models/cache');
+var productlists  = require('../models/productlists');
+var productmoreinfo  = require('../models/productmoreinfo');
+var caches = require('../models/cache');
+module.exports.gethotproductcat = function(customer_id){
+  return new Promise((resolve, reject)=>{
+    var listcat = '';
+    ProductCat.getrootproductcats(customer_id,async function(err, productcatroot){
+      for (var x in productcatroot) {
+          listcat = listcat + '<li class="product_menu_item"><span><a href="/'+productcatroot[x].seo_url+'">'+productcatroot[x].detail[0].name+'</a><i class="fa fa-caret-right"></i></span>';
+          var listcat1 = await rendercatsbyparent(customer_id,productcatroot[x].cat_id,'');
+          listcat = listcat + listcat1;
+          listcat = listcat + '</li>';  
+      }
+      resolve(listcat);
+    });
+  });
+}
+function rendercatsbyparent(customer_id,parent_id,listcat) {
+    return new Promise((resolve, reject)=>{
+        ProductCat.getproductcatsbyparent(customer_id,Number(parent_id),async function (err, productcat) {
+            if (productcat.length>0) {
+                listcat = listcat + '<ul>';
+                for (var x in productcat) {
+                  listcat = listcat + '<li><span><a href="/'+productcat[x].seo_url+'">'+productcat[x].detail[0].name+'</a></span>';
+                  if(productcat[x].list_child.length==0||productcat[x].list_child[0]==undefined){
+                  }
+                  else{ 
+                    var aaa = await rendercatsbyparent(customer_id,productcat[x].cat_id,listcat);
+                    //console.log(aaa);
+                    listcat = aaa;
+                  }
+                  listcat = listcat + '</li>';
+                }
+                listcat = listcat + '</ul>';
+                resolve(listcat);
+            }
+            else {
+              resolve('');
+            }
+        });
+    });
+}
+module.exports.rendermainmenu =async function(customer_id){
+  return new Promise((resolve, reject)=>{
+    menu.getrootmenu(customer_id,async function(err, menuroot){
+      var listcat = '<ul class="ul_mainmenu">';
+      for (var x in menuroot) {
+        listcat = listcat + '<li class="mainmenu_item"><span><a href="/'+menuroot[x].link+'">'+menuroot[x].detail[0].name+'</a></span>';
+        var listcat1 = await renderrootmenuparent(customer_id,menuroot[x].cat_id,'');
+        console.log(listcat1)
+        listcat = listcat + listcat1;
+        listcat = listcat + '</li>';  
+      }
+      listcat = listcat + '</ul>';
+      console.log(listcat)
+      resolve(listcat);
+    });
+  });
+}
+function renderrootmenuparent(customer_id,parent_id,listcat) {
+  return new Promise((resolve, reject)=>{
+      menu.getmenubyparent(customer_id,Number(parent_id),async function (err, productcat) {
+          //console.log(listcat);
+          if (productcat.length>0) {
+              listcat = listcat + '<ul>';
+              for (var x in productcat) {
+                listcat = listcat + '<li><span><a href="/'+productcat[x].seo_url+'">'+productcat[x].detail[0].name+'</a></span>';
+                  if(productcat[x].list_child.length==0||productcat[x].list_child[0]==undefined){
+                  }
+                  else{ 
+                    await renderrootmenuparent(customer_id,productcat[x].cat_id,listcat);
+                  }
+                  listcat = listcat + '</li>';
+              }
+              listcat = listcat + '</ul>';
+              resolve(listcat);
+          }
+          else {
+            resolve('');
+          }
+      });
+  });
+}
+module.exports.getwebsiteinfo = function(hostname, callback){
+	var query = {website_url:hostname};
+	website.findOne(query, callback);
+}
+module.exports.getfooterbycustomer = function(customer_id){
+  return new Promise((resolve, reject)=>{
+    footer.getfooterbycustomer(customer_id,function(err, footerinfo){
+      if(footerinfo){
+        resolve(footerinfo)
+      }
+      else{
+        resolve({});
+      }
+    });
+  })
+}
+module.exports.gethotproductbycustomer = function(customer_id,count,products_name_letters){
+  return new Promise((resolve, reject)=>{
+    productlists.gethotproducts(customer_id,count,function(err, countproduct){
+      if(countproduct){
+        for (var x in countproduct) {
+          var productiteam = JSON.parse(JSON.stringify(countproduct[x]));
+          var pricebeauty = String(productiteam.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+          var sale_pricebeauty = String(productiteam.sale_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+          var productname = countproduct[x].detail[0].name;
+          if(productname.length>products_name_letters){
+            productname = countproduct[x].detail[0].name.substring(0,products_name_letters)+"...";
+          }
+          productiteam.pricebeauty = pricebeauty;
+          productiteam.sale_pricebeauty = sale_pricebeauty;
+          var salepec = parseInt(((productiteam.sale_price-productiteam.price)/productiteam.sale_price)*100);
+          productiteam.alt=countproduct[x].detail[0].name;
+          productiteam.productname = productname;
+          if(productiteam.sale==1){
+            productiteam.salepec = salepec;
+          }
+          countproduct[x] = productiteam;
+        }
+        resolve(countproduct);
+      }
+      else{
+        resolve({});
+      }
+    });
+  })
+}
+module.exports.getnewproductbycustomer = function(customer_id,count,products_name_letters){
+  return new Promise((resolve, reject)=>{
+    productlists.getnewproducts(customer_id,count,function(err, countproduct){
+      if(countproduct){
+        for (var x in countproduct) {
+          var productiteam = JSON.parse(JSON.stringify(countproduct[x]));
+          var pricebeauty = String(productiteam.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+          var sale_pricebeauty = String(productiteam.sale_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+          var productname = countproduct[x].detail[0].name;
+          if(productname.length>products_name_letters){
+            productname = countproduct[x].detail[0].name.substring(0,products_name_letters)+"...";
+          }
+          productiteam.pricebeauty = pricebeauty;
+          productiteam.sale_pricebeauty = sale_pricebeauty;
+          var salepec = parseInt(((productiteam.sale_price-productiteam.price)/productiteam.sale_price)*100);
+          productiteam.alt=countproduct[x].detail[0].name;
+          productiteam.productname = productname;
+          if(productiteam.sale==1){
+            productiteam.salepec = salepec;
+          }
+          countproduct[x] = productiteam;
+        }
+        resolve(countproduct);
+      }
+      else{
+        resolve({});
+      }
+    });
+  })
+}
+module.exports.getallchoiseproductmoreinfos = function(customer_id){
+  return new Promise((resolve, reject)=>{
+    productmoreinfo.getallchoiseproductmoreinfo(customer_id,function(err, countproduct){
+      if(countproduct){
+        resolve(countproduct);
+      }
+      else{
+        resolve({});
+      }
+    });
+  })
+}
+module.exports.gettopnewscatsandcontent = function(customer_id,count,callback){
+  NewsCats.gethotnewcatbyrank(customer_id,count,function(err, countproduct){
+    if (countproduct) {
+      for (var x in countproduct) {
+        var productiteam = JSON.parse(JSON.stringify(countproduct[x]));
+        var pricebeauty = String(productiteam.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+        productiteam.pricebeauty = pricebeauty;
+        productiteam.alt = countproduct[x].detail[0].name;
+        countproduct[x] = productiteam;
+      }
+      return callback(null,countproduct);
+      //resolve(countproduct);
+    }
+    else{
+      return callback(null,[]);
+    }
+});
+}

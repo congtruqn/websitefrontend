@@ -1,0 +1,36 @@
+<div class="header-about">
+  <div class="text-about">Tin tức và sự kiện</div>
+</div>
+<div class="news_content row">
+
+  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <div class="fist_news_content">
+           <div class="images">
+              <a href="/{{topnews.seo_url}}"><img src="/images/news/fullsize/{{topnews.image2}}"></a>
+           </div>
+            <div class="cont">
+            {{#each topnews.detail as | listnews|}}
+              <h4><a href="/{{images.seo_url}}">{{{listnews.name}}}</a></h4>
+              <p>{{{listnews.desc}}}</p>
+            {{/each}}
+           </div>
+        </div>      
+  </div>
+  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+    {{#each childnews as |images|}}
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+          <div class="list_news_content">
+             <div class="images">
+                <a href="/{{images.seo_url}}"><img src="/images/news/medium/{{images.image1}}"></a>
+             </div>
+            <div class="cont">
+              {{#each images.detail as | listnews|}}
+                <h4><a href="/{{images.seo_url}}">{{{listnews.name}}}</a></h4>
+              {{/each}}
+             </div>
+          </div>  
+      </div>
+    {{/each}} 
+  </div>
+  <div id="clear"></div>
+</div>
