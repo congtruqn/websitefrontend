@@ -153,14 +153,7 @@ mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
-const options = {
-  user:"website",
-  pass:"VinaCA@123!@#",
-  keepAlive: true,
-  keepAliveInitialDelay: 300000,
-  useNewUrlParser: true
-};
-var db = mongoose.connect("mongodb://localhost/website",options);
+var db = mongoose.connect("mongodb://localhost/website");
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
