@@ -1131,6 +1131,8 @@ function getproductcatinfo(cat_id) {
 }
 
 router.post('/addorder', function(req, res, next) {
+  var hostname = req.headers.host;
+  var websiteinfo =  caches.websiteinfo[hostname];
   nodeMailer = require('nodemailer');
   var name = req.param('name');
   var email = req.param('email');
@@ -1169,10 +1171,11 @@ router.post('/addorder', function(req, res, next) {
       province:province,
       district:district,
       ward:ward,
-      customer_note:note
+      customer_note:note,
+      customer_id:websiteinfo.customer_id
   });
   listorders.createlistorders(neworders, function(err, producttypess){
-    var websiteinfo =  caches.websiteinfo[hostname];
+
     for (var i in req.session.products) {
       var list_product = {
         product_id:req.session.products[i].product_id,
@@ -1181,7 +1184,6 @@ router.post('/addorder', function(req, res, next) {
         product_image:req.session.products[i].image,
         product_total_price:req.session.products[i].product_total_price,
         count:req.session.products[i].num,
-        
       }
       products = 'Tên sản phẩm :'+ req.session.products[i].name + '<br>';
       products = products + 'Giá sản phẩm :'+ req.session.products[i].price + '<br>';

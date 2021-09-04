@@ -66,10 +66,15 @@ var hbs = exphbs.create({
 app.use(async function(req, res, next) {
   var curent_date = new Date().getTime();
   var hostname = req.headers.host;
+  //console.log(caches.websiteinfo[hostname])
   if(!caches.websiteinfo[hostname]||caches.websiteinfo[hostname]==null){
     systems.getwebsiteinfo(hostname,async function(err, websitein){
+      if(websitein===null){
+        res.redirect(301, 'http://tns.vn');
+      }
       if(websitein){
         caches.websiteinfo[hostname] = websitein;
+        
         caches.websiteinfo[hostname].date = curent_date+(1000*60*1);
         if(!caches.productcat[hostname]||caches.productcat[hostname]==null){
           var productcat = await systems.gethotproductcat(websitein.customer_id);
