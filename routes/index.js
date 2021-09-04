@@ -1172,6 +1172,7 @@ router.post('/addorder', function(req, res, next) {
       customer_note:note
   });
   listorders.createlistorders(neworders, function(err, producttypess){
+    var websiteinfo =  caches.websiteinfo[hostname];
     for (var i in req.session.products) {
       var list_product = {
         product_id:req.session.products[i].product_id,
@@ -1201,7 +1202,7 @@ router.post('/addorder', function(req, res, next) {
         });
         let mailOptions = {
                 from: 'trutc@smartvas.com.vn', // sender address
-                to: "congtruqn@gmail.com", // list of receivers
+                to: websiteinfo.customer_email, // list of receivers
                 subject: "Khách hàng đăt hàng từ website", // Subject line
                 text: cont, // plain text body
                 html: cont, // html body
