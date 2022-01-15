@@ -7,6 +7,7 @@ var hotproducts = {}
 var newproducts = {}
 var hotproductcats = {}
 var productmoreinfos = {}
+var productmenu = {}
 var provinces = null
 module.exports = {
     websiteinfo,
@@ -18,5 +19,6 @@ module.exports = {
     hotproductcats,
     newproducts,
     provinces,
-    productmoreinfos
+    productmoreinfos,
+    productmenu
 }

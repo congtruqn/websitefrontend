@@ -50,7 +50,11 @@ router.get('/',async function(req, res, next) {
     var hostname = req.headers.host;
     var websiteinfo =  caches.websiteinfo[hostname];
     var productmenu = caches.productcat[hostname];
-    var product_per_cat_home = websiteinfo.products_per_cat_home;
+    var productmenu1 = caches.productmenu[hostname];
+    var product_per_cat_home = 0;
+    if(websiteinfo.products_per_cat_home){
+      product_per_cat_home = websiteinfo.products_per_cat_home;
+    }
     var sitefooter = caches.footer[hostname];
     var mainmenu = caches.mainmenu[hostname];
     var productmoreinfos = caches.productmoreinfos[hostname];
@@ -110,7 +114,8 @@ router.get('/',async function(req, res, next) {
               sitefooter:sitefooter,
               hotproducts:hotproducts,
               newproducts:newproducts,
-              productmoreinfos:productmoreinfos
+              productmoreinfos:productmoreinfos,
+              productmenu1:productmenu1
             });
           });
       }

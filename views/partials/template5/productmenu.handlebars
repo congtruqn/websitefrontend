@@ -1,16 +1,25 @@
 <div id="main_nav">
   <div id="smoothmenu1" class="ddsmoothmenu">
          <ul>
-            {{#each productmoreinfos as |productcat|}}
-                <li class="product_menu_item"><span><a href="#">{{{productcat.name}}}</a></span>
-                <ul>
-                    {{#each productcat.default_value as |infodetais|}}
-                        <li><span><a href="{{{infodetais.seo_url}}}">{{{infodetais.default_name}}}</a></span></li>
-                    {{/each}}
-                </ul>
-                </li>
-            {{/each}}
-            {{{productmenu}}}
+            {{{productmenu1}}}
         </ul>
     </div>
 </div>
+<script>
+    $(document).ready(function(){
+        var boxWidth = 450;
+        $(".product_menu").hover(function(){
+            $(".product_menu").animate({
+                height: boxWidth
+            });
+            //document.getElementById("#product_menu").style.overflow = 'visible';
+            //$("product_menu").css('overflow','none');
+        });
+        $(".product_menu").mouseleave(function(){
+            $(".product_menu").animate({
+                height: 310,
+            });
+            //document.getElementById("#product_menu").style.overflow = 'hidden';
+        });
+    });
+</script>

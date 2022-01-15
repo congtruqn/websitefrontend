@@ -27,6 +27,22 @@ module.exports.gethotproductcat = function(customer_id){
     });
   });
 }
+module.exports.getproductmenu = function(customer_id){
+  return new Promise((resolve, reject)=>{
+    var listcat = '';
+    website.getwebsitesbycustomerid(customer_id,function(err, websiteinfo){
+      ProductCat.getrootproductcats(customer_id,async function(err, productcatroot){
+        for (var x in productcatroot) {
+            listcat = listcat + '<li class="product_menu_item"><a href="/'+productcatroot[x].seo_url+'"><i class="menu-icon img-icon"><img src="/static/'+websiteinfo.customer_username+'/images/products/fullsize/'+productcatroot[x].image_icon+'" alt="menu icon"></i><span>'+productcatroot[x].detail[0].name+'</span></a>';
+            var listcat1 = await rendercatsbyparent(customer_id,productcatroot[x].cat_id,'');
+            listcat = listcat + listcat1;
+            listcat = listcat + '</li>';  
+        }
+        resolve(listcat);
+      });
+    })
+  });
+}
 function rendercatsbyparent(customer_id,parent_id,listcat) {
     return new Promise((resolve, reject)=>{
         ProductCat.getproductcatsbyparent(customer_id,Number(parent_id),async function (err, productcat) {

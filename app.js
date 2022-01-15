@@ -74,11 +74,14 @@ app.use(async function(req, res, next) {
       }
       if(websitein){
         caches.websiteinfo[hostname] = websitein;
-        
         caches.websiteinfo[hostname].date = curent_date+(1000*60*1);
         if(!caches.productcat[hostname]||caches.productcat[hostname]==null){
           var productcat = await systems.gethotproductcat(websitein.customer_id);
           caches.productcat[hostname] = productcat;
+        }
+        if(!caches.productmenu[hostname]||caches.productmenu[hostname]==null){
+          var productmenu = await systems.getproductmenu(websitein.customer_id);
+          caches.productmenu[hostname] = productmenu;
         }
         if(!caches.mainmenu[hostname]||caches.mainmenu[hostname]==null){
           var mainmenu = await systems.rendermainmenu(websitein.customer_id);
@@ -100,7 +103,6 @@ app.use(async function(req, res, next) {
           var productmoreinfos = await systems.getallchoiseproductmoreinfos(websitein.customer_id);
           caches.productmoreinfos[hostname] = productmoreinfos;
         }
-        
         app.engine('handlebars', exphbs({
           partialsDir: __dirname + '/views/partials/'+websitein.customer_username
         }));
@@ -116,6 +118,10 @@ app.use(async function(req, res, next) {
     if(!caches.productcat[hostname]||caches.productcat[hostname]==null){
       var productcat = await systems.gethotproductcat(websitein.customer_id);
       caches.productcat[hostname] = productcat;
+    }
+    if(!caches.productmenu[hostname]||caches.productmenu[hostname]==null){
+      var productmenu = await systems.getproductmenu(websitein.customer_id);
+      caches.productmenu[hostname] = productmenu;
     }
     if(!caches.mainmenu[hostname]||caches.mainmenu[hostname]==null){
       var mainmenu = await systems.rendermainmenu(websitein.customer_id);
@@ -158,6 +164,13 @@ mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
+const options = {
+  user:"website",
+  pass:"Tru205649601@",
+  keepAlive: true,
+  keepAliveInitialDelay: 300000,
+  useNewUrlParser: true
+};
 var db = mongoose.connect("mongodb://localhost/website");
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

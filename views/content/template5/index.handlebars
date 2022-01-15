@@ -1,8 +1,19 @@
 <div class="block">
-	<div class="content_left">
-		<div class="product_menu">
+	<div class="menu_slider">
+		<div class="left_product_menu">
+			<div class="product_menu" id="product_menu">
 			{{> productmenu}}
+			</div>
 		</div>
+		<div class="slider">
+          {{>slider}}
+		</div>
+	</div>
+</div>
+<div class="block">
+	<div class="content_left">
+		
+
 		<div class="new_product">
 			<div class="block_new_product">
 				{{>newproducts}}
@@ -11,7 +22,7 @@
 	</div>
 	<div class="content_right">
 		<div class="slider" id="slider">
-          {{>slider}}
+
     	</div>
 		<div id="clear"></div>
 		<div class="hotproduct">

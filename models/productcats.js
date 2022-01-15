@@ -19,6 +19,15 @@ var productcatsSchema = mongoose.Schema({
 	image:{
 		type: String,
 	},
+	image_icon:{
+		type: String,
+	},
+	image_category:{
+		type: String,
+	},
+	image_ads:{
+		type: String,
+	},
 	detail:[{
 		lang: String,
 		name: String,
@@ -44,6 +53,9 @@ var productcatsSchema = mongoose.Schema({
 		type: String,
 	},
 	seo_url:{
+		type: String,
+	},
+	ads_url:{
 		type: String,
 	},
 	child:{

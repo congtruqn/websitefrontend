@@ -3,7 +3,7 @@
     padding: 0;
 }
 body {
-    background: #fff none repeat scroll 0 0;
+    background: #f4f4f4 none repeat scroll 0 0;
     color: #333333;
     font-family: "Roboto",sans-serif;
     font-size: 13px;
@@ -16,19 +16,20 @@ body {
     width: 100%;
 }
 #top {
-    background: #efefef none repeat scroll 0 0;
+    background: #1d71aa none repeat scroll 0 0;
     float: left;
     text-align: center;
     width: 100%;
 }
+#navition{
+    background: #1d71aa;
+}
 .cont-header{
-    background: url(../images/bg-header1.jpg) center 10px no-repeat transparent;
+    background: #189eff;
 }
 .desktop_menu_left{
-    float: left;width: 250px;
-    background: #000;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
+    float: left;width: 270px;
+    background: #fc0;
     padding: 7px 10px;
 }
 .desktop_menu_left > div {
@@ -42,10 +43,10 @@ body {
     width: 100%;
     height: 2px;
     margin-top: 2px;
-    background: #fff;
+    background: #000;
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
 }
-.desktop_menu_left p{color: #fff;font-size: 14px;font-weight: 500;text-transform: uppercase;}
+.desktop_menu_left p{color: #000;font-size: 14px;font-weight: 400;text-transform: uppercase;}
 #top_mobile{display: none;background: #111111 none repeat scroll 0 0;
     float: left;
     text-align: center;
@@ -64,6 +65,9 @@ body {
     border-radius: 3px;
     background: #fff;
 }
+.menu_slider{height: 320px;margin-top: 10px;clear: both;display: block;}
+.left_product_menu{width: 270px; float: left;position: absolute;}
+.slider{width: 1060px; float: right;}
 .btn-default {
     position: absolute;
     top: 0px;
@@ -124,11 +128,11 @@ body {
     -moz-border-radius: 100%;
     -webkit-border-radius: 100%;}
 .header-top-left ul li{list-style: none;float: left;margin: 2px 0 2px 0 ;font-size:13px}
-.header-top-left ul li a{color: #666;font-weight: 500;}
+.header-top-left ul li a{color: #fff;font-weight: 400;}
 .header-top-left ul li i{margin-right: 4px;}
 .header-left {
     float: left;
-    margin: 15px 0;
+    margin: 10px 0;
     padding: 0;
     width: 20%;
 }
@@ -148,9 +152,6 @@ body {
 .center-block ul li a{color: #333;font-weight: 400;font-size: 14px;}
 .center-block ul li:HOVER{background: #ff911d}
 .center-block ul li:HOVER a{color: #fff}
-#navition{
-    
-}
 .hotproduct{margin-top: 10px;width: 100%;}
 .block-title{
     border-bottom: 3px solid #eee;
@@ -176,18 +177,34 @@ body {
     bottom: -3px;
 }
 .block-title h3 a{color: #fff;}
-.content_left{width: 250px;float: left;}
-.content_right{width: 1000px;float:right;}
+.content_left{width: 270px;float: left;}
+.content_right{width: 1060px;float:right;}
+.menu-icon{
+    min-width: 37px;
+    text-align: center;
+    padding-left: 4px;
+    margin: 0 0 0 -10px;
+    display: inline-block;
+}
+.product_menu_item a{
+    color: #666;
+    border-bottom: 1px solid #e5e5e5;
+    position: relative;
+    padding: 4px 2px 5px 9px;
+    display: block;
+}
 .ul_mainmenu{margin-bottom: 0;}
 .product_menu{
     float: left;
-    width: 250px;
-    background: #f5f5f5;
+    width: 270px;
+    background: #fff;
     border-bottom-right-radius: 3px;
     border-bottom-left-radius: 3px;
-    min-height: 270px;
+    height: 310px;
     z-index: 10000;
+    overflow:hidden;
 }
+.product_menu:hover{overflow:visible;}
 .product_menu ul li{
     list-style: none;
     padding: 1px 9px;
@@ -196,17 +213,16 @@ body {
     margin: 1px 0 0px 0;
 }
 .product_menu ul li:HOVER ul{display: block;}
-.product_menu ul li span{
-    background: url("../images/angle-right.png") left center no-repeat transparent;
-    border-bottom: 1px solid #e5e5e5;
+.product_menu>ul>li>span{
     position: relative;
-    display: block;
-    padding: 4px 2px 5px 25px;
+    padding: 4px 2px 5px 9px;
 }
+
+.product_menu ul li span:hover{color: #0083c1;}
 .product_menu ul li span a{
     color: #666;
     text-transform:initial;
-    font-weight: 500;
+    font-weight: 400;
 }
 .fa-caret-right{display: none !important;}
 .product_menu ul li span a:hover{color: #25B430}
@@ -223,7 +239,7 @@ body {
 .nav-pills li ul li{list-style: none;border-top: 1px solid #eee;padding: 6px 0 6px 10px;}
 .nav-pills li ul li a{color: #23527c;font-size: 12px !important;}
 .nav-pills li ul li:first-child{margin-top: 7px;}
-#slider{width: 1000px;float: right;overflow: hidden;position: relative;margin-top: 10px;}
+#slider{width: 1060px;float: right;overflow: hidden;position: relative;margin-top: 10px;}
 .hot_product_cat{
     width: 79%;
     float: right;
@@ -684,7 +700,6 @@ footer{
     border-bottom: 1px solid #ccc;
     padding: 5px;
 }
-.product_menu_item a{color: #666}
 .list_news_item{min-height: 390px; }
 .list_news_item .cat_detail{border-bottom:1px solid #ccc;padding-bottom: 5px;}
 .fa-caret-right{position: absolute;right: 10px;top: 7px;color: #25B430}
