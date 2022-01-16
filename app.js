@@ -171,7 +171,7 @@ const options = {
   keepAliveInitialDelay: 300000,
   useNewUrlParser: true
 };
-var db = mongoose.connect("mongodb://localhost/website");
+var db = mongoose.connect("mongodb://14.225.192.200/website",options);
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;

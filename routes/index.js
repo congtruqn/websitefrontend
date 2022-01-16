@@ -48,11 +48,13 @@ router.get('/getcart', function(req, res, next) {
 });
 router.get('/',async function(req, res, next) {
     var hostname = req.headers.host;
+    
     var websiteinfo =  caches.websiteinfo[hostname];
+    console.log(websiteinfo)
     var productmenu = caches.productcat[hostname];
     var productmenu1 = caches.productmenu[hostname];
     var product_per_cat_home = 0;
-    if(websiteinfo.products_per_cat_home){
+    if(websiteinfo&&websiteinfo.products_per_cat_home){
       product_per_cat_home = websiteinfo.products_per_cat_home;
     }
     var sitefooter = caches.footer[hostname];
