@@ -165,13 +165,14 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
 const options = {
-  user:"website",
-  pass:"Tru205649601@",
+  user:process.env.MONGO_USER,
+  pass:process.env.MONGO_PASSWORD,
   keepAlive: true,
   keepAliveInitialDelay: 300000,
   useNewUrlParser: true
 };
-var db = mongoose.connect("mongodb://14.225.192.200/website",options);
+console.log(process.env.DB_URL)
+var db = mongoose.connect("mongodb://"+process.env.DB_URL+"/website",options);
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
