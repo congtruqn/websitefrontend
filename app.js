@@ -171,7 +171,6 @@ const options = {
   keepAliveInitialDelay: 300000,
   useNewUrlParser: true
 };
-console.log(process.env.DB_URL)
 var db = mongoose.connect("mongodb://"+process.env.DB_URL+"/website",options);
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
