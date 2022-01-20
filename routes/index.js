@@ -60,6 +60,7 @@ router.get('/',async function(req, res, next) {
     var sitefooter = caches.footer[hostname];
     var mainmenu = caches.mainmenu[hostname];
     var productmoreinfos = caches.productmoreinfos[hostname];
+    console.log(productmoreinfos)
     if(hostname=='tnsvn.online'){
       website.gettemplatewebsites(8,async function(error,templatewebsite){
           testimonials.getcounttestimonialsbycustomer(3,websiteinfo.customer_id,async function(error,testimo){
