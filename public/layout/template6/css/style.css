@@ -40,6 +40,26 @@ body {
     padding: 0;
     width: auto;
 }
+.tab-title {
+    border-top: 1px solid #ddd;
+    margin-top: 30px;
+    text-align: center;
+}
+.tab-title h4 {
+    border-left: 3px solid #000;
+    padding: 15px 0 10px;
+    margin: 0;
+    max-width: 235px;
+    text-transform: uppercase;
+    font-weight: normal;
+}
+.tab-title h4 .word2 {
+    display: block;
+    font-size: 30px;
+    color: #9d9d9d;
+    line-height: 50px;
+}
+
 .center-block{float: left;margin-left: 200px;padding: 10px 0; }
 .center-block ul li{
     list-style: none;
