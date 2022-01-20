@@ -35,7 +35,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/public')));
-app.use('/static',express.static(path.join('D:/websites')));
+app.use('/static',express.static(path.join(process.env.UPLOAD_DIR)));
 // Express Session
 app.use(session({
     secret: 'secret',

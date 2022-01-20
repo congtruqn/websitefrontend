@@ -10,7 +10,7 @@
     "await": "^0.2.6",
     "bcryptjs": "*",
     "body-parser": "~1.18.2",
-    "canvas": "^2.6.1",
+    "canvas": "^2.9.0",
     "connect-flash": "*",
     "connect-multiparty": "^2.1.0",
     "cookie-parser": "~1.4.3",

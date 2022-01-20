@@ -20,7 +20,9 @@ body {
     float: left;
     text-align: center;
     width: 100%;
+    border-bottom: 2px solid #000;
 }
+#logo{margin-bottom: -70px;}
 #top_mobile{display: none;background: #111111 none repeat scroll 0 0;
     float: left;
     text-align: center;
@@ -34,7 +36,7 @@ body {
 .header-top-left ul li i{margin-right: 4px;}
 .header-left {
     float: left;
-    margin: 15px 0;
+    margin: 5px 0;
     padding: 0;
     width: auto;
 }
@@ -51,63 +53,14 @@ body {
 .center-block ul li a{color: #333;font-weight: 400;font-size: 14px;}
 .center-block ul li:HOVER{background: #ff911d}
 .center-block ul li:HOVER a{color: #fff}
-#navition{background: #0083c1}
-.ul_mainmenu{margin-bottom: 0;}
-.category_title{
-    background: #0083c1;padding: 5px 20px 5px 7px;
-    color: #fff;
-}
-.title_item{
-    text-transform: uppercase;font-size: 15px;
-    background: url(../images/menu.png) left center no-repeat;
-    padding: 0 0 0 30px;
-}
+#navition{background: #e5e5e5}
+.ul_mainmenu{margin-bottom: 0;margin-left: 170px;}
 .block{margin-top: 10px}
-.product_menu{
-    float: left;
-    width: 20%;
-    background: #fff;
-    border: 1px solid #e5e5e5;
-    border-radius: 2px;
-    min-height: 270px;
-    z-index: 10000;
-}
-.product_menu ul li{
-    list-style: none;
-    padding: 1px 9px;
-    position: relative;
-    z-index: 1000;
-    margin: 1px 0 0px 0;
-}
-.product_menu ul li:HOVER ul{display: block;}
-.product_menu ul li span{
-    border-bottom: 1px solid #e5e5e5;
-    position: relative;
-    display: block;
-    padding: 5px 0px;
-}
-.product_menu ul li span a{
-    color: #222
-}
-.product_menu ul li span a:hover{color: #25B430}
-.product_menu ul li ul{
-    display: none;
-    position: absolute;
-    left: 100%;
-    top: 0px;
-    background: #fff;
-    width: 250px;
-    z-index: 10000;
-}
 .right-icon{display: none}
 .nav-pills li ul li{list-style: none;border-top: 1px solid #eee;padding: 6px 0 6px 10px;}
 .nav-pills li ul li a{color: #23527c;font-size: 12px !important;}
 .nav-pills li ul li:first-child{margin-top: 7px;}
-#slider{width: 990px;float: right;overflow: hidden;position: relative;}
-.hot_product_cat{
-    width: 79%;
-    float: right;
-}
+#slider{overflow: hidden;position: relative;}
 .product_images{text-align: center;}
 .product_item .product_images img{max-width: 100%;height: 220px;}
 .product_image li{list-style: none;}
@@ -131,15 +84,6 @@ body {
     padding: 1px;
 }
 .new_product .ad img{width: 100%;}
-.block_new_product{
-    border:1px solid #ddd;
-    margin: 10px 0;
-    padding: 5px;
-    background: #fff;
-    border-radius:2px;
-}
-.newproducttitle{background: #0083c1;}
-.newproducttitle p{color: #fff;font-size: 14px;text-transform: uppercase;font-weight: 500;padding: 5px 10px}
 .hot_product_item{
     border-bottom: 1px solid #ddd;
     padding: 10px 0;
@@ -569,12 +513,6 @@ footer{
 .error{color: #ff0000;font-size: 12px;font-weight: 300;font-style: italic; }
 .thank_order{text-align: center;}
 .thank_order p{color: #ff911d;font-size: 17px;margin:20px 0; }
-.list_policy ul li{list-style: none;}
-.list_policy{border: 1px solid #0083c1;overflow: hidden;background: #fff;}
-.list_policy .wrap-banner{width: 25%;}
-.list_policy .imgcenter{margin-top: 17px;}
-.list_policy .wrap-text-content{width: 60%;padding: 7px 0}
-.list_policy .wrap-text-content h3{margin-top: 10px;color: #0083c1;}
 .product_menu_item ul{display: none;}
 .nav-mobile .product_menu_item{
     border-bottom: 1px solid #ccc;
@@ -585,10 +523,10 @@ footer{
 .list_news_item .cat_detail{border-bottom:1px solid #ccc;padding-bottom: 5px;}
 .fa-caret-right{position: absolute;right: 10px;top: 7px;color: #25B430}
 
-.mainmenu_item{list-style: none;float: left;position: relative;padding: 7px 0;}
+.mainmenu_item{list-style: none;float: left;position: relative;padding: 20px 0;}
 .mainmenu_item:hover{}
 .mainmenu_item span{padding: 5px 4px}
-.mainmenu_item span a{color: #fff;text-transform: uppercase;font-weight: 450;padding: 7px 9px;position: relative;}
+.mainmenu_item span a{color: #000;text-transform: uppercase;font-weight: 450;padding: 7px 9px;position: relative;}
 .mainmenu_item span a:hover{background: #fff;color: #0083c1;}
 .mainmenu_item ul{display: none;}
 
