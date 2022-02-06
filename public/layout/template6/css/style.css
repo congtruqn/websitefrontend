@@ -81,23 +81,28 @@ body {
 .nav-pills li ul li a{color: #23527c;font-size: 12px !important;}
 .nav-pills li ul li:first-child{margin-top: 7px;}
 #slider{overflow: hidden;position: relative;}
-.product_images{text-align: center;}
-.product_item .product_images img{max-width: 100%;height: 220px;}
+.product_images{
+    text-align: center;
+    height: 250px;
+    overflow: hidden;
+}
+.product_item .product_images img{width: 100%;}
 .product_image li{list-style: none;}
 .productcat_title{
-    background: url("../images/bg-title-block.png") repeat-x left bottom transparent;
-    padding: 7px 0;margin: 10px 0;overflow: hidden;
+    border-top: 1px solid #e5e5e5;
+    padding: 15px 0;margin: 10px 0;overflow: hidden;
     padding-bottom: 12px;
     margin-bottom: 20px;
 }
 .viewall{float: right;width: 30%;text-align: right;padding: 0 10px;}
 .productcat_name{width: 70%;float: left;font-size: 15px;font-weight: normal}
-.viewall a{font-style: italic;color: #43b728 !important;text-transform: capitalize !important;font-size: 11px !important;font-weight: 400 !important;}
-.productcat_title h2{font-size: 14px;text-transform: uppercase;padding: 0 7px;font-weight: 500;color: #333}
+.viewall a{font-style: italic;color: rgb(27, 10, 10) !important;text-transform: capitalize !important;font-size: 11px !important;font-weight: 400 !important;}
+.productcat_title h2{font-size: 16px;text-transform: uppercase;padding: 0 7px;font-weight: 500;color: #333}
 .product_item{background: #fff;margin-bottom: 10px;}
 .product_item .product_detail{padding: 7px;min-height: 91px;}
 .product_item .product_detail .product_name{border-bottom:1px solid #ccc; }
-.product_item .product_detail .product_price{color: #e25d62;font-size: 14px;margin-top: 5px;font-weight: 500;}
+.product_item .product_detail .product_name a{color: #6a6a6a; font-size: 14px;}
+.product_item .product_detail .product_price{color: #f25862;font-size: 16px;margin-top: 5px;font-weight: 500;}
 #clear{clear: both;}
 .new_product{float: left;width: 20%;}
 .new_product .ad{
@@ -521,8 +526,12 @@ footer{
     top: 11px;
     right: 5px;
 }
-
-
+.productcat_title h2:before {
+    content: "\f0c9";
+    font-family: FontAwesome;
+    margin-right: 15px;
+}
+.productcat_title h2 a{color: #222;}
 
 
 

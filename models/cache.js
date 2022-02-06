@@ -7,6 +7,7 @@ var hotproducts = {}
 var newproducts = {}
 var hotproductcats = {}
 var productmoreinfos = {}
+var list_products_by_more_info = {}
 var productmenu = {}
 var provinces = null
 module.exports = {
@@ -20,5 +21,6 @@ module.exports = {
     newproducts,
     provinces,
     productmoreinfos,
-    productmenu
+    productmenu,
+    list_products_by_more_info
 }

@@ -197,6 +197,18 @@ module.exports.getallchoiseproductmoreinfos = function(customer_id){
     });
   })
 }
+module.exports.gethotproductsbymoreinfo = function(customer_id,num_of_product){
+  return new Promise((resolve, reject)=>{
+    productmoreinfo.getallchoiseproductmoreinfo(customer_id,function(err, countproduct){
+      if(countproduct){
+        resolve(countproduct);
+      }
+      else{
+        resolve({});
+      }
+    });
+  })
+}
 module.exports.gettopnewscatsandcontent = function(customer_id,count,callback){
   NewsCats.gethotnewcatbyrank(customer_id,count,function(err, countproduct){
     if (countproduct) {
@@ -213,5 +225,5 @@ module.exports.gettopnewscatsandcontent = function(customer_id,count,callback){
     else{
       return callback(null,[]);
     }
-});
+  });
 }
