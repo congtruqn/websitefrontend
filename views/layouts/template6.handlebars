@@ -60,7 +60,7 @@
         <div class="container">
             <div class="header-top-left">
                 <ul>
-                  <li><i class="fa fa-phone" aria-hidden="true"></i><a href="#">Hotline: {{siteinfo.hotline}}</a></li>
+                  <li><i class="fa fa-phone" aria-hidden="true"></i><a href="#">Hotline: <span>{{siteinfo.hotline}}</span></a></li>
                 </ul>              
             </div>
             <div class="header-top-right">
@@ -178,7 +178,7 @@ $('.pro_detail').delegate('.list_size','click', function(){
   url: '/getcart',
   data: '',
   success: function (result) {
-    document.getElementById('cart-total').innerHTML=result.length;
+    document.getElementById('cart-total').innerHTML=result;
   }
 });
 </script>

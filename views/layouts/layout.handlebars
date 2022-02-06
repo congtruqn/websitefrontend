@@ -156,7 +156,7 @@ $('.pro_detail').delegate('.list_size','click', function(){
   url: '/getcart',
   data: '',
   success: function (result) {
-    document.getElementById('cart-total').innerHTML=result.length;
+    document.getElementById('cart-total').innerHTML=result;
   }
 });
 </script>
