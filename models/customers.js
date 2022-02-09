@@ -30,7 +30,6 @@ module.exports.findOneAndUpdatecustomers = function(query,newcustomers, callback
 module.exports.delcustomers = function(id,callback){
 	customers.findByIdAndRemove(id, function(err, customerss) {
   	if (err) throw err;
-  		console.log(customerss);
 	});
 }
 module.exports.getcustomersById = function(id, callback){

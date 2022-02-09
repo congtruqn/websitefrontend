@@ -34,7 +34,6 @@ module.exports.findOneAndUpdatebanners = function(query,newbanners, callback){
 module.exports.delbanners = function(id,callback){
 	banners.findByIdAndRemove(id, function(err, bannerss) {
   	if (err) throw err;
-  		console.log(bannerss);
 	});
 }
 module.exports.getbannersById = function(id, callback){

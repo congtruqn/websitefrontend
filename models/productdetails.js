@@ -19,20 +19,18 @@ module.exports.editProductsDetail1 = function(id,newProductsDetail, callback){
   		user.fullname = newProductsDetail.fullname;
   		user.save(function(err) {
     		if (err) throw err;
-    		console.log('User successfully updated!');
+
   		});
 	});
 }
 module.exports.editProductsDetail = function(id,newProductsDetail, callback){
 	ProductsDetail.findByIdAndUpdate(id, newProductsDetail, function(err) {
 	  	if (err) throw err;
-    		console.log('User successfully updated!');
 	});
 }
 module.exports.dellProductsDetail = function(id,callback){
 	ProductsDetail.findByIdAndRemove(id, function(err, user) {
   	if (err) throw err;
-  		console.log(user);
 	});
 }
 

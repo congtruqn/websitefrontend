@@ -118,7 +118,7 @@ module.exports.addProductCount = function(product_id,pr_count,callback){
 module.exports.delnewscontents = function(id,callback){
 	newscontents.findByIdAndRemove(id, function(err, newscontentss) {
   	if (err) throw err;
-  		console.log(newscontentss);
+
 	});
 }
 module.exports.getNewsContentsById = function(id, callback){
@@ -168,7 +168,6 @@ module.exports.getMaxproductlistID =  function (callback) {
 	          maxordercode:1,
 	          ordercode:'HD000001',
 	       	}
-	       	console.log(jsons);
 			return callback(jsons);
 		}
   	});	

@@ -117,7 +117,6 @@ module.exports.findOneAndUpdatewebsites = function(query,newwebsites, callback){
 module.exports.delwebsites = function(id,callback){
 	websites.findByIdAndRemove(id, function(err, websitess) {
   	if (err) throw err;
-  		console.log(websitess);
 	});
 }
 module.exports.getwebsitesById = function(id, callback){

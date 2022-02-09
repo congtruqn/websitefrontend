@@ -59,6 +59,7 @@
   }
   .tabs.style__vertical .tabs__nav {
     flex: 0 0 150px;
+    background: #333;
   }
   .tabs.style__vertical .tabs__nav .tabs__nav_link {
     border-bottom: 1px solid #666;
@@ -81,7 +82,7 @@
   }
   .tabs.style__vertical .tabs__content.is__active {
     background: #f8f8f8;
-    padding: 18px;
+    padding: 15px 0;
     position: relative;
     z-index: 1;
     width: auto;

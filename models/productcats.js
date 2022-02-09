@@ -115,8 +115,6 @@ module.exports.delproductcats = function(id,callback){
 }
 module.exports.delproductcatsbycatid = function(cat_id,callback){
 	productcats.findOneAndRemove({cat_id:cat_id}, function(err, productcatss) {
-  	if (err) throw err;
-  		console.log(productcatss);
 	});
 }
 module.exports.getproductcatsById = function(id, callback){
@@ -172,7 +170,7 @@ module.exports.getMaxProductCatID =  function (callback) {
 	          maxordercode:productc.cat_id,
 	          ordercode:'HD000001',
 	       	}
-	       	console.log(jsons);
+	
 			return callback(jsons);
 		}
 		else{
@@ -180,7 +178,6 @@ module.exports.getMaxProductCatID =  function (callback) {
 	          maxordercode:1,
 	          ordercode:'HD000001',
 	       	}
-	       	console.log(jsons);
 			return callback(jsons);
 		}
   	});	

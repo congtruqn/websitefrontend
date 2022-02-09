@@ -269,8 +269,6 @@ router.get('/thankorder', function(req, res, next) {
 });
 router.get('/tim-kiem', function(req, res, next) {
   var key = req.param('key','');
-  console.log(key);
- 
   ProductCat.getrootproductcats(async function(err, productcatroot){
     var newproduct = await getnewproducts(10);
     var listproduct = await findproduct(key);
@@ -344,8 +342,7 @@ router.get('/:seourl',async function(req, res, next) {
                   };
                   for (var x in conten) {
                     var newcatitem = JSON.parse(JSON.stringify(conten[x]));
-                    var temp = conten[x].detail[0].description.substring(0,120);;
-                    console.log(temp);
+                    var temp = conten[x].detail[0].description.substring(0,120);
                     newcatitem.detail[0].shortdesc = temp;
                     conten[x] = newcatitem;
                   };

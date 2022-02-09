@@ -33,7 +33,6 @@ module.exports.findOneAndUpdatetestimonials = function(query,newtestimonials, ca
 module.exports.deltestimonials = function(id,callback){
 	testimonials.findByIdAndRemove(id, function(err, testimonialss) {
   	if (err) throw err;
-  		console.log(testimonialss);
 	});
 }
 module.exports.gettestimonialsById = function(id, callback){

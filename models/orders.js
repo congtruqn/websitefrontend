@@ -42,13 +42,13 @@ module.exports.editOrders = function(id,newOrders, callback){
 module.exports.findOneAndUpdateOrders = function(query,newOrders, callback){
 	Orders.findOneAndUpdate(query, newOrders, function(err) {
 	  	if (err) throw err;
-    		console.log('Ok');
+    		
 	});
 }
 module.exports.delOrders = function(id,callback){
 	Orders.findByIdAndRemove(id, function(err, Orderss) {
   	if (err) throw err;
-  		console.log(Orderss);
+  		
 	});
 }
 module.exports.getOrdersById = function(id, callback){
@@ -134,11 +134,8 @@ module.exports.getOrderCode = function(callback){
 	          maxordercode:0,
 	          ordercode:'HD000001',
 	       }
-	       //console.log(jsons);
 	       return callback(jsons);
 	    }
-	    
-    	//console.log(maxordercode);
 	});
 }
 module.exports.countMaxOrdersCode = function(callback){

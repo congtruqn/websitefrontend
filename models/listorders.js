@@ -58,13 +58,11 @@ module.exports.editlistorders = function(id,newlistorders, callback){
 module.exports.findOneAndUpdatelistorders = function(query,newlistorders, callback){
 	listorders.findOneAndUpdate(query, newlistorders, function(err) {
 	  	if (err) throw err;
-    		console.log('Ok');
+
 	});
 }
 module.exports.dellistorders = function(id,callback){
 	listorders.findByIdAndRemove(id, function(err, listorderss) {
-  	if (err) throw err;
-  		console.log(listorderss);
 	});
 }
 module.exports.getlistordersById = function(id, callback){
@@ -150,11 +148,9 @@ module.exports.getOrderCode = function(callback){
 	          maxordercode:0,
 	          ordercode:'HD000001',
 	       }
-	       //console.log(jsons);
+	
 	       return callback(jsons);
 	    }
-	    
-    	//console.log(maxordercode);
 	});
 }
 module.exports.countMaxlistordersCode = function(callback){
@@ -171,13 +167,11 @@ module.exports.getlistordersByDate = function(page,per_page,from_date,to_date,ca
 }
 module.exports.getlistordersByUserDate = function(userid,type,from_date,to_date,callback){
 	var query = {};
-	//console.log(type);
 	if(type===1||type===2||type===3){
 		var query = {create_user:userid,status:type};
 	}
 	else{
 		var query = {create_user:userid};
 	}
-	//console.log(query);
 	listorders.find(query, callback).where("create_date").gte(from_date).lte(to_date);
 }

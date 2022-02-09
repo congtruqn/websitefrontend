@@ -63,10 +63,15 @@ app.use(expressValidator({
 var hbs = exphbs.create({
   extname: '.hbs'
 });
+app.use(function(req, res, next) {
+  hbs.handlebars.registerHelper('formatCurrency', function(value) {
+    return value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+  });
+  next();
+});
 app.use(async function(req, res, next) {
   var curent_date = new Date().getTime();
   var hostname = req.headers.host;
-  //console.log(caches.websiteinfo[hostname])
   if(!caches.websiteinfo[hostname]||caches.websiteinfo[hostname]==null){
     systems.getwebsiteinfo(hostname,async function(err, websitein){
       if(websitein===null){
@@ -102,6 +107,10 @@ app.use(async function(req, res, next) {
         if(!caches.productmoreinfos[hostname]||caches.productmoreinfos[hostname]==null){
           var productmoreinfos = await systems.getallchoiseproductmoreinfos(websitein.customer_id);
           caches.productmoreinfos[hostname] = productmoreinfos;
+        }
+        if(!caches.list_products_by_more_info[hostname]||caches.list_products_by_more_info[hostname]==null){
+          let productmoreinfos = await systems.getproductbyproductmoreinfos(websitein.customer_id,4);
+          caches.list_products_by_more_info[hostname] = productmoreinfos;
         }
         app.engine('handlebars', exphbs({
           partialsDir: __dirname + '/views/partials/'+websitein.customer_username
@@ -142,6 +151,10 @@ app.use(async function(req, res, next) {
     if(!caches.productmoreinfos[hostname]||caches.productmoreinfos[hostname]==null){
       var productmoreinfos = await systems.getallchoiseproductmoreinfos(websitein.customer_id);
       caches.productmoreinfos[hostname] = productmoreinfos;
+    }
+    if(!caches.list_products_by_more_info[hostname]||caches.list_products_by_more_info[hostname]==null){
+      let productmoreinfos = await systems.getproductbyproductmoreinfos(websitein.customer_id,4);
+      caches.list_products_by_more_info[hostname] = productmoreinfos;
     }
     app.engine('handlebars', exphbs({
        partialsDir: __dirname + '/views/partials/'+websitein.customer_username  

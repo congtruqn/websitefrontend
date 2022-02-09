@@ -70,8 +70,6 @@ module.exports.findOneAndUpdatemenu = function(query,newmenu, callback){
 }
 module.exports.delmenu = function(id,callback){
 	menu.findByIdAndRemove(id, function(err, menus) {
-  	if (err) throw err;
-  		console.log(menus);
 	});
 }
 module.exports.getmenuById = function(id, callback){
@@ -122,7 +120,7 @@ module.exports.getMaxProductCatID =  function (callback) {
 	          maxordercode:productc.cat_id,
 	          ordercode:'HD000001',
 	       	}
-	       	console.log(jsons);
+	
 			return callback(jsons);
 		}
 		else{
@@ -130,7 +128,6 @@ module.exports.getMaxProductCatID =  function (callback) {
 	          maxordercode:1,
 	          ordercode:'HD000001',
 	       	}
-	       	console.log(jsons);
 			return callback(jsons);
 		}
   	});	

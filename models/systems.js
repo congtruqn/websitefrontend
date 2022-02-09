@@ -54,7 +54,7 @@ function rendercatsbyparent(customer_id,parent_id,listcat) {
                   }
                   else{ 
                     var aaa = await rendercatsbyparent(customer_id,productcat[x].cat_id,listcat);
-                    //console.log(aaa);
+            
                     listcat = aaa;
                   }
                   listcat = listcat + '</li>';
@@ -75,12 +75,10 @@ module.exports.rendermainmenu =async function(customer_id){
       for (var x in menuroot) {
         listcat = listcat + '<li class="mainmenu_item"><span><a href="/'+menuroot[x].link+'">'+menuroot[x].detail[0].name+'</a></span>';
         var listcat1 = await renderrootmenuparent(customer_id,menuroot[x].cat_id,'');
-        console.log(listcat1)
         listcat = listcat + listcat1;
         listcat = listcat + '</li>';  
       }
       listcat = listcat + '</ul>';
-      console.log(listcat)
       resolve(listcat);
     });
   });
@@ -88,7 +86,7 @@ module.exports.rendermainmenu =async function(customer_id){
 function renderrootmenuparent(customer_id,parent_id,listcat) {
   return new Promise((resolve, reject)=>{
       menu.getmenubyparent(customer_id,Number(parent_id),async function (err, productcat) {
-          //console.log(listcat);
+
           if (productcat.length>0) {
               listcat = listcat + '<ul>';
               for (var x in productcat) {
@@ -197,11 +195,20 @@ module.exports.getallchoiseproductmoreinfos = function(customer_id){
     });
   })
 }
-module.exports.gethotproductsbymoreinfo = function(customer_id,num_of_product){
+module.exports.getproductbyproductmoreinfos = function(customer_id,num){
   return new Promise((resolve, reject)=>{
     productmoreinfo.getallchoiseproductmoreinfo(customer_id,function(err, countproduct){
-      if(countproduct){
-        resolve(countproduct);
+      if(countproduct.length>0){
+        var product_more_infos = JSON.parse(JSON.stringify(countproduct[0].default_value));
+        for (const x in product_more_infos) {
+            product_more_infos[x].list_products = {};
+            let id = product_more_infos[x].default_id;
+            productlists.getproductsbymoreinfo(customer_id,num,id,function(err, products){
+              let temp = JSON.parse(JSON.stringify(products))
+              product_more_infos[x].list_products = temp
+            })
+        }
+        resolve(product_more_infos);
       }
       else{
         resolve({});

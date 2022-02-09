@@ -278,3 +278,7 @@ module.exports.countproductbymoreinfo = function(customer_id,moreinfo_id,callbac
 	var query = {customer_id:customer_id,'product_more_info.defaultid': moreinfo_id,show:1};
 	productlists.count(query, callback);
 }
+module.exports.getproductsbymoreinfo = function(customer_id,num,moreinfo_id,callback){
+	var query = {customer_id:customer_id,'product_more_info.defaultid': moreinfo_id,show:1};
+	productlists.find(query, callback).limit(num).sort({'rank': -1 });
+}

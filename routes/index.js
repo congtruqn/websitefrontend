@@ -48,9 +48,7 @@ router.get('/getcart', function(req, res, next) {
 });
 router.get('/',async function(req, res, next) {
     var hostname = req.headers.host;
-    
     var websiteinfo =  caches.websiteinfo[hostname];
-    console.log(websiteinfo)
     var productmenu = caches.productcat[hostname];
     var productmenu1 = caches.productmenu[hostname];
     var product_per_cat_home = 0;
@@ -60,7 +58,7 @@ router.get('/',async function(req, res, next) {
     var sitefooter = caches.footer[hostname];
     var mainmenu = caches.mainmenu[hostname];
     var productmoreinfos = caches.productmoreinfos[hostname];
-    console.log(productmoreinfos)
+    var list_products_by_more_info = caches.list_products_by_more_info[hostname];
     if(hostname=='tnsvn.online'){
       website.gettemplatewebsites(8,async function(error,templatewebsite){
           testimonials.getcounttestimonialsbycustomer(3,websiteinfo.customer_id,async function(error,testimo){
@@ -78,7 +76,8 @@ router.get('/',async function(req, res, next) {
                 layout: customer_username,
                 siteinfo:websiteinfo,
                 sitefooter:sitefooter,
-                productmoreinfos:productmoreinfos
+                productmoreinfos:productmoreinfos,
+                list_products_by_more_info:list_products_by_more_info
               });
             }
             else{
@@ -118,6 +117,7 @@ router.get('/',async function(req, res, next) {
               hotproducts:hotproducts,
               newproducts:newproducts,
               productmoreinfos:productmoreinfos,
+              list_products_by_more_info:list_products_by_more_info,
               productmenu1:productmenu1
             });
           });
@@ -248,8 +248,6 @@ router.get('/tim-kiem',async function(req, res, next) {
   var newproducts = caches.newproducts[hostname];
   var productmoreinfos = caches.productmoreinfos[hostname];
   Productlists.findproductbykey(key,websiteinfo.customer_id,function(err, countproduct){
-    console.log(key)
-    console.log(countproduct)
     for (var x in countproduct) {
       var productiteam = JSON.parse(JSON.stringify(countproduct[x]));
       var pricebeauty = String(productiteam.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
@@ -1291,7 +1289,6 @@ passport.deserializeUser(function(id, done) {
 });
 passport.use(new LocalStrategy(
   function(username, password, done) {
-	  //console.log(req);
    User.getUserByUsername(username, function(err, users){
    	if(err) throw err;
    	if(!users){

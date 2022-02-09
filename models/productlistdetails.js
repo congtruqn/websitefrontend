@@ -31,8 +31,6 @@ module.exports.editproductlistdetail1 = function(id,newproductlistdetail, callba
   		if (err) throw err;
   		user.fullname = newproductlistdetail.fullname;
   		user.save(function(err) {
-    		if (err) throw err;
-    		console.log('User successfully updated!');
   		});
 	});
 }
@@ -45,7 +43,6 @@ module.exports.findOneAndUpdateproductlistdetail = function(query,productlist, c
 module.exports.dellproductlistdetail = function(id,callback){
 	productlistdetail.findByIdAndRemove(id, function(err, user) {
   	if (err) throw err;
-  		console.log(user);
 	});
 }
 

@@ -7,13 +7,27 @@
 			</div>
 			<div class="newproductcont">
         <ul id="tabs-v" class="tabs">
-          {{#each productmoreinfos as |productcat|}}
-              {{#each productcat.default_value as |infodetais|}}
-                  <li data-title="{{{infodetais.default_name}}}">
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc luctus lobortis sapien, ut rhoncus dui sagittis vel. Donec rhoncus convallis justo, in placerat nibh auctor ut. Aliquam erat volutpat. Morbi finibus velit et erat vehicula, facilisis viverra magna euismod. Nullam consequat a justo id luctus. Sed vitae maximus massa. Integer ligula ligula, semper ac feugiat vel, viverra sed nisi. In commodo lacus non orci faucibus mollis. Maecenas sit amet gravida leo, non ornare nisl. Etiam rhoncus dui vitae magna pulvinar, eu semper ex porttitor. Nulla facilisi. Donec ac tortor arcu. Nulla pharetra suscipit nulla. Ut maximus justo vitae libero fermentum efficitur. Aliquam mattis quam erat, eget varius tortor cursus eget.</p>
-                  </li>
+              {{#each list_products_by_more_info as |infodetais|}}
+                  <li data-title="{{{infodetais.default_name}}}">  
+					{{#each infodetais.list_products as |products|}}
+					<div class="col-xs-6 col-sm-6 col-md-3 {{products.class}}">
+						<div class="s_product_item">
+							<div class="s_product_images">
+								<a href="/{{products.seo_url}}"><img src="/static/{{products.image_path}}/medium/{{products.image}}" alt="{{products.alt}}"></a>
+							</div>
+							<div class="s_product_detail">
+								<a href="/{{products.seo_url}}">{{{products.detail.[0].name}}}</a>
+								<div class="s_product_price">
+									<p class="s_price">Giá: {{formatCurrency products.price}} Đ</p>
+									<p class="s_true_price">Giá: {{formatCurrency products.sale_price}} Đ</p>
+								</div>
+							</div>
+							</div>
+						</div>
+                  	{{/each}}
+				  </li>
               {{/each}}
-          {{/each}}
+          
         </ul>
 			</div>
 	</div>

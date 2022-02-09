@@ -67,7 +67,6 @@ module.exports.addProductCount = function(product_id,pr_count,callback){
 module.exports.delNewsPages = function(id,callback){
 	NewsPages.findByIdAndRemove(id, function(err, NewsPagess) {
   	if (err) throw err;
-  		console.log(NewsPagess);
 	});
 }
 module.exports.getNewsPagesById = function(customer_id,id, callback){
