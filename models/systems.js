@@ -86,11 +86,10 @@ module.exports.rendermainmenu =async function(customer_id){
 function renderrootmenuparent(customer_id,parent_id,listcat) {
   return new Promise((resolve, reject)=>{
       menu.getmenubyparent(customer_id,Number(parent_id),async function (err, productcat) {
-
           if (productcat.length>0) {
               listcat = listcat + '<ul>';
               for (var x in productcat) {
-                listcat = listcat + '<li><span><a href="/'+productcat[x].seo_url+'">'+productcat[x].detail[0].name+'</a></span>';
+                listcat = listcat + '<li><span><a href="/'+productcat[x].link+'">'+productcat[x].detail[0].name+'</a></span>';
                   if(productcat[x].list_child.length==0||productcat[x].list_child[0]==undefined){
                   }
                   else{ 
