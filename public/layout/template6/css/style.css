@@ -159,19 +159,14 @@ footer .footer-top {
     width: 100%;
     position: relative;
 }
-footer{
-    background: url("../images/footer-bg1.jpg") no-repeat center top transparent;
-    background-size: cover;
-}
 .footer-container{
 
     padding: 25px 0;
     
     
 }
-.footer-container p a{color: #fff}
 .footer-container p a:HoVER{color: #23527c}
-.footer-container .fmn{color: #fff;font-weight: 500;text-transform: uppercase;display: block;margin: 10px 0;}
+.footer-container .fmn{color: #fff;font-weight: 500;text-transform: uppercase;display: block;margin: 10px 0;border-bottom: 2px solid #fff;}
 .footer_address{color: #fff;font-size: 14px;}
 .facebook_like{overflow: hidden;display: block;margin: 15px 0;}
 .newletter-title{color: #fff;font-size: 17px;text-transform: uppercase;font-weight: 500;padding: 5px 15px;}
@@ -439,10 +434,6 @@ footer{
 .instock, .outstock{color: #111;padding: 7px 0}
 .instock span{color: #43b728}
 .outstock span{color: red}
-.product_cat {
-    width: 79%;
-    float: right;
-}
 .cat_image img{width: 100%;}
 .cat_image{height: 210px;overflow: hidden;}
 .list_news{min-height: 430px;}
@@ -503,13 +494,6 @@ footer{
 .list_news_item{min-height: 390px; }
 .list_news_item .cat_detail{border-bottom:1px solid #ccc;padding-bottom: 5px;}
 .fa-caret-right{position: absolute;right: 10px;top: 7px;color: #25B430}
-
-.mainmenu_item{list-style: none;float: left;position: relative;padding: 20px 0;}
-.mainmenu_item:hover{}
-.mainmenu_item span{padding: 5px 4px}
-.mainmenu_item span a{color: #000;text-transform: uppercase;font-weight: 450;padding: 7px 9px;position: relative;}
-.mainmenu_item span a:hover{background: #fff;color: #0083c1;}
-.mainmenu_item ul{display: none;}
 .top-cart {
     color: #2d2d2d;
     text-align: left;
@@ -549,7 +533,30 @@ footer{
 }
 .productcat_title h2 a{color: #222;}
 .s_true_price{text-decoration: line-through;font-size: 11px;}
-
-
-
-
+.product_price .s_price{font-size: 14px;float: left;}
+.product_price .s_true_price{font-size: 12px;float: right;text-decoration: line-through;color: #444;}
+footer{
+    background: #1d1d1d;
+    background-size: cover;
+}
+footer i {
+    display: inline-block;
+    font-size: 14px  !important;
+    background: #838383 none repeat scroll 0 0;
+    color: #c4c4c4;
+    font-weight: bold;
+    height: 34px !important;
+    line-height: 34px  !important;
+    margin-right: 10px;
+    text-align: center;
+    width: 34px;
+}
+footer .footer_address {
+    background: #383838 none repeat scroll 0 0;
+    border: 0 none;
+    color: #a8a8a8;
+    margin-bottom: 15px;
+}
+.footer-container li{list-style: circle inside;}
+.footer-container li a{color: #fff;}
+.footer-bottom{border-top: 1px solid#ccc;color: #fff;}

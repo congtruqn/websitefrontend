@@ -1,1 +1,11 @@
-{{{mainmenu}}}
+<script type="text/javascript" src="/layout/{{layout}}/js/ddsmoothmenu.js"></script>
+<div id="smoothmenu1" class="ddsmoothmenu">
+    {{{mainmenu}}}
+</div>
+<script type="text/javascript">
+    ddsmoothmenu.init({
+	    mainmenuid: "smoothmenu1", //menu DIV id
+	    orientation: 'h', //Horizontal or vertical menu: Set to "h" or "v"
+	    classname: 'ddsmoothmenu', //class added to menu's outer DIV
+    })
+</script>
