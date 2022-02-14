@@ -398,7 +398,7 @@ router.get('/getdistrictbyprovinces', function(req, res, next) {
       var districts = '<option value="0">--Vui lòng chọn--</option>';
       var temp = json.data;
       for (var x in temp) {
-        if(temp[x].DistrictID!=3442&&temp[x].DistrictID!=3450){
+        if(temp[x].DistrictID!=3442&&temp[x].DistrictID!=3450&&temp[x].DistrictID!=3448&&temp[x].DistrictID!=3449&&temp[x].DistrictID!=1580){
           districts = districts + '<option value="'+temp[x].DistrictID+';'+temp[x].DistrictName+'">'+temp[x].DistrictName+'</option>';
         }
       }
@@ -464,13 +464,14 @@ router.get('/getshippingcod', function(req, res, next) {
     body: raw1,
   };
   request(options1, function(err, res1, body) {
+    console.log(body.data)
       let json = JSON.parse(body);
       var serviceid = 0
-      if(json.data.length>0){
+      if(body.data){
         serviceid = json.data[0].service_id;
       }
       else{
-        serviceid = json.data[0].service_id;
+        serviceid = 0;
       }
       var temp ={
         'from_district_id':Number(websiteinfo.from_district_id),
@@ -1033,6 +1034,7 @@ router.post('/addtocart', function(req, res, next) {
 });
 router.post('/updatecartnumber', function(req, res, next) {
   var product_id = req.body.id;
+  console.log(product_id)
   var num = req.body.num;
   var listproducts = [];
   var total_price = 0;
@@ -1063,8 +1065,16 @@ function findObjectByKey(array, value) {
 }
 router.post('/removecartitem', function(req, res, next) {
   var array = req.session.products;
+  var total_price = 0;
+  if(req.session.total_price){
+    total_price = req.session.total_price;
+  }
   var id = req.param('id')
-  var temp = removeArrayItemByAttr(array,'product_id',id);
+  var listproducts = req.session.products;
+  var xx = findObjectByKey(listproducts,id);
+  total_price = total_price - (listproducts[xx].price*listproducts[xx].num);
+  req.session.total_price = total_price
+  var temp = removeArrayItemByAttr(array,'id',id);
   //req.session.destroy();
   req.session.products = temp;
   res.send('ok');
@@ -1245,7 +1255,7 @@ function removeArrayItemByAttr(arr, attr, value){
   while(i--){
      if( arr[i] 
          && arr[i].hasOwnProperty(attr) 
-         && (arguments.length > 2 && arr[i][attr] === value ) ){ 
+         && (arguments.length > 2 && arr[i][attr] == value ) ){ 
 
          arr.splice(i,1);
 
