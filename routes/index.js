@@ -612,8 +612,10 @@ router.get('/:seourl',async function(req, res, next) {
         });
       }
       if(producttypess.type==4){
-        var listcat = '';
         var per_page = websiteinfo.products_per_page;
+        if(isNaN(Number(per_page))){
+          per_page = 24
+        }
         var page = req.param('page','1');
         var count = await countproductsbycat(producttypess.content_id);
         var catinfo = await getproductcatinfo(producttypess.content_id);

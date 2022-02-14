@@ -1,6 +1,6 @@
-<link rel="stylesheet" href="/layout/css/images/pgwslider.min.css" type="text/css" media="screen" />
-<script type="text/javascript" src="/layout/js/images/pgwslider.min.js"></script>
 
+<script type="text/javascript" src="/layout/{{layout}}/js/pgwslider.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/layout/{{layout}}/css/pgwslider.min.css" media="screen" />
 <div class="block">
 	<div class="content_detail">
 		<div class="main_news">
@@ -16,15 +16,15 @@
 		</div>
 		<div class="product_detail">
 			<div class="product_image">
-				{{#if contents.image1}}
-						<li><img src="/static/{{siteinfo.customer_username}}/images/products/medium/{{contents.image1}}" alt='' data-large-src="/static/{{siteinfo.customer_username}}/images/products/fullsize/{{contents.image2}}"></li>
-                    {{else}}
-                    	<li><img src="/static/{{siteinfo.customer_username}}/images/products/medium/{{contents.image}}" alt='' data-large-src="/static/{{siteinfo.customer_username}}/images/products/fullsize/{{contents.image}}"></li>
-                {{/if}}
-				
+				<ul class="pgwSlider">
+                <li><img src="/static/{{siteinfo.customer_username}}/images/products/medium/{{contents.image}}" alt='' data-large-src="/static/{{siteinfo.customer_username}}/images/products/fullsize/{{contents.image}}"></li>
+				{{#each contents.list_images as |image|}}
+					<li><img src="{{image.image_path}}/medium/{{image.image}}" alt=''  data-large-src="{{image.image_path}}/medium/{{image.image}}"></li>
+                {{/each}}
+				</ul>
 			</div>
 			<div class="product_info">
-				<div class="col-lg-7 col-md-7 col-xs-12">
+				<div class="col-lg-12 col-md-12 col-xs-12">
 					<h1>{{{details.name}}}</h1>
 					<p>{{{details.desc}}}</p>
 					<p class="price">Giá: {{{price}}} Đ</p>
@@ -49,38 +49,6 @@
 					<span>Thêm vào giỏ hàng</span>
 					</button>
 				</div>
-				<div class="col-lg-5 col-md-5  col-xs-12 policy">
-					<ul>
-						<li>
-							<div class="wrap-banner">
-								<i class=" fa fa-truck"></i>
-							</div>
-							<div class="wrap-text-content">
-								<h3 class="big-title">Đúng giờ</h3>
-								<span class="small-title">Luôn đúng hẹn, giao trong 2 tiếng.</span>
-							</div>
-						</li>
-						<li>
-							<div class="wrap-banner">
-								<i class="fa fa-mail-reply-all"></i>
-							</div>
-							<div class="wrap-text-content">
-								<h3 class="big-title">TIỆN LỢI</h3>
-								<span class="small-title">Dễ dàng mua hàng, đặt hàng thuận tiện.</span>
-							</div>
-						</li>
-						<li>
-							<div class="wrap-banner">
-								<i class="fa fa-certificate"></i>
-							</div>
-							<div class="wrap-text-content">
-								<h3 class="big-title">ĐẠT CHẤT LƯỢNG</h3>
-								<span class="small-title">Nhãn hiệu tin cậy, an tâm tận tay.</span>
-							</div>
-						</li>
-					</ul>
-				</div>
-
 			</div>
 			<div id="clear"></div>
 		</div>
@@ -97,6 +65,6 @@
 </div>
 <script>
 $(document).ready(function() {
-    $('.pgwSlider').pgwSlider();
+    $('.pgwSlider').pgwSlider({transitionEffect : 'fading',listPosition : 'left'});
 });
 </script>

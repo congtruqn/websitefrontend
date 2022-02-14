@@ -61,6 +61,7 @@ var productlistsSchema = mongoose.Schema({
 	}],
 	list_images:[{
 		image_name: String,
+		image_path:String,
 		image: String,
 		image1: String,
 		image2: String,

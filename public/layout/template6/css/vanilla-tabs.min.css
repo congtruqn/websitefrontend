@@ -85,7 +85,8 @@
     padding: 15px 0;
     position: relative;
     z-index: 1;
-    width: auto;
+    width: 100%;
+    overflow: hidden;
   }
   .tabs.style__accordion,
   .tabs.is__responsive {
@@ -102,11 +103,16 @@
     display: block;
     padding: 18px;
     margin: -18px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #444;
   }
   .tabs.style__accordion .tabs__nav_link.is__active,
   .tabs.is__responsive .tabs__nav_link.is__active {
     font-weight: bold;
     margin-bottom: 0;
+    color: #444;font-weight: bold;
+    padding-left: 32px;
   }
   .tabs.style__accordion .tabs__content,
   .tabs.is__responsive .tabs__content {
