@@ -27,6 +27,20 @@ module.exports.gethotproductcat = function(customer_id){
     });
   });
 }
+//Lấy danh sách danh mục sản phẩm hot theo customer
+module.exports.gethotproductcategory = function(customer_id){
+  return new Promise((resolve, reject)=>{
+    var listcat = '';
+    ProductCat.gethotproductcategory(customer_id,async function(err, productcategory){
+      if(productcategory){
+        resolve(productcategory);
+      }
+      else{
+        resolve({});
+      }
+    });
+  });
+}
 module.exports.getproductmenu = function(customer_id){
   return new Promise((resolve, reject)=>{
     var listcat = '';
@@ -68,7 +82,7 @@ function rendercatsbyparent(customer_id,parent_id,listcat) {
         });
     });
 }
-module.exports.rendermainmenu =async function(customer_id){
+module.exports.rendermainmenu = async function(customer_id){
   return new Promise((resolve, reject)=>{
     menu.getrootmenu(customer_id,async function(err, menuroot){
       var listcat = '<ul class="ul_mainmenu">';

@@ -16,10 +16,14 @@
 								<a href="/{{products.seo_url}}"><img src="/static/{{products.image_path}}/medium/{{products.image}}" alt="{{products.alt}}"></a>
 							</div>
 							<div class="s_product_detail">
-								<a href="/{{products.seo_url}}">{{{products.detail.[0].name}}}</a>
+								<a href="/{{products.seo_url}}">{{truncateString products.detail.[0].name 47}}</a>
 								<div class="s_product_price">
-									<p class="s_price">Giá: {{formatCurrency products.price}}₫</p>
+									{{#if products.price}}
+										<p class="s_price">Giá: {{formatCurrency products.price}}₫</p>
+									{{/if}}
+									{{#if products.sale_price}}
 									<p class="s_true_price">Giá: {{formatCurrency products.sale_price}} Đ</p>
+									{{/if}}
 								</div>
 							</div>
 							</div>

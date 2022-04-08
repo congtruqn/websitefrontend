@@ -14,7 +14,7 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 //aaaaaaaaaaa
 var app = express();
-var port = process.env.PORT || 3001;
+var port = process.env.PORT || 3005;
 app.set('port', port);
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 var index = require('./routes/index');
@@ -69,11 +69,22 @@ app.use(function(req, res, next) {
   });
   next();
 });
+app.use(function(req, res, next) {
+  hbs.handlebars.registerHelper('truncateString', function(value,length) {
+    if(value.length>length){
+      return value.substring(0,length) + '...';
+    }
+    return value.substring(0,length);
+  });
+  next();
+});
+
 app.use(async function(req, res, next) {
   var curent_date = new Date().getTime();
   var hostname = req.headers.host;
   if(!caches.websiteinfo[hostname]||caches.websiteinfo[hostname]==null){
     systems.getwebsiteinfo(hostname,async function(err, websitein){
+
       if(websitein===null){
         res.redirect(301, 'http://tns.vn');
       }
@@ -83,6 +94,10 @@ app.use(async function(req, res, next) {
         if(!caches.productcat[hostname]||caches.productcat[hostname]==null){
           var productcat = await systems.gethotproductcat(websitein.customer_id);
           caches.productcat[hostname] = productcat;
+        }
+        if(!caches.hotproductcategory[hostname]||caches.hotproductcategory[hostname]==null){
+          var hotproductcategory = await systems.gethotproductcategory(websitein.customer_id);
+          caches.hotproductcategory[hostname] = hotproductcategory;
         }
         if(!caches.productmenu[hostname]||caches.productmenu[hostname]==null){
           var productmenu = await systems.getproductmenu(websitein.customer_id);
@@ -127,6 +142,10 @@ app.use(async function(req, res, next) {
     if(!caches.productcat[hostname]||caches.productcat[hostname]==null){
       var productcat = await systems.gethotproductcat(websitein.customer_id);
       caches.productcat[hostname] = productcat;
+    }
+    if(!caches.hotproductcategory[hostname]||caches.hotproductcategory[hostname]==null){
+      var hotproductcategory = await systems.gethotproductcategory(websitein.customer_id);
+      caches.hotproductcategory[hostname] = hotproductcategory;
     }
     if(!caches.productmenu[hostname]||caches.productmenu[hostname]==null){
       var productmenu = await systems.getproductmenu(websitein.customer_id);
@@ -184,7 +203,7 @@ const options = {
   keepAliveInitialDelay: 300000,
   useNewUrlParser: true
 };
-var db = mongoose.connect("mongodb://"+process.env.DB_URL1+"/website",options);
+var db = mongoose.connect("mongodb://"+process.env.DB_URL+"/website",options);
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;

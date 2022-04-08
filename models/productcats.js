@@ -154,6 +154,10 @@ module.exports.gethotrootproductcats = function(customer_id,callback){
 	var query = {customer_id:customer_id,parent_id:0,hot:1};
 	productcats.find(query, callback).sort({'rank': -1 });
 }
+module.exports.gethotproductcategory = function(customer_id,callback){
+	var query = {customer_id:customer_id,hot:1};
+	productcats.find(query, callback).sort({'rank': -1 });
+}
 module.exports.countproductcats = function(callback){
 	var query = {};
 	productcats.count(query, callback);

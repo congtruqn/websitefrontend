@@ -1,0 +1,15 @@
+<!-- Start Categories  -->
+<div class="categories-shop">
+  <div class="container">
+    <div class="row">
+    {{#each hotproductcategory as |productcat|}}
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+            <div class="shop-cat-box">
+              <img  class="img-fluid" src="/static/template7/images/products/fullsize/{{productcat.image}}" alt="{{listnews.alt}}">
+              <a class="btn hvr-hover" href="{{productcat.seo_url}}">{{{productcat.detail.[0].name}}}</a>
+            </div>
+        </div>
+    {{/each}}
+  </div>
+</div>
+<!-- End Categories -->

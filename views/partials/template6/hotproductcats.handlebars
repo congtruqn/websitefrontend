@@ -18,11 +18,15 @@
                       </div>
                       <div class="product_detail">
                         
-                          <p class="product_name"><a href="/{{listnews.seo_url}}">{{{listnews.detail.[0].name}}}</a></p>
+                          <p class="product_name"><a href="/{{listnews.seo_url}}">{{truncateString listnews.detail.[0].name 47}}</a></p>
                         
                         <div class="product_price">
+                          {{#if listnews.price}}
                           	<p class="s_price">Giá: {{formatCurrency listnews.price}}₫</p>
+                          {{/if}}
+                          {{#if listnews.sale_price}}
 									          <p class="s_true_price">Giá: {{formatCurrency listnews.sale_price}} ₫</p>
+                          {{/if}}
                         </div>
                       </div>
                     </div>

@@ -1,0 +1,26 @@
+<div class="block">
+	<div class="left_menu">
+		<div class="product_menu detail_menu">
+    		{{> productmenu}}
+		</div>
+		<div class="newproductcont">
+			{{> newproducts}}
+		</div>
+	</div>
+	<div class="product_cat">
+		<div class="main_news">
+			<div class="breadcrumbs">
+				<div id="bread">
+					<ul class="items">
+				<li class="homes"><a href="/">Trang chủ</a></li>
+				<li class="homes"><a href="/{{{contents.seo_url}}}">{{{details.name}}}</a></li>
+					</ul>
+				</div>
+			
+			</div>
+		</div>
+		<div class="product_content">
+			{{{details.content}}}
+		</div>
+	</div>
+</div>

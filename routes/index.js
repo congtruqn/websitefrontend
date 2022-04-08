@@ -94,6 +94,7 @@ router.get('/',async function(req, res, next) {
       var mainmenu = caches.mainmenu[hostname];
       var hotproducts = caches.hotproducts[hostname];
       var newproducts = caches.newproducts[hostname];
+      var hotproductcategory = caches.hotproductcategory[hostname];
       if(websiteinfo.website_url===hostname){
           var customer_username = websiteinfo.customer_username;
           if(!caches.hotproductcats[hostname]||caches.hotproductcats[hostname]==null){
@@ -118,7 +119,8 @@ router.get('/',async function(req, res, next) {
               newproducts:newproducts,
               productmoreinfos:productmoreinfos,
               list_products_by_more_info:list_products_by_more_info,
-              productmenu1:productmenu1
+              productmenu1:productmenu1,
+              hotproductcategory:hotproductcategory
             });
           });
       }
@@ -161,6 +163,11 @@ router.get('/clearcache', function(req, res, next) {
   caches.newproducts[hostname] = null;
   caches.productmoreinfos[hostname] = null;
   caches.provinces[hostname] = null;
+  caches.productmoreinfos[hostname] = null;
+  caches.productmenu[hostname] = null;
+  caches.list_products_by_more_info[hostname] = null;
+  caches.hotproductcategory[hostname] = null;
+  
   res.send('ok');
 })
 router.get('/lien-he', function(req, res, next) {
@@ -866,24 +873,19 @@ function rendercatsbyparent(customer_id,parent_id,listcat) {
     return new Promise((resolve, reject)=>{
         var listcat = '';
         ProductCat.getproductcatsbyparent(customer_id,Number(parent_id),async function (err, productcat) {
-
             if (productcat) {
                 listcat = listcat + '<ul>';
                 for (var x in productcat) {
                   listcat = listcat + '<li><span><a href="/'+productcat[x].seo_url+'">'+productcat[x].detail[0].name+'</a></span>';
-    
                     if(productcat[x].list_child.length==0||productcat[x].list_child[0]==undefined){
-                        //reject('productcat null')
                     }
                     else{ 
                       await rendercatsbyparent(customer_id,productcat[x].cat_id,listcat);
-                    //return;
                     }
                     listcat = listcat + '</li>';
                 }
                 listcat = listcat + '</ul>';
                 resolve(listcat);
-                //res.json(listcat);
             }
             else {
                 reject('productcat null')
@@ -964,16 +966,13 @@ router.post('/gettrial',async function(req, res, next) {
               html: cont, // html body
       };
       transporter.sendMail(mailOptions, (error, info) => {
-              if (error) {
-                  return console.log(error);
-              }
-              console.log('Message %s sent: %s', info.messageId, info.response);
-                  
+        if (error) {
+          return console.log(error);
+        }
+        console.log('Message %s sent: %s', info.messageId, info.response);       
       });
- 
   res.send('1');
 });
-
 router.post('/addtocart', function(req, res, next) {
   var listproducts = [];
   var total_price = 0;
@@ -1079,10 +1078,6 @@ router.post('/removecartitem', function(req, res, next) {
   req.session.products = temp;
   res.send('ok');
 });
-
-
-
-
 router.get('/thankyou',async function(req, res, next) {
   var hostname = req.headers.host;
   var websiteinfo = await getwebsiteinfo(hostname);
