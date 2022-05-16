@@ -925,6 +925,7 @@
      margin: 0 auto;
      text-align: center;
      display: block;
+     max-height: 240px;
 }
  .type-lb{
      position: absolute;
@@ -2597,10 +2598,14 @@
 	padding: 12px 25px;
 	border: none;
 }
-
-
-
-
+.img-fluid {
+    max-width: 100%;
+    /* height: auto; */
+    max-height: 300px !important;
+}
+.s_price{text-decoration: line-through;}
+#slides-shop{max-height: 650px !important;}
+.product_cat{margin-top: 30px;}
 
 
 

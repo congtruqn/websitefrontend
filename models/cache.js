@@ -10,6 +10,8 @@ var productmoreinfos = {}
 var list_products_by_more_info = {}
 var productmenu = {}
 var hotproductcategory = {}
+var hotnews = {}
+var hotandnewproducts = {}
 var provinces = null
 module.exports = {
     websiteinfo,
@@ -24,5 +26,7 @@ module.exports = {
     productmoreinfos,
     productmenu,
     list_products_by_more_info,
-    hotproductcategory
+    hotproductcategory,
+    hotnews,
+    hotandnewproducts
 }

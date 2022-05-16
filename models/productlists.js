@@ -200,26 +200,6 @@ module.exports.countMaxproductlistID = function(callback){
 	var query = {};
 	productlists.findOne(query,callback).sort({'product_id': -1 });
 }
-module.exports.getMaxproductlistID =  function (callback) {
-	productlists.countMaxproductlistID(function(err, productc) {
-		if(productc){
-			jsons = {
-	          maxordercode:productc.cat_id,
-	          ordercode:'HD000001',
-	       	}
-	       	console.log(jsons);
-			return callback(jsons);
-		}
-		else{
-			jsons = {
-	          maxordercode:1,
-	          ordercode:'HD000001',
-	       	}
-	       	console.log(jsons);
-			return callback(jsons);
-		}
-  	});	
-}
 module.exports.getAllproductlistsByUser = function(userid,page,per_page,callback){
 	var query = {create_user: userid};
 	productlists.find(query, callback).skip(per_page * (page - 1)).limit(per_page).sort({'productlists_id': -1 });
@@ -250,7 +230,11 @@ module.exports.getnewproducts = function(customer_id,count,callback){
 	productlists.find(query, callback).skip(0).limit(count).sort({'rank': -1 });
 }
 module.exports.gethotproducts = function(customer_id,count,callback){
-	var query = {customer_id:customer_id,'new':1,'show':1};
+	var query = {customer_id:customer_id,'hot':1,'show':1};
+	productlists.find(query, callback).skip(0).limit(count).sort({'rank': -1 });
+}
+module.exports.gethotandnewproducts = function(customer_id,count,callback){
+	var query = {customer_id:customer_id,'show':1,$or:[{'new':1},{'hot':1}]};
 	productlists.find(query, callback).skip(0).limit(count).sort({'rank': -1 });
 }
 module.exports.getproductbydetailid = function(productid,detailid,callback){

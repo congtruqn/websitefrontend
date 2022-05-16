@@ -103,6 +103,12 @@ var websitesSchema = mongoose.Schema({
 	from_district_id:{
 		type: Number
 	},
+	num_hot_products:{
+		type: Number
+	},
+	num_hot_news:{
+		type: Number
+	},
 });
 var websites = module.exports = mongoose.model('listwebsites', websitesSchema);
 module.exports.createwebsites = function(newwebsites, callback){

@@ -13,6 +13,7 @@ var caches = require('../models/cache');
 var productlists  = require('../models/productlists');
 var productmoreinfo  = require('../models/productmoreinfo');
 var caches = require('../models/cache');
+var testimonials = require('../models/testimonials');
 module.exports.gethotproductcat = function(customer_id){
   return new Promise((resolve, reject)=>{
     var listcat = '';
@@ -136,6 +137,42 @@ module.exports.getfooterbycustomer = function(customer_id){
     });
   })
 }
+module.exports.gettestimonialsbycustomer = function(customer_id){
+  return new Promise((resolve, reject)=>{
+    testimonials.getcounttestimonialsbycustomer(3,customer_id,async function(error,testimo){
+      if(testimo){
+        resolve(testimo)
+      }
+      else{
+        resolve([]);
+      }
+    })
+  })
+}
+module.exports.gettemplates = function(){
+  return new Promise((resolve, reject)=>{
+    website.gettemplatewebsites(8,async function(error,templatewebsite){
+      if(templatewebsite){
+        resolve(templatewebsite)
+      }
+      else{
+        resolve([]);
+      }
+    })
+  })
+}
+module.exports.getbanner = function(customer_id) {
+  return new Promise((resolve, reject)=>{
+    banners.getbannerbycustomer(customer_id,async function(err, banners){
+        if (banners) {
+          resolve(banners);
+        }
+        else{
+          resolve([]);
+        }
+    });
+  });
+}
 module.exports.gethotproductbycustomer = function(customer_id,count,products_name_letters){
   return new Promise((resolve, reject)=>{
     productlists.gethotproducts(customer_id,count,function(err, countproduct){
@@ -155,6 +192,12 @@ module.exports.gethotproductbycustomer = function(customer_id,count,products_nam
           productiteam.productname = productname;
           if(productiteam.sale==1){
             productiteam.salepec = salepec;
+          }
+          if(productiteam.hot==0){
+            productiteam.hot = undefined;
+          }
+          if(productiteam.new==0){
+            productiteam.new = undefined;
           }
           countproduct[x] = productiteam;
         }
@@ -246,4 +289,43 @@ module.exports.gettopnewscatsandcontent = function(customer_id,count,callback){
       return callback(null,[]);
     }
   });
+}
+module.exports.gethotnewsbycustomer = function(customer_id,count){
+  return new Promise((resolve, reject)=>{
+    NewsContents.getnewcontents(customer_id,count,function(err, news){
+      if(news){
+        resolve(news);
+      }
+      else{
+        resolve({});
+      }
+    });
+  })
+}
+module.exports.gethotandnewproductsbycustomer = function(customer_id,count){
+  return new Promise((resolve, reject)=>{
+    productlists.gethotandnewproducts(customer_id,count,function(err, countproduct){
+      if(countproduct){
+        for (var x in countproduct) {
+          var productiteam = JSON.parse(JSON.stringify(countproduct[x]));
+          var salepec = parseInt(((productiteam.sale_price-productiteam.price)/productiteam.sale_price)*100);
+          productiteam.alt=countproduct[x].detail[0].name;
+          if(productiteam.sale==1){
+            productiteam.salepec = salepec;
+          }
+          if(productiteam.hot==0){
+            productiteam.hot = undefined;
+          }
+          if(productiteam.new==0){
+            productiteam.new = undefined;
+          }
+          countproduct[x] = productiteam;
+        }
+        resolve(countproduct);
+      }
+      else{
+        resolve({});
+      }
+    });
+  })
 }

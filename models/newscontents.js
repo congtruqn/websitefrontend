@@ -24,6 +24,9 @@ var newscontentsSchema = mongoose.Schema({
 	image2:{
 		type: String,
 	},
+	image_path:{
+		type: String,
+	},
 	detail:[{
 		lang: String,
 		name: String,
@@ -149,28 +152,13 @@ module.exports.countnewscontents = function(customer_id,callback){
 	var query = {customer_id:customer_id};
 	newscontents.count(query, callback);
 }
+module.exports.getnewcontents = function(customer_id,count,callback){
+	var query = {customer_id:customer_id,'new':1};
+	newscontents.find(query, callback).skip(0).limit(count).sort({'create_date': -1 });;
+}
 module.exports.countMaxcontentID = function(callback){
 	var query = {};
 	newscontents.findOne(query,callback).sort({'content_id': -1 });
-}
-module.exports.getMaxproductlistID =  function (callback) {
-	newscontents.countMaxproductlistID(function(err, productc) {
-		if(productc){
-			jsons = {
-	          maxordercode:productc.cat_id,
-	          ordercode:'HD000001',
-	       	}
-	       	console.log(jsons);
-			return callback(jsons);
-		}
-		else{
-			jsons = {
-	          maxordercode:1,
-	          ordercode:'HD000001',
-	       	}
-			return callback(jsons);
-		}
-  	});	
 }
 module.exports.getAllnewscontentsByUser = function(userid,page,per_page,callback){
 	var query = {create_user: userid};

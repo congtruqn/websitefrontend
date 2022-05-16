@@ -9,10 +9,7 @@ var expressValidator = require('express-validator');
 var flash = require('connect-flash');
 var session = require('express-session');
 var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var mongo = require('mongodb');
 var mongoose = require('mongoose');
-//aaaaaaaaaaa
 var app = express();
 var port = process.env.PORT || 3005;
 app.set('port', port);
@@ -21,14 +18,19 @@ var index = require('./routes/index');
 var systems = require('./models/systems');
 var caches = require('./models/cache');
 global.__basedir = __dirname;
-
+var i18n = require('i18n');
+i18n.configure({
+  locales: ['en', 'vi'],
+  cookie: 'locale',
+  defaultLocale: 'vi',
+  extension: '.json',
+  directory: "" + __dirname + "/locales"
+});
 app.set('views', path.join(__dirname, 'views'));
 app.engine('handlebars', exphbs({
   defaultLayout:'layout',
 }));
 app.set('view engine', 'handlebars');
-
-// uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -78,7 +80,12 @@ app.use(function(req, res, next) {
   });
   next();
 });
-
+app.use(function(req, res, next) {
+  hbs.handlebars.registerHelper('i18n', function(value) {
+      return i18n.__(value);
+  });
+  next();
+});
 app.use(async function(req, res, next) {
   var curent_date = new Date().getTime();
   var hostname = req.headers.host;
@@ -127,6 +134,14 @@ app.use(async function(req, res, next) {
           let productmoreinfos = await systems.getproductbyproductmoreinfos(websitein.customer_id,4);
           caches.list_products_by_more_info[hostname] = productmoreinfos;
         }
+        if(!caches.hotandnewproducts[hostname]||caches.hotandnewproducts[hostname]==null){
+          let hotandnewproducts = await systems.gethotandnewproductsbycustomer(websitein.customer_id,websitein.num_hot_products);
+          caches.hotandnewproducts[hostname] = hotandnewproducts;
+        }
+        if(!caches.hotnews[hostname]||caches.hotnews[hostname]==null){
+          let hotnews = await systems.gethotnewsbycustomer(websitein.customer_id,websitein.num_hot_news);
+          caches.hotnews[hostname] = hotnews;
+        }
         app.engine('handlebars', exphbs({
           partialsDir: __dirname + '/views/partials/'+websitein.customer_username
         }));
@@ -174,6 +189,14 @@ app.use(async function(req, res, next) {
     if(!caches.list_products_by_more_info[hostname]||caches.list_products_by_more_info[hostname]==null){
       let productmoreinfos = await systems.getproductbyproductmoreinfos(websitein.customer_id,4);
       caches.list_products_by_more_info[hostname] = productmoreinfos;
+    }
+    if(!caches.hotandnewproducts[hostname]||caches.hotandnewproducts[hostname]==null){
+      let hotandnewproducts = await systems.gethotandnewproductsbycustomer(websitein.customer_id,websitein.num_hot_products);
+      caches.hotandnewproducts[hostname] = hotandnewproducts;
+    }
+    if(!caches.hotnews[hostname]||caches.hotnews[hostname]==null){
+      let hotnews = await systems.gethotnewsbycustomer(websitein.customer_id,websitein.num_hot_news);
+      caches.hotnews[hostname] = hotnews;
     }
     app.engine('handlebars', exphbs({
        partialsDir: __dirname + '/views/partials/'+websitein.customer_username  
