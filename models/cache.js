@@ -12,7 +12,7 @@ var productmenu = {}
 var hotproductcategory = {}
 var hotnews = {}
 var hotandnewproducts = {}
-var provinces = null
+var provinces = {}
 module.exports = {
     websiteinfo,
     hotnewcats,

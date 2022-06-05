@@ -1,4 +1,11 @@
 {
 	"name": "Họ Và Tên",
-	"contact": "Liên hệ"
+	"contact": "Liên hệ",
+	"company_name": "Công ty tnhh công nghệ TNS solution",
+	"address": "Địa chỉ",
+	"phone": "Điện thoại",
+	"homepage": "Trang chủ",
+	"features":"Tính năng",
+	"agent_registration":"Đăng ký làm đại lý",
+	"7_day_free":"Trải nghiệm dùng thử miễn phí 7 ngày"
 }

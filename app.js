@@ -91,7 +91,6 @@ app.use(async function(req, res, next) {
   var hostname = req.headers.host;
   if(!caches.websiteinfo[hostname]||caches.websiteinfo[hostname]==null){
     systems.getwebsiteinfo(hostname,async function(err, websitein){
-
       if(websitein===null){
         res.redirect(301, 'http://tns.vn');
       }
@@ -145,9 +144,6 @@ app.use(async function(req, res, next) {
         app.engine('handlebars', exphbs({
           partialsDir: __dirname + '/views/partials/'+websitein.customer_username
         }));
-        next();
-      }
-      else{
         next();
       }
     });

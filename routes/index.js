@@ -7,7 +7,6 @@ var NewsContents = require('../models/newscontents');
 var NewsCats = require('../models/newscats');
 var Productlists = require('../models/productlists');
 var ProductCat = require('../models/productcats');
-var Seourls = require('../models/seourl');
 var listorders = require('../models/listorders');
 var website = require('../models/websites');
 var customers = require('../models/customers');
@@ -80,7 +79,6 @@ router.get('/lien-he', function(req, res, next) {
   var hostname = req.headers.host;
   var websiteinfo =  caches.websiteinfo[hostname];
   var productmenu = caches.productcat[hostname];
-  var product_per_cat_home = websiteinfo.products_per_cat_home;
   var sitefooter = caches.footer[hostname];
   var customer_username = websiteinfo.customer_username;
   var mainmenu = caches.mainmenu[hostname];
@@ -421,7 +419,7 @@ router.get('/getshippingcod', function(req, res, next) {
       });
   });
 });
-router.get('/',async function(req, res, next) {
+const renderhomepage = async function(req,res){
   var hostname = req.headers.host;
   var websiteinfo =  caches.websiteinfo[hostname];
   var productmenu = caches.productcat[hostname];
@@ -438,7 +436,7 @@ router.get('/',async function(req, res, next) {
   let testimonials = [];
   let cusbanner = [];
   let promises = []
-  if(hostname==='tns.vn'||(process.ENV==='local'||hostname==='template1.tns.vn:3005')){
+  if(hostname==='tns.vn'||(process.ENV==='local'&&hostname==='template1.tns.vn:3005')||hostname==='tnsviet.online'){
     promises.push(systems.gettestimonialsbycustomer(websiteinfo.customer_id),systems.gettemplates(),systems.getbanner(websiteinfo.customer_id))
   }
   else{
@@ -451,35 +449,35 @@ router.get('/',async function(req, res, next) {
   let hotandnewproducts = caches.hotandnewproducts[hostname];
   var hotnews = caches.hotnews[hostname];
   if(websiteinfo.website_url===hostname){
-        var customer_username = websiteinfo.customer_username;
-        if(!caches.hotproductcats[hostname]||caches.hotproductcats[hostname]==null){
-          var hotproductcats = await gethotproductcat(websiteinfo.customer_id,product_per_cat_home,websiteinfo.products_name_letters);
-          caches.hotproductcats[hostname] = hotproductcats;
-        }
-        var productcat = caches.hotproductcats[hostname]
-          res.render('content/'+customer_username+'/index', {
-            productcats:productcat,
-            canonical:websiteinfo.website_protocol+'://'+hostname,
-            title: websiteinfo.title,
-            description: websiteinfo.description,  
-            keyword: websiteinfo.keyword,
-            banners: cusbanner,
-            productmenu:productmenu,
-            mainmenu:mainmenu,
-            layout: customer_username,
-            siteinfo:websiteinfo,
-            sitefooter:sitefooter,
-            hotproducts:hotproducts,
-            newproducts:newproducts,
-            productmoreinfos:productmoreinfos,
-            list_products_by_more_info:list_products_by_more_info,
-            productmenu1:productmenu1,
-            hotproductcategory:hotproductcategory,
-            hotandnewproducts:hotandnewproducts,
-            hotnews:hotnews,
-            listtemplates:listtemplates,
-            testimonials:testimonials,
-          });
+      var customer_username = websiteinfo.customer_username;
+      if(!caches.hotproductcats[hostname]||caches.hotproductcats[hostname]==null){
+        var hotproductcats = await gethotproductcat(websiteinfo.customer_id,product_per_cat_home,websiteinfo.products_name_letters);
+        caches.hotproductcats[hostname] = hotproductcats;
+      }
+      var productcat = caches.hotproductcats[hostname]
+      res.render('content/'+customer_username+'/index', {
+        productcats:productcat,
+        canonical:websiteinfo.website_protocol+'://'+hostname,
+        title: websiteinfo.title,
+        description: websiteinfo.description,  
+        keyword: websiteinfo.keyword,
+        banners: cusbanner,
+        productmenu:productmenu,
+        mainmenu:mainmenu,
+        layout: customer_username,
+        siteinfo:websiteinfo,
+        sitefooter:sitefooter,
+        hotproducts:hotproducts,
+        newproducts:newproducts,
+        productmoreinfos:productmoreinfos,
+        list_products_by_more_info:list_products_by_more_info,
+        productmenu1:productmenu1,
+        hotproductcategory:hotproductcategory,
+        hotandnewproducts:hotandnewproducts,
+        hotnews:hotnews,
+        listtemplates:listtemplates,
+        testimonials:testimonials,
+      });
     }
   else{
     res.render('content/template1/error404', {
@@ -487,9 +485,8 @@ router.get('/',async function(req, res, next) {
       layout: 'template1',
     });
   }
-});
-router.get('/:seourl',async function(req, res, next) {
-  var seourl = req.params.seourl;
+}
+const renderpage = async function(req,res,website_url){
   var hostname = req.headers.host;
   var websiteinfo =  caches.websiteinfo[hostname];
   var customer_id = websiteinfo.customer_id;
@@ -499,297 +496,416 @@ router.get('/:seourl',async function(req, res, next) {
   var sitefooter = caches.footer[hostname];
   var newproducts = caches.newproducts[hostname];
   var productmoreinfos = caches.productmoreinfos[hostname];
+  newspages.getNewsPagesById(customer_id,website_url.content_id,function(err, conten){
+    res.render('content/'+customer_username+'/page', {
+      contents:conten,
+      details:conten.detail[0],
+      title:conten.detail[0].title,
+      layout: customer_username   ,
+      productmenu:productmenu,
+      mainmenu:mainmenu,
+      siteinfo:websiteinfo,
+      sitefooter:sitefooter,
+      newproducts:newproducts,
+      productmoreinfos:productmoreinfos
+    });
+  });
+}
+const rendernewcontentpage = async function(req,res,website_url){
+  var hostname = req.headers.host;
+  var websiteinfo =  caches.websiteinfo[hostname];
+  var customer_username = websiteinfo.customer_username;
+  var mainmenu = caches.mainmenu[hostname];
+  var productmenu = caches.productcat[hostname];
+  var sitefooter = caches.footer[hostname];
+  var newproducts = caches.newproducts[hostname];
+  var productmoreinfos = caches.productmoreinfos[hostname];
+  NewsContents.getnewscontentbycontentid(website_url.content_id,function(err, conten){
+    NewsContents.gethotnewcontentcount(5,function(err, hotnews){
+      NewsContents.getratenewcontentbycatcount(conten.parent_id,conten.content_id,8,function(err, ratenews){
+        var procontent = JSON.parse(JSON.stringify(conten.detail[0]));
+        res.render('content/'+customer_username+'/newscontent', {
+          contents:conten,
+          hotnews:hotnews,
+          ratenews:ratenews,
+          details:procontent,
+          title:conten.detail[0].title,
+          description:conten.detail[0].description,
+          keyword:conten.detail[0].keyword,
+          canonical:websiteinfo.website_protocol+'://'+hostname+'/'+conten.seo_url+'/',
+          orgimage:websiteinfo.website_protocol+'://'+hostname+'/images/news/fullsize/'+conten.image2,
+          layout: customer_username,
+          productmenu:productmenu,
+          mainmenu:mainmenu,
+          siteinfo:websiteinfo,
+          sitefooter:sitefooter,
+          newproducts:newproducts,
+          productmoreinfos:productmoreinfos
+        });
+      });
+    })   
+  });
+}
+const rendernewcatpage = async function(req,res,website_url){
+  var hostname = req.headers.host;
+  var websiteinfo =  caches.websiteinfo[hostname];
+  var customer_id = websiteinfo.customer_id;
+  var customer_username = websiteinfo.customer_username;
+  var mainmenu = caches.mainmenu[hostname];
+  var productmenu = caches.productcat[hostname];
+  var sitefooter = caches.footer[hostname];
+  var newproducts = caches.newproducts[hostname];
+  var productmoreinfos = caches.productmoreinfos[hostname];
+  var per_page = 18;
+  var page = req.param('page','1');
+  NewsCats.getnewscatsbycatid(customer_id,website_url.content_id,async function(err, newcatinfo){
+      var count = await countnewsbycat(newcatinfo.cat_id);
+      NewsContents.getnewsnontentsbycatcount(website_url.content_id,page,per_page,function(err, conten){
+        NewsContents.gethotnewcontentcount(5,function(err, hotnews){
+          var allpage = (count/per_page)+1;
+          var arraypage = [];
+          for (var i = 1; i <= allpage; i++ ) {
+              var temp ={
+                  pagecount:i,
+                  seo_url:newcatinfo.seo_url
+              }
+              arraypage.push(temp);
+          };
+          for (var x in conten) {
+              var newcatitem = JSON.parse(JSON.stringify(conten[x]));
+              var temp = conten[x].detail[0].description.substring(0,200);
+              newcatitem.detail[0].shortdesc = temp;
+              conten[x] = newcatitem;
+          };
+          res.render('content/'+customer_username+'/newscat', {
+              contents:conten,
+              hotnews:hotnews,
+              allpage:arraypage,
+              newscatinfo:newcatinfo,
+              newcatdetail:newcatinfo.detail[0],
+              title:newcatinfo.detail[0].title,
+              description:newcatinfo.detail[0].description,
+              keyword:newcatinfo.detail[0].keyword,
+              canonical:websiteinfo.website_protocol+'://'+hostname+'/'+newcatinfo.seo_url+'/',
+              orgimage:hostname+'/images/news/fullsize/'+conten.image,
+              layout: customer_username,
+              productmenu:productmenu,
+              mainmenu:mainmenu,
+              siteinfo:websiteinfo,
+              sitefooter:sitefooter,
+              newproducts:newproducts,
+              productmoreinfos:productmoreinfos
+          });
+        });
+      });
+  });
+}
+const renderproductcatpage = async function(req,res,website_url){
+  var hostname = req.headers.host;
+  var websiteinfo =  caches.websiteinfo[hostname];
+  var customer_id = websiteinfo.customer_id;
+  var customer_username = websiteinfo.customer_username;
+  var mainmenu = caches.mainmenu[hostname];
+  var productmenu = caches.productcat[hostname];
+  var sitefooter = caches.footer[hostname];
+  var newproducts = caches.newproducts[hostname];
+  var productmoreinfos = caches.productmoreinfos[hostname];
+  var per_page = websiteinfo.products_per_page;
+  if(isNaN(Number(per_page))){
+    per_page = 24
+  }
+  var page = req.param('page','1');
+  var count = await countproductsbycat(website_url.content_id);
+  var catinfo = await getproductcatinfo(website_url.content_id);
+  Productlists.getallproductbycatshow(customer_id,website_url.content_id,Number(page),per_page,async function(err, countproduct){
+      for (var x in countproduct) {
+        var productiteam = JSON.parse(JSON.stringify(countproduct[x]));
+        var pricebeauty = String(productiteam.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+        var sale_pricebeauty = String(productiteam.sale_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+        var productname = countproduct[x].detail[0].name;
+        if(productname.length>websiteinfo.products_name_letters){
+          productname = countproduct[x].detail[0].name.substring(0,websiteinfo.products_name_letters)+"...";
+        }
+        productiteam.pricebeauty = pricebeauty;
+        productiteam.sale_pricebeauty = sale_pricebeauty;
+        var salepec = parseInt(((productiteam.sale_price-productiteam.price)/productiteam.sale_price)*100);
+        productiteam.alt=countproduct[x].detail[0].name;
+        productiteam.productname = productname;
+        if(productiteam.sale==1){
+          productiteam.salepec = salepec;
+        }
+        countproduct[x] = productiteam;
+      }
+      var allpage = (count/per_page)+1;
+      var arraypage = [];
+      for (var i = 1; i <= allpage; i++ ) {
+          var temp ={
+                pagecount:i,
+                seo_url:catinfo.seo_url
+          }
+          arraypage.push(temp);
+      };
+      res.render('content/'+customer_username+'/productscat', {
+        contents:countproduct,
+        allpage:arraypage,
+        newscatinfo:countproduct,
+        productcatinfo:catinfo.detail[0],
+        title:catinfo.detail[0].title,
+        canonical:websiteinfo.website_protocol+'://'+hostname+'/'+catinfo.seo_url+'/',
+        description:catinfo.detail[0].description,
+        keyword:catinfo.detail[0].keyword,
+        layout: customer_username,
+        productmenu:productmenu,
+        mainmenu:mainmenu,
+        siteinfo:websiteinfo,
+        sitefooter:sitefooter,
+        newproducts:newproducts,
+        productmoreinfos:productmoreinfos
+      });
+  });
+}
+const renderproductdetailpage = async function(req,res,website_url){
+  var hostname = req.headers.host;
+  var websiteinfo =  caches.websiteinfo[hostname];
+  var customer_id = websiteinfo.customer_id;
+  var customer_username = websiteinfo.customer_username;
+  var mainmenu = caches.mainmenu[hostname];
+  var productmenu = caches.productcat[hostname];
+  var sitefooter = caches.footer[hostname];
+  var newproducts = caches.newproducts[hostname];
+  var productmoreinfos = caches.productmoreinfos[hostname];
+  Productlists.getproductbyproductid(website_url.content_id,async function(err, conten){
+    Productlists.getrateproductlistscatcount(conten.parent_id,conten.product_id,8,function(err, rateproducts){
+      for (var x in rateproducts) {
+        var productiteam = JSON.parse(JSON.stringify(rateproducts[x]));
+        var pricebeauty = String(productiteam.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+        productiteam.pricebeauty = pricebeauty;
+        productiteam.alt = rateproducts[x].detail[0].name;
+        rateproducts[x] = productiteam;
+      }
+
+      var procontent = JSON.parse(JSON.stringify(conten.detail[0]));
+      var product_details = conten.product_detail;
+      var product_more_info = conten.product_more_info;
+      for (var x in product_more_info) {
+        if(product_more_info[x].status==1){
+          product_more_info[x].status=undefined
+        }
+        if(product_more_info[x].status==1){
+          product_more_info[x].status=undefined
+        }
+      }
+      var pricebeauty = String(conten.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+      var islogin = undefined;
+      var instock = undefined;
+      if(req.user){
+        islogin = 1;
+      }
+      if(conten.show==1){
+        instock = 1;
+      }
+      res.render('content/'+customer_username+'/productdetail', {
+        description:conten.detail[0].description,
+        canonical:websiteinfo.website_protocol+'://'+hostname+'/'+conten.seo_url,
+        orgimage:websiteinfo.website_protocol+'://'+hostname+'/images/products/fullsize/'+conten.image2,
+        contents:conten,
+        product_details:product_details,
+        price:pricebeauty,
+        details:procontent,
+        title:conten.detail[0].title,
+        layout: customer_username,
+        productmenu:productmenu,
+        instock:instock,
+        product_more_info:product_more_info,
+        islogin:islogin,
+        mainmenu:mainmenu,
+        siteinfo:websiteinfo,
+        sitefooter:sitefooter,
+        rateproducts:rateproducts,
+        newproducts:newproducts,
+        productmoreinfos:productmoreinfos
+      });
+    });
+  });
+}
+const renderproductmoreinfocategorypage = async function(req,res,website_url){
+  var hostname = req.headers.host;
+  var websiteinfo =  caches.websiteinfo[hostname];
+  var customer_id = websiteinfo.customer_id;
+  var customer_username = websiteinfo.customer_username;
+  var mainmenu = caches.mainmenu[hostname];
+  var productmenu = caches.productcat[hostname];
+  var sitefooter = caches.footer[hostname];
+  var newproducts = caches.newproducts[hostname];
+  var productmoreinfos = caches.productmoreinfos[hostname];
+  var per_page = websiteinfo.products_per_page;
+  var page = req.param('page','1');
+  Productlists.countproductbymoreinfo(customer_id,website_url.content_id,async function(err, count){
+    productmoreinfo.getmoreinfovalue(customer_id,website_url.content_id, function(err, productmorein){
+      Productlists.getallproductbymoreinfo(customer_id,website_url.content_id,Number(page),per_page,async function(err, countproduct){
+        for (var x in countproduct) {
+          var productiteam = JSON.parse(JSON.stringify(countproduct[x]));
+          var pricebeauty = String(productiteam.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+          var sale_pricebeauty = String(productiteam.sale_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+          var productname = countproduct[x].detail[0].name;
+          if(productname.length>websiteinfo.products_name_letters){
+            productname = countproduct[x].detail[0].name.substring(0,websiteinfo.products_name_letters)+"...";
+          }
+          productiteam.pricebeauty = pricebeauty;
+          productiteam.sale_pricebeauty = sale_pricebeauty;
+          var salepec = parseInt(((productiteam.sale_price-productiteam.price)/productiteam.sale_price)*100);
+          productiteam.alt=countproduct[x].detail[0].name;
+          productiteam.productname = productname;
+          if(productiteam.sale==1){
+            productiteam.salepec = salepec;
+          }
+          countproduct[x] = productiteam;
+        }
+        var allpage = (count/per_page)+1;
+        var arraypage = [];
+        for (var i = 1; i <= allpage; i++ ) {
+            var temp ={
+                  pagecount:i,
+                  seo_url:productmorein[0].default_value[0].seo_url
+            }
+            arraypage.push(temp);
+        };
+        res.render('content/'+customer_username+'/productmoreinfo', {
+          contents:countproduct,
+          allpage:arraypage,
+          newscatinfo:countproduct,
+          productcatinfo:productmorein[0].default_value[0],
+          title:productmorein[0].default_value[0].title,
+          canonical:websiteinfo.website_protocol+'://'+hostname+'/'+productmorein[0].default_value[0].seo_url+'/',
+          description:productmorein[0].default_value[0].description,
+          keyword:productmorein[0].default_value[0].keyword,
+          layout: customer_username,
+          productmenu:productmenu,
+          mainmenu:mainmenu,
+          siteinfo:websiteinfo,
+          sitefooter:sitefooter,
+          newproducts:newproducts,
+          productmoreinfos:productmoreinfos
+        });
+      });
+    })
+  })
+}
+router.get('/',async function(req, res) {
+  renderhomepage(req,res)
+});
+router.get('/:seourl',async function(req, res, next) {
+  var seourl = req.params.seourl;
+  var hostname = req.headers.host;
+  var websiteinfo =  caches.websiteinfo[hostname];
+  var customer_id = websiteinfo.customer_id;
+  var customer_username = websiteinfo.customer_username;
   switch(seourl){
     case 'en':
       res.cookie('locale','en');
       i18n.setLocale('en');
+      renderhomepage(req,res);
       break;
     case 'vi':
       res.cookie('locale','vi');
       i18n.setLocale('vi');
+      renderhomepage(req,res);
       break;
     default:
-      Seourls.findByUrl(customer_id,seourl,async function(err, producttypess){
-        if(producttypess){
-          if(producttypess.type==1){
-            newspages.getNewsPagesById(customer_id,producttypess.content_id,function(err, conten){
-              res.render('content/'+customer_username+'/page', {
-                contents:conten,
-                details:conten.detail[0],
-                title:conten.detail[0].title,
-                layout: customer_username   ,
-                productmenu:productmenu,
-                mainmenu:mainmenu,
-                siteinfo:websiteinfo,
-                sitefooter:sitefooter,
-                newproducts:newproducts,
-                productmoreinfos:productmoreinfos
-              });
-            });
-          }
-          if(producttypess.type==2){
-            var per_page = 18;
-            var page = req.param('page','1');
-            NewsCats.getnewscatsbycatid(customer_id,producttypess.content_id,async function(err, newcatinfo){
-                var count =await countnewsbycat(newcatinfo.cat_id);
-                NewsContents.getnewsnontentsbycatcount(producttypess.content_id,page,per_page,function(err, conten){
-                  NewsContents.gethotnewcontentcount(5,function(err, hotnews){
-                    var allpage = (count/per_page)+1;
-                    var arraypage = [];
-                    for (var i = 1; i <= allpage; i++ ) {
-                        var temp ={
-                            pagecount:i,
-                            seo_url:newcatinfo.seo_url
-                        }
-                        arraypage.push(temp);
-                    };
-                    for (var x in conten) {
-                        var newcatitem = JSON.parse(JSON.stringify(conten[x]));
-                        var temp = conten[x].detail[0].description.substring(0,200);
-                        newcatitem.detail[0].shortdesc = temp;
-                        conten[x] = newcatitem;
-                    };
-                    res.render('content/'+customer_username+'/newscat', {
-                        contents:conten,
-                        hotnews:hotnews,
-                        allpage:arraypage,
-                        newscatinfo:newcatinfo,
-                        newcatdetail:newcatinfo.detail[0],
-                        title:newcatinfo.detail[0].title,
-                        description:newcatinfo.detail[0].description,
-                        keyword:newcatinfo.detail[0].keyword,
-                        canonical:websiteinfo.website_protocol+'://'+hostname+'/'+newcatinfo.seo_url+'/',
-                        orgimage:hostname+'/images/news/fullsize/'+conten.image,
-                        layout: customer_username,
-                        productmenu:productmenu,
-                        mainmenu:mainmenu,
-                        siteinfo:websiteinfo,
-                        sitefooter:sitefooter,
-                        newproducts:newproducts,
-                        productmoreinfos:productmoreinfos
-                    });
-                  });
-                });
-            });
-          }
-          if(producttypess.type==3){
-            NewsContents.getnewscontentbycontentid(producttypess.content_id,function(err, conten){
-              NewsContents.gethotnewcontentcount(5,function(err, hotnews){
-                NewsContents.getratenewcontentbycatcount(conten.parent_id,conten.content_id,8,function(err, ratenews){
-                  var procontent = JSON.parse(JSON.stringify(conten.detail[0]));
-                  res.render('content/'+customer_username+'/newscontent', {
-                    contents:conten,
-                    hotnews:hotnews,
-                    ratenews:ratenews,
-                    details:procontent,
-                    title:conten.detail[0].title,
-                    description:conten.detail[0].description,
-                    keyword:conten.detail[0].keyword,
-                    canonical:websiteinfo.website_protocol+'://'+hostname+'/'+conten.seo_url+'/',
-                    orgimage:websiteinfo.website_protocol+'://'+hostname+'/images/news/fullsize/'+conten.image2,
-                    layout: customer_username,
-                    productmenu:productmenu,
-                    mainmenu:mainmenu,
-                    siteinfo:websiteinfo,
-                    sitefooter:sitefooter,
-                    newproducts:newproducts,
-                    productmoreinfos:productmoreinfos
-                  });
-                });
-              })   
-            });
-          }
-          if(producttypess.type==4){
-            var per_page = websiteinfo.products_per_page;
-            if(isNaN(Number(per_page))){
-              per_page = 24
-            }
-            var page = req.param('page','1');
-            var count = await countproductsbycat(producttypess.content_id);
-            var catinfo = await getproductcatinfo(producttypess.content_id);
-            Productlists.getallproductbycatshow(customer_id,producttypess.content_id,Number(page),per_page,async function(err, countproduct){
-                for (var x in countproduct) {
-                  var productiteam = JSON.parse(JSON.stringify(countproduct[x]));
-                  var pricebeauty = String(productiteam.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-                  var sale_pricebeauty = String(productiteam.sale_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-                  var productname = countproduct[x].detail[0].name;
-                  if(productname.length>websiteinfo.products_name_letters){
-                    productname = countproduct[x].detail[0].name.substring(0,websiteinfo.products_name_letters)+"...";
-                  }
-                  productiteam.pricebeauty = pricebeauty;
-                  productiteam.sale_pricebeauty = sale_pricebeauty;
-                  var salepec = parseInt(((productiteam.sale_price-productiteam.price)/productiteam.sale_price)*100);
-                  productiteam.alt=countproduct[x].detail[0].name;
-                  productiteam.productname = productname;
-                  if(productiteam.sale==1){
-                    productiteam.salepec = salepec;
-                  }
-                  countproduct[x] = productiteam;
-                }
-                var allpage = (count/per_page)+1;
-                var arraypage = [];
-                for (var i = 1; i <= allpage; i++ ) {
-                    var temp ={
-                          pagecount:i,
-                          seo_url:catinfo.seo_url
-                    }
-                    arraypage.push(temp);
-                };
-                res.render('content/'+customer_username+'/productscat', {
-                  contents:countproduct,
-                  allpage:arraypage,
-                  newscatinfo:countproduct,
-                  productcatinfo:catinfo.detail[0],
-                  title:catinfo.detail[0].title,
-                  canonical:websiteinfo.website_protocol+'://'+hostname+'/'+catinfo.seo_url+'/',
-                  description:catinfo.detail[0].description,
-                  keyword:catinfo.detail[0].keyword,
-                  layout: customer_username,
-                  productmenu:productmenu,
-                  mainmenu:mainmenu,
-                  siteinfo:websiteinfo,
-                  sitefooter:sitefooter,
-                  newproducts:newproducts,
-                  productmoreinfos:productmoreinfos
-                });
-              
-            });
-          }
-          if(producttypess.type==6){
-            var listcat = '';
-            var per_page = websiteinfo.products_per_page;
-            var page = req.param('page','1');
-            Productlists.countproductbymoreinfo(customer_id,producttypess.content_id,async function(err, count){
-              productmoreinfo.getmoreinfovalue(customer_id,producttypess.content_id, function(err, productmorein){
-                Productlists.getallproductbymoreinfo(customer_id,producttypess.content_id,Number(page),per_page,async function(err, countproduct){
-                  for (var x in countproduct) {
-                    var productiteam = JSON.parse(JSON.stringify(countproduct[x]));
-                    var pricebeauty = String(productiteam.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-                    var sale_pricebeauty = String(productiteam.sale_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-                    var productname = countproduct[x].detail[0].name;
-                    if(productname.length>websiteinfo.products_name_letters){
-                      productname = countproduct[x].detail[0].name.substring(0,websiteinfo.products_name_letters)+"...";
-                    }
-                    productiteam.pricebeauty = pricebeauty;
-                    productiteam.sale_pricebeauty = sale_pricebeauty;
-                    var salepec = parseInt(((productiteam.sale_price-productiteam.price)/productiteam.sale_price)*100);
-                    productiteam.alt=countproduct[x].detail[0].name;
-                    productiteam.productname = productname;
-                    if(productiteam.sale==1){
-                      productiteam.salepec = salepec;
-                    }
-                    countproduct[x] = productiteam;
-                  }
-                  var allpage = (count/per_page)+1;
-                  var arraypage = [];
-                  for (var i = 1; i <= allpage; i++ ) {
-                      var temp ={
-                            pagecount:i,
-                            seo_url:productmorein[0].default_value[0].seo_url
-                      }
-                      arraypage.push(temp);
-                  };
-                  res.render('content/'+customer_username+'/productmoreinfo', {
-                    contents:countproduct,
-                    allpage:arraypage,
-                    newscatinfo:countproduct,
-                    productcatinfo:productmorein[0].default_value[0],
-                    title:productmorein[0].default_value[0].title,
-                    canonical:websiteinfo.website_protocol+'://'+hostname+'/'+productmorein[0].default_value[0].seo_url+'/',
-                    description:productmorein[0].default_value[0].description,
-                    keyword:productmorein[0].default_value[0].keyword,
-                    layout: customer_username,
-                    productmenu:productmenu,
-                    mainmenu:mainmenu,
-                    siteinfo:websiteinfo,
-                    sitefooter:sitefooter,
-                    newproducts:newproducts,
-                    productmoreinfos:productmoreinfos
-                  });
-                });
-              })
-            })
-          }
-          if(producttypess.type==5){
-            var listcat = '';
-            Productlists.getproductbyproductid(producttypess.content_id,async function(err, conten){
-              Productlists.getrateproductlistscatcount(conten.parent_id,conten.product_id,8,function(err, rateproducts){
-
-                for (var x in rateproducts) {
-                  var productiteam = JSON.parse(JSON.stringify(rateproducts[x]));
-                  var pricebeauty = String(productiteam.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-                  productiteam.pricebeauty = pricebeauty;
-                  productiteam.alt = rateproducts[x].detail[0].name;
-                  rateproducts[x] = productiteam;
-                }
-
-                var procontent = JSON.parse(JSON.stringify(conten.detail[0]));
-                var product_details = conten.product_detail;
-                var product_more_info = conten.product_more_info;
-                for (var x in product_more_info) {
-                  if(product_more_info[x].status==1){
-                    product_more_info[x].status=undefined
-                  }
-                  if(product_more_info[x].status==1){
-                    product_more_info[x].status=undefined
-                  }
-                }
-                var pricebeauty = String(conten.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-                var islogin = undefined;
-                var instock = undefined;
-                if(req.user){
-                  islogin = 1;
-                }
-                if(conten.show==1){
-                  instock = 1;
-                }
-                res.render('content/'+customer_username+'/productdetail', {
-                  description:conten.detail[0].description,
-                  canonical:websiteinfo.website_protocol+'://'+hostname+'/'+conten.seo_url,
-                  orgimage:websiteinfo.website_protocol+'://'+hostname+'/images/products/fullsize/'+conten.image2,
-                  contents:conten,
-                  product_details:product_details,
-                  price:pricebeauty,
-                  details:procontent,
-                  title:conten.detail[0].title,
-                  layout: customer_username,
-                  productmenu:productmenu,
-                  instock:instock,
-                  product_more_info:product_more_info,
-                  islogin:islogin,
-                  mainmenu:mainmenu,
-                  siteinfo:websiteinfo,
-                  sitefooter:sitefooter,
-                  rateproducts:rateproducts,
-                  newproducts:newproducts,
-                  productmoreinfos:productmoreinfos
-                });
-              });
-            });
-          }
-          else{
-
-          }
+      const website_url = await systems.getwebsitebyseourl(customer_id,seourl)
+      if(!website_url){
+        if(customer_username){
+          res.render('content/'+customer_username+'/error404', {
+            title: 'Lổi 404 không tìm thấy',
+            layout:customer_username,
+            canonical:hostname+'/error404',
+            title: websiteinfo.title,
+            description: websiteinfo.description,  
+            keyword: websiteinfo.keyword,
+          });
         }
-        else{
-          if(customer_username){
-            res.render('content/'+customer_username+'/error404', {
-              title: 'Lổi 404 không tìm thấy',
-              layout:customer_username,
-              canonical:hostname+'/error404',
-              title: websiteinfo.title,
-              description: websiteinfo.description,  
-              keyword: websiteinfo.keyword,
-            });
-          }
-          else{
-
-          }
+      }
+      else{
+        switch(website_url.type){
+          case 1:
+            renderpage(req,res,website_url);
+            break;
+          case 2:
+            rendernewcatpage(req,res,website_url);
+            break;
+          case 3:
+            rendernewcontentpage(req,res,website_url);
+            break;
+          case 4:
+            renderproductcatpage(req,res,website_url);
+            break;
+          case 5:
+            renderproductdetailpage(req,res,website_url);
+            break;
+          case 6:
+            renderproductmoreinfocategorypage(req,res,website_url);
+            break;      
         }
-      });
+      }
     }
 });
-
+router.get('/:seourl1/:selurl2',async function(req, res, next) {
+  var seourl1 = req.params.seourl1;
+  var seourl2 = req.params.selurl2;
+  var seourl =  seourl1+'/'+seourl2;
+  var hostname = req.headers.host;
+  var websiteinfo =  caches.websiteinfo[hostname];
+  var customer_id = websiteinfo.customer_id;
+  var customer_username = websiteinfo.customer_username;
+  switch(seourl){
+    case 'en':
+      res.cookie('locale','en');
+      i18n.setLocale('en');
+      renderhomepage(req,res);
+      break;
+    case 'vi':
+      res.cookie('locale','vi');
+      i18n.setLocale('vi');
+      renderhomepage(req,res);
+      break;
+    default:
+      const website_url = await systems.getwebsitebyseourl(customer_id,seourl)
+      if(!website_url){
+        if(customer_username){
+          res.render('content/'+customer_username+'/error404', {
+            title: 'Lổi 404 không tìm thấy',
+            layout:customer_username,
+            canonical:hostname+'/error404',
+            title: websiteinfo.title,
+            description: websiteinfo.description,  
+            keyword: websiteinfo.keyword,
+          });
+        }
+      }
+      else{
+        switch(website_url.type){
+          case 1:
+            renderpage(req,res,website_url);
+            break;
+          case 2:
+            rendernewcatpage(req,res,website_url);
+            break;
+          case 3:
+            rendernewcontentpage(req,res,website_url);
+            break;
+          case 4:
+            renderproductcatpage(req,res,website_url);
+            break;
+          case 5:
+            renderproductdetailpage(req,res,website_url);
+            break;
+          case 6:
+            renderproductmoreinfocategorypage(req,res,website_url);
+            break;      
+        }
+      }
+    }
+});
 function gethotproductcat(customer_id,product_per_cat_home,products_name_letters) {
     return new Promise((resolve, reject)=>{
         ProductCat.gethotrootproductcats(customer_id,async function (err, productcat) {
@@ -1291,299 +1407,5 @@ function getcartprovinces() {
     })
   });
 }
-
-router.get('/:seourl1/:selurl2',async function(req, res, next) {
-  var seourl1 = req.params.seourl1;
-  var seourl2 = req.params.selurl2;
-  var seourl =  seourl1+'/'+seourl2;
-  var hostname = req.headers.host;
-  var websiteinfo =  caches.websiteinfo[hostname];
-  var customer_id = websiteinfo.customer_id;
-  var customer_username = websiteinfo.customer_username;
-  var mainmenu = caches.mainmenu[hostname];
-  var productmenu = caches.productcat[hostname];
-  var sitefooter = caches.footer[hostname];
-  var newproducts = caches.newproducts[hostname];
-  var productmoreinfos = caches.productmoreinfos[hostname];
-  Seourls.findByUrl(customer_id,seourl,async function(err, producttypess){
-    if(producttypess){
-      if(producttypess.type==1){
-        newspages.getNewsPagesById(customer_id,producttypess.content_id,function(err, conten){
-          res.render('content/'+customer_username+'/page', {
-            contents:conten,
-            details:conten.detail[0],
-            title:conten.detail[0].title,
-            layout: customer_username   ,
-            productmenu:productmenu,
-            mainmenu:mainmenu,
-            siteinfo:websiteinfo,
-            sitefooter:sitefooter,
-            newproducts:newproducts,
-            productmoreinfos:productmoreinfos
-          });
-        });
-      }
-      if(producttypess.type==2){
-        var per_page = 18;
-        var page = req.param('page','1');
-        NewsCats.getnewscatsbycatid(customer_id,producttypess.content_id,async function(err, newcatinfo){
-            var count =await countnewsbycat(newcatinfo.cat_id);
-            NewsContents.getnewsnontentsbycatcount(producttypess.content_id,page,per_page,function(err, conten){
-              NewsContents.gethotnewcontentcount(5,function(err, hotnews){
-                var allpage = (count/per_page)+1;
-                var arraypage = [];
-                for (var i = 1; i <= allpage; i++ ) {
-                    var temp ={
-                        pagecount:i,
-                        seo_url:newcatinfo.seo_url
-                    }
-                    arraypage.push(temp);
-                };
-                for (var x in conten) {
-                    var newcatitem = JSON.parse(JSON.stringify(conten[x]));
-                    var temp = conten[x].detail[0].description.substring(0,200);
-                    newcatitem.detail[0].shortdesc = temp;
-                    conten[x] = newcatitem;
-                };
-                res.render('content/'+customer_username+'/newscat', {
-                    contents:conten,
-                    hotnews:hotnews,
-                    allpage:arraypage,
-                    newscatinfo:newcatinfo,
-                    newcatdetail:newcatinfo.detail[0],
-                    title:newcatinfo.detail[0].title,
-                    description:newcatinfo.detail[0].description,
-                    keyword:newcatinfo.detail[0].keyword,
-                    canonical:websiteinfo.website_protocol+'://'+hostname+'/'+newcatinfo.seo_url+'/',
-                    orgimage:hostname+'/images/news/fullsize/'+conten.image,
-                    layout: customer_username,
-                    productmenu:productmenu,
-                    mainmenu:mainmenu,
-                    siteinfo:websiteinfo,
-                    sitefooter:sitefooter,
-                    newproducts:newproducts,
-                    productmoreinfos:productmoreinfos
-                });
-              });
-            });
-        });
-      }
-      if(producttypess.type==3){
-        NewsContents.getnewscontentbycontentid(producttypess.content_id,function(err, conten){
-          NewsContents.gethotnewcontentcount(5,function(err, hotnews){
-            NewsContents.getratenewcontentbycatcount(conten.parent_id,conten.content_id,8,function(err, ratenews){
-              var procontent = JSON.parse(JSON.stringify(conten.detail[0]));
-              res.render('content/'+customer_username+'/newscontent', {
-                contents:conten,
-                hotnews:hotnews,
-                ratenews:ratenews,
-                details:procontent,
-                title:conten.detail[0].title,
-                description:conten.detail[0].description,
-                keyword:conten.detail[0].keyword,
-                canonical:websiteinfo.website_protocol+'://'+hostname+'/'+conten.seo_url+'/',
-                orgimage:websiteinfo.website_protocol+'://'+hostname+'/images/news/fullsize/'+conten.image2,
-                layout: customer_username,
-                productmenu:productmenu,
-                mainmenu:mainmenu,
-                siteinfo:websiteinfo,
-                sitefooter:sitefooter,
-                newproducts:newproducts,
-                productmoreinfos:productmoreinfos
-              });
-            });
-          })   
-        });
-      }
-      if(producttypess.type==4){
-        var per_page = websiteinfo.products_per_page;
-        if(isNaN(Number(per_page))){
-          per_page = 24
-        }
-        var page = req.param('page','1');
-        var count = await countproductsbycat(producttypess.content_id);
-        var catinfo = await getproductcatinfo(producttypess.content_id);
-        Productlists.getallproductbycatshow(customer_id,producttypess.content_id,Number(page),per_page,async function(err, countproduct){
-            for (var x in countproduct) {
-              var productiteam = JSON.parse(JSON.stringify(countproduct[x]));
-              var pricebeauty = String(productiteam.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-              var sale_pricebeauty = String(productiteam.sale_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-              var productname = countproduct[x].detail[0].name;
-              if(productname.length>websiteinfo.products_name_letters){
-                productname = countproduct[x].detail[0].name.substring(0,websiteinfo.products_name_letters)+"...";
-              }
-              productiteam.pricebeauty = pricebeauty;
-              productiteam.sale_pricebeauty = sale_pricebeauty;
-              var salepec = parseInt(((productiteam.sale_price-productiteam.price)/productiteam.sale_price)*100);
-              productiteam.alt=countproduct[x].detail[0].name;
-              productiteam.productname = productname;
-              if(productiteam.sale==1){
-                productiteam.salepec = salepec;
-              }
-              countproduct[x] = productiteam;
-            }
-            var allpage = (count/per_page)+1;
-            var arraypage = [];
-            for (var i = 1; i <= allpage; i++ ) {
-                var temp ={
-                      pagecount:i,
-                      seo_url:catinfo.seo_url
-                }
-                arraypage.push(temp);
-            };
-            res.render('content/'+customer_username+'/productscat', {
-              contents:countproduct,
-              allpage:arraypage,
-              newscatinfo:countproduct,
-              productcatinfo:catinfo.detail[0],
-              title:catinfo.detail[0].title,
-              canonical:websiteinfo.website_protocol+'://'+hostname+'/'+catinfo.seo_url+'/',
-              description:catinfo.detail[0].description,
-              keyword:catinfo.detail[0].keyword,
-              layout: customer_username,
-              productmenu:productmenu,
-              mainmenu:mainmenu,
-              siteinfo:websiteinfo,
-              sitefooter:sitefooter,
-              newproducts:newproducts,
-              productmoreinfos:productmoreinfos
-            });
-          
-        });
-      }
-      if(producttypess.type==6){
-        var listcat = '';
-        var per_page = websiteinfo.products_per_page;
-        var page = req.param('page','1');
-        Productlists.countproductbymoreinfo(customer_id,producttypess.content_id,async function(err, count){
-          productmoreinfo.getmoreinfovalue(customer_id,producttypess.content_id, function(err, productmorein){
-            Productlists.getallproductbymoreinfo(customer_id,producttypess.content_id,Number(page),per_page,async function(err, countproduct){
-              for (var x in countproduct) {
-                var productiteam = JSON.parse(JSON.stringify(countproduct[x]));
-                var pricebeauty = String(productiteam.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-                var sale_pricebeauty = String(productiteam.sale_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-                var productname = countproduct[x].detail[0].name;
-                if(productname.length>websiteinfo.products_name_letters){
-                  productname = countproduct[x].detail[0].name.substring(0,websiteinfo.products_name_letters)+"...";
-                }
-                productiteam.pricebeauty = pricebeauty;
-                productiteam.sale_pricebeauty = sale_pricebeauty;
-                var salepec = parseInt(((productiteam.sale_price-productiteam.price)/productiteam.sale_price)*100);
-                productiteam.alt=countproduct[x].detail[0].name;
-                productiteam.productname = productname;
-                if(productiteam.sale==1){
-                  productiteam.salepec = salepec;
-                }
-                countproduct[x] = productiteam;
-              }
-              var allpage = (count/per_page)+1;
-              var arraypage = [];
-              for (var i = 1; i <= allpage; i++ ) {
-                  var temp ={
-                        pagecount:i,
-                        seo_url:productmorein[0].default_value[0].seo_url
-                  }
-                  arraypage.push(temp);
-              };
-              res.render('content/'+customer_username+'/productmoreinfo', {
-                contents:countproduct,
-                allpage:arraypage,
-                newscatinfo:countproduct,
-                productcatinfo:productmorein[0].default_value[0],
-                title:productmorein[0].default_value[0].title,
-                canonical:websiteinfo.website_protocol+'://'+hostname+'/'+productmorein[0].default_value[0].seo_url+'/',
-                description:productmorein[0].default_value[0].description,
-                keyword:productmorein[0].default_value[0].keyword,
-                layout: customer_username,
-                productmenu:productmenu,
-                mainmenu:mainmenu,
-                siteinfo:websiteinfo,
-                sitefooter:sitefooter,
-                newproducts:newproducts,
-                productmoreinfos:productmoreinfos
-              });
-            });
-          })
-        })
-      }
-      if(producttypess.type==5){
-        var listcat = '';
-        Productlists.getproductbyproductid(producttypess.content_id,async function(err, conten){
-          Productlists.getrateproductlistscatcount(conten.parent_id,conten.product_id,8,function(err, rateproducts){
-
-            for (var x in rateproducts) {
-              var productiteam = JSON.parse(JSON.stringify(rateproducts[x]));
-              var pricebeauty = String(productiteam.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-              productiteam.pricebeauty = pricebeauty;
-              productiteam.alt = rateproducts[x].detail[0].name;
-              rateproducts[x] = productiteam;
-            }
-
-            var procontent = JSON.parse(JSON.stringify(conten.detail[0]));
-            var product_details = conten.product_detail;
-            var product_more_info = conten.product_more_info;
-            for (var x in product_more_info) {
-              if(product_more_info[x].status==1){
-                product_more_info[x].status=undefined
-              }
-              if(product_more_info[x].status==1){
-                product_more_info[x].status=undefined
-              }
-            }
-            var pricebeauty = String(conten.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-            var islogin = undefined;
-            var instock = undefined;
-            if(req.user){
-              islogin = 1;
-            }
-            if(conten.show==1){
-              instock = 1;
-            }
-            res.render('content/'+customer_username+'/productdetail', {
-              description:conten.detail[0].description,
-              canonical:websiteinfo.website_protocol+'://'+hostname+'/'+conten.seo_url,
-              orgimage:websiteinfo.website_protocol+'://'+hostname+'/images/products/fullsize/'+conten.image2,
-              contents:conten,
-              product_details:product_details,
-              price:pricebeauty,
-              details:procontent,
-              title:conten.detail[0].title,
-              layout: customer_username,
-              productmenu:productmenu,
-              instock:instock,
-              product_more_info:product_more_info,
-              islogin:islogin,
-              mainmenu:mainmenu,
-              siteinfo:websiteinfo,
-              sitefooter:sitefooter,
-              rateproducts:rateproducts,
-              newproducts:newproducts,
-              productmoreinfos:productmoreinfos
-            });
-          });
-        });
-      }
-      else{
-
-      }
-    }
-    else{
-      if(customer_username){
-        res.render('content/'+customer_username+'/error404', {
-          title: 'Lổi 404 không tìm thấy',
-          layout:customer_username,
-          canonical:hostname+'/error404',
-          title: websiteinfo.title,
-          description: websiteinfo.description,  
-          keyword: websiteinfo.keyword,
-        });
-      }
-      else{
-
-      }
-    }
-  });
-});
-
 module.exports = router;
 

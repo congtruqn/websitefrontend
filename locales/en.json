@@ -1,4 +1,11 @@
 {
 	"name": "Full Name",
-	"contact":"Contact"
+	"contact": "Contact",
+	"address": "Address",
+	"phone": "Phone",
+	"company_name": "TNS . Technology Solution CO., LTD",
+	"homepage": "Home",
+	"features": "Features",
+	"agent_registration": "Agent registration",
+	"7_day_free": "7_day_free"
 }

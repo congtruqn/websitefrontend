@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="/layout/{{layout}}/css/jcarousel.responsive.css" />
   <link rel="stylesheet" href="/layout/{{layout}}/css/mmenu.css" />
   
-  <script type="text/javascript" src="/layout/{{layout}}/js/jquery-1.7.1.min.js"></script>
+  <script type="text/javascript" src="/layout/{{layout}}/js/jquery-1.12.4-wp.js"></script>
   <script type="text/javascript" src="/layout/{{layout}}/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/layout/{{layout}}/js/jquery.reveal.js"></script>
   <script type="text/javascript" src="/layout/{{layout}}/js/jcarousel.responsive.js"></script>
@@ -55,15 +55,19 @@
 <body>
 	<div class="wrapper">
     <header>
-      <div id="top">
+      <div id="top" class="head_top">
         <div class="container">
             <div class="header-top-left">
-                <ul>
-                  <li><i class="fa fa-mobile" aria-hidden="true"></i> <a href="#">{{siteinfo.hotline}}</a></li>
+                <ul class="top-menu">
+                  <li><span>Have any questions?</span></li>
+                  <li><i class="fa fa-phone" aria-hidden="true"></i> <a href="#">{{siteinfo.hotline}}</a></li>
+                  <li><i class="fa fa-envelope" aria-hidden="true"></i> <a href="#">{{siteinfo.email}}</a></li>
                 </ul>              
             </div>
             <div class="header-top-right">
                 <ul>
+                  <li><a href="/en"><img src="/images/en.jpg"></a></li>
+                  <li><a href="/vi"><img src="/images/vi.png"></a></li>
                   <li><a href="#"><i class="fa fa-youtube-square" aria-hidden="true"></i></a></li>
                   <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
                   <li><a href="#"><i class="fa fa-facebook-square" aria-hidden="true"></i></a></li>
@@ -84,14 +88,6 @@
         </div>
       </div>
     </header>
-    <div id="navition">
-        <div class="container">
-          <a href="#menu" class="mobimenuicon"><span></span></a>
-          <div class="desktop_menu">
-            {{>mainmenu}}
-          </div>
-        </div>
-    </div>
     <div class="content" id="content">
           {{{body}}}
     </div>
@@ -205,5 +201,22 @@ $('.pro_detail').delegate('.list_size','click', function(){
           }
           
         }
+</script>
+<script>
+$(function(){
+  var header = $("header"),
+      yOffset = 0,
+      triggerPoint = 120;
+  $(window).scroll(function(){
+    //console.log($(window).scrollTop())
+    yOffset = $(window).scrollTop();
+    if(yOffset >= triggerPoint){
+      header.addClass("minimized");
+    }else{
+      header.removeClass("minimized");
+    }
+    
+  });
+});
 </script>
 </html>

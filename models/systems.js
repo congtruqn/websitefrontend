@@ -137,6 +137,18 @@ module.exports.getfooterbycustomer = function(customer_id){
     });
   })
 }
+module.exports.getwebsitebyseourl = function(customer_id,seo_url){
+  return new Promise((resolve, reject)=>{
+    Seourls.findByUrl(customer_id,seo_url,async function(err, website){
+      if(website){
+        resolve(website)
+      }
+      else{
+        resolve(null);
+      }
+    });
+  })
+}
 module.exports.gettestimonialsbycustomer = function(customer_id){
   return new Promise((resolve, reject)=>{
     testimonials.getcounttestimonialsbycustomer(3,customer_id,async function(error,testimo){

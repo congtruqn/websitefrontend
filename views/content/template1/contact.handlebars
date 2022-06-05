@@ -16,7 +16,7 @@
 		<div class="row">
 			<div class="col-xs-12 col-sm-6 col-md-4 contact_right">
 				<div class="hpr-form">
-					<h2>Trải nghiệm dùng thử miễn phí 7 ngày</h2>
+					<h2>{{i18n "7_day_free"}}</h2>
 					<p>Không giới hạn tính năng</p>
 					<div class="hpr-input hpr-text">
 						<input id="name" type="text" placeholder="Họ và tên *" obj="Họ và tên" class="validate required" maxlength="255">
@@ -35,9 +35,9 @@
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-8 contact_left">
 				<div class="contact-form">
-					<h3>{{siteinfo.company_name}}</h3>
-					<p><i class="fa fa-map-marker"></i> Địa chỉ: {{siteinfo.customer_address}}</p>
-					<p><i class="fa fa-phone"></i> Điện thoại: {{siteinfo.ustomer_phone}}</p>
+					<h3>{{i18n "company_name"}}</h3>
+					<p><i class="fa fa-map-marker"></i> {{i18n "address"}}: {{i18n "company_name"}}</p>
+					<p><i class="fa fa-phone"></i> {{i18n "phone"}}: {{siteinfo.ustomer_phone}}</p>
 					<p><i class="fa fa-envelope"></i> Email: {{siteinfo.customer_email}}</p>
 					<img src="/static/template1/images/news/map.png">
 				</div>
