@@ -419,7 +419,7 @@ router.get('/getshippingcod', function(req, res, next) {
       });
   });
 });
-const renderhomepage = async function(req,res){
+const renderhomepage = async function(req,res,language){
   var hostname = req.headers.host;
   var websiteinfo =  caches.websiteinfo[hostname];
   var productmenu = caches.productcat[hostname];
@@ -448,6 +448,11 @@ const renderhomepage = async function(req,res){
   var hotproductcategory = caches.hotproductcategory[hostname];
   let hotandnewproducts = caches.hotandnewproducts[hostname];
   var hotnews = caches.hotnews[hostname];
+  let website_protocol = websiteinfo.website_protocol ?  websiteinfo.website_protocol: "http";
+  let lang = ''
+  if(language != 'vi'){
+    lang = language
+  }
   if(websiteinfo.website_url===hostname){
       var customer_username = websiteinfo.customer_username;
       if(!caches.hotproductcats[hostname]||caches.hotproductcats[hostname]==null){
@@ -457,7 +462,7 @@ const renderhomepage = async function(req,res){
       var productcat = caches.hotproductcats[hostname]
       res.render('content/'+customer_username+'/index', {
         productcats:productcat,
-        canonical:websiteinfo.website_protocol+'://'+hostname,
+        canonical:website_protocol+'://'+hostname+'/'+lang,
         title: websiteinfo.title,
         description: websiteinfo.description,  
         keyword: websiteinfo.keyword,
@@ -477,6 +482,7 @@ const renderhomepage = async function(req,res){
         hotnews:hotnews,
         listtemplates:listtemplates,
         testimonials:testimonials,
+        language: lang
       });
     }
   else{
@@ -520,6 +526,7 @@ const rendernewcontentpage = async function(req,res,website_url){
   var sitefooter = caches.footer[hostname];
   var newproducts = caches.newproducts[hostname];
   var productmoreinfos = caches.productmoreinfos[hostname];
+  let website_protocol = websiteinfo.website_protocol?websiteinfo.website_protocol:"http";
   NewsContents.getnewscontentbycontentid(website_url.content_id,function(err, conten){
     NewsContents.gethotnewcontentcount(5,function(err, hotnews){
       NewsContents.getratenewcontentbycatcount(conten.parent_id,conten.content_id,8,function(err, ratenews){
@@ -532,8 +539,8 @@ const rendernewcontentpage = async function(req,res,website_url){
           title:conten.detail[0].title,
           description:conten.detail[0].description,
           keyword:conten.detail[0].keyword,
-          canonical:websiteinfo.website_protocol+'://'+hostname+'/'+conten.seo_url+'/',
-          orgimage:websiteinfo.website_protocol+'://'+hostname+'/images/news/fullsize/'+conten.image2,
+          canonical:website_protocol+'://'+hostname+'/'+conten.seo_url,
+          orgimage:website_protocol+'://'+hostname+'/images/news/fullsize/'+conten.image2,
           layout: customer_username,
           productmenu:productmenu,
           mainmenu:mainmenu,
@@ -558,6 +565,7 @@ const rendernewcatpage = async function(req,res,website_url){
   var productmoreinfos = caches.productmoreinfos[hostname];
   var per_page = 18;
   var page = req.param('page','1');
+  let website_protocol = websiteinfo.website_protocol?websiteinfo.website_protocol:"http";
   NewsCats.getnewscatsbycatid(customer_id,website_url.content_id,async function(err, newcatinfo){
       var count = await countnewsbycat(newcatinfo.cat_id);
       NewsContents.getnewsnontentsbycatcount(website_url.content_id,page,per_page,function(err, conten){
@@ -586,7 +594,7 @@ const rendernewcatpage = async function(req,res,website_url){
               title:newcatinfo.detail[0].title,
               description:newcatinfo.detail[0].description,
               keyword:newcatinfo.detail[0].keyword,
-              canonical:websiteinfo.website_protocol+'://'+hostname+'/'+newcatinfo.seo_url+'/',
+              canonical:website_protocol+'://'+hostname+'/'+newcatinfo.seo_url+'/',
               orgimage:hostname+'/images/news/fullsize/'+conten.image,
               layout: customer_username,
               productmenu:productmenu,
@@ -611,6 +619,7 @@ const renderproductcatpage = async function(req,res,website_url){
   var newproducts = caches.newproducts[hostname];
   var productmoreinfos = caches.productmoreinfos[hostname];
   var per_page = websiteinfo.products_per_page;
+  let website_protocol = websiteinfo.website_protocol?websiteinfo.website_protocol:"http";
   if(isNaN(Number(per_page))){
     per_page = 24
   }
@@ -651,7 +660,7 @@ const renderproductcatpage = async function(req,res,website_url){
         newscatinfo:countproduct,
         productcatinfo:catinfo.detail[0],
         title:catinfo.detail[0].title,
-        canonical:websiteinfo.website_protocol+'://'+hostname+'/'+catinfo.seo_url+'/',
+        canonical:website_protocol+'://'+hostname+'/'+catinfo.seo_url+'/',
         description:catinfo.detail[0].description,
         keyword:catinfo.detail[0].keyword,
         layout: customer_username,
@@ -667,13 +676,13 @@ const renderproductcatpage = async function(req,res,website_url){
 const renderproductdetailpage = async function(req,res,website_url){
   var hostname = req.headers.host;
   var websiteinfo =  caches.websiteinfo[hostname];
-  var customer_id = websiteinfo.customer_id;
   var customer_username = websiteinfo.customer_username;
   var mainmenu = caches.mainmenu[hostname];
   var productmenu = caches.productcat[hostname];
   var sitefooter = caches.footer[hostname];
   var newproducts = caches.newproducts[hostname];
   var productmoreinfos = caches.productmoreinfos[hostname];
+  let website_protocol = websiteinfo.website_protocol?websiteinfo.website_protocol:"http";
   Productlists.getproductbyproductid(website_url.content_id,async function(err, conten){
     Productlists.getrateproductlistscatcount(conten.parent_id,conten.product_id,8,function(err, rateproducts){
       for (var x in rateproducts) {
@@ -706,8 +715,8 @@ const renderproductdetailpage = async function(req,res,website_url){
       }
       res.render('content/'+customer_username+'/productdetail', {
         description:conten.detail[0].description,
-        canonical:websiteinfo.website_protocol+'://'+hostname+'/'+conten.seo_url,
-        orgimage:websiteinfo.website_protocol+'://'+hostname+'/images/products/fullsize/'+conten.image2,
+        canonical:website_protocol+'://'+hostname+'/'+conten.seo_url,
+        orgimage:website_protocol+'://'+hostname+'/images/products/fullsize/'+conten.image2,
         contents:conten,
         product_details:product_details,
         price:pricebeauty,
@@ -740,6 +749,7 @@ const renderproductmoreinfocategorypage = async function(req,res,website_url){
   var productmoreinfos = caches.productmoreinfos[hostname];
   var per_page = websiteinfo.products_per_page;
   var page = req.param('page','1');
+  let website_protocol = websiteinfo.website_protocol?websiteinfo.website_protocol:"http";
   Productlists.countproductbymoreinfo(customer_id,website_url.content_id,async function(err, count){
     productmoreinfo.getmoreinfovalue(customer_id,website_url.content_id, function(err, productmorein){
       Productlists.getallproductbymoreinfo(customer_id,website_url.content_id,Number(page),per_page,async function(err, countproduct){
@@ -776,7 +786,7 @@ const renderproductmoreinfocategorypage = async function(req,res,website_url){
           newscatinfo:countproduct,
           productcatinfo:productmorein[0].default_value[0],
           title:productmorein[0].default_value[0].title,
-          canonical:websiteinfo.website_protocol+'://'+hostname+'/'+productmorein[0].default_value[0].seo_url+'/',
+          canonical:website_protocol+'://'+hostname+'/'+productmorein[0].default_value[0].seo_url+'/',
           description:productmorein[0].default_value[0].description,
           keyword:productmorein[0].default_value[0].keyword,
           layout: customer_username,
@@ -792,7 +802,12 @@ const renderproductmoreinfocategorypage = async function(req,res,website_url){
   })
 }
 router.get('/',async function(req, res) {
-  renderhomepage(req,res)
+  if(i18n.getLocale()&&i18n.getLocale()!='vi'){ 
+    res.redirect(i18n.getLocale());
+  }
+  else{
+    renderhomepage(req,res,'vi')
+  }
 });
 router.get('/:seourl',async function(req, res, next) {
   var seourl = req.params.seourl;
@@ -804,12 +819,12 @@ router.get('/:seourl',async function(req, res, next) {
     case 'en':
       res.cookie('locale','en');
       i18n.setLocale('en');
-      renderhomepage(req,res);
+      renderhomepage(req,res,i18n.getLocale());
       break;
     case 'vi':
       res.cookie('locale','vi');
       i18n.setLocale('vi');
-      renderhomepage(req,res);
+      renderhomepage(req,res,i18n.getLocale());
       break;
     default:
       const website_url = await systems.getwebsitebyseourl(customer_id,seourl)
