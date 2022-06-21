@@ -449,7 +449,7 @@ const renderhomepage = async function(req,res,language){
   let hotandnewproducts = caches.hotandnewproducts[hostname];
   var hotnews = caches.hotnews[hostname];
   let website_protocol = websiteinfo.website_protocol ?  websiteinfo.website_protocol: "http";
-  let lang = ''
+  let lang = 'vi'
   if(language != 'vi'){
     lang = language
   }
@@ -460,12 +460,16 @@ const renderhomepage = async function(req,res,language){
         caches.hotproductcats[hostname] = hotproductcats;
       }
       var productcat = caches.hotproductcats[hostname]
+      let tranData = {}
+      if(websiteinfo.multi_language == 1){
+        tranData = websiteinfo.detail.find( obj => obj.lang == lang )
+      }
       res.render('content/'+customer_username+'/index', {
         productcats:productcat,
         canonical:website_protocol+'://'+hostname+'/'+lang,
-        title: websiteinfo.title,
-        description: websiteinfo.description,  
-        keyword: websiteinfo.keyword,
+        title: tranData?tranData.title:websiteinfo.title,
+        description: tranData?tranData.description:websiteinfo.description,  
+        keyword: tranData?tranData.keyword:websiteinfo.keyword,
         banners: cusbanner,
         productmenu:productmenu,
         mainmenu:mainmenu,
@@ -824,7 +828,7 @@ router.get('/:seourl',async function(req, res, next) {
     case 'vi':
       res.cookie('locale','vi');
       i18n.setLocale('vi');
-      renderhomepage(req,res,i18n.getLocale());
+      res.redirect('/');
       break;
     default:
       const website_url = await systems.getwebsitebyseourl(customer_id,seourl)

@@ -213,39 +213,6 @@ body {
     color: #1e1e1e;
     font-weight: 500;
 }
-.about_us_left{
-    float: left;
-    width: 41.66666667%;
-}
-.about_us_right{
-    width: 50%;
-    margin-left: 8.33333333%;
-    float: right;
-}
-.about_us{padding: 30px 0;}
-.about_us h1{font-size: 25px;font-weight: 400;border-bottom: 2px solid #09f;padding: 7px 0;}
-.about_us p{font-size: 15px; text-align: justify;font-weight: 300;color: #555;}
-.about_us_right p{margin-top: 20px;}
-.contact_us{
-    width: 100%;
-    height: 150px;
-    background: url("../images/clouds-1923545.jpg") center bottom no-repeat transparent;
-}
-.contact_us_left{
-    float: left;
-    width: 41.66666667%;
-}
-.contact_us_left{padding: 29px 0;}
-.contact_us_left h3{font-size: 28px;color: #0077bd;font-weight: 200;line-height:45px;}
-.contact_us_right{
-    width: 50%;
-    height: 150px;
-    float: right;
-    margin-left: 8.33333333%;
-}
-.contact_us_right img{margin-top: -30px;height: 180px;}
-.contact_us_right p{float: right;margin-top: 60px;}
-.contact_us_right p a{color: #fff;padding: 7px 15px;font-size: 17px;background: #09f;text-transform: uppercase;}
 .list_template_title{
     padding-top: 25px;
     text-align: center;

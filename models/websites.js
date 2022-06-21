@@ -10,6 +10,14 @@ var websitesSchema = mongoose.Schema({
 	website_protocol:{
 		type: String
 	},
+	detail:[{
+		lang: String,
+		title: String,
+		keyword: String,
+		description: String,
+		company_name:String,
+		slogan:String
+	}],
 	website_name:{
 		type: String
 	},
@@ -107,6 +115,9 @@ var websitesSchema = mongoose.Schema({
 		type: Number
 	},
 	num_hot_news:{
+		type: Number
+	},
+	multi_language:{
 		type: Number
 	},
 });
