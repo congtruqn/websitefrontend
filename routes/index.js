@@ -19,16 +19,18 @@ const request = require('request');
 var i18n = require('i18n');
 router.get('/website-mau',async function(req, res, next) {
   var hostname = req.headers.host;
-  website.getwebsitesbyurl(hostname,async function(error,websiteinfo){
-    website.gettemplatewebsites(8,async function(error,templatewebsite){
-      var customer_username = websiteinfo.customer_username
-      res.render('content/'+customer_username+'/websitetemplate', {
-          title:'Giao diện website mẫu, template website miễn phí',
-          listtemplates:templatewebsite,
-          layout: websiteinfo.customer_username,
-      });
+  var websiteinfo =  caches.websiteinfo[hostname];
+  var hotnews = caches.hotnews[hostname];
+  website.gettemplatewebsites(8,async function(error,templatewebsite){
+    var customer_username = websiteinfo.customer_username
+    res.render('content/'+customer_username+'/websitetemplate', {
+      title:'Giao diện website mẫu, template website miễn phí',
+      listtemplates:templatewebsite,
+      siteinfo:websiteinfo,
+      hotnews:hotnews,
+      layout: websiteinfo.customer_username,
     });
-  })
+  });
 });
 router.get('/getcart', function(req, res, next) {
   if(req.session.products){
@@ -83,6 +85,7 @@ router.get('/lien-he', function(req, res, next) {
   var customer_username = websiteinfo.customer_username;
   var mainmenu = caches.mainmenu[hostname];
   var productmoreinfos = caches.productmoreinfos[hostname];
+  var hotnews = caches.hotnews[hostname];
   res.render('content/'+customer_username+'/contact', {
     title: 'Liên hệ',
     layout: customer_username,
@@ -91,6 +94,7 @@ router.get('/lien-he', function(req, res, next) {
     layout: customer_username,
     siteinfo:websiteinfo,
     sitefooter:sitefooter,
+    hotnews:hotnews,
     productmoreinfos:productmoreinfos
   });
 });
@@ -436,7 +440,7 @@ const renderhomepage = async function(req,res,language){
   let testimonials = [];
   let cusbanner = [];
   let promises = []
-  if(hostname==='tns.vn'||(process.ENV==='local'&&hostname==='template1.tns.vn:3005')||hostname==='tnsviet.online'){
+  if(hostname==='tns.vn'||(process.env.ENV==='local'&&hostname==='template1.tns.vn:3005')||hostname==='tnsviet.online'){
     promises.push(systems.gettestimonialsbycustomer(websiteinfo.customer_id),systems.gettemplates(),systems.getbanner(websiteinfo.customer_id))
   }
   else{
@@ -467,9 +471,9 @@ const renderhomepage = async function(req,res,language){
       res.render('content/'+customer_username+'/index', {
         productcats:productcat,
         canonical:website_protocol+'://'+hostname+'/'+lang,
-        title: tranData?tranData.title:websiteinfo.title,
-        description: tranData?tranData.description:websiteinfo.description,  
-        keyword: tranData?tranData.keyword:websiteinfo.keyword,
+        title: tranData&&tranData.title?tranData.title:websiteinfo.title,
+        description: tranData&&tranData.description?tranData.description:websiteinfo.description,  
+        keyword: tranData&&tranData.keyword?tranData.keyword:websiteinfo.keyword,
         banners: cusbanner,
         productmenu:productmenu,
         mainmenu:mainmenu,
@@ -486,7 +490,7 @@ const renderhomepage = async function(req,res,language){
         hotnews:hotnews,
         listtemplates:listtemplates,
         testimonials:testimonials,
-        language: lang
+        language: language
       });
     }
   else{
@@ -806,12 +810,9 @@ const renderproductmoreinfocategorypage = async function(req,res,website_url){
   })
 }
 router.get('/',async function(req, res) {
-  if(i18n.getLocale()&&i18n.getLocale()!='vi'){ 
-    res.redirect(i18n.getLocale());
-  }
-  else{
-    renderhomepage(req,res,'vi')
-  }
+  res.cookie('locale','vi');
+  i18n.setLocale('vi');
+  renderhomepage(req,res)
 });
 router.get('/:seourl',async function(req, res, next) {
   var seourl = req.params.seourl;
@@ -880,7 +881,7 @@ router.get('/:seourl1/:selurl2',async function(req, res, next) {
     case 'en':
       res.cookie('locale','en');
       i18n.setLocale('en');
-      renderhomepage(req,res);
+      renderhomepage(req,res,i18n.getLocale());
       break;
     case 'vi':
       res.cookie('locale','vi');

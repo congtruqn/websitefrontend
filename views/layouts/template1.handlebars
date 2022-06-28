@@ -65,7 +65,7 @@
         <div class="container">
             <div class="header-top-left">
                 <ul class="top-menu">
-                  <li><span>Have any questions?</span></li>
+                  <li><span>{{i18n "you_need_webdesign"}}</span></li>
                   <li><i class="fa fa-phone" aria-hidden="true"></i> <a href="#">{{siteinfo.hotline}}</a></li>
                   <li><i class="fa fa-envelope" aria-hidden="true"></i> <a href="#">{{siteinfo.customer_email}}</a></li>
                 </ul>              
@@ -74,9 +74,6 @@
                 <ul>
                   <li><a href="/en"><img src="/images/en.jpg"></a></li>
                   <li><a href="/vi"><img src="/images/vi.png"></a></li>
-                  <li><a href="#"><i class="fa fa-youtube-square" aria-hidden="true"></i></a></li>
-                  <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-                  <li><a href="#"><i class="fa fa-facebook-square" aria-hidden="true"></i></a></li>
                 </ul> 
             </div>
         </div>
@@ -97,7 +94,7 @@
     <div class="content" id="content">
           {{{body}}}
     </div>
-      <footer class="footer">
+      <footer id="footer">
           {{>footer}}
       </footer>
     </div> <!-- /container -->
@@ -137,52 +134,11 @@
     </div>
 </body>
 <script type="text/javascript">
-$('.pro_detail').delegate('.list_size','click', function(){
-  $('.list_size').removeClass('sizeactive');
-  $(this).addClass('sizeactive');
-});
- function addToCart(ID){
-    var productcount = 1;
-    var productadd = 1;
-    
-    //var dataString = 'name='+name+'&email='+email+'&product='+product+'&text='+noidung;
-      var sizepro = $('.sizeactive').html();
-      var datastring =  'productcount='+productcount+'&productadd='+ID;
-      $.ajax({
-                type: "POST",
-                url: '/addtocart?'+datastring,
-                data: {id: ID},
-                success: function (result) {
-                    if(result==1){
-                        alert('Sản phẩm trong kho không đủ!');
-                    }
-                    else{
-                      window.location = '/gio-hang';
-                      //document.getElementById('product_price').innerHTML=array[1];
-                      
-                    }
-                }
-            });
-   
-    };
-  
-</script>
-<script type="text/javascript">
 	function DoSubmitSingleExts() {
 		var txt = $('#ime').val().trim();
 		window.location = '/tim-kiem?key=' + txt.toLowerCase();
 	};
 </script >
-<script>
-			new Mmenu( document.querySelector( '#menu' ) );
-			document.addEventListener( 'click', ( evnt ) => {
-				let anchor = evnt.target.closest( 'a[href^="#/"]' );
-				if ( anchor ) {
-					alert('Thank you for clicking, but that\'s a demo link.');
-					evnt.preventDefault();
-				}
-			});
-</script>
 <script type="text/javascript">
         function sent() {
           var name = document.getElementById('name').value;
@@ -208,7 +164,16 @@ $('.pro_detail').delegate('.list_size','click', function(){
           
         }
 </script>
+
 <script>
+new Mmenu( document.querySelector( '#menu' ) );
+			document.addEventListener( 'click', ( evnt ) => {
+				let anchor = evnt.target.closest( 'a[href^="#/"]' );
+				if ( anchor ) {
+					alert('Thank you for clicking, but that\'s a demo link.');
+					evnt.preventDefault();
+				}
+});
 $(function(){
   var header = $("header"),
       yOffset = 0,

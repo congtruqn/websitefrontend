@@ -1,11 +1,11 @@
 <div class="bread_images" style="background: url(/static/template1/images/news/history.png) no-repeat center center transparent;background-size: cover;">
 	<div class="container">
 		<div class="breadcrumb">
-			<h1  class="title_page">Giao diện website mẫu</h1>
+			<h1  class="title_page">{{i18n "template_store"}}</h1>
 				<nav aria-label="breadcrumb">
                     <ol class="breadcrumb justify-content-center">
-                        <li class="breadcrumb-item"><a href="/">Trang Chủ</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Website mẫu</li>
+                        <li class="breadcrumb-item"><a href="#">{{i18n "homepage"}}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{i18n "template"}}</li>
                     </ol>
                 </nav>
 		</div>
@@ -21,8 +21,7 @@
 	                        <a href="http://{{template.website_url}}"><img src="{{template.website_image_path}}{{template.website_image}}" alt="{{template.title}}"></a>
 	                      </div>
 	                      <div class="list_template_detail">
-	                        <p class="product_name">{{{template.title}}}</p>
-							<p class="product_name"><a href="http://{{template.website_url}}">Xem demo >></a></p>
+							<p class="product_name"><a href="http://{{template.website_url}}">{{i18n "view_demo"}}</a></p>
 	                      </div>
 	                    </div>
 	                </div>	
