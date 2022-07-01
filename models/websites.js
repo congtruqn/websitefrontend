@@ -148,9 +148,9 @@ module.exports.getwebsitesbyurl = function(url, callback){
 	var query = {website_url:url};
 	websites.findOne(query, callback);
 }
-module.exports.getAllwebsites = function(page,per_page,callback){
-	var query = {};
-	websites.find(query, callback).skip(per_page * (page - 1)).limit(per_page).sort({'create_date': -1 });
+module.exports.getAllWebsiteTemplateByPage = async function(page,per_page){
+	var query = {is_template:1};
+	return await websites.find(query).skip(per_page * (page - 1)).limit(per_page).sort({'create_date': -1 }).exec();
 }
 module.exports.gettemplatewebsites = function(num,callback){
 	var query = {is_template:1};
@@ -160,9 +160,9 @@ module.exports.getallwebsitesnotpage = function(callback){
 	var query = {};
 	websites.find(query, callback);
 }
-module.exports.countwebsites = function(callback){
-	var query = {};
-	websites.count(query, callback);
+module.exports.countWebsitesTemplate = async function(){
+	var query = {is_template:1};
+	return await websites.count(query).exec();
 }
 module.exports.countmaxcustomerid = function(callback){
 	var query = {};

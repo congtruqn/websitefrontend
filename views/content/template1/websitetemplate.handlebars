@@ -26,6 +26,14 @@
 	                    </div>
 	                </div>	
 				{{/each}}
+			<div id="clear"></div>	
+			<div class="content_page">
+				<ul>
+				{{#each allpage as |page|}}
+					<li><a href="/{{{page.seo_url}}}?page={{page.pagecount}}">{{{page.pagecount}}}</a></li>
+				{{/each}}
+				</ul>
+			</div>
 		</div>
 	</div>
 </div>

@@ -9,6 +9,10 @@ var Productlists = require('../models/productlists');
 var ProductCat = require('../models/productcats');
 var listorders = require('../models/listorders');
 var website = require('../models/websites');
+const {
+  countWebsitesTemplate,
+  getAllWebsiteTemplateByPage
+} = require('../models/websites');
 var customers = require('../models/customers');
 var systems = require('../models/systems');
 var caches = require('../models/cache');
@@ -21,15 +25,29 @@ router.get('/website-mau',async function(req, res, next) {
   var hostname = req.headers.host;
   var websiteinfo =  caches.websiteinfo[hostname];
   var hotnews = caches.hotnews[hostname];
-  website.gettemplatewebsites(8,async function(error,templatewebsite){
-    var customer_username = websiteinfo.customer_username
-    res.render('content/'+customer_username+'/websitetemplate', {
-      title:'Giao diện website mẫu, template website miễn phí',
-      listtemplates:templatewebsite,
-      siteinfo:websiteinfo,
-      hotnews:hotnews,
-      layout: websiteinfo.customer_username,
-    });
+  let language = i18n.getLocale();
+  if(language=='vi')
+    language = ''
+  let per_page = 30;
+  let [count,listTemplate] = await Promise.all([countWebsitesTemplate(),getAllWebsiteTemplateByPage()])
+  var allpage = (count/per_page)+1;
+  var arraypage = [];
+  for (var i = 1; i <= allpage; i++ ) {
+      var temp ={
+          pagecount:i,
+          seo_url:'website-mau'
+      }
+      arraypage.push(temp);
+  };
+  var customer_username = websiteinfo.customer_username
+  res.render('content/'+customer_username+'/websitetemplate', {
+    title:'Giao diện website mẫu, template website miễn phí',
+    listtemplates:listTemplate,
+    siteinfo:websiteinfo,
+    arraypage:arraypage,
+    hotnews:hotnews,
+    language:language,
+    layout: websiteinfo.customer_username,
   });
 });
 router.get('/getcart', function(req, res, next) {
@@ -86,6 +104,9 @@ router.get('/lien-he', function(req, res, next) {
   var mainmenu = caches.mainmenu[hostname];
   var productmoreinfos = caches.productmoreinfos[hostname];
   var hotnews = caches.hotnews[hostname];
+  let language = i18n.getLocale();
+  if(language=='vi')
+    language = ''
   res.render('content/'+customer_username+'/contact', {
     title: 'Liên hệ',
     layout: customer_username,
@@ -95,6 +116,7 @@ router.get('/lien-he', function(req, res, next) {
     siteinfo:websiteinfo,
     sitefooter:sitefooter,
     hotnews:hotnews,
+    language:language,
     productmoreinfos:productmoreinfos
   });
 });
@@ -510,6 +532,9 @@ const renderpage = async function(req,res,website_url){
   var sitefooter = caches.footer[hostname];
   var newproducts = caches.newproducts[hostname];
   var productmoreinfos = caches.productmoreinfos[hostname];
+  let language = i18n.getLocale();
+  if(language=='vi')
+    language = ''
   newspages.getNewsPagesById(customer_id,website_url.content_id,function(err, conten){
     res.render('content/'+customer_username+'/page', {
       contents:conten,
@@ -521,6 +546,7 @@ const renderpage = async function(req,res,website_url){
       siteinfo:websiteinfo,
       sitefooter:sitefooter,
       newproducts:newproducts,
+      language:language,
       productmoreinfos:productmoreinfos
     });
   });
@@ -535,6 +561,9 @@ const rendernewcontentpage = async function(req,res,website_url){
   var newproducts = caches.newproducts[hostname];
   var productmoreinfos = caches.productmoreinfos[hostname];
   let website_protocol = websiteinfo.website_protocol?websiteinfo.website_protocol:"http";
+  let language = i18n.getLocale();
+  if(language=='vi')
+    language = ''
   NewsContents.getnewscontentbycontentid(website_url.content_id,function(err, conten){
     NewsContents.gethotnewcontentcount(5,function(err, hotnews){
       NewsContents.getratenewcontentbycatcount(conten.parent_id,conten.content_id,8,function(err, ratenews){
@@ -555,6 +584,7 @@ const rendernewcontentpage = async function(req,res,website_url){
           siteinfo:websiteinfo,
           sitefooter:sitefooter,
           newproducts:newproducts,
+          language:language,
           productmoreinfos:productmoreinfos
         });
       });
@@ -574,6 +604,9 @@ const rendernewcatpage = async function(req,res,website_url){
   var per_page = 18;
   var page = req.param('page','1');
   let website_protocol = websiteinfo.website_protocol?websiteinfo.website_protocol:"http";
+  let language = i18n.getLocale();
+  if(language=='vi')
+    language = ''
   NewsCats.getnewscatsbycatid(customer_id,website_url.content_id,async function(err, newcatinfo){
       var count = await countnewsbycat(newcatinfo.cat_id);
       NewsContents.getnewsnontentsbycatcount(website_url.content_id,page,per_page,function(err, conten){
@@ -610,6 +643,7 @@ const rendernewcatpage = async function(req,res,website_url){
               siteinfo:websiteinfo,
               sitefooter:sitefooter,
               newproducts:newproducts,
+              language:language,
               productmoreinfos:productmoreinfos
           });
         });
@@ -634,6 +668,9 @@ const renderproductcatpage = async function(req,res,website_url){
   var page = req.param('page','1');
   var count = await countproductsbycat(website_url.content_id);
   var catinfo = await getproductcatinfo(website_url.content_id);
+  let language = i18n.getLocale();
+  if(language=='vi')
+    language = ''
   Productlists.getallproductbycatshow(customer_id,website_url.content_id,Number(page),per_page,async function(err, countproduct){
       for (var x in countproduct) {
         var productiteam = JSON.parse(JSON.stringify(countproduct[x]));
@@ -677,6 +714,7 @@ const renderproductcatpage = async function(req,res,website_url){
         siteinfo:websiteinfo,
         sitefooter:sitefooter,
         newproducts:newproducts,
+        language:language,
         productmoreinfos:productmoreinfos
       });
   });
@@ -691,6 +729,9 @@ const renderproductdetailpage = async function(req,res,website_url){
   var newproducts = caches.newproducts[hostname];
   var productmoreinfos = caches.productmoreinfos[hostname];
   let website_protocol = websiteinfo.website_protocol?websiteinfo.website_protocol:"http";
+  let language = i18n.getLocale();
+  if(language=='vi')
+    language = ''
   Productlists.getproductbyproductid(website_url.content_id,async function(err, conten){
     Productlists.getrateproductlistscatcount(conten.parent_id,conten.product_id,8,function(err, rateproducts){
       for (var x in rateproducts) {
@@ -740,6 +781,7 @@ const renderproductdetailpage = async function(req,res,website_url){
         sitefooter:sitefooter,
         rateproducts:rateproducts,
         newproducts:newproducts,
+        language:language,
         productmoreinfos:productmoreinfos
       });
     });
@@ -758,6 +800,9 @@ const renderproductmoreinfocategorypage = async function(req,res,website_url){
   var per_page = websiteinfo.products_per_page;
   var page = req.param('page','1');
   let website_protocol = websiteinfo.website_protocol?websiteinfo.website_protocol:"http";
+  let language = i18n.getLocale();
+  if(language=='vi')
+    language = ''
   Productlists.countproductbymoreinfo(customer_id,website_url.content_id,async function(err, count){
     productmoreinfo.getmoreinfovalue(customer_id,website_url.content_id, function(err, productmorein){
       Productlists.getallproductbymoreinfo(customer_id,website_url.content_id,Number(page),per_page,async function(err, countproduct){
@@ -803,6 +848,7 @@ const renderproductmoreinfocategorypage = async function(req,res,website_url){
           siteinfo:websiteinfo,
           sitefooter:sitefooter,
           newproducts:newproducts,
+          language:language,
           productmoreinfos:productmoreinfos
         });
       });
