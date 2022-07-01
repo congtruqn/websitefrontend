@@ -1,3 +1,4 @@
+const await = require('await');
 var express = require('express');
 var app = express();
 var mongoose = require("mongoose")
@@ -186,9 +187,9 @@ module.exports.getAllNewsContentsBycat = function(cat_id,page,per_page,callback)
 	var query = {newscat_id:cat_id};
 	newscontents.find(query, callback).skip(per_page * (page - 1)).limit(per_page).sort({'create_date': -1 });
 }
-module.exports.getnewsnontentsbycatcount = function(cat_id,page,per_page,callback){
+module.exports.getnewsnontentsbycatcount = async function(cat_id,page,per_page){
 	var query = {'list_parent.parent_id':cat_id,show:1};
-	newscontents.find(query, callback).skip(per_page * (page - 1)).limit(per_page).sort({'create_date': -1 });
+	return await newscontents.find(query).skip(per_page * (page - 1)).limit(per_page).sort({'create_date': -1 }).exec();
 }
 module.exports.gethotnewcontentcount = function(count,callback){
 	var query = {hot:1,show:1};

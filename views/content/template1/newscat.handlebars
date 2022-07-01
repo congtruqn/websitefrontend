@@ -4,8 +4,8 @@
 			<div class="breadcrumbs">
 				<div id="bread">
 					<ul class="items">
-						<li class="homes"><a href="/">Trang chủ</a></li>
-						<li class="homes"><a href="/{{{contents.seo_url}}}">{{{newcatdetail.name}}}</a></li>
+						<li class="homes"><a href="/">{{i18n "homepage"}}</a></li>
+						<li class="homes"><a href="/{{{contents.seo_url}}}">{{newcatdetail.name}}</a></li>
 					</ul>
 				</div>
 			</div>
@@ -25,7 +25,7 @@
 					  	<div class="cat_detail">
 					   	{{#each images.detail as | listnews|}}
 					   		<h4><a href="/{{images.seo_url}}">{{{listnews.name}}}</a></h4>
-					   		<p>{{{listnews.shortdesc}}}...</p>
+					   		<p>{{{listnews.name}}}...</p>
 					   		<i><a href="/{{images.seo_url}}">Xem thêm</a></i>
 					   	{{/each}}
 					   </div>
@@ -42,7 +42,7 @@
 			</div>
 		</div>
 		 <div class="col-xs-12 col-sm-6 col-md-3">
-			<div class="new_news_title">Tin nổi bật</div>
+			<div class="new_news_title">{{i18n "featured_news"}}</div>
 			{{#each hotnews as |hotnew|}}
                 <div class="hot_news_item">
                     <div class="hot_news_detail">
