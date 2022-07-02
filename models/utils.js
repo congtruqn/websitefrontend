@@ -5,8 +5,11 @@ module.exports.filterDetailByLang = function(data,lang,change_url){
     return data.map(function(item){
         let details = item.detail.find(obj => obj.lang == lang)
         item.details = details
-        if(change_url===1){
+        if(lang!='vi'){
             item.url = lang+'/'+item.seo_url
+        }
+        else{
+            item.url = item.seo_url
         }
         return item
     })

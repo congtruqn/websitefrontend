@@ -600,7 +600,9 @@ const rendernewcontentpage = async function (req, res, website_url,language='vi'
       let tranData = null
       let canonical = conten.seo_url
       if (websiteinfo.multi_language == 1) {
-        canonical = language+'/'+canonical
+        if(language!='vi'){
+          canonical = language+'/'+canonical
+        }
         tranData = conten.detail.find(obj => obj.lang == language)
         ratenews = utils.filterDetailByLang(ratenews,language,1)
         hotnews = utils.filterDetailByLang(hotnews,language,1)
@@ -614,7 +616,7 @@ const rendernewcontentpage = async function (req, res, website_url,language='vi'
         description: tranData&&tranData.description?tranData.description:conten.detail[0].description,
         keyword: tranData&&tranData.keyword?tranData.keyword:conten.detail[0].keyword,
         canonical: website_protocol + '://' + hostname + '/' + canonical,
-        orgimage: website_protocol + '://' + hostname + '/'+customer_username+'/images/news/fullsize/' + conten.image2,
+        orgimage: website_protocol + '://' + hostname + '/static/'+customer_username+'/images/news/fullsize/' + conten.image2,
         layout: customer_username,
         productmenu: productmenu,
         mainmenu: mainmenu,
@@ -663,7 +665,12 @@ const rendernewcatpage = async function (req, res, website_url, language = 'vi')
       }
       arraypage.push(temp);
     };
-    conten = utils.filterDetailByLang(conten,language,1)
+    if(language=='vi'){
+      conten = utils.filterDetailByLang(conten,language,0)
+    }
+    else{
+      conten = utils.filterDetailByLang(conten,language,1)
+    }
     res.render('content/' + customer_username + '/newscat', {
       contents: conten,
       hotnews: hotnews1,
