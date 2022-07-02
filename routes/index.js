@@ -8,6 +8,7 @@ var NewsCats = require('../models/newscats');
 var Productlists = require('../models/productlists');
 var ProductCat = require('../models/productcats');
 var listorders = require('../models/listorders');
+const utils = require('../models/utils');
 var website = require('../models/websites');
 const {
   countWebsitesTemplate,
@@ -21,16 +22,16 @@ var province = require('../models/province');
 var productmoreinfo = require('../models/productmoreinfo');
 const request = require('request');
 var i18n = require('i18n');
-const await = require('await');
 router.get('/website-mau', async function (req, res, next) {
-  var hostname = req.headers.host;
-  var websiteinfo = caches.websiteinfo[hostname];
-  var hotnews = caches.hotnews[hostname];
   let language = i18n.getLocale();
   let homelang = language
   if (language == 'vi') {
     homelang = ''
   }
+  var hostname = req.headers.host;
+  var websiteinfo = caches.websiteinfo[hostname];
+  var hotnews = caches.hotnews[hostname];
+  hotnews = utils.filterDetailByLang(hotnews,language)
   let per_page = 30;
   let [count, listTemplate] = await Promise.all([countWebsitesTemplate(), getAllWebsiteTemplateByPage()])
   var allpage = (count / per_page) + 1;
@@ -100,17 +101,18 @@ router.get('/clearcache', function (req, res, next) {
   res.send('ok');
 })
 router.get('/lien-he', function (req, res, next) {
-  var hostname = req.headers.host;
-  var websiteinfo = caches.websiteinfo[hostname];
-  var productmenu = caches.productcat[hostname];
-  var sitefooter = caches.footer[hostname];
-  var customer_username = websiteinfo.customer_username;
-  var mainmenu = caches.mainmenu[hostname];
-  var productmoreinfos = caches.productmoreinfos[hostname];
-  var hotnews = caches.hotnews[hostname];
   let language = i18n.getLocale();
   if (language == 'vi')
     language = ''
+  let hostname = req.headers.host;
+  let websiteinfo = caches.websiteinfo[hostname];
+  let productmenu = caches.productcat[hostname];
+  let sitefooter = caches.footer[hostname];
+  let customer_username = websiteinfo.customer_username;
+  let mainmenu = caches.mainmenu[hostname];
+  let productmoreinfos = caches.productmoreinfos[hostname];
+  let hotnews = caches.hotnews[hostname];
+  hotnews = utils.filterDetailByLang(hotnews,language)
   res.render('content/' + customer_username + '/contact', {
     title: 'Liên hệ',
     layout: customer_username,
@@ -478,6 +480,7 @@ const renderhomepage = async function (req, res, language) {
   var hotproductcategory = caches.hotproductcategory[hostname];
   let hotandnewproducts = caches.hotandnewproducts[hostname];
   var hotnews = caches.hotnews[hostname];
+  hotnews = utils.filterDetailByLang(hotnews,language)
   let website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : "http";
   let homelang = ''
   let lang = 'vi'
@@ -529,7 +532,11 @@ const renderhomepage = async function (req, res, language) {
     });
   }
 }
-const renderpage = async function (req, res, website_url) {
+const renderpage = async function (req, res, website_url,language='vi') {
+  let homelang = language
+  if (language == 'vi') {
+    homelang = ''
+  }
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
   var customer_id = websiteinfo.customer_id;
@@ -539,16 +546,27 @@ const renderpage = async function (req, res, website_url) {
   var sitefooter = caches.footer[hostname];
   var newproducts = caches.newproducts[hostname];
   var productmoreinfos = caches.productmoreinfos[hostname];
-  let language = i18n.getLocale();
-  let homelang = language
-  if (language == 'vi') {
-    homelang = ''
-  }
+  var hotnews = caches.hotnews[hostname];
+  let website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : "http";
   newspages.getNewsPagesById(customer_id, website_url.content_id, function (err, conten) {
+    let tranData = null
+    let canonical = conten.seo_url
+    if (websiteinfo.multi_language == 1) {
+      if (language != 'vi') {
+        lang = language
+        homelang = language
+      }
+      canonical = language+'/'+canonical
+      tranData = conten.detail.find(obj => obj.lang == language);
+      hotnews = utils.filterDetailByLang(hotnews,language,1)
+    }
     res.render('content/' + customer_username + '/page', {
       contents: conten,
-      details: conten.detail[0],
-      title: conten.detail[0].title,
+      details:tranData?tranData: conten.detail[0],
+      title:tranData&&tranData.title?tranData.title: conten.detail[0].title,
+      description: tranData && tranData.description ? tranData.description : conten.detail[0].description,
+      keyword: tranData && tranData.keyword ? tranData.keyword : conten.detail[0].keyword,
+      canonical:website_protocol+'/'+hostname+'/'+canonical,
       layout: customer_username,
       productmenu: productmenu,
       mainmenu: mainmenu,
@@ -557,37 +575,45 @@ const renderpage = async function (req, res, website_url) {
       newproducts: newproducts,
       language: language,
       lang: homelang,
+      hotnews:hotnews,
       productmoreinfos: productmoreinfos
     });
   });
 }
 const rendernewcontentpage = async function (req, res, website_url,language='vi') {
-  var hostname = req.headers.host;
-  var websiteinfo = caches.websiteinfo[hostname];
-  var customer_username = websiteinfo.customer_username;
-  var mainmenu = caches.mainmenu[hostname];
-  var productmenu = caches.productcat[hostname];
-  var sitefooter = caches.footer[hostname];
-  var newproducts = caches.newproducts[hostname];
-  var productmoreinfos = caches.productmoreinfos[hostname];
-  let website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : "http";
-  let hotnews = caches.hotnews[hostname];
   let homelang = language
   if (language == 'vi') {
     homelang = ''
   }
+  let hostname = req.headers.host;
+  let websiteinfo = caches.websiteinfo[hostname];
+  let customer_username = websiteinfo.customer_username;
+  let mainmenu = caches.mainmenu[hostname];
+  let productmenu = caches.productcat[hostname];
+  let sitefooter = caches.footer[hostname];
+  let newproducts = caches.newproducts[hostname];
+  let productmoreinfos = caches.productmoreinfos[hostname];
+  let website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : "http";
+  let hotnews = caches.hotnews[hostname];
   NewsContents.getnewscontentbycontentid(website_url.content_id, function (err, conten) {
     NewsContents.getratenewcontentbycatcount(conten.parent_id, conten.content_id, 8, function (err, ratenews) {
-      var procontent = JSON.parse(JSON.stringify(conten.detail[0]));
+      let tranData = null
+      let canonical = conten.seo_url
+      if (websiteinfo.multi_language == 1) {
+        canonical = language+'/'+canonical
+        tranData = conten.detail.find(obj => obj.lang == language)
+        ratenews = utils.filterDetailByLang(ratenews,language,1)
+        hotnews = utils.filterDetailByLang(hotnews,language,1)
+      }
       res.render('content/' + customer_username + '/newscontent', {
         contents: conten,
         hotnews: hotnews,
         ratenews: ratenews,
-        details: procontent,
-        title: conten.detail[0].title,
-        description: conten.detail[0].description,
-        keyword: conten.detail[0].keyword,
-        canonical: website_protocol + '://' + hostname + '/' + conten.seo_url,
+        details: tranData?tranData:conten.detail[0],
+        title: tranData&&tranData.title?tranData.title:conten.detail[0].title,
+        description: tranData&&tranData.description?tranData.description:conten.detail[0].description,
+        keyword: tranData&&tranData.keyword?tranData.keyword:conten.detail[0].keyword,
+        canonical: website_protocol + '://' + hostname + '/' + canonical,
         orgimage: website_protocol + '://' + hostname + '/images/news/fullsize/' + conten.image2,
         layout: customer_username,
         productmenu: productmenu,
@@ -603,6 +629,10 @@ const rendernewcontentpage = async function (req, res, website_url,language='vi'
   });
 }
 const rendernewcatpage = async function (req, res, website_url, language = 'vi') {
+  let homelang = language
+  if (language == 'vi') {
+    homelang = ''
+  }
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
   var customer_id = websiteinfo.customer_id;
@@ -615,11 +645,8 @@ const rendernewcatpage = async function (req, res, website_url, language = 'vi')
   var per_page = 18;
   var page = req.param('page', '1');
   let website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : "http";
-  var hotnews = caches.hotnews[hostname];
-  let homelang = language
-  if (language == 'vi') {
-    homelang = ''
-  }
+  let hotnews = caches.hotnews[hostname];
+  hotnews = utils.filterDetailByLang(hotnews,language)
   NewsCats.getnewscatsbycatid(customer_id, website_url.content_id, async function (err, newcatinfo) {
     let newsCatData = null
     if (websiteinfo.multi_language == 1) {
@@ -635,9 +662,7 @@ const rendernewcatpage = async function (req, res, website_url, language = 'vi')
       }
       arraypage.push(temp);
     };
-    conten = conten.filter(function(content) {
-      return content.detail.find(obj => obj.lang == language)
-    });
+    conten = utils.filterDetailByLang(conten,language,1)
     res.render('content/' + customer_username + '/newscat', {
       contents: conten,
       hotnews: hotnews,
@@ -935,6 +960,21 @@ router.get('/:seourl1/:selurl2', async function (req, res, next) {
   if (seourl1.length === 2) {
     lang = seourl1;
     seourl = seourl2;
+    switch (seourl1) {
+      case 'en':
+        res.cookie('locale', 'en');
+        i18n.setLocale('en');
+        break;
+      case 'vi':
+        res.cookie('locale', 'vi');
+        i18n.setLocale('vi');
+        break;
+      default:
+    }
+  }
+  else{
+    res.cookie('locale', 'vi');
+    i18n.setLocale('vi');
   }
   const website_url = await systems.getwebsitebyseourl(customer_id, seourl)
   if (!website_url) {
@@ -952,13 +992,13 @@ router.get('/:seourl1/:selurl2', async function (req, res, next) {
   else {
     switch (website_url.type) {
       case 1:
-        renderpage(req, res, website_url);
+        renderpage(req, res, website_url,lang);
         break;
       case 2:
         rendernewcatpage(req, res, website_url, lang);
         break;
       case 3:
-        rendernewcontentpage(req, res, website_url);
+        rendernewcontentpage(req, res, website_url,lang);
         break;
       case 4:
         renderproductcatpage(req, res, website_url);

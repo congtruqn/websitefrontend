@@ -6,7 +6,7 @@
 			<div class="breadcrumbs">
 				<div id="bread">
 					<ul class="items">
-						<li class="homes"><a href="/">Trang chủ</a></li>
+						<li class="homes"><a href="/">{{i18n "homepage"}}</a></li>
 						<li class="homes"><a href="/{{{contents.seo_url}}}">{{{details.name}}}</a></li>
 					</ul>
 				</div>
@@ -19,15 +19,12 @@
 		<div class="col-xs-12 col-sm-9">
 			<div class="news_content">
 				{{{details.content}}}
-
 				<div class="rate_news">
 					<div class="rate_news_title">Bài viết liên quan</div>
 					<ul>
 					{{#each ratenews as |hotnew|}}
 						<li class="rate_news_item">
-							{{#each hotnew.detail as |productdetail|}}
-								<a href="/{{hotnew.seo_url}}">{{{productdetail.name}}}</a>
-							{{/each}}
+							<a href="/{{hotnew.seo_url}}">{{{hotnew.details.name}}}</a>
 						</li>
 					{{/each}}
 					</ul>
@@ -35,13 +32,11 @@
 			</div>
 		</div>
 		 <div class="col-xs-12 col-sm-6 col-md-3">
-			<div class="new_news_title">Tin nổi bật</div>
+			<div class="new_news_title">{{i18n "featured_news"}}</div>
 			{{#each hotnews as |hotnew|}}
                 <div class="hot_news_item">
                     <div class="hot_news_detail">
-                        {{#each hotnew.detail as |productdetail|}}
-                          <p class="hot_news_name"><a href="/{{hotnew.seo_url}}">{{{productdetail.name}}}</a></p>
-                        {{/each}}
+						<p class="hot_news_name"><a href="/{{hotnew.seo_url}}">{{{hotnew.details.name}}}</a></p>
                     </div>
                 </div>
   			{{/each}}

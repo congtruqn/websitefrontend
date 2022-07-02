@@ -23,11 +23,9 @@
 					   		<a href="/{{images.seo_url}}"><img src="{{images.image_path}}medium/{{images.image}}"></a>
 					   </div>
 					  	<div class="cat_detail">
-					   	{{#each images.detail as | listnews|}}
-					   		<h4><a href="/{{images.seo_url}}">{{{listnews.name}}}</a></h4>
-					   		<p>{{{listnews.name}}}...</p>
-					   		<i><a href="/{{images.seo_url}}">Xem thêm</a></i>
-					   	{{/each}}
+						<h4><a href="/{{images.seo_url}}">{{images.details.name}}</a></h4>
+						<p>{{images.details.desc}}...</p>
+						<i><a href="/{{images.seo_url}}">{{i18n "view_more"}}</a></i>
 					   </div>
 					</div>	
 				{{/each}}
@@ -46,9 +44,7 @@
 			{{#each hotnews as |hotnew|}}
                 <div class="hot_news_item">
                     <div class="hot_news_detail">
-                        {{#each hotnew.detail as |productdetail|}}
-                          <p class="hot_news_name"><a href="/{{hotnew.seo_url}}">{{{productdetail.name}}}</a></p>
-                        {{/each}}
+                        <p class="hot_news_name"><a href="/{{hotnew.seo_url}}">{{{hotnew.details.name}}}</a></p>
                     </div>
                 </div>
   			{{/each}}
