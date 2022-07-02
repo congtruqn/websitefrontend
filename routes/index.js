@@ -30,8 +30,8 @@ router.get('/website-mau', async function (req, res, next) {
   }
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
-  var hotnews = caches.hotnews[hostname];
-  hotnews = utils.filterDetailByLang(hotnews,language)
+  let hotnews = caches.hotnews[hostname];
+  hotnews = utils.filterDetailByLang(hotnews,language,1)
   let per_page = 30;
   let [count, listTemplate] = await Promise.all([countWebsitesTemplate(), getAllWebsiteTemplateByPage()])
   var allpage = (count / per_page) + 1;
@@ -479,7 +479,7 @@ const renderhomepage = async function (req, res, language) {
   var newproducts = caches.newproducts[hostname];
   var hotproductcategory = caches.hotproductcategory[hostname];
   let hotandnewproducts = caches.hotandnewproducts[hostname];
-  var hotnews = caches.hotnews[hostname];
+  let hotnews = caches.hotnews[hostname];
   hotnews = utils.filterDetailByLang(hotnews,language)
   let website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : "http";
   let homelang = ''
@@ -546,7 +546,7 @@ const renderpage = async function (req, res, website_url,language='vi') {
   var sitefooter = caches.footer[hostname];
   var newproducts = caches.newproducts[hostname];
   var productmoreinfos = caches.productmoreinfos[hostname];
-  var hotnews = caches.hotnews[hostname];
+  let hotnews = caches.hotnews[hostname];
   let website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : "http";
   newspages.getNewsPagesById(customer_id, website_url.content_id, function (err, conten) {
     let tranData = null
@@ -614,7 +614,7 @@ const rendernewcontentpage = async function (req, res, website_url,language='vi'
         description: tranData&&tranData.description?tranData.description:conten.detail[0].description,
         keyword: tranData&&tranData.keyword?tranData.keyword:conten.detail[0].keyword,
         canonical: website_protocol + '://' + hostname + '/' + canonical,
-        orgimage: website_protocol + '://' + hostname + '/images/news/fullsize/' + conten.image2,
+        orgimage: website_protocol + '://' + hostname + '/'+customer_username+'/images/news/fullsize/' + conten.image2,
         layout: customer_username,
         productmenu: productmenu,
         mainmenu: mainmenu,
@@ -645,8 +645,9 @@ const rendernewcatpage = async function (req, res, website_url, language = 'vi')
   var per_page = 18;
   var page = req.param('page', '1');
   let website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : "http";
+  console.log(caches.hotnews[hostname])
   let hotnews = caches.hotnews[hostname];
-  hotnews = utils.filterDetailByLang(hotnews,language)
+  let hotnews1 = utils.filterDetailByLang(hotnews,language,1)
   NewsCats.getnewscatsbycatid(customer_id, website_url.content_id, async function (err, newcatinfo) {
     let newsCatData = null
     if (websiteinfo.multi_language == 1) {
@@ -665,7 +666,7 @@ const rendernewcatpage = async function (req, res, website_url, language = 'vi')
     conten = utils.filterDetailByLang(conten,language,1)
     res.render('content/' + customer_username + '/newscat', {
       contents: conten,
-      hotnews: hotnews,
+      hotnews: hotnews1,
       allpage: arraypage,
       newscatinfo: newcatinfo,
       newcatdetail: newsCatData ? newsCatData : newcatinfo.detail[0],

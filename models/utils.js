@@ -6,7 +6,7 @@ module.exports.filterDetailByLang = function(data,lang,change_url){
         let details = item.detail.find(obj => obj.lang == lang)
         item.details = details
         if(change_url===1){
-            item.seo_url = lang+'/'+item.seo_url
+            item.url = lang+'/'+item.seo_url
         }
         return item
     })
