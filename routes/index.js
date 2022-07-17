@@ -102,8 +102,10 @@ router.get('/clearcache', function (req, res, next) {
 })
 router.get('/lien-he', function (req, res, next) {
   let language = i18n.getLocale();
-  if (language == 'vi')
-    language = ''
+  let homelang = language
+  if (language == 'vi') {
+    homelang = ''
+  }
   let hostname = req.headers.host;
   let websiteinfo = caches.websiteinfo[hostname];
   let productmenu = caches.productcat[hostname];
@@ -123,6 +125,7 @@ router.get('/lien-he', function (req, res, next) {
     sitefooter: sitefooter,
     hotnews: hotnews,
     language: language,
+    lang:homelang,
     productmoreinfos: productmoreinfos
   });
 });

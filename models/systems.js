@@ -48,7 +48,19 @@ module.exports.getproductmenu = function(customer_id){
     website.getwebsitesbycustomerid(customer_id,function(err, websiteinfo){
       ProductCat.getrootproductcats(customer_id,async function(err, productcatroot){
         for (var x in productcatroot) {
-            listcat = listcat + '<li class="product_menu_item"><a href="/'+productcatroot[x].seo_url+'"><i class="menu-icon img-icon"><img src="/static/'+websiteinfo.customer_username+'/images/products/fullsize/'+productcatroot[x].image_icon+'" alt="menu icon"></i><span>'+productcatroot[x].detail[0].name+'</span></a>';
+          let icon = '';
+          let icon_font  = productcatroot[x].icon_font?productcatroot[x].icon_font:null;
+          let icon_image = productcatroot[x].icon?productcatroot[x].icon:null;
+          if(icon_font){
+            icon = `<i class="${icon_font}"></i>`
+          }
+          else if(icon_image){
+            icon = '<img src="'+productcatroot[x].icon+'" alt="menu icon">'
+          }
+          listcat = listcat + '<li class="product_menu_item"><a href="/'+productcatroot[x].seo_url+'">'
+            +'<i class="menu-icon img-icon">'
+            + icon
+            +'</i><span>'+productcatroot[x].detail[0].name+'</span></a>';
             var listcat1 = await rendercatsbyparent(customer_id,productcatroot[x].cat_id,'');
             listcat = listcat + listcat1;
             listcat = listcat + '</li>';  

@@ -19,9 +19,12 @@ var productcatsSchema = mongoose.Schema({
 	image:{
 		type: String,
 	},
-	image_icon:{
+	icon:{
 		type: String,
 	},
+	icon_font:{
+		type: String,
+	},	
 	image_category:{
 		type: String,
 	},
