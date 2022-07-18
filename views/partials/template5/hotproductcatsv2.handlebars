@@ -1,0 +1,46 @@
+{{#each productcats as |productcat|}}
+{{#if productcat.image_ads}}
+{{#if productcat.ads_url}}
+<div class="category_ads">
+  <a href="{{productcat.ads_url}}"><img src="{{productcat.image_ads}}" alt="ads"></a>
+</div>
+{{/if}}
+{{/if}}
+<div class="row">
+  <div class="col-xs-12 col-sm-12">
+    <div class="cdz-block-content cdz-tabs-bg" style="background-image: url({{productcat.image}});min-height: 612px;">
+      <ul class="box-cate-link abs-dropdown">
+        <li class="item active"><a href="/{{productcat.seo_url}}">{{{productcat.detail.[0].name}}}</a></li>
+        {{#each productcat.list_child as |child_cat|}}
+          <li class="item"><a href="{{child_cat.seo_url}}">{{child_cat.child_name}}</a></li>
+        {{/each}}
+      </ul>
+      <div class="cdz-tabs df-tabs">
+        <div class="row">
+          {{#each productcat.product as |productitem|}}
+          <div class="col-xs-6 col-sm-6 col-md-2 {{productitem.class}}">
+            <div class="product_item">
+              <div class="product_images">
+                <a href="/{{productitem.seo_url}}"><img src="/static/{{productitem.image_path}}/medium/{{productitem.image}}"
+                    alt="{{productitem.alt}}"></a>
+              </div>
+              <div class="product_detail">
+                <p class="product_name"><a href="/{{productitem.seo_url}}">{{{productitem.detail.[0].name}}}</a></p>
+                <div id="clear"></div>
+                <div class="product_price">
+                  <p>{{productitem.pricebeauty}}₫</p>
+                </div>
+                <div class="sale_pricebeauty">
+                  <p>{{productitem.sale_pricebeauty}}₫</p>
+                </div>
+                <div id="clear"></div>
+              </div>
+            </div>
+          </div>
+          {{/each}}
+        </div>  
+      </div>
+    </div>
+  </div>
+</div>
+{{/each}}
