@@ -700,6 +700,7 @@ const rendernewcatpage = async function (req, res, website_url, language = 'vi')
 const renderproductcatpage = async function (req, res, website_url) {
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
+  var hotproducts = caches.hotproducts[hostname];
   var customer_id = websiteinfo.customer_id;
   var customer_username = websiteinfo.customer_username;
   var mainmenu = caches.mainmenu[hostname];
@@ -759,7 +760,8 @@ const renderproductcatpage = async function (req, res, website_url) {
       sitefooter: sitefooter,
       newproducts: newproducts,
       language: language,
-      productmoreinfos: productmoreinfos
+      productmoreinfos: productmoreinfos,
+      hotproducts:hotproducts
     });
   });
 }

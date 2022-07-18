@@ -7,7 +7,7 @@
             alt={{productitem.alt}}></a>
       </div>
       <div class="product_detail">
-        <p class="product_name"><a href="/{{productitem.seo_url}}">{{{productitem.detail.[0].name}}}</a></p>
+        <p class="product_name"><a href="/{{productitem.seo_url}}">{{truncateString productitem.detail.[0].name 50}}</a></p>
         <div id="clear"></div>
         <div class="product_price">
           <p>{{productitem.pricebeauty}}₫</p>
