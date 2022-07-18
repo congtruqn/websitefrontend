@@ -226,7 +226,7 @@ var db = mongoose.connect("mongodb://"+process.env.DB_URL+"/website",options);
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
-  next(err);
+  next();
 });// error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
