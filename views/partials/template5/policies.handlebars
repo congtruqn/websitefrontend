@@ -1,0 +1,12 @@
+<div class="row service-banner-style02">
+  <ul>
+  {{#each policies as |policy_item|}}
+  <li class="col-xs-12 col-sm-6 col-md-3 item">
+    <p class="item-icon">
+      <span class="{{policy_item.icon_font}}"></span>
+    </p>
+    <p>{{policy_item.name}}</p>
+  </li>
+  {{/each}}
+  </ul>
+</div>

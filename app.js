@@ -148,6 +148,10 @@ app.use(async function(req, res, next) {
           let hotnews = await systems.gethotnewsbycustomer(websitein.customer_id,websitein.num_hot_news);
           caches.hotnews[hostname] = hotnews;
         }
+        if(!caches.policies[hostname]||caches.policies[hostname]==null){
+          let policies = await systems.policies.getPolicyByCustomer(websitein.customer_id);
+          caches.policies[hostname] = policies;
+        }
         app.engine('handlebars', exphbs({
           partialsDir: __dirname + '/views/partials/'+websitein.customer_username
         }));
@@ -200,6 +204,10 @@ app.use(async function(req, res, next) {
     if(!caches.hotnews[hostname]||caches.hotnews[hostname]==null){
       let hotnews = await systems.gethotnewsbycustomer(websitein.customer_id,websitein.num_hot_news);
       caches.hotnews[hostname] = hotnews;
+    }
+    if(!caches.policies[hostname]||caches.policies[hostname]==null){
+      let policies = await systems.policies.getPolicyByCustomer(websitein.customer_id);
+      caches.policies[hostname] = policies;
     }
     app.engine('handlebars', exphbs({
        partialsDir: __dirname + '/views/partials/'+websitein.customer_username  

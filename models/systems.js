@@ -353,3 +353,4 @@ module.exports.gethotandnewproductsbycustomer = function(customer_id,count){
     });
   })
 }
+module.exports.policies  = require('./policies')

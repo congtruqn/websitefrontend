@@ -483,6 +483,7 @@ const renderhomepage = async function (req, res, language) {
   var hotproductcategory = caches.hotproductcategory[hostname];
   let hotandnewproducts = caches.hotandnewproducts[hostname];
   let hotnews = caches.hotnews[hostname];
+  let policies = caches.policies[hostname]?caches.policies[hostname]:[];
   hotnews = utils.filterDetailByLang(hotnews,language)
   let website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : "http";
   let homelang = ''
@@ -524,6 +525,7 @@ const renderhomepage = async function (req, res, language) {
       hotnews: hotnews,
       listtemplates: listtemplates,
       testimonials: testimonials,
+      policies:policies,
       language: language,
       lang: homelang
     });
@@ -650,7 +652,6 @@ const rendernewcatpage = async function (req, res, website_url, language = 'vi')
   var per_page = 18;
   var page = req.param('page', '1');
   let website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : "http";
-  console.log(caches.hotnews[hostname])
   let hotnews = caches.hotnews[hostname];
   let hotnews1 = utils.filterDetailByLang(hotnews,language,1)
   NewsCats.getnewscatsbycatid(customer_id, website_url.content_id, async function (err, newcatinfo) {

@@ -13,6 +13,7 @@ var hotproductcategory = {}
 var hotnews = {}
 var hotandnewproducts = {}
 var provinces = {}
+var policies = {}
 module.exports = {
     websiteinfo,
     hotnewcats,
@@ -28,5 +29,6 @@ module.exports = {
     list_products_by_more_info,
     hotproductcategory,
     hotnews,
-    hotandnewproducts
+    hotandnewproducts,
+    policies
 }

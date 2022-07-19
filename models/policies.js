@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-var ObjectId = require('mongoose').Types.ObjectId;
 var policysSchema = mongoose.Schema({
 	name:{
 		type: String,
@@ -7,13 +6,10 @@ var policysSchema = mongoose.Schema({
 	description:{
 		type: String,
 	},
-	image_path:{
+	icon:{
 		type: String,
 	},
-	image:{
-		type: String,
-	},
-	font:{
+	icon_font:{
 		type: String,
 	},
 	customer_id:{

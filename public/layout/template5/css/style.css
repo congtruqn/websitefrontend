@@ -898,3 +898,39 @@ footer{
     text-transform: capitalize;
     top: 0;
 }
+.service-banner-style02 .item {
+    text-align: center;
+    padding: 30px;
+    font-size: 14px;
+    color: #444444;
+    border-left: 1px solid #f5f3ea;
+    list-style: none;
+}
+.service-banner-style02 .item:last-child{border-right: 1px solid #f5f3ea;}
+.service-banner-style02 .item {
+    border-color: #f5f3ea;
+}
+.service-banner-style02 .item-icon span {
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    text-align: center;
+    background: #f1f3f2;
+    border-radius: 100%;
+    float: none;
+    margin: 0 auto 15px;
+    transition: all 500ms ease;
+    backface-visibility: hidden;
+    font-size: 24px;
+    line-height: 70px;
+}
+.footer-content-top {
+    border-top: 1px solid #f5f3ea;
+}
+.footer-content-middle {
+    border-top: 1px solid #f5f3ea;
+}
+.service-banner-style02 {
+    text-align: center;
+    margin: 0;
+}
