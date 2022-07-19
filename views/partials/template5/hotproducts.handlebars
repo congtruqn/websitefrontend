@@ -3,8 +3,15 @@
   <div>
     <div class="hot_product_item">
       <div class="product_images">
-        <a href="/{{productitem.seo_url}}"><img src="/static/{{productitem.image_path}}medium/{{productitem.image}}"
-            alt={{productitem.alt}}></a>
+        <a href="/{{productitem.seo_url}}"><img src="/static/{{productitem.image_path}}medium/{{productitem.image}}" alt={{productitem.alt}}></a>
+        <ul class="cdz-product-labels">
+          {{#if productitem.new}}
+            <li class="label-item new"><div class="label-content">New</div></li>
+          {{/if}}
+          {{#if productitem.salepec}}
+            <li class="label-item sale"><div class="label-content">-{{productitem.salepec}}%</div></li>
+          {{/if}}
+        </ul>
       </div>
       <div class="product_detail">
         <p class="product_name"><a href="/{{productitem.seo_url}}">{{truncateString productitem.detail.[0].name 50}}</a></p>

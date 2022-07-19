@@ -86,6 +86,13 @@ app.use(function(req, res, next) {
   });
   next();
 });
+app.use(function(req, res, next) {
+  hbs.handlebars.registerHelper('timestampToString', function(value) {
+    let date = new Date(value);
+    return date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()
+  });
+  next();
+});
 app.use(async function(req, res, next) {
   var curent_date = new Date().getTime();
   var hostname = req.headers.host;

@@ -203,8 +203,8 @@ module.exports.gethotproductbycustomer = function(customer_id,count,products_nam
       if(countproduct){
         for (var x in countproduct) {
           var productiteam = JSON.parse(JSON.stringify(countproduct[x]));
-          var pricebeauty = String(productiteam.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-          var sale_pricebeauty = String(productiteam.sale_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+          var pricebeauty = productiteam.price?String(productiteam.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'):'';
+          var sale_pricebeauty = productiteam.sale_price?String(productiteam.sale_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'):'';
           var productname = countproduct[x].detail[0].name;
           if(productname.length>products_name_letters){
             productname = countproduct[x].detail[0].name.substring(0,products_name_letters)+"...";
