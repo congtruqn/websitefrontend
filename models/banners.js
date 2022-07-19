@@ -22,20 +22,6 @@ var bannersSchema = mongoose.Schema({
 	
 });
 var banners = module.exports = mongoose.model('banners', bannersSchema);
-module.exports.createbanners = function(newbanners, callback){
-	newbanners.save(callback);
-}
-module.exports.editbanners = function(id,newbanners, callback){
-	banners.findByIdAndUpdate(id, newbanners,callback);
-}
-module.exports.findOneAndUpdatebanners = function(query,newbanners, callback){
-	banners.findOneAndUpdate(query, newbanners, callback);
-}
-module.exports.delbanners = function(id,callback){
-	banners.findByIdAndRemove(id, function(err, bannerss) {
-  	if (err) throw err;
-	});
-}
 module.exports.getbannersById = function(id, callback){
 	var query = {_id:id};
 	banners.findOne(query, callback);

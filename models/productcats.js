@@ -101,25 +101,6 @@ var productcatsSchema = mongoose.Schema({
 	},
 });
 var productcats = module.exports = mongoose.model('productcats', productcatsSchema);
-module.exports.createproductcats = function(newproductcats, callback){
-	newproductcats.save(callback);
-}
-module.exports.editproductcats = function(id,newproductcats, callback){
-	productcats.findByIdAndUpdate(id, newproductcats,callback);
-}
-module.exports.findOneAndUpdateproductcats = function(query,newproductcats, callback){
-	productcats.findOneAndUpdate(query, newproductcats, callback);
-}
-module.exports.delproductcats = function(id,callback){
-	productcats.findByIdAndRemove(id, function(err, productcatss) {
-  	if (err) throw err;
-  		console.log(productcatss);
-	});
-}
-module.exports.delproductcatsbycatid = function(cat_id,callback){
-	productcats.findOneAndRemove({cat_id:cat_id}, function(err, productcatss) {
-	});
-}
 module.exports.getproductcatsById = function(id, callback){
 	var query = {_id:id};
 	productcats.findOne(query, callback);

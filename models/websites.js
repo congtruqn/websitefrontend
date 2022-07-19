@@ -122,20 +122,6 @@ var websitesSchema = mongoose.Schema({
 	},
 });
 var websites = module.exports = mongoose.model('listwebsites', websitesSchema);
-module.exports.createwebsites = function(newwebsites, callback){
-	newwebsites.save(callback);
-}
-module.exports.editwebsites = function(id,newwebsites, callback){
-	websites.findByIdAndUpdate(id, newwebsites,callback);
-}
-module.exports.findOneAndUpdatewebsites = function(query,newwebsites, callback){
-	websites.findOneAndUpdate(query, newwebsites, callback);
-}
-module.exports.delwebsites = function(id,callback){
-	websites.findByIdAndRemove(id, function(err, websitess) {
-  	if (err) throw err;
-	});
-}
 module.exports.getwebsitesById = function(id, callback){
 	var query = {_id:id};
 	websites.findOne(query, callback);

@@ -47,32 +47,6 @@ var ProductsordersSchema = mongoose.Schema({
 	},
 });
 var Productsorders = module.exports = mongoose.model('productsorder', ProductsordersSchema);
-module.exports.createProductsorders = function(newProductsorders,productdetail, callback){
-	newProductsorders.save(function(err, Productsorderss) {
-  		for (var i in productdetail) {
-  			Productsorders.editProductsorders(Productsorderss._id,{$push:{product_detail:productdetail[i]}},function(err, companys) {
-		            if(err) throw err;
-		          //res.send('ok');
-			});
-  		}
-  		
-  	});
-}
-module.exports.editProductsorders = function(id,newProductsorders, callback){
-	Productsorders.findByIdAndUpdate(id, newProductsorders,callback);
-}
-module.exports.findOneAndUpdateProductsorders = function(query,newProductsorders, callback){
-	Productsorders.findOneAndUpdate(query, newProductsorders, function(err) {
-	  	if (err) throw err;
-    		console.log('Ok');
-	});
-}
-module.exports.delProductsorders = function(id,callback){
-	Productsorders.findByIdAndRemove(id, function(err, Productsorderss) {
-  	if (err) throw err;
-  		console.log(Productsorderss);
-	});
-}
 module.exports.getProductsordersById = function(id, callback){
 	Productsorders.findById(id, callback);
 }

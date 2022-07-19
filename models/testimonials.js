@@ -21,20 +21,6 @@ var testimonialsSchema = mongoose.Schema({
 	},
 });
 var testimonials = module.exports = mongoose.model('testimonials', testimonialsSchema);
-module.exports.createtestimonials = function(newtestimonials, callback){
-	newtestimonials.save(callback);
-}
-module.exports.edittestimonials = function(id,newtestimonials, callback){
-	testimonials.findByIdAndUpdate(id, newtestimonials,callback);
-}
-module.exports.findOneAndUpdatetestimonials = function(query,newtestimonials, callback){
-	testimonials.findOneAndUpdate(query, newtestimonials, callback);
-}
-module.exports.deltestimonials = function(id,callback){
-	testimonials.findByIdAndRemove(id, function(err, testimonialss) {
-  	if (err) throw err;
-	});
-}
 module.exports.gettestimonialsById = function(id, callback){
 	var query = {_id:id};
 	testimonials.findOne(query, callback);

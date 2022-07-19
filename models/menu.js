@@ -59,19 +59,6 @@ var menuSchema = mongoose.Schema({
 	}
 });
 var menu = module.exports = mongoose.model('menus', menuSchema);
-module.exports.createmenu = function(newmenu, callback){
-	newmenu.save(callback);
-}
-module.exports.editmenu = function(id,newmenu, callback){
-	menu.findByIdAndUpdate(id, newmenu,callback);
-}
-module.exports.findOneAndUpdatemenu = function(query,newmenu, callback){
-	menu.findOneAndUpdate(query, newmenu, callback);
-}
-module.exports.delmenu = function(id,callback){
-	menu.findByIdAndRemove(id, function(err, menus) {
-	});
-}
 module.exports.getmenuById = function(id, callback){
 	var query = {_id:id};
 	menu.findOne(query, callback);

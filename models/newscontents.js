@@ -92,39 +92,6 @@ var newscontentsSchema = mongoose.Schema({
 	},
 });
 var newscontents = module.exports = mongoose.model('newscontents', newscontentsSchema);
-module.exports.createnewscontents = function(newnewscontents, callback){
-	newnewscontents.save(callback);
-}
-module.exports.editnewscontents = function(id,newnewscontents, callback){
-	newscontents.findByIdAndUpdate(id, newnewscontents,callback);
-}
-module.exports.findOneAndUpdatenewscontents = function(query,newnewscontents, callback){
-	newscontents.findOneAndUpdate(query, newnewscontents, callback);
-}
-module.exports.updateProductCount = function(product_id,pr_count,callback){
-	newscontents.getnewscontentsById(product_id,function(err, newscontents) {
- 		var Updateproduct = {count:newscontents.count - pr_count};
- 		newscontents.editnewscontents(product_id,Updateproduct,function(err, callback) {
-		            if(err) throw err;
-		});
-  	
-  	});
-}
-module.exports.addProductCount = function(product_id,pr_count,callback){
-	newscontents.getnewscontentsById(product_id,function(err, newscontents) {
- 		var Updateproduct = {count:newscontents.count + pr_count};
- 		newscontents.editnewscontents(product_id,Updateproduct,function(err, callback) {
-		            if(err) throw err;
-		});
-  	
-  	});
-}
-module.exports.delnewscontents = function(id,callback){
-	newscontents.findByIdAndRemove(id, function(err, newscontentss) {
-  	if (err) throw err;
-
-	});
-}
 module.exports.getNewsContentsById = function(id, callback){
 	var query = {_id:id};
 	newscontents.findOne(query, callback);

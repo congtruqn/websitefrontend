@@ -22,30 +22,11 @@ var productlistdetailSchema = mongoose.Schema({
 	}],
 });
 var productlistdetail = module.exports = mongoose.model('productlistdetails', productlistdetailSchema);
-
-module.exports.createproductlistdetail = function(newproductlistdetail, callback){
-	newproductlistdetail.save(callback);
-}
-module.exports.editproductlistdetail1 = function(id,newproductlistdetail, callback){
-	productlistdetail.findById(id, function(err, user) {
-  		if (err) throw err;
-  		user.fullname = newproductlistdetail.fullname;
-  		user.save(function(err) {
-  		});
-	});
-}
-module.exports.editproductlistdetail = function(id,newproductlistdetail, callback){
-	productlistdetail.findByIdAndUpdate(id, newproductlistdetail,{upsert: true, new: true},callback);
-}
-module.exports.findOneAndUpdateproductlistdetail = function(query,productlist, callback){
-	productlistdetail.findOneAndUpdate(query, productlist,{upsert: true, new: true}, callback);
-}
 module.exports.dellproductlistdetail = function(id,callback){
 	productlistdetail.findByIdAndRemove(id, function(err, user) {
   	if (err) throw err;
 	});
 }
-
 module.exports.getAllproductlistdetail = function(page,per_page,callback){
 	var query = {};
 	productlistdetail.find(query, callback).skip(per_page * (page - 1)).limit(per_page);

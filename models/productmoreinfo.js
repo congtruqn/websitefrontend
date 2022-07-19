@@ -25,35 +25,6 @@ var productmoreinfoSchema = mongoose.Schema({
 });
 
 var productmoreinfo = module.exports = mongoose.model('productsmoreinfo', productmoreinfoSchema);
-
-module.exports.createproductmoreinfo = function(newproductmoreinfo, callback){
-	newproductmoreinfo.save(callback);
-}
-
-module.exports.editproductmoreinfo = function(id,newproductmoreinfo, callback){
-	if (ObjectId.isValid(id)) {
-		productmoreinfo.findByIdAndUpdate(id, newproductmoreinfo, function(err) {
-			if (err) throw err;
-			  console.log('User successfully updated!');
-	  	});
-    } else {
-        return callback(null,{});
-    }
-}
-module.exports.findandupdate = function(query,newProducts, callback){
-	productmoreinfo.findOneAndUpdate(query, newProducts, callback);
-}
-module.exports.dellproductmoreinfo = function(id,callback){
-	if (ObjectId.isValid(id)) {
-		productmoreinfo.findByIdAndRemove(id, function(err, user) {
-			if (err) throw err;
-				console.log(user);
-		});
-    } else {
-        return callback(null,{});
-    }
-}
-
 module.exports.getallproductmoreinfo = function(customer_id,callback){
 	var query = {customer_id:customer_id};
 	productmoreinfo.find(query, callback);

@@ -10,30 +10,6 @@ var ProductsTypeSchema = mongoose.Schema({
 });
 var ProductsType = module.exports = mongoose.model('products_types', ProductsTypeSchema);
 
-module.exports.createProductsType = function(newProductsType, callback){
-	newProductsType.save(callback);
-}
-module.exports.editProductsType1 = function(id,newProductsType, callback){
-	ProductsType.findById(id, function(err, user) {
-  		if (err) throw err;
-  		user.fullname = newProductsType.fullname;
-  		user.save(function(err) {
-  		});
-	});
-}
-module.exports.editProductsType = function(id,newProductsType, callback){
-	ProductsType.findByIdAndUpdate(id, newProductsType, function(err) {
-	  	if (err) throw err;
-    		
-	});
-}
-module.exports.dellProductsType = function(id,callback){
-	ProductsType.findByIdAndRemove(id, function(err, user) {
-  	if (err) throw err;
-  		
-	});
-}
-
 module.exports.getAllProductsType = function(page,per_page,callback){
 	var query = {};
 	ProductsType.find(query, callback).skip(per_page * (page - 1)).limit(per_page);

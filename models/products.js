@@ -40,38 +40,6 @@ var ProductsSchema = mongoose.Schema({
 	},
 });
 var Products = module.exports = mongoose.model('products', ProductsSchema);
-module.exports.createProducts = function(newProducts, callback){
-	newProducts.save(callback);
-}
-module.exports.editProducts = function(id,newProducts, callback){
-	Products.findByIdAndUpdate(id, newProducts,callback);
-}
-module.exports.findOneAndUpdateProducts = function(query,newProducts, callback){
-	Products.findOneAndUpdate(query, newProducts, callback);
-}
-module.exports.updateProductCount = function(product_id,pr_count,callback){
-	Products.getProductsById(product_id,function(err, products) {
- 		var Updateproduct = {count:products.count - pr_count};
- 		Products.editProducts(product_id,Updateproduct,function(err, callback) {
-		            if(err) throw err;
-		});
-  	
-  	});
-}
-module.exports.addProductCount = function(product_id,pr_count,callback){
-	Products.getProductsById(product_id,function(err, products) {
- 		var Updateproduct = {count:products.count + pr_count};
- 		Products.editProducts(product_id,Updateproduct,function(err, callback) {
-		            if(err) throw err;
-		}); 
-  	});
-}
-module.exports.delProducts = function(id,callback){
-	Products.findByIdAndRemove(id, function(err, Productss) {
-  	if (err) throw err;
-  		console.log(Productss);
-	});
-}
 module.exports.getProductsById = function(id, callback){
 	Products.findById(id, callback);
 }

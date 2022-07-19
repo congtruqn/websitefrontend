@@ -37,38 +37,6 @@ var NewsPagesSchema = mongoose.Schema({
 	},
 });
 var NewsPages = module.exports = mongoose.model('newspages', NewsPagesSchema);
-module.exports.createNewsPages = function(newNewsPages, callback){
-	newNewsPages.save(callback);
-}
-module.exports.editNewsPages = function(id,newNewsPages, callback){
-	NewsPages.findByIdAndUpdate(id, newNewsPages,callback);
-}
-module.exports.findOneAndUpdateNewsPages = function(query,newNewsPages, callback){
-	NewsPages.findOneAndUpdate(query, newNewsPages, callback);
-}
-module.exports.updateProductCount = function(product_id,pr_count,callback){
-	NewsPages.getNewsPagesById(product_id,function(err, NewsPages) {
- 		var Updateproduct = {count:NewsPages.count - pr_count};
- 		NewsPages.editNewsPages(product_id,Updateproduct,function(err, callback) {
-		            if(err) throw err;
-		});
-  	
-  	});
-}
-module.exports.addProductCount = function(product_id,pr_count,callback){
-	NewsPages.getNewsPagesById(product_id,function(err, NewsPages) {
- 		var Updateproduct = {count:NewsPages.count + pr_count};
- 		NewsPages.editNewsPages(product_id,Updateproduct,function(err, callback) {
-		            if(err) throw err;
-		});
-  	
-  	});
-}
-module.exports.delNewsPages = function(id,callback){
-	NewsPages.findByIdAndRemove(id, function(err, NewsPagess) {
-  	if (err) throw err;
-	});
-}
 module.exports.getNewsPagesById = function(customer_id,id, callback){
 	var query = {_id:id,customer_id:customer_id};
 	NewsPages.findOne(query, callback);

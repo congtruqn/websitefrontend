@@ -73,20 +73,6 @@ var newscatsSchema = mongoose.Schema({
 	}
 });
 var newscats = module.exports = mongoose.model('newscats', newscatsSchema);
-module.exports.createnewscats = function(newnewscats, callback){
-	newnewscats.save(callback);
-}
-module.exports.editnewscats = function(id,newnewscats, callback){
-	newscats.findByIdAndUpdate(id, newnewscats,callback);
-}
-module.exports.findOneAndUpdatenewscats = function(query,newnewscats, callback){
-	newscats.findOneAndUpdate(query, newnewscats, callback);
-}
-module.exports.delnewscats = function(id,callback){
-	newscats.findByIdAndRemove(id, function(err, newscatss) {
-  	if (err) throw err;
-	});
-}
 module.exports.getnewscatsById = function(id, callback){
 	var query = {_id:id};
 	newscats.findOne(query, callback);

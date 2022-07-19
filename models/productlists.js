@@ -117,39 +117,6 @@ var productlistsSchema = mongoose.Schema({
 	},
 });
 var productlists = module.exports = mongoose.model('productlists', productlistsSchema);
-module.exports.createproductlists = function(newproductlists, callback){
-	newproductlists.save(callback);
-}
-module.exports.editproductlists = function(id,newproductlists, callback){
-	productlists.findByIdAndUpdate(id, newproductlists,callback);
-}
-module.exports.findOneAndUpdateproductlists = function(query,newproductlists, callback){
-	productlists.findOneAndUpdate(query, newproductlists, callback);
-}
-module.exports.updateProductCount = function(product_id,pr_count,callback){
-	productlists.getproductlistsById(product_id,function(err, productlists) {
- 		var Updateproduct = {count:productlists.count - pr_count};
- 		productlists.editproductlists(product_id,Updateproduct,function(err, callback) {
-		            if(err) throw err;
-		});
-  	
-  	});
-}
-module.exports.addProductCount = function(product_id,pr_count,callback){
-	productlists.getproductlistsById(product_id,function(err, productlists) {
- 		var Updateproduct = {count:productlists.count + pr_count};
- 		productlists.editproductlists(product_id,Updateproduct,function(err, callback) {
-		            if(err) throw err;
-		});
-  	
-  	});
-}
-module.exports.delproductlists = function(id,callback){
-	productlists.findByIdAndRemove(id, function(err, productlistss) {
-  	if (err) throw err;
-  		console.log(productlistss);
-	});
-}
 module.exports.getproductlistsById = function(id, callback){
 	var query = {_id:id};
 	productlists.findOne(query, callback);
