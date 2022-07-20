@@ -46,13 +46,3 @@ module.exports.getAllbannersByUser = function(userid,page,per_page,callback){
 	var query = {create_user: userid};
 	banners.find(query, callback).skip(per_page * (page - 1)).limit(per_page).sort({'banners_id': -1 });
 }
-module.exports.getbannersByDate = function(type,from_date,to_date,callback){
-	var query = {};
-	if(type===1||type===2||type===3){
-		query = {status:type};
-	}
-	else{
-		query = {};
-	}
-	banners.find(query, callback).where("create_date").gte(from_date).lte(to_date);
-}
