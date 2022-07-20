@@ -854,10 +854,9 @@ footer{
     font-size: 12px;
     background: #fff;
 }
-.footer-container .fmn{font-weight: 500;text-transform: uppercase;display: block;margin: 10px 0;}
-.footer_address{font-size: 14px;}
+.footer-container .fmn{font-weight: 500;display: block;margin: 10px 0;}
 .facebook_like{overflow: hidden;display: block;margin: 15px 0;}
-.newletter-title{font-size: 17px;text-transform: uppercase;font-weight: 500;padding: 5px 15px;}
+.newletter-title{font-size: 17px;font-weight: 500;padding: 5px 15px;}
 #form_subscribe {
     float: left;
     position: relative;
@@ -933,4 +932,55 @@ footer{
 .service-banner-style02 {
     text-align: center;
     margin: 0;
+}
+.footer a {
+    color: #b1b1b1;
+}
+.middle-top{
+    display: flex;
+    padding: 20px 0;
+    width: 65%;
+}
+.subscribe{
+    background-image: none;
+    background: #1979c3;
+    border: 1px solid #1979c3;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 500;
+    padding: 7px 15px;
+    font-size: 1.4rem;
+    box-sizing: border-box;
+    vertical-align: middle;
+    margin-left: 10px;
+    border-radius: 3px;
+}
+.subscribe:hover{
+    color: #fff;
+    border-color: #000;
+    background: #000;
+}
+#newsletter{
+    padding-left: 35px;
+    padding: 5px 15px;
+    border: 1px solid #f5f3ea;
+    border-radius: 5px;
+    height: 40px;
+    line-height: 40px;
+    width: 300px;
+}
+.footer-content-middle .title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 15px;
+    color: #000;
+}
+.newsletter_item{
+    padding: 9px;
+}
+.footer-content-bottom {
+    background-color: #189eff;
+    padding: 20px 0 15px;
+    margin-top: 20px;
 }

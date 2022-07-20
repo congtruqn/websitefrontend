@@ -548,6 +548,7 @@ const renderpage = async function (req, res, website_url,language='vi') {
   var customer_username = websiteinfo.customer_username;
   var mainmenu = caches.mainmenu[hostname];
   var productmenu = caches.productcat[hostname];
+  var productmenu1 = caches.productmenu[hostname];
   var sitefooter = caches.footer[hostname];
   var newproducts = caches.newproducts[hostname];
   var productmoreinfos = caches.productmoreinfos[hostname];
@@ -574,6 +575,7 @@ const renderpage = async function (req, res, website_url,language='vi') {
       canonical:website_protocol+'/'+hostname+'/'+canonical,
       layout: customer_username,
       productmenu: productmenu,
+      productmenu1:productmenu1,
       mainmenu: mainmenu,
       siteinfo: websiteinfo,
       sitefooter: sitefooter,
@@ -595,6 +597,7 @@ const rendernewcontentpage = async function (req, res, website_url,language='vi'
   let customer_username = websiteinfo.customer_username;
   let mainmenu = caches.mainmenu[hostname];
   let productmenu = caches.productcat[hostname];
+  var productmenu1 = caches.productmenu[hostname];
   let sitefooter = caches.footer[hostname];
   let newproducts = caches.newproducts[hostname];
   let productmoreinfos = caches.productmoreinfos[hostname];
@@ -624,6 +627,7 @@ const rendernewcontentpage = async function (req, res, website_url,language='vi'
         orgimage: website_protocol + '://' + hostname + '/static/'+customer_username+'/images/news/fullsize/' + conten.image2,
         layout: customer_username,
         productmenu: productmenu,
+        productmenu1:productmenu1,
         mainmenu: mainmenu,
         siteinfo: websiteinfo,
         sitefooter: sitefooter,
@@ -646,6 +650,7 @@ const rendernewcatpage = async function (req, res, website_url, language = 'vi')
   var customer_username = websiteinfo.customer_username;
   var mainmenu = caches.mainmenu[hostname];
   var productmenu = caches.productcat[hostname];
+  var productmenu1 = caches.productmenu[hostname];
   var sitefooter = caches.footer[hostname];
   var newproducts = caches.newproducts[hostname];
   var productmoreinfos = caches.productmoreinfos[hostname];
@@ -687,6 +692,7 @@ const rendernewcatpage = async function (req, res, website_url, language = 'vi')
       canonical: language ? website_protocol + '://' + hostname + '/' + language + '/' + newcatinfo.seo_url + '/' : website_protocol + '://' + hostname + '/' + newcatinfo.seo_url + '/',
       orgimage: website_protocol + '://' + hostname + '/images/news/fullsize/' + conten.image,
       productmenu: productmenu,
+      productmenu1:productmenu1,
       mainmenu: mainmenu,
       siteinfo: websiteinfo,
       sitefooter: sitefooter,
@@ -706,6 +712,7 @@ const renderproductcatpage = async function (req, res, website_url) {
   var customer_username = websiteinfo.customer_username;
   var mainmenu = caches.mainmenu[hostname];
   var productmenu = caches.productcat[hostname];
+  var productmenu1 = caches.productmenu[hostname];
   var sitefooter = caches.footer[hostname];
   var newproducts = caches.newproducts[hostname];
   var productmoreinfos = caches.productmoreinfos[hostname];
@@ -756,6 +763,7 @@ const renderproductcatpage = async function (req, res, website_url) {
       keyword: catinfo.detail[0].keyword,
       layout: customer_username,
       productmenu: productmenu,
+      productmenu1:productmenu1,
       mainmenu: mainmenu,
       siteinfo: websiteinfo,
       sitefooter: sitefooter,
@@ -772,6 +780,7 @@ const renderproductdetailpage = async function (req, res, website_url) {
   var customer_username = websiteinfo.customer_username;
   var mainmenu = caches.mainmenu[hostname];
   var productmenu = caches.productcat[hostname];
+  var productmenu1 = caches.productmenu[hostname];
   var sitefooter = caches.footer[hostname];
   var newproducts = caches.newproducts[hostname];
   var productmoreinfos = caches.productmoreinfos[hostname];
@@ -820,6 +829,7 @@ const renderproductdetailpage = async function (req, res, website_url) {
         title: conten.detail[0].title,
         layout: customer_username,
         productmenu: productmenu,
+        productmenu1:productmenu1,
         instock: instock,
         product_more_info: product_more_info,
         islogin: islogin,
@@ -841,6 +851,7 @@ const renderproductmoreinfocategorypage = async function (req, res, website_url)
   var customer_username = websiteinfo.customer_username;
   var mainmenu = caches.mainmenu[hostname];
   var productmenu = caches.productcat[hostname];
+  var productmenu1 = caches.productmenu[hostname];
   var sitefooter = caches.footer[hostname];
   var newproducts = caches.newproducts[hostname];
   var productmoreinfos = caches.productmoreinfos[hostname];
@@ -891,6 +902,7 @@ const renderproductmoreinfocategorypage = async function (req, res, website_url)
           keyword: productmorein[0].default_value[0].keyword,
           layout: customer_username,
           productmenu: productmenu,
+          productmenu1:productmenu1,
           mainmenu: mainmenu,
           siteinfo: websiteinfo,
           sitefooter: sitefooter,
