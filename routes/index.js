@@ -527,7 +527,8 @@ const renderhomepage = async function (req, res, language) {
       testimonials: testimonials,
       policies:policies,
       language: language,
-      lang: homelang
+      lang: homelang,
+      ishomepage:1
     });
   }
   else {

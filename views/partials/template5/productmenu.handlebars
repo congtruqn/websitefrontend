@@ -6,20 +6,6 @@
     </div>
 </div>
 <script>
-    $(document).ready(function(){
-        var boxWidth = 450;
-        $(".product_menu").hover(function(){
-            $(".product_menu").animate({
-                height: boxWidth
-            });
-            //document.getElementById("#product_menu").style.overflow = 'visible';
-            //$("product_menu").css('overflow','none');
-        });
-        $(".product_menu").mouseleave(function(){
-            $(".product_menu").animate({
-                height: 310,
-            });
-            //document.getElementById("#product_menu").style.overflow = 'hidden';
-        });
-    });
+    let he = document.getElementById('main_nav').offsetHeight
+    document.getElementById('product_menu').setAttribute("style","height:"+he+"px");
 </script>
