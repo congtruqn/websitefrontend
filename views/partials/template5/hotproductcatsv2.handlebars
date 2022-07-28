@@ -37,9 +37,11 @@
                 <div class="product_price">
                   <p>{{productitem.pricebeauty}}₫</p>
                 </div>
-                <div class="sale_pricebeauty">
-                  <p>{{productitem.sale_pricebeauty}}₫</p>
-                </div>
+                {{#if productitem.salepec}}
+                    <div class="sale_pricebeauty">
+                    <p>{{productitem.sale_pricebeauty}}₫</p>
+                  </div>
+                {{/if}}
                 <div id="clear"></div>
               </div>
             </div>

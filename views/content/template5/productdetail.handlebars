@@ -58,11 +58,11 @@
 						</div>
                     {{/each}}
 					{{#if instock}}
-						<div class="buy_group">
-							<button id="product-buynow" class="action primary tocart button btn-cart" title="Add to Cart" type="submit" onclick="Buynow({{{contents.product_id}}})">
+						<div class="box-tocart large-box-tocart att-scr-qty scr-top">
+							<button id="product-buynow" class="action primary buy-now" title="Add to Cart" type="submit" onclick="Buynow({{{contents.product_id}}})">
 								<span>Mua ngay</span>
 							</button>
-							<button id="product-addtocart-button" class="action addtocart primary button btn-cart" title="Add to Cart" type="submit" onclick="addToCart({{{contents.product_id}}})">
+							<button id="product-addtocart-button" class="action primary tocart" title="Add to Cart" type="submit" onclick="addToCart({{{contents.product_id}}})">
 								<span>Thêm vào giỏ hàng</span>
 							</button>
 						</div>

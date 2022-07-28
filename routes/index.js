@@ -555,6 +555,7 @@ const renderpage = async function (req, res, website_url,language='vi') {
   var productmoreinfos = caches.productmoreinfos[hostname];
   let hotnews = caches.hotnews[hostname];
   let website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : "http";
+  let policies = caches.policies[hostname]?caches.policies[hostname]:[];
   newspages.getNewsPagesById(customer_id, website_url.content_id, function (err, conten) {
     let tranData = null
     let canonical = conten.seo_url
@@ -584,7 +585,8 @@ const renderpage = async function (req, res, website_url,language='vi') {
       language: language,
       lang: homelang,
       hotnews:hotnews,
-      productmoreinfos: productmoreinfos
+      productmoreinfos: productmoreinfos,
+      policies:policies
     });
   });
 }
@@ -604,6 +606,7 @@ const rendernewcontentpage = async function (req, res, website_url,language='vi'
   let productmoreinfos = caches.productmoreinfos[hostname];
   let website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : "http";
   let hotnews = caches.hotnews[hostname];
+  let policies = caches.policies[hostname]?caches.policies[hostname]:[];
   NewsContents.getnewscontentbycontentid(website_url.content_id, function (err, conten) {
     NewsContents.getratenewcontentbycatcount(conten.parent_id, conten.content_id, 8, function (err, ratenews) {
       let tranData = null
@@ -635,7 +638,8 @@ const rendernewcontentpage = async function (req, res, website_url,language='vi'
         newproducts: newproducts,
         language: language,
         lang:homelang,
-        productmoreinfos: productmoreinfos
+        productmoreinfos: productmoreinfos,
+        policies:policies
       });
     });
   });
@@ -660,6 +664,7 @@ const rendernewcatpage = async function (req, res, website_url, language = 'vi')
   let website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : "http";
   let hotnews = caches.hotnews[hostname];
   let hotnews1 = utils.filterDetailByLang(hotnews,language,1)
+  let policies = caches.policies[hostname]?caches.policies[hostname]:[];
   NewsCats.getnewscatsbycatid(customer_id, website_url.content_id, async function (err, newcatinfo) {
     let newsCatData = null
     if (websiteinfo.multi_language == 1) {
@@ -701,7 +706,8 @@ const rendernewcatpage = async function (req, res, website_url, language = 'vi')
       language: language,
       lang:homelang,
       productmoreinfos: productmoreinfos,
-      layout: customer_username
+      layout: customer_username,
+      policies:policies
     });
   });
 }
@@ -722,6 +728,7 @@ const renderproductcatpage = async function (req, res, website_url) {
   var page = req.param('page', '1');
   var count = await countproductsbycat(website_url.content_id);
   var catinfo = await getproductcatinfo(website_url.content_id);
+  let policies = caches.policies[hostname]?caches.policies[hostname]:[];
   let language = i18n.getLocale();
   if (language == 'vi')
     language = ''
@@ -771,7 +778,8 @@ const renderproductcatpage = async function (req, res, website_url) {
       newproducts: newproducts,
       language: language,
       productmoreinfos: productmoreinfos,
-      hotproducts:hotproducts
+      hotproducts:hotproducts,
+      policies:policies
     });
   });
 }
@@ -786,6 +794,7 @@ const renderproductdetailpage = async function (req, res, website_url) {
   var newproducts = caches.newproducts[hostname];
   var productmoreinfos = caches.productmoreinfos[hostname];
   let website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : "http";
+  let policies = caches.policies[hostname]?caches.policies[hostname]:[];
   let language = i18n.getLocale();
   if (language == 'vi')
     language = ''
@@ -840,7 +849,8 @@ const renderproductdetailpage = async function (req, res, website_url) {
         rateproducts: rateproducts,
         newproducts: newproducts,
         language: language,
-        productmoreinfos: productmoreinfos
+        productmoreinfos: productmoreinfos,
+        policies:policies
       });
     });
   });
@@ -859,6 +869,7 @@ const renderproductmoreinfocategorypage = async function (req, res, website_url)
   var per_page = websiteinfo.products_per_page;
   var page = req.param('page', '1');
   let website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : "http";
+  let policies = caches.policies[hostname]?caches.policies[hostname]:[];
   let language = i18n.getLocale();
   if (language == 'vi')
     language = ''
@@ -909,7 +920,8 @@ const renderproductmoreinfocategorypage = async function (req, res, website_url)
           sitefooter: sitefooter,
           newproducts: newproducts,
           language: language,
-          productmoreinfos: productmoreinfos
+          productmoreinfos: productmoreinfos,
+          policies:policies
         });
       });
     })
