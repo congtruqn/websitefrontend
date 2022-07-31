@@ -67,7 +67,12 @@ var hbs = exphbs.create({
 });
 app.use(function(req, res, next) {
   hbs.handlebars.registerHelper('formatCurrency', function(value) {
-    return value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+    if(value){
+      return value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+    }
+    else{
+      return 'Please call'
+    }
   });
   next();
 });
