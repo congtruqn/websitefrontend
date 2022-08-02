@@ -805,6 +805,16 @@ const renderproductdetailpage = async function (req, res, website_url) {
         var pricebeauty = String(productiteam.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
         productiteam.pricebeauty = pricebeauty;
         productiteam.alt = rateproducts[x].detail[0].name;
+        let salepec = parseInt(((productiteam.sale_price-productiteam.price)/productiteam.sale_price)*100);
+        if(productiteam.sale==1){
+          productiteam.salepec = salepec;
+        }
+        if(productiteam.hot==0){
+          productiteam.hot = undefined;
+        }
+        if(productiteam.new==0){
+          productiteam.new = undefined;
+        }
         rateproducts[x] = productiteam;
       }
 

@@ -31,7 +31,7 @@
 				<div class="col-lg-12 col-md-12 col-xs-12">
 					<h1>{{{details.name}}}</h1>
 					<p>{{{details.desc}}}</p>
-					<p class="price">Giá: {{{price}}} Đ</p>
+					<p class="price">{{{price}}} ₫</p>
 					{{islogin}}
 					{{#if instock}}
 						<p class="instock">Tình trạng:<span> Còn hàng<span></p>
@@ -75,7 +75,7 @@
 		<div class="product_content">
 			<div class="product_content_title">
 				<div class="product_content_tit">
-					<p>Chi tiết</p>
+					<a>Chi tiết</a>
 				</div>
 			</div>
 			{{{details.content}}}
@@ -83,35 +83,44 @@
 
 		<div class="rate_product">
 			<div class="product_content_title">
-				<div class="block_title_parent">
+				<div class="product_content_tit">
 					<div class="block-title">
-						<strong><span>Có thể bạn quan tâm</span></strong>
+						<a>Có thể bạn quan tâm</a>
 					</div>
 				</div>
 			</div>
 			<div class="row">
-				{{#each rateproducts as |images|}}
+				{{#each rateproducts as |rateproduct_item|}}
 	                <div class="col-xs-6 col-sm-6 col-md-2">
 	                  <div class="product_item">
 	                      <div class="product_images">
-	                          {{#if images.image1}}
-	                            <a href="/{{images.seo_url}}"><img src="/static/{{images.image_path}}/medium/{{images.image1}}" alt="{{images.alt}}"></a>
+	                          {{#if rateproduct_item.image1}}
+	                            <a href="/{{rateproduct_item.seo_url}}"><img src="/static/{{rateproduct_item.image_path}}/medium/{{rateproduct_item.image1}}" alt="{{rateproduct_item.alt}}"></a>
 	                          {{else}}
-	                            <a href="/{{images.seo_url}}"><img src="/static/{{images.image_path}}/medium/{{images.image}}" alt="{{images.alt}}"></a>
+	                            <a href="/{{rateproduct_item.seo_url}}"><img src="/static/{{rateproduct_item.image_path}}/medium/{{rateproduct_item.image}}" alt="{{rateproduct_item.alt}}"></a>
 	                          {{/if}}
+							<ul class="cdz-product-labels">
+							{{#if rateproduct_item.new}}
+								<li class="label-item new"><div class="label-content">New</div></li>
+							{{/if}}
+							{{#if rateproduct_item.salepec}}
+								<li class="label-item sale"><div class="label-content">-{{rateproduct_item.salepec}}%</div></li>
+							{{/if}}
+							</ul>
 	                      </div>
 	                      <div class="product_detail">
-	                        {{#each images.detail as |productdetail|}}
-	                          <p class="product_name"><a href="/{{images.seo_url}}">{{{productdetail.name}}}</a></p>
-	                        {{/each}}
-	                        <div class="product_price"><p>Giá: {{images.pricebeauty}} Đ</p></div>
+							<p class="product_name"><a href="/{{rateproduct_item.seo_url}}">{{truncateString rateproduct_item.detail.[0].name 50}}</a></p>
+	                        <div class="product_price"><p>{{formatCurrency rateproduct_item.price}}₫</p></div>
+							{{#if rateproduct_item.salepec}}
+								<p class="product_sale_price">{{formatCurrency rateproduct_item.sale_price}}₫</p>
+							{{/if}}
+							<div id="clear"></div>
 	                      </div>
 	                    </div>
 	                </div>	
 				{{/each}}
 			</div>
 		</div>
-
 	</div>
 </div>
 <script>

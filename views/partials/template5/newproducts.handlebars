@@ -2,9 +2,9 @@
   <p>Sản phẩm mới</p>
 </div>
 <div class="newproductcont">
-  <div class="row">
+  <ul>
     {{#each newproducts as |productitem|}}
-    <div class="col-xs-12">
+    <li>
       <div class="new_product_item">
         <div class="new_product_images">
           <a href="/{{productitem.seo_url}}"><img src="/static/{{productitem.image_path}}thumb/{{productitem.image}}"
@@ -25,8 +25,8 @@
           <div id="clear"></div>
         </div>
       </div>
-    </div>
+    </li>
     {{/each}}
-  </div>
+  </ul>
   <div id="clear"></div>
 </div>
