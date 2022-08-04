@@ -687,7 +687,8 @@ body {
     padding: 5px;
 }
 .list_news_item{min-height: 390px; }
-.list_news_item .cat_detail{border-bottom:1px solid #ccc;padding-bottom: 5px;}
+.list_news_item .cat_detail{border-bottom:1px solid #ccc;padding-bottom: 5px;min-height: 130px;}
+.list_news_item .cat_detail .item_name{padding: 10px 0; font-weight: 500;}
 .fa-caret-right{position: absolute;right: 10px;top: 7px;color: #25B430}
 
 .mainmenu_item{list-style: none;float: left;position: relative;padding: 7px 0;}
@@ -1070,4 +1071,17 @@ footer{
     color: #333;
     font-size: 11px;
     text-decoration: line-through;
+}
+.cdz-product-labels li{list-style: none;}
+.rate_news_item{list-style: inside;}
+.news_detail {
+    padding: 20px 20px;
+    height: 100%;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 4px 34px rgb(0 0 0 / 8%);
+    border: 0px solid #e1e1e1;
+}
+.news_detail img{
+    max-width: 100%;
 }
