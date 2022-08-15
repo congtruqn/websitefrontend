@@ -465,11 +465,11 @@ footer .footer-top {
 .mobimenuicon::before, .mobimenuicon::after {
     content: '';
     display: block;
-    background: #fff;
+    background: #111;
     height: 2px;
 }
 .mobimenuicon span {
-    background: #fff;
+    background: #111;
     display: block;
     height: 2px;
     margin: 6px 0;

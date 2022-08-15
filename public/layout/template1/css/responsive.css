@@ -7,6 +7,7 @@
 	}
 	header {
 		top: 0px;
+		height: 95px;
 	}
 	.right-block{
 		display: none;
@@ -151,6 +152,37 @@
 		padding: 10px 0;
 	}
 	.list_template_title .title{font-size: 22px;}
+	.intro-text{
+		padding: 3px !important;
+	}
+	.dt-sc-two-third{
+		width: 100%;
+		text-align: center;
+	}
+	.dt-sc-one-third{
+		width: 100%;
+		text-align: center;
+		padding: 10px 0;
+	}
+	.full-width-section img{
+		width: 100%;
+	}
+	header.minimized{
+		height: 90px;
+	}
+	.content{
+		margin-top: 95px;
+	}
+	.header-left{
+		width: 100%;
+	}
+	.header-left .logo{
+		width: 100%;
+		text-align: center;
+	}
+	.header-left .logo img{
+		max-height: 50px;
+	}
 }
 
 @media (max-width: 768px) {
