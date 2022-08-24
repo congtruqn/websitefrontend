@@ -463,6 +463,10 @@ const renderhomepage = async function (req, res, language) {
   if (websiteinfo && websiteinfo.products_per_cat_home) {
     product_per_cat_home = websiteinfo.products_per_cat_home;
   }
+  let istemplate = false;
+  if(websiteinfo && websiteinfo.is_template &&websiteinfo.is_template ==1){
+    istemplate = true
+  }
   var sitefooter = caches.footer[hostname];
   var mainmenu = caches.mainmenu[hostname];
   var productmoreinfos = caches.productmoreinfos[hostname];
@@ -470,7 +474,8 @@ const renderhomepage = async function (req, res, language) {
   let listtemplates = [];
   let testimonials = [];
   let cusbanner = [];
-  let promises = []
+  let promises = [];
+  
   if (hostname === 'tns.vn' || (process.env.ENV === 'local' && hostname === 'template1.tns.vn:3005') || hostname === 'tnsviet.online') {
     promises.push(systems.gettestimonialsbycustomer(websiteinfo.customer_id), systems.gettemplates(), systems.getbanner(websiteinfo.customer_id))
   }
@@ -528,7 +533,8 @@ const renderhomepage = async function (req, res, language) {
       policies:policies,
       language: language,
       lang: homelang,
-      ishomepage:1
+      ishomepage:1,
+      istemplate:istemplate
     });
   }
   else {
@@ -542,6 +548,10 @@ const renderpage = async function (req, res, website_url,language='vi') {
   let homelang = language
   if (language == 'vi') {
     homelang = ''
+  }
+  let istemplate = false;
+  if(websiteinfo && websiteinfo.is_template &&websiteinfo.is_template ==1){
+    istemplate = true
   }
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
@@ -586,17 +596,22 @@ const renderpage = async function (req, res, website_url,language='vi') {
       lang: homelang,
       hotnews:hotnews,
       productmoreinfos: productmoreinfos,
-      policies:policies
+      policies:policies,
+      istemplate:istemplate
     });
   });
 }
 const rendernewcontentpage = async function (req, res, website_url,language='vi') {
+  let hostname = req.headers.host;
+  let websiteinfo = caches.websiteinfo[hostname];
   let homelang = language
   if (language == 'vi') {
     homelang = ''
   }
-  let hostname = req.headers.host;
-  let websiteinfo = caches.websiteinfo[hostname];
+  let istemplate = false;
+  if(websiteinfo && websiteinfo.is_template &&websiteinfo.is_template ==1){
+    istemplate = true
+  }
   let customer_username = websiteinfo.customer_username;
   let mainmenu = caches.mainmenu[hostname];
   let productmenu = caches.productcat[hostname];
@@ -639,18 +654,23 @@ const rendernewcontentpage = async function (req, res, website_url,language='vi'
         language: language,
         lang:homelang,
         productmoreinfos: productmoreinfos,
-        policies:policies
+        policies:policies,
+        istemplate:istemplate
       });
     });
   });
 }
 const rendernewcatpage = async function (req, res, website_url, language = 'vi') {
-  let homelang = language
+  let homelang = language;
+  var hostname = req.headers.host;
+  var websiteinfo = caches.websiteinfo[hostname];
   if (language == 'vi') {
     homelang = ''
   }
-  var hostname = req.headers.host;
-  var websiteinfo = caches.websiteinfo[hostname];
+  let istemplate = false;
+  if(websiteinfo && websiteinfo.is_template &&websiteinfo.is_template ==1){
+    istemplate = true
+  }
   var customer_id = websiteinfo.customer_id;
   var customer_username = websiteinfo.customer_username;
   var mainmenu = caches.mainmenu[hostname];
@@ -707,7 +727,8 @@ const rendernewcatpage = async function (req, res, website_url, language = 'vi')
       lang:homelang,
       productmoreinfos: productmoreinfos,
       layout: customer_username,
-      policies:policies
+      policies:policies,
+      istemplate:istemplate
     });
   });
 }
@@ -732,6 +753,10 @@ const renderproductcatpage = async function (req, res, website_url) {
   let language = i18n.getLocale();
   if (language == 'vi')
     language = ''
+    let istemplate = false;
+  if(websiteinfo && websiteinfo.is_template &&websiteinfo.is_template ==1){
+    istemplate = true
+  }
   Productlists.getallproductbycatshow(customer_id, website_url.content_id, Number(page), per_page, async function (err, countproduct) {
     for (var x in countproduct) {
       var productiteam = JSON.parse(JSON.stringify(countproduct[x]));
@@ -779,7 +804,8 @@ const renderproductcatpage = async function (req, res, website_url) {
       language: language,
       productmoreinfos: productmoreinfos,
       hotproducts:hotproducts,
-      policies:policies
+      policies:policies,
+      istemplate:istemplate
     });
   });
 }
@@ -798,6 +824,10 @@ const renderproductdetailpage = async function (req, res, website_url) {
   let language = i18n.getLocale();
   if (language == 'vi')
     language = ''
+  let istemplate = false;
+  if(websiteinfo && websiteinfo.is_template &&websiteinfo.is_template ==1){
+    istemplate = true
+  }
   Productlists.getproductbyproductid(website_url.content_id, async function (err, conten) {
     Productlists.getrateproductlistscatcount(conten.parent_id, conten.product_id, 8, function (err, rateproducts) {
       for (var x in rateproducts) {
@@ -860,7 +890,8 @@ const renderproductdetailpage = async function (req, res, website_url) {
         newproducts: newproducts,
         language: language,
         productmoreinfos: productmoreinfos,
-        policies:policies
+        policies:policies,
+        istemplate:istemplate
       });
     });
   });
@@ -883,6 +914,10 @@ const renderproductmoreinfocategorypage = async function (req, res, website_url)
   let language = i18n.getLocale();
   if (language == 'vi')
     language = ''
+  let istemplate = false;
+  if(websiteinfo && websiteinfo.is_template &&websiteinfo.is_template ==1){
+      istemplate = true
+  }
   Productlists.countproductbymoreinfo(customer_id, website_url.content_id, async function (err, count) {
     productmoreinfo.getmoreinfovalue(customer_id, website_url.content_id, function (err, productmorein) {
       Productlists.getallproductbymoreinfo(customer_id, website_url.content_id, Number(page), per_page, async function (err, countproduct) {
@@ -931,7 +966,8 @@ const renderproductmoreinfocategorypage = async function (req, res, website_url)
           newproducts: newproducts,
           language: language,
           productmoreinfos: productmoreinfos,
-          policies:policies
+          policies:policies,
+          istemplate:istemplate
         });
       });
     })

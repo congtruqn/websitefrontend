@@ -94,7 +94,6 @@
       <div class="container">
           {{{body}}}
       </div>
-
     </div>
       <footer class="footer">
           {{>footer}}
@@ -143,8 +142,6 @@ $('.pro_detail').delegate('.list_size','click', function(){
  function addToCart(ID){
     var productcount = 1;
     var productadd = 1;
-    
-    //var dataString = 'name='+name+'&email='+email+'&product='+product+'&text='+noidung;
       var sizepro = $('.sizeactive').html();
       var datastring =  'productcount='+productcount+'&productadd='+ID;
       $.ajax({
