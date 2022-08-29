@@ -525,7 +525,7 @@ const renderhomepage = async function (req, res, language) {
   let cusbanner = [];
   let promises = [];
   
-  if (hostname === 'tns.vn' || (process.env.ENV === 'local' && hostname === 'template1.tns.vn:3005') || hostname === 'tnsviet.online') {
+  if (hostname == 'tns.vn' || (process.env.ENV === 'local' && hostname === 'template1.tns.vn:3005') || hostname === 'tnsviet.online') {
     promises.push(systems.gettestimonialsbycustomer(websiteinfo.customer_id), systems.gettemplates(), systems.getbanner(websiteinfo.customer_id))
   }
   else {

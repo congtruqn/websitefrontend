@@ -153,6 +153,14 @@
 	.addtocart{margin-top: 10px;width: 98%;}
 	#userNextStepBottom{width: 100%;margin-bottom: 10px;}
 	.cart_button_contin{margin-top: 20px;}
+	.left_product_menu{display: none;}
+	.menu_slider{height: auto;}
+	.slider{
+		width: 100%;
+		height: auto;
+	}
+	.abs-dropdown{display: none;}
+	.cdz-tabs{width: 100%;}
 }
 
 @media (max-width: 768px) {

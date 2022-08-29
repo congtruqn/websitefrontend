@@ -44,10 +44,15 @@
 	"platform": "Platform",
 	"template_store": "Website template store",
 	"view_demo": "View demo",
-	"view_more":"View more",
+	"view_more": "View more",
 	"unlimited_features": "Unlimited features",
 	"free_trial": "Free Trial",
 	"company_industry": "company_industry",
-	"full_name":"Fullname",
-	"featured_news":"Featured news"
+	"full_name": "Fullname",
+	"featured_news": "Featured news",
+	"website_registration": "Website registration",
+	"register":"Register",
+	"complete_registration":"Registration Success",
+	"complete_registration_text":"Thank you for your interest in our products. Our staff will contact you within 15 business hours to create an account.",
+	"register_to_use":"Buy now"
 }

@@ -1085,3 +1085,21 @@ footer{
 .news_detail img{
     max-width: 100%;
 }
+.istemplate_left{
+    float: left;
+}
+#istemplate{background:#262626 ;padding: 7px 10px;}
+.istemplate_right{
+    float: right;
+    padding: 4px;
+}
+.istemplate_right a{
+    background-color: #82b440;
+    box-shadow: 0 2px 0 #6f9a37;
+    position: relative;
+    font-size: 14px;
+    padding: 5px 20px;
+    line-height: 1.5;
+    color: white;
+    border-radius: 4px;
+}

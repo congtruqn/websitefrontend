@@ -68,7 +68,14 @@
 
 <body>
   {{#if istemplate}}
-  <div id="istemplate"><a href="http://template1.tns.vn:3005/templateregister?template={{layout}}" class="big-link" data-reveal-id="myModal" data-animation="fade">Đăng ký sử dụng</a>
+  <div id="istemplate">
+    <div class="istemplate_left">
+      <img src="/images/logo2_small.png">
+    </div>
+    <div class="istemplate_right">
+        <a href="http://tns.vn/templateregister?template={{layout}}" class="big-link" data-reveal-id="myModal" data-animation="fade">{{i18n "register_to_use"}}</a>
+    </div>
+    <div id="clear"></div>
   </div>
   {{/if}}
   <div class="wrapper">
