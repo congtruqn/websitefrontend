@@ -67,20 +67,66 @@ router.get('/logout', function (req, res) {
   req.logout();
   res.redirect('/');
 });
+router.get('/templateregister', function (req, res, next) {
+  let language = i18n.getLocale();
+  let homelang = language
+  if (language == 'vi') {
+    homelang = ''
+  }
+  let template = req.param('template', '');
+  let hostname = req.headers.host;
+  let productmenu = caches.productcat[hostname];
+  let mainmenu = caches.mainmenu[hostname];
+  let websiteinfo = caches.websiteinfo[hostname];
+  let customer_username = websiteinfo.customer_username?websiteinfo.customer_username:'template1'
+  let hotnews = caches.hotnews[hostname];
+  hotnews = utils.filterDetailByLang(hotnews,language)
+  res.render('content/' + customer_username + '/templateregister', {
+    title: 'Register this template',
+    layout: customer_username,
+    productmenu: productmenu,
+    mainmenu: mainmenu,
+    siteinfo: websiteinfo,
+    hotnews: hotnews,
+    template:template
+  });
+});
+router.get('/thankyou', async function (req, res, next) {
+  let language = i18n.getLocale();
+  let homelang = language
+  if (language == 'vi') {
+    homelang = ''
+  }
+  let hostname = req.headers.host;
+  let productmenu = caches.productcat[hostname];
+  let mainmenu = caches.mainmenu[hostname];
+  let websiteinfo = caches.websiteinfo[hostname];
+  let customer_username = websiteinfo.customer_username?websiteinfo.customer_username:'template1'
+  let hotnews = caches.hotnews[hostname];
+  hotnews = utils.filterDetailByLang(hotnews,language)
+  res.render('content/' + customer_username + '/thankyou', {
+    title: 'Ragister complete',
+    productmenu: productmenu,
+    mainmenu: mainmenu,
+    siteinfo: websiteinfo,
+    hotnews: hotnews,
+    layout: websiteinfo.customer_username,
+  });
+
+});
 router.get('/login', function (req, res, next) {
   var hostname = req.headers.host;
   var productmenu = caches.productcat[hostname];
   var mainmenu = caches.mainmenu[hostname];
-  website.getwebsitesbyurl(hostname, async function (error, websiteinfo) {
-    var customer_username = websiteinfo.customer_username;
-    res.render('content/' + customer_username + '/login', {
-      title: 'Đăng nhập',
-      layout: customer_username,
-      productmenu: productmenu,
-      mainmenu: mainmenu,
-      siteinfo: websiteinfo,
-    });
-  })
+  let websiteinfo = caches.websiteinfo[hostname];
+  var customer_username = websiteinfo.customer_username;
+  res.render('content/' + customer_username + '/login', {
+    title: 'Đăng nhập',
+    layout: customer_username,
+    productmenu: productmenu,
+    mainmenu: mainmenu,
+    siteinfo: websiteinfo,
+  });
 });
 router.get('/clearcache', function (req, res, next) {
   var hostname = req.headers.host;
@@ -1173,15 +1219,12 @@ function rendercatsbyparent(customer_id, parent_id, listcat) {
   });
 }
 router.post('/registertouse', async function (req, res, next) {
-  var hostname = req.headers.host;
-  var websiteinfo = await getwebsiteinfo(hostname);
-  var customer_username = websiteinfo.customer_username
   nodeMailer = require('nodemailer');
   var newcustomers = customers({
-    name: req.param('name'),
-    email: req.param('email'),
-    phone: req.param('phone'),
-    template_name: customer_username,
+    name: req.param('name')?req.param('name'):'',
+    email: req.param('email')?req.param('email'):'',
+    phone: req.param('phone')?req.param('phone'):'',
+    template_name: req.param('template')?req.param('template'):'',
     status: 0
   });
   customers.createcustomers(newcustomers, function (err, custo) {
@@ -1359,16 +1402,6 @@ router.post('/removecartitem', function (req, res, next) {
   //req.session.destroy();
   req.session.products = temp;
   res.send('ok');
-});
-router.get('/thankyou', async function (req, res, next) {
-  var hostname = req.headers.host;
-  var websiteinfo = await getwebsiteinfo(hostname);
-  var customer_username = websiteinfo.customer_username
-  res.render('content/' + customer_username + '/thankyou', {
-    title: '',
-    layout: websiteinfo.customer_username,
-  });
-
 });
 router.get('/thong-tin-khach-hang', function (req, res, next) {
   var listcat = '';

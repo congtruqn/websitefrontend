@@ -299,8 +299,8 @@ body {
 .hpr-form {
     text-align: center;
     padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 1px 10px rgba(0, 0, 0, .16);
+    border-radius: 3px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .16);
     overflow: hidden;
     margin: 30px 0;
     
@@ -725,3 +725,4 @@ footer{
 .dt-sc-ico-content.type3 { text-align: left; padding-bottom:40px; padding-left:85px; }
 .dt-sc-ico-content.type3 h4 { margin-bottom:6px; font-size:16px; font-weight:600; }
 .contact_company_name{text-transform: uppercase;}
+.register_right img{max-width: 100%;margin-top: 30px;}
