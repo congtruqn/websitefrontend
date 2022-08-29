@@ -88,6 +88,7 @@ router.get('/templateregister', function (req, res, next) {
     mainmenu: mainmenu,
     siteinfo: websiteinfo,
     hotnews: hotnews,
+    lang:homelang,
     template:template
   });
 });
@@ -110,6 +111,7 @@ router.get('/thankyou', async function (req, res, next) {
     mainmenu: mainmenu,
     siteinfo: websiteinfo,
     hotnews: hotnews,
+    lang:homelang,
     layout: websiteinfo.customer_username,
   });
 
@@ -125,6 +127,7 @@ router.get('/login', function (req, res, next) {
     layout: customer_username,
     productmenu: productmenu,
     mainmenu: mainmenu,
+    lang:homelang,
     siteinfo: websiteinfo,
   });
 });
