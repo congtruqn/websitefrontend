@@ -76,7 +76,7 @@ function rendercatsbyparent(customer_id,parent_id,listcat) {
             if (productcat.length>0) {
                 listcat = listcat + '<ul>';
                 for (var x in productcat) {
-                  listcat = listcat + '<li><span><a href="/'+productcat[x].seo_url+'">'+productcat[x].detail[0].name+'</a></span>';
+                  listcat = listcat + '<li><a href="/'+productcat[x].seo_url+'">'+productcat[x].detail[0].name+'</a>';
                   if(productcat[x].list_child.length==0||productcat[x].list_child[0]==undefined){
                   }
                   else{ 
