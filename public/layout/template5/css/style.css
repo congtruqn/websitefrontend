@@ -1103,3 +1103,14 @@ footer{
     color: white;
     border-radius: 4px;
 }
+.pgwSlider.narrow>.ps-list>li {
+    padding: 4px;
+    width: 25% !important;
+}
+.pgwSlider.narrow>.ps-list>li  img{
+    border: 1px #CCC solid;
+    padding: 4px;
+}
+.pgwSlider.narrow>ul {
+    height: 90px;
+}
