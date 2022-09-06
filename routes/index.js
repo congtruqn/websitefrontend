@@ -98,6 +98,7 @@ router.get('/thankyou', async function (req, res, next) {
   if (language == 'vi') {
     homelang = ''
   }
+  let policies = caches.policies[hostname]?caches.policies[hostname]:[];
   let hostname = req.headers.host;
   let productmenu = caches.productcat[hostname];
   let mainmenu = caches.mainmenu[hostname];
@@ -112,6 +113,7 @@ router.get('/thankyou', async function (req, res, next) {
     siteinfo: websiteinfo,
     hotnews: hotnews,
     lang:homelang,
+    policies:policies,
     layout: websiteinfo.customer_username,
   });
 
@@ -122,12 +124,14 @@ router.get('/login', function (req, res, next) {
   var mainmenu = caches.mainmenu[hostname];
   let websiteinfo = caches.websiteinfo[hostname];
   var customer_username = websiteinfo.customer_username;
+  let policies = caches.policies[hostname]?caches.policies[hostname]:[];
   res.render('content/' + customer_username + '/login', {
     title: 'Đăng nhập',
     layout: customer_username,
     productmenu: productmenu,
     mainmenu: mainmenu,
     lang:homelang,
+    policies:policies,
     siteinfo: websiteinfo,
   });
 });
@@ -163,6 +167,7 @@ router.get('/lien-he', function (req, res, next) {
   let mainmenu = caches.mainmenu[hostname];
   let productmoreinfos = caches.productmoreinfos[hostname];
   let hotnews = caches.hotnews[hostname];
+  let policies = caches.policies[hostname]?caches.policies[hostname]:[];
   hotnews = utils.filterDetailByLang(hotnews,language)
   res.render('content/' + customer_username + '/contact', {
     title: 'Liên hệ',
@@ -175,6 +180,7 @@ router.get('/lien-he', function (req, res, next) {
     hotnews: hotnews,
     language: language,
     lang:homelang,
+    policies:policies,
     productmoreinfos: productmoreinfos
   });
 });
@@ -188,6 +194,7 @@ router.get('/thankorder', async function (req, res, next) {
   var websiteinfo = caches.websiteinfo[hostname];
   var customer_username = websiteinfo.customer_username;
   var productmoreinfos = caches.productmoreinfos[hostname];
+  let policies = caches.policies[hostname]?caches.policies[hostname]:[];
   res.render('content/' + customer_username + '/thankorder', {
     productmenu: productmenu,
     mainmenu: mainmenu,
@@ -196,6 +203,7 @@ router.get('/thankorder', async function (req, res, next) {
     title: '',
     layout: customer_username,
     sitefooter: sitefooter,
+    policies:policies,
     productmoreinfos: productmoreinfos
   });
 });
@@ -207,6 +215,7 @@ router.get('/gio-hang', async function (req, res, next) {
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
   var productmenu = caches.productcat[hostname];
+  var productmenu1 = caches.productmenu[hostname];
   var sitefooter = caches.footer[hostname];
   var customer_username = websiteinfo.customer_username
   var listproduct = req.session.products;
@@ -214,6 +223,7 @@ router.get('/gio-hang', async function (req, res, next) {
   var newproducts = caches.newproducts[hostname];
   var provinces = caches.provinces;
   var productmoreinfos = caches.productmoreinfos[hostname];
+  let policies = caches.policies[hostname]?caches.policies[hostname]:[];
   res.render('content/' + customer_username + '/shoppingcart', {
     listproducts: listproduct,
     total_money: req.session.total_price,
@@ -227,7 +237,9 @@ router.get('/gio-hang', async function (req, res, next) {
     sitefooter: sitefooter,
     newproducts: newproducts,
     provinces: provinces,
-    productmoreinfos: productmoreinfos
+    policies:policies,
+    productmoreinfos: productmoreinfos,
+    productmenu1:productmenu1,
   });
 });
 
@@ -241,6 +253,7 @@ router.get('/tim-kiem', async function (req, res, next) {
   var mainmenu = caches.mainmenu[hostname];
   var newproducts = caches.newproducts[hostname];
   var productmoreinfos = caches.productmoreinfos[hostname];
+  let policies = caches.policies[hostname]?caches.policies[hostname]:[];
   Productlists.findproductbykey(key, websiteinfo.customer_id, function (err, countproduct) {
     for (var x in countproduct) {
       var productiteam = JSON.parse(JSON.stringify(countproduct[x]));
@@ -270,11 +283,11 @@ router.get('/tim-kiem', async function (req, res, next) {
       siteinfo: websiteinfo,
       sitefooter: sitefooter,
       newproducts: newproducts,
+      policies:policies,
       productmoreinfos: productmoreinfos
     });
   })
 });
-
 router.get('/san-pham-ban-chay', async function (req, res, next) {
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
@@ -287,6 +300,7 @@ router.get('/san-pham-ban-chay', async function (req, res, next) {
   var newproducts = caches.newproducts[hostname];
   var productmoreinfos = caches.productmoreinfos[hostname];
   var page = req.param('page', '1');
+  let policies = caches.policies[hostname]?caches.policies[hostname]:[];
   Productlists.counthotproducts(customer_id, function (err, count) {
     Productlists.getallhotproductsbypage(customer_id, page, per_page, async function (err, conten) {
       for (var x in conten) {
@@ -318,6 +332,7 @@ router.get('/san-pham-ban-chay', async function (req, res, next) {
         siteinfo: websiteinfo,
         sitefooter: sitefooter,
         newproducts: newproducts,
+        policies:policies,
         productmoreinfos: productmoreinfos
       });
     })
@@ -335,6 +350,7 @@ router.get('/san-pham-moi', async function (req, res, next) {
   var newproducts = caches.newproducts[hostname];
   var productmoreinfos = caches.productmoreinfos[hostname];
   var page = req.param('page', '1');
+  let policies = caches.policies[hostname]?caches.policies[hostname]:[];
   Productlists.countnewproducts(customer_id, function (err, count) {
     Productlists.getallnewproductsbypage(customer_id, page, per_page, async function (err, conten) {
       for (var x in conten) {
@@ -366,6 +382,7 @@ router.get('/san-pham-moi', async function (req, res, next) {
         siteinfo: websiteinfo,
         sitefooter: sitefooter,
         newproducts: newproducts,
+        policies:policies,
         productmoreinfos: productmoreinfos
       });
     })
@@ -648,6 +665,51 @@ const renderpage = async function (req, res, website_url,language='vi') {
       policies:policies,
       istemplate:istemplate
     });
+  });
+}
+const render404page = async function (req, res, website_url,language='vi') {
+  let homelang = language
+  if (language == 'vi') {
+    homelang = ''
+  }
+  let istemplate = false;
+  let hostname = req.headers.host;
+  let websiteinfo = caches.websiteinfo[hostname];
+  if(websiteinfo && websiteinfo.is_template &&websiteinfo.is_template ==1){
+    istemplate = true
+  }
+  
+  let customer_username = websiteinfo.customer_username;
+  let mainmenu = caches.mainmenu[hostname];
+  let productmenu = caches.productcat[hostname];
+  let productmenu1 = caches.productmenu[hostname];
+  let sitefooter = caches.footer[hostname];
+  let newproducts = caches.newproducts[hostname];
+  let productmoreinfos = caches.productmoreinfos[hostname];
+  let policies = caches.policies[hostname]?caches.policies[hostname]:[];
+  if (websiteinfo.multi_language == 1) {
+      if (language != 'vi') {
+        lang = language
+        homelang = language
+      }
+  }
+  res.render('content/' + customer_username + '/error404', {
+      title:'Error 404',
+      description: '',
+      keyword: '',
+      canonical:'/',
+      layout: customer_username,
+      productmenu: productmenu,
+      productmenu1:productmenu1,
+      mainmenu: mainmenu,
+      siteinfo: websiteinfo,
+      sitefooter: sitefooter,
+      newproducts: newproducts,
+      language: language,
+      lang: homelang,
+      productmoreinfos: productmoreinfos,
+      policies:policies,
+      istemplate:istemplate
   });
 }
 const rendernewcontentpage = async function (req, res, website_url,language='vi') {
@@ -1048,14 +1110,7 @@ router.get('/:seourl', async function (req, res, next) {
       const website_url = await systems.getwebsitebyseourl(customer_id, seourl)
       if (!website_url) {
         if (customer_username) {
-          res.render('content/' + customer_username + '/error404', {
-            title: 'Lổi 404 không tìm thấy',
-            layout: customer_username,
-            canonical: hostname + '/error404',
-            title: websiteinfo.title,
-            description: websiteinfo.description,
-            keyword: websiteinfo.keyword,
-          });
+          render404page(req, res, website_url)
         }
       }
       else {
