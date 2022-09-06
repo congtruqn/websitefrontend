@@ -1168,14 +1168,7 @@ router.get('/:seourl1/:selurl2', async function (req, res, next) {
   const website_url = await systems.getwebsitebyseourl(customer_id, seourl)
   if (!website_url) {
     if (customer_username) {
-      res.render('content/' + customer_username + '/error404', {
-        title: 'Lổi 404 không tìm thấy',
-        layout: customer_username,
-        canonical: hostname + '/error404',
-        title: websiteinfo.title,
-        description: websiteinfo.description,
-        keyword: websiteinfo.keyword,
-      });
+      render404page(req, res, website_url,lang);
     }
   }
   else {
