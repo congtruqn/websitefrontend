@@ -1,102 +1,62 @@
-<!-- Start Footer  -->
-<footer>
-    <div class="footer-main">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 col-md-12 col-sm-12">
-                    <div class="footer-top-box">
-                        <h3>Thời gian làm việc</h3>
-                        <ul class="list-time">
-                            <li>Monday - Friday: 08.00am to 05.00pm</li>
-                            <li>Saturday: 10.00am to 08.00pm</li>
-                            <li>Sunday: <span>Closed</span></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-12 col-sm-12">
-                    <div class="footer-top-box">
-                        <h3>Đăng ký bảng tin</h3>
-                        <form class="newsletter-box">
-                            <div class="form-group">
-                                <input class="" type="email" name="Email" placeholder="Email Address*" />
-                                <i class="fa fa-envelope"></i>
-                            </div>
-                            <button class="btn hvr-hover" type="submit">Gửi</button>
-                        </form>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-12 col-sm-12">
-                    <div class="footer-top-box">
-                        <h3>Kết nối với chúng tôi</h3>
-                        <ul>
-                            <li>
-                                <a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <hr />
-            <div class="row">
-                <div class="col-lg-4 col-md-12 col-sm-12">
-                    <div class="footer-widget">
-                        <h4>Giới thiệu {{siteinfo.company_name}}</h4>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                            commodo consequat.
-                        </p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-12 col-sm-12">
-                    <div class="footer-link">
-                        <h4>Thông tin</h4>
-                        <ul>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Customer Service</a></li>
-                            <li><a href="#">Our Sitemap</a></li>
-                            <li><a href="#">Terms &amp; Conditions</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Delivery Information</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-12 col-sm-12">
-                    <div class="footer-link-contact">
-                        <h4>Liên hệ</h4>
-                        <ul>
-                            <li>
-                                <p><i class="fas fa-map-marker-alt"></i>{{siteinfo.customer_address}}</p>
-                            </li>
-                            <li>
-                                <p><i class="fas fa-phone-square"></i>Phone: <a href="tel:{{siteinfo.customer_phone}}">{{siteinfo.customer_phone}}</a></p>
-                            </li>
-                            <li>
-                                <p><i class="fas fa-envelope"></i>Email: <a href="mailto:{{siteinfo.customer_email}}">{{siteinfo.customer_email}}</a></p>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="footer-container">
+  <div class="footer-content-top">
+    <div class="container">
+      {{>policies}}
     </div>
-</footer>
-<!-- End Footer  -->
+  </div>
+  <div class="footer-content-middle">
+    <div class="container">
+      <div class="col-sm-14">
+      <div class="row middle-top">
+        <div class="newsletter_control newsletter_item">
+            <span class="title">Đăng ký nhận tin khuyến mãi!</span>
+        </div>
+        <div class="newsletter_control">
+          <input name="email" type="email" id="newsletter" placeholder="Đăng ký nhận bản tin">
+        </div>
+        <div class="newsletter_control">
+          <button class="action subscribe primary" title="Subscribe" type="submit"><span>Đăng ký</span></button>
+        </div>        
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      {{#each sitefooter as |footer|}}
+      <div class="col-md-3 col-xs-6">
+        <span class="fmn">{{footer.footer_name}}</span>
+        {{#each footer.footer_child as |childfooter|}}
+        <p><a href="/{{childfooter.child_url}}">{{{childfooter.child_name}}}</a></p>
+        {{/each}}
+      </div>
+      {{/each}}
+      <div class="col-md-4 col-sm-7 col-xs-12">
+        <span class="fmn">Liên hệ với chúng tôi</span>
+        <div class="footer_address">
+          {{siteinfo.company_name}}
+        </div>
+        <div class="footer_address">
+          <i class="fa fa-map-marker" aria-hidden="true"></i>
+          Địa chỉ: {{siteinfo.customer_address}}
+        </div>
+        <div class="footer_address">
+          <i class="fa fa-phone" aria-hidden="true"></i>
+          Điện thoại: {{siteinfo.customer_phone}}
+        </div>
+
+        <div class="footer_address">
+          <i class="fa fa-envelope" aria-hidden="true"></i>
+          Email: {{siteinfo.customer_email}}
+        </div>
+      </div>
+    </div>
+    <div id="clear"></div>
+  </div>
+</div>
+<div class="footer-content-bottom">
+  <div class="container">
+    <p>© 2018 tns.vn</p>
+  </div>
+</div>

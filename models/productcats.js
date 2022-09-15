@@ -1,6 +1,5 @@
 var express = require('express');
 var app = express();
-var Promise = require('promise');
 var mongoose = require("mongoose")
 // User Schema
 var productcatsSchema = mongoose.Schema({

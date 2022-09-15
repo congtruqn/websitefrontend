@@ -116,7 +116,6 @@ router.get('/thankyou', async function (req, res, next) {
     policies:policies,
     layout: websiteinfo.customer_username,
   });
-
 });
 router.get('/login', function (req, res, next) {
   var hostname = req.headers.host;

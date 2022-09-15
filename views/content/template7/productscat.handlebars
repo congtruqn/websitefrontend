@@ -1,52 +1,53 @@
-
-<!-- Start All Title Box -->
-<div class="all-title-box">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <h2>{{{productcatinfo.name}}}</h2>
-                <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-                    <li class="breadcrumb-item active">{{{productcatinfo.name}}}</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- End All Title Box -->
-
-<div class="container">
+<div class="block">
+	<div class="left_menu">
+		<div id="product_menu" class="product_menu detail_menu">
+    		{{> productmenu}}
+		</div>
+		<div class="new_product">
+			<div class="block_new_product">
+				{{>newproducts}}
+			</div>
+		</div>
+	</div>
 	<div class="product_cat">
-		<div role="tabpanel" class="tab-pane fade show active" id="grid-view">
+		<div class="main_news">
+			<div class="breadcrumbs">
+				<div id="bread">
+					<ul class="items">
+						<li class="item home"><a href="/">Trang chủ</a></li>
+						<li class="item product"><strong>{{{productcatinfo.name}}}</strong></li>
+					</ul>
+				</div>
+			
+			</div>
+		</div>
+		<div class="product_content">
 			<div class="row">
-				{{#each contents as |images|}}
-                        <div class="col-lg-3 col-md-6">
-                            <div class="products-single fix">
-                                <div class="box-img-hover">
-                                    <img  src="/static/{{images.image_path}}/medium/{{images.image}}" alt="{{images.alt}}" class="img-fluid" />
-                                    <div class="mask-icon">
-                                        <ul>
-                                            <li>
-                                                <a href="#" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a>
-                                            </li>
-                                            <li>
-                                                <a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a>
-                                            </li>
-                                        </ul>
-                                        <a class="cart" href="/{{images.seo_url}}">Chi tiết</a>
-                                    </div>
-                                </div>
-                                <div class="why-text">
-                                    <h4><a href="/{{images.seo_url}}">{{truncateString images.detail.[0].name 47}}</a></h4>
-                                    {{#if images.sale_price}}
-                                        <p class="s_price">Giá: {{formatCurrency images.sale_price}}₫</p>
-                                    {{/if}}
-                                    {{#if images.price}}
-                                        <h5>{{formatCurrency images.price}}₫</h5>
-                                    {{/if}}                                    
-                                </div>
-                            </div>
-                        </div>	
+				{{#each contents as |productitem|}}
+	                <div class="col-xs-6 col-sm-6 col-md-2 {{images.class}}">
+						<div class="product_item">
+							<div class="product_images">
+								<a href="/{{productitem.seo_url}}"><img src="/static/{{productitem.image_path}}/medium/{{productitem.image}}" alt="{{productitem.alt}}"></a>
+								<ul class="cdz-product-labels">
+									{{#if productitem.new}}
+										<li class="label-item new"><div class="label-content">New</div></li>
+									{{/if}}
+									{{#if productitem.salepec}}
+										<li class="label-item sale"><div class="label-content">-{{productitem.salepec}}%</div></li>
+									{{/if}}
+								</ul>
+							</div>
+							<div class="product_detail">
+								<p class="product_name"><a href="/{{productitem.seo_url}}">{{truncateString productitem.detail.[0].name 50}}</a></p>
+								<div id="clear"></div>
+								<div class="product_price"><p>{{productitem.pricebeauty}}₫</p></div>
+								{{#if productitem.salepec}}
+									<p class="product_sale_price">{{formatCurrency productitem.sale_price}}₫</p>
+								{{/if}}
+								<div id="clear"></div>
+							</div>
+						</div>
+	                </div>	
 				{{/each}}
 			</div>
 				<div class="content_page">

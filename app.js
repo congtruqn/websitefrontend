@@ -81,7 +81,7 @@ app.use(function(req, res, next) {
     if(value.length>length){
       return value.substring(0,length) + '...';
     }
-    return value.substring(0,length);
+    return value;
   });
   next();
 });
