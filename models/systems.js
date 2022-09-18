@@ -237,7 +237,10 @@ module.exports.getnewproductbycustomer = function(customer_id,count,products_nam
   return new Promise((resolve, reject)=>{
     productlists.getnewproducts(customer_id,count,function(err, countproduct){
       if(countproduct){
+        let i = 1;
+        let css_class = "";
         for (var x in countproduct) {
+          let itemposition = i%2
           var productiteam = JSON.parse(JSON.stringify(countproduct[x]));
           var pricebeauty = String(productiteam.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
           var sale_pricebeauty = String(productiteam.sale_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
@@ -245,20 +248,51 @@ module.exports.getnewproductbycustomer = function(customer_id,count,products_nam
           if(productname.length>products_name_letters){
             productname = countproduct[x].detail[0].name.substring(0,products_name_letters)+"...";
           }
+          css_class = `item${i} item_pos${itemposition}`;
           productiteam.pricebeauty = pricebeauty;
           productiteam.sale_pricebeauty = sale_pricebeauty;
-          var salepec = parseInt(((productiteam.sale_price-productiteam.price)/productiteam.sale_price)*100);
+
+          let salepec = parseInt(((productiteam.sale_price-productiteam.price)/productiteam.sale_price)*100);
+          
           productiteam.alt=countproduct[x].detail[0].name;
           productiteam.productname = productname;
+          productiteam.css_class = css_class;
           if(productiteam.sale==1){
             productiteam.salepec = salepec;
           }
           countproduct[x] = productiteam;
+          i++;
         }
         resolve(countproduct);
       }
       else{
         resolve({});
+      }
+    });
+  })
+}
+module.exports.getSaleProductsbyCustomer = function(customer_id,count){
+  return new Promise((resolve, reject)=>{
+    productlists.getSaleProducts(customer_id,count,function(err, countproduct){
+      if(countproduct){
+        let i = 1;
+        let css_class = "";
+        for (var x in countproduct) {
+          let itemposition = i%2
+          var productiteam = JSON.parse(JSON.stringify(countproduct[x]));
+          css_class = `item${i} item_pos${itemposition}`;
+          let salepec = parseInt(((productiteam.sale_price-productiteam.price)/productiteam.sale_price)*100);
+          productiteam.css_class = css_class;
+          if(productiteam.sale==1){
+            productiteam.salepec = salepec;
+          }
+          countproduct[x] = productiteam;
+          i++;
+        }
+        resolve(countproduct);
+      }
+      else{
+        resolve([]);
       }
     });
   })

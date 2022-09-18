@@ -5,6 +5,7 @@ var mainmenu = {}
 var footer = {}
 var hotproducts = {}
 var newproducts = {}
+var saleproducts = {}
 var hotproductcats = {}
 var productmoreinfos = {}
 var list_products_by_more_info = {}
@@ -23,6 +24,7 @@ module.exports = {
     hotproducts,
     hotproductcats,
     newproducts,
+    saleproducts,
     provinces,
     productmoreinfos,
     productmenu,

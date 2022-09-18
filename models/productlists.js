@@ -196,6 +196,11 @@ module.exports.getnewproducts = function(customer_id,count,callback){
 	var query = {customer_id:customer_id,'new':1,'show':1};
 	productlists.find(query, callback).skip(0).limit(count).sort({'rank': -1 });
 }
+module.exports.getSaleProducts = function(customer_id,count,callback){
+	var query = {customer_id:customer_id,'sale':1,'show':1};
+	productlists.find(query, callback).skip(0).limit(count).sort({'rank': -1 });
+}
+
 module.exports.gethotproducts = function(customer_id,count,callback){
 	var query = {customer_id:customer_id,'hot':1,'show':1};
 	productlists.find(query, callback).skip(0).limit(count).sort({'rank': -1 });

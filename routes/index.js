@@ -553,6 +553,7 @@ const renderhomepage = async function (req, res, language) {
   var hotproductcategory = caches.hotproductcategory[hostname];
   let hotandnewproducts = caches.hotandnewproducts[hostname];
   let hotnews = caches.hotnews[hostname];
+  let saleproducts = caches.saleproducts[hostname];
   let policies = caches.policies[hostname]?caches.policies[hostname]:[];
   hotnews = utils.filterDetailByLang(hotnews,language)
   let website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : "http";
@@ -587,6 +588,7 @@ const renderhomepage = async function (req, res, language) {
       sitefooter: sitefooter,
       hotproducts: hotproducts,
       newproducts: newproducts,
+      saleproducts:saleproducts,
       productmoreinfos: productmoreinfos,
       list_products_by_more_info: list_products_by_more_info,
       productmenu1: productmenu1,

@@ -110,35 +110,39 @@ app.use(async function(req, res, next) {
         caches.websiteinfo[hostname] = websitein;
         caches.websiteinfo[hostname].date = curent_date+(1000*60*1);
         if(!caches.productcat[hostname]||caches.productcat[hostname]==null){
-          var productcat = await systems.gethotproductcat(websitein.customer_id);
+          let productcat = await systems.gethotproductcat(websitein.customer_id);
           caches.productcat[hostname] = productcat;
         }
         if(!caches.hotproductcategory[hostname]||caches.hotproductcategory[hostname]==null){
-          var hotproductcategory = await systems.gethotproductcategory(websitein.customer_id);
+          let hotproductcategory = await systems.gethotproductcategory(websitein.customer_id);
           caches.hotproductcategory[hostname] = hotproductcategory;
         }
         if(!caches.productmenu[hostname]||caches.productmenu[hostname]==null){
-          var productmenu = await systems.getproductmenu(websitein.customer_id);
+          let productmenu = await systems.getproductmenu(websitein.customer_id);
           caches.productmenu[hostname] = productmenu;
         }
         if(!caches.mainmenu[hostname]||caches.mainmenu[hostname]==null){
-          var mainmenu = await systems.rendermainmenu(websitein.customer_id);
+          let mainmenu = await systems.rendermainmenu(websitein.customer_id);
           caches.mainmenu[hostname] = mainmenu;
         }
         if(!caches.footer[hostname]||caches.footer[hostname]==null){
-          var footer1 = await systems.getfooterbycustomer(websitein.customer_id);
+          let footer1 = await systems.getfooterbycustomer(websitein.customer_id);
           caches.footer[hostname] = footer1;
         }
         if(!caches.hotproducts[hostname]||!caches.hotproducts[hostname]==null){
-          var hotproducts = await systems.gethotproductbycustomer(websitein.customer_id,10,websitein.products_name_letters);
+          let hotproducts = await systems.gethotproductbycustomer(websitein.customer_id,10,websitein.products_name_letters);
           caches.hotproducts[hostname] = hotproducts;
         }
         if(!caches.newproducts[hostname]||caches.newproducts[hostname]==null){
-          var newproducts = await systems.getnewproductbycustomer(websitein.customer_id,10,websitein.products_name_letters);
+          let newproducts = await systems.getnewproductbycustomer(websitein.customer_id,10,websitein.products_name_letters);
           caches.newproducts[hostname] = newproducts;
         }
+        if(!caches.saleproducts[hostname]||caches.saleproducts[hostname]==null){
+          let saleproducts = await systems.getSaleProductsbyCustomer(websitein.customer_id,10,websitein.products_name_letters);
+          caches.saleproducts[hostname] = saleproducts;
+        }
         if(!caches.productmoreinfos[hostname]||caches.productmoreinfos[hostname]==null){
-          var productmoreinfos = await systems.getallchoiseproductmoreinfos(websitein.customer_id);
+          let productmoreinfos = await systems.getallchoiseproductmoreinfos(websitein.customer_id);
           caches.productmoreinfos[hostname] = productmoreinfos;
         }
         if(!caches.list_products_by_more_info[hostname]||caches.list_products_by_more_info[hostname]==null){
@@ -165,34 +169,38 @@ app.use(async function(req, res, next) {
     });
   }
   else{
-    var websitein = caches.websiteinfo[hostname];
+    let websitein = caches.websiteinfo[hostname];
     if(!caches.productcat[hostname]||caches.productcat[hostname]==null){
-      var productcat = await systems.gethotproductcat(websitein.customer_id);
+      let productcat = await systems.gethotproductcat(websitein.customer_id);
       caches.productcat[hostname] = productcat;
     }
     if(!caches.hotproductcategory[hostname]||caches.hotproductcategory[hostname]==null){
-      var hotproductcategory = await systems.gethotproductcategory(websitein.customer_id);
+      let hotproductcategory = await systems.gethotproductcategory(websitein.customer_id);
       caches.hotproductcategory[hostname] = hotproductcategory;
     }
     if(!caches.productmenu[hostname]||caches.productmenu[hostname]==null){
-      var productmenu = await systems.getproductmenu(websitein.customer_id);
+      let productmenu = await systems.getproductmenu(websitein.customer_id);
       caches.productmenu[hostname] = productmenu;
     }
     if(!caches.mainmenu[hostname]||caches.mainmenu[hostname]==null){
-      var mainmenu = await systems.rendermainmenu(websitein.customer_id);
+      let mainmenu = await systems.rendermainmenu(websitein.customer_id);
       caches.mainmenu[hostname] = mainmenu;
     }
     if(!caches.footer[hostname]||caches.footer[hostname]==null){
-        var footer1 = await systems.getfooterbycustomer(websitein.customer_id);
-        caches.footer[hostname] = footer1;
+      let footer1 = await systems.getfooterbycustomer(websitein.customer_id);
+      caches.footer[hostname] = footer1;
     }
     if(!caches.hotproducts[hostname]||!caches.hotproducts[hostname]==null){
-      var hotproducts = await systems.gethotproductbycustomer(websitein.customer_id,10,websitein.products_name_letters);
+      let hotproducts = await systems.gethotproductbycustomer(websitein.customer_id,10,websitein.products_name_letters);
       caches.hotproducts[hostname] = hotproducts;
     }
     if(!caches.newproducts[hostname]||caches.newproducts[hostname]==null){
-      var newproducts = await systems.getnewproductbycustomer(websitein.customer_id,10,websitein.products_name_letters);
+      let newproducts = await systems.getnewproductbycustomer(websitein.customer_id,10,websitein.products_name_letters);
       caches.newproducts[hostname] = newproducts;
+    }
+    if(!caches.saleproducts[hostname]||caches.saleproducts[hostname]==null){
+      let saleproducts = await systems.getSaleProductsbyCustomer(websitein.customer_id,10,websitein.products_name_letters);
+      caches.saleproducts[hostname] = saleproducts;
     }
     if(!caches.productmoreinfos[hostname]||caches.productmoreinfos[hostname]==null){
       var productmoreinfos = await systems.getallchoiseproductmoreinfos(websitein.customer_id);
