@@ -16,6 +16,7 @@
     "express": "^4.17.1",
     "express-handlebars": "*",
     "express-messages": "*",
+    "express-rate-limit": "^6.6.0",
     "express-session": "*",
     "express-validator": "*",
     "fs": "0.0.1-security",

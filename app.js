@@ -10,10 +10,21 @@ var flash = require('connect-flash');
 var session = require('express-session');
 var passport = require('passport');
 var mongoose = require('mongoose');
+const rateLimit = require('express-rate-limit')
 var app = express();
 var port = process.env.PORT || 3005;
 app.set('port', port);
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+
+const limiter = rateLimit({
+	windowMs: 60 * 1000, // 1 minutes
+	max: 700, // Limit each IP to 2000 requests per `window` (here, per 15 minutes)
+	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+})
+
+// Apply the rate limiting middleware to all requests
+app.use(limiter)
 var index = require('./routes/index');
 var systems = require('./models/systems');
 var caches = require('./models/cache');
