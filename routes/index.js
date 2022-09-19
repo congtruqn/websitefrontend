@@ -150,6 +150,7 @@ router.get('/clearcache', function (req, res, next) {
   caches.list_products_by_more_info[hostname] = null;
   caches.hotproductcategory[hostname] = null;
   caches.hotandnewproducts[hostname] = null;
+  caches.saleproducts[hostname] = null;
   res.send('ok');
 })
 router.get('/lien-he', function (req, res, next) {

@@ -35,11 +35,13 @@ body {
     text-align: center;
     width: 100%;
 }
-#top .container{
+#top .container .center{
     border-bottom: 1px solid #ccc;
+    overflow: hidden;
 }
-#navition .container{
+#navition .container .center{
     background: #343434;
+    
 }
 .cont-header{
     background: #fff;
@@ -290,13 +292,18 @@ body {
 }
 .new_product_images{float: left;width: 30%;}
 .new_product_detail{width: 67%;float: right;}
-.newproductcont ul li{list-style: none;width: 50%;}
-.new_product_item{padding: 15px 10px;border: 1px solid #ebebeb;overflow: hidden;}
+.newproductcont ul li{list-style: none;width: 50%;float: left;}
+.newproductcont{max-height: 300px;display: block;}
+.new_product_item{padding: 15px 10px;border: 1px solid #ebebeb;overflow: hidden;min-height: 105px;}
+.newproductcont .item_pos0{border-left: none;border-right: none;}
+.newproductcont .item_pos1{border-left: none;}
+.newproductcont .item7,.newproductcont .item8{border-bottom: none;}
 .new_product_item{
     border-top: none;
 }
-.new_product_item .product_price p{width: 55%;float: left;text-align: left;color: #1d71aa;font-weight: 500;}
-.new_product_item .sale_pricebeauty{width: 45%;float: right;}
+.new_product_item .product_price{float: left;text-align: left;}
+.new_product_item .product_price p{color: #ffa415;font-weight: 500;font-size: 15px;}
+.new_product_item .sale_pricebeauty{margin-left: 7px;float: left;}
 .new_product_item .sale_pricebeauty p{color:#333;font-size: 11px;text-decoration: line-through;}
 .new_product_item .new_product_name a{color: #666;font-weight: 500;}
 .hot_product_item{
