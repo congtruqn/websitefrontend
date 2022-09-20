@@ -7,11 +7,13 @@
 </div>
 {{adverttises}}
 <div class="ads">
+	<ul>
 	{{#each (filterAds advertises 'top') as |advertise|}}
-		<div class="left">
+		<li class="left">
 			<a href="#"><img src="/static{{advertise.image_path}}"></a>
-		</div>		
+		</li>		
 	{{/each}}
+	</ul>
 	<div id="clear"></div>
 </div>
 
