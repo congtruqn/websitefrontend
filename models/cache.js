@@ -15,6 +15,7 @@ var hotnews = {}
 var hotandnewproducts = {}
 var provinces = ''
 var policies = {}
+var advertises = {}
 module.exports = {
     websiteinfo,
     hotnewcats,
@@ -32,5 +33,6 @@ module.exports = {
     hotproductcategory,
     hotnews,
     hotandnewproducts,
-    policies
+    policies,
+    advertises
 }

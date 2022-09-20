@@ -5,12 +5,13 @@
 		</div>
 	</div>
 </div>
-
+{{adverttises}}
 <div class="ads">
-	<div class="left">
-		<a href="#"><img src="/static/template7/images/systems/ads1-top-food3.jpg"></a>
-	</div>
-	<div class="right"><a href="#"><img src="/static/template7/images/systems/ads2-top-food3.jpg"></a></div>
+	{{#each (filterAds advertises 'top') as |advertise|}}
+		<div class="left">
+			<a href="#"><img src="/static{{advertise.image_path}}"></a>
+		</div>		
+	{{/each}}
 	<div id="clear"></div>
 </div>
 

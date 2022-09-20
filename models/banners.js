@@ -34,15 +34,3 @@ module.exports.getbannerbycustomer = function(customer_id,callback){
 	var query = {customer_id:customer_id};
 	banners.find(query, callback);
 }
-module.exports.getallbannersnotpage = function(callback){
-	var query = {};
-	banners.find(query, callback);
-}
-module.exports.countbanners = function(callback){
-	var query = {};
-	banners.count(query, callback);
-}
-module.exports.getAllbannersByUser = function(userid,page,per_page,callback){
-	var query = {create_user: userid};
-	banners.find(query, callback).skip(per_page * (page - 1)).limit(per_page).sort({'banners_id': -1 });
-}

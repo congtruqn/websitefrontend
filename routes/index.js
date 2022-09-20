@@ -535,6 +535,7 @@ const renderhomepage = async function (req, res, language) {
   }
   var sitefooter = caches.footer[hostname];
   var mainmenu = caches.mainmenu[hostname];
+  let advertises = caches.advertises[hostname];
   var productmoreinfos = caches.productmoreinfos[hostname];
   var list_products_by_more_info = caches.list_products_by_more_info[hostname];
   let listtemplates = [];
@@ -598,6 +599,7 @@ const renderhomepage = async function (req, res, language) {
       hotnews: hotnews,
       listtemplates: listtemplates,
       testimonials: testimonials,
+      advertises:advertises,
       policies:policies,
       language: language,
       lang: homelang,

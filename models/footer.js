@@ -1,6 +1,4 @@
 var mongoose = require('mongoose');
-var ObjectId = require('mongoose').Types.ObjectId;
-// User Schema
 var footerSchema = mongoose.Schema({
 	footer_name:{
 		type: String,

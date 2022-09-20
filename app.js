@@ -18,7 +18,7 @@ app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 const limiter = rateLimit({
 	windowMs: 60 * 1000, // 1 minutes
-	max: 200, // Limit each IP to 2000 requests per `window` (here, per 1 minutes)
+	max: 2000, // Limit each IP to 2000 requests per `window` (here, per 1 minutes)
 	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
 	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 })
@@ -26,7 +26,7 @@ const limiter = rateLimit({
 // Apply the rate limiting middleware to all requests
 app.use(limiter)
 var index = require('./routes/index');
-var systems = require('./models/systems');
+var systems = require('./models/systems'); 
 var caches = require('./models/cache');
 global.__basedir = __dirname;
 var i18n = require('i18n');
@@ -109,6 +109,15 @@ app.use(function(req, res, next) {
   });
   next();
 });
+app.use(function(req, res, next) {
+  hbs.handlebars.registerHelper('filterAds', function(value,key) {
+    let temp = value.filter((word) => {
+      return word.position == key;
+    })
+    return temp;
+  });
+  next();
+});
 app.use(async function(req, res, next) {
   var curent_date = new Date().getTime();
   var hostname = req.headers.host;
@@ -168,9 +177,13 @@ app.use(async function(req, res, next) {
           let hotnews = await systems.gethotnewsbycustomer(websitein.customer_id,websitein.num_hot_news);
           caches.hotnews[hostname] = hotnews;
         }
-        if(!caches.policies[hostname]||caches.policies[hostname]==null){
+        if(!caches.policies[hostname]){
           let policies = await systems.policies.getPolicyByCustomer(websitein.customer_id);
           caches.policies[hostname] = policies;
+        }
+        if(!caches.advertises[hostname]){
+          let advertises = await systems.advertises.getAdvertisesByCustomer(websitein.customer_id);
+          caches.advertises[hostname] = advertises;
         }
         app.engine('handlebars', exphbs({
           partialsDir: __dirname + '/views/partials/'+websitein.customer_username
@@ -217,21 +230,25 @@ app.use(async function(req, res, next) {
       var productmoreinfos = await systems.getallchoiseproductmoreinfos(websitein.customer_id);
       caches.productmoreinfos[hostname] = productmoreinfos;
     }
-    if(!caches.list_products_by_more_info[hostname]||caches.list_products_by_more_info[hostname]==null){
+    if(!caches.list_products_by_more_info[hostname]){
       let productmoreinfos = await systems.getproductbyproductmoreinfos(websitein.customer_id,4);
       caches.list_products_by_more_info[hostname] = productmoreinfos;
     }
-    if(!caches.hotandnewproducts[hostname]||caches.hotandnewproducts[hostname]==null){
+    if(!caches.hotandnewproducts[hostname]){
       let hotandnewproducts = await systems.gethotandnewproductsbycustomer(websitein.customer_id,websitein.num_hot_products);
       caches.hotandnewproducts[hostname] = hotandnewproducts;
     }
-    if(!caches.hotnews[hostname]||caches.hotnews[hostname]==null){
+    if(!caches.hotnews[hostname]){
       let hotnews = await systems.gethotnewsbycustomer(websitein.customer_id,websitein.num_hot_news);
       caches.hotnews[hostname] = hotnews;
     }
-    if(!caches.policies[hostname]||caches.policies[hostname]==null){
+    if(!caches.policies[hostname]){
       let policies = await systems.policies.getPolicyByCustomer(websitein.customer_id);
       caches.policies[hostname] = policies;
+    }
+    if(!caches.advertises[hostname]){
+      let advertises = await systems.advertises.getAdvertisesByCustomer(websitein.customer_id);
+      caches.advertises[hostname] = advertises;
     }
     app.engine('handlebars', exphbs({
        partialsDir: __dirname + '/views/partials/'+websitein.customer_username  

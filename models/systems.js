@@ -1,8 +1,6 @@
-var mongoose = require("mongoose")
 var ProductCat = require('../models/productcats');
 var NewsContents = require('../models/newscontents');
 var NewsCats = require('../models/newscats');
-var Productlists = require('../models/productlists');
 var ProductCat = require('../models/productcats');
 var Seourls = require('../models/seourl');
 var banners = require('../models/banners');
@@ -388,3 +386,4 @@ module.exports.gethotandnewproductsbycustomer = function(customer_id,count){
   })
 }
 module.exports.policies  = require('./policies')
+module.exports.advertises  = require('./advertises')
