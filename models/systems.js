@@ -11,7 +11,6 @@ var caches = require('../models/cache');
 var productlists  = require('../models/productlists');
 var productmoreinfo  = require('../models/productmoreinfo');
 var caches = require('../models/cache');
-var testimonials = require('../models/testimonials');
 module.exports.gethotproductcat = function(customer_id){
   return new Promise((resolve, reject)=>{
     var listcat = '';
@@ -157,18 +156,6 @@ module.exports.getwebsitebyseourl = function(customer_id,seo_url){
         resolve(null);
       }
     });
-  })
-}
-module.exports.gettestimonialsbycustomer = function(customer_id){
-  return new Promise((resolve, reject)=>{
-    testimonials.getcounttestimonialsbycustomer(3,customer_id,async function(error,testimo){
-      if(testimo){
-        resolve(testimo)
-      }
-      else{
-        resolve([]);
-      }
-    })
   })
 }
 module.exports.gettemplates = function(){
@@ -387,3 +374,4 @@ module.exports.gethotandnewproductsbycustomer = function(customer_id,count){
 }
 module.exports.policies  = require('./policies')
 module.exports.advertises  = require('./advertises')
+module.exports.testimonials = require('./testimonials');

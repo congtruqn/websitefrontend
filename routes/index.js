@@ -542,14 +542,14 @@ const renderhomepage = async function (req, res, language) {
   let testimonials = [];
   let cusbanner = [];
   let promises = [];
-  
-  if (hostname == 'tns.vn' || (process.env.ENV === 'local' && hostname === 'template1.tns.vn:3005') || hostname === 'tnsviet.online') {
-    promises.push(systems.gettestimonialsbycustomer(websiteinfo.customer_id), systems.gettemplates(), systems.getbanner(websiteinfo.customer_id))
+  if (hostname == 'template1.tns.vn:3005' || hostname == 'tns.vn') {
+    promises.push(systems.testimonials.getTestimonialsByCustomer(3,websiteinfo.customer_id), systems.gettemplates(), systems.getbanner(websiteinfo.customer_id))
   }
   else {
     promises.push([], [], systems.getbanner(websiteinfo.customer_id))
   }
   [testimonials, listtemplates, cusbanner] = await Promise.all(promises).catch(function (err) { console.log(err) })
+  //console.log(testimonials,listtemplates,cusbanner,process.env.ENV)
   var hotproducts = caches.hotproducts[hostname];
   var newproducts = caches.newproducts[hostname];
   var hotproductcategory = caches.hotproductcategory[hostname];

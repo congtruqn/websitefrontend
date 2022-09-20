@@ -15,7 +15,6 @@ var SeourlSchema = mongoose.Schema({
 	},
 });
 var Seourl = module.exports = mongoose.model('seourl', SeourlSchema);
-
 module.exports.findByUrl = function(customer_id,url,callback){
 	var query = {"customer_id":customer_id,"seo_url":url};
 	Seourl.findOne(query,callback);

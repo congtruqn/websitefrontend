@@ -835,13 +835,6 @@ footer .footer-top {
     width: 100%;
     position: relative;
 }
-footer{
-    border-top: 1px solid #f5f3ea;
-    padding-top: 0;
-    padding-bottom: 0;
-    font-size: 12px;
-    background: #fff;
-}
 .footer-container .fmn{font-weight: 500;display: block;margin: 10px 0;}
 .facebook_like{overflow: hidden;display: block;margin: 15px 0;}
 .newletter-title{font-size: 17px;font-weight: 500;padding: 5px 15px;}
@@ -923,54 +916,6 @@ footer{
 }
 .footer a {
     color: #b1b1b1;
-}
-.middle-top{
-    display: flex;
-    padding: 20px 0;
-    width: 65%;
-}
-.subscribe{
-    background-image: none;
-    background: #1979c3;
-    border: 1px solid #1979c3;
-    color: #fff;
-    cursor: pointer;
-    display: inline-block;
-    font-weight: 500;
-    padding: 7px 15px;
-    font-size: 1.4rem;
-    box-sizing: border-box;
-    vertical-align: middle;
-    margin-left: 10px;
-    border-radius: 3px;
-}
-.subscribe:hover{
-    color: #fff;
-    border-color: #000;
-    background: #000;
-}
-#newsletter{
-    padding-left: 35px;
-    padding: 5px 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    height: 40px;
-    line-height: 40px;
-    width: 300px;
-}
-.footer-content-middle .title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-right: 15px;
-    color: #000;
-}
-.newsletter_item{
-    padding: 9px;
-}
-.footer-content-bottom {
-    background-color: #189eff;
-    padding: 20px 0 15px;
-    margin-top: 20px;
 }
 .rate_product {
     background: #fff;
@@ -1107,4 +1052,124 @@ footer{
     -o-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
+}
+.newsletter-group {
+    margin-top: 50px;
+    text-align: center;
+}
+.block.newsletter {
+    width: 100% !important;
+    text-align: left;
+    position: relative;
+    margin: 0;
+    padding: 31px 30px 35px 30px;
+    background: #004863;
+}
+.block.newsletter h2.title {
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: 500;
+    color: #fff;
+    display: block;
+}
+.block.newsletter .form.subscribe {
+    display: table;
+    width: 100%;
+}
+.block.newsletter .field .control {
+    margin-bottom: 0;
+    position: relative;
+    margin-top: 11px;
+    width: 100%;
+    display: inline-block;
+    padding-right: 145px;
+}
+.block.newsletter .field .control input {
+    display: inline-block;
+    background: #fff;
+    padding: 10px;
+    line-height: 30px;
+    height: 34px;
+    border-radius: 0;
+    color: #aaaaaa;
+    font-size: 13px;
+    width: 100%;
+    font-weight: 400;
+}
+.block.newsletter .field .actions {
+    display: block;
+    margin: 0;
+    width: auto;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.block.newsletter .field .actions button.subscribe {
+    line-height: 32px;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    padding: 0 30px;
+    background: #ffa415;
+    color: #fff;
+    border-radius: 0;
+    text-transform: uppercase;
+    border: 1px solid #fff;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+}
+.block.newsletter .field {
+    margin-right: 5px;
+}
+.block .title {
+    margin-bottom: 10px;
+}
+.block.newsletter .form.subscribe {
+    display: table;
+    width: 100%;
+}
+.footer-content-bottom{
+    background: #232323;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    margin-top: 30px;
+}
+.information-group {
+    margin-top: 50px;
+}
+.information-group .container-inner {
+    background: #fff;
+    padding: 25px 0 10px 0;
+}
+.information-group .row {
+    margin: 0;
+}
+.information-group .f-col .title h3 {
+    color: #ffa415;
+    font-size: 16px;
+    line-height: 30px;
+    font-weight: 500;
+    text-transform: uppercase;
+    display: block;
+    padding-bottom: 6px;
+    position: relative;
+}
+.information-group .f-col .title h3:after {
+    content: "";
+    width: 35px;
+    height: 2px;
+    background: #ffa415;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+.information-group .f-col {
+    margin-bottom: 15px;
+    padding: 0;
+    padding-left: 30px;
+    padding-right: 25px;
+    border-right: 1px solid #ebebeb;
 }
