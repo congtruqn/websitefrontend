@@ -523,7 +523,6 @@ router.get('/getshippingcod', function (req, res, next) {
   });
 });
 const renderhomepage = async function (req, res, language) {
-  console.log(caches)
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
   var productmenu = caches.productcat[hostname];
