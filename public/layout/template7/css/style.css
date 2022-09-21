@@ -334,7 +334,7 @@ body {
     padding-right: 2%;
 }
 .content_detail {
-    width: 79%;
+    width: 74.36% !important;
     float: right;
     padding: 10px;
     margin-top: 10px;
