@@ -141,11 +141,9 @@ body {
 .ul_mainmenu{margin-bottom: 0;}
 .product_menu{
     float: left;
-    width: 270px;
     background: #fff;
     border-bottom-right-radius: 3px;
     border-bottom-left-radius: 3px;
-    height: 310px;
     z-index: 10000;
     overflow:hidden;
 }
@@ -172,6 +170,7 @@ body {
     color: #666;
     text-transform:initial;
     font-weight: 400;
+    font-size: 14px;
 }
 .fa-caret-right{display: none !important;}
 .product_menu ul li span a:hover{color: #25B430}
@@ -211,7 +210,7 @@ body {
 .productcat_name{width: 70%;float: left;font-size: 15px;font-weight: normal}
 .viewall a{font-style: italic;color: #43b728 !important;text-transform: capitalize !important;font-size: 11px !important;font-weight: 400 !important;}
 .productcat_title h2{font-size: 14px;text-transform: uppercase;padding: 0 7px;font-weight: 500;color: #333}
-.product_item{background: #fff;margin-bottom: 10px;border: 1px solid #eee;}
+.product_item{background: #fff;margin-bottom: 10px;}
 .product_item .product_detail{padding: 7px;}
 .product_item .product_detail .product_name{border-bottom:1px solid #ccc; }
 #clear{clear: both;}
@@ -256,11 +255,11 @@ body {
 .new_product_item{
     border-top: none;
 }
-.new_product_item .product_price{float: left;text-align: left;}
-.new_product_item .product_price p{color: #ffa415;font-weight: 500;font-size: 15px;}
-.new_product_item .sale_pricebeauty{margin-left: 7px;float: left;}
-.new_product_item .sale_pricebeauty p{color:#333;font-size: 11px;text-decoration: line-through;}
-.new_product_item .new_product_name a{color: #666;font-weight: 500;}
+.new_products .product_price,.new_product_item .product_price{float: left;text-align: left;}
+.new_products .product_price p,.new_product_item .product_price p{color: #ffa415;font-weight: 500;font-size: 15px;}
+.new_products .sale_pricebeauty,.new_product_item .sale_pricebeauty{margin-left: 7px;float: left;}
+.new_products .sale_pricebeauty p,.new_product_item .sale_pricebeauty p{color:#333;font-size: 11px;text-decoration: line-through;}
+.new_products .new_product_name a,.new_product_item .new_product_name a{color: #666;font-weight: 500;}
 .hot_product_item{
     padding: 10px;
     display: block;
@@ -352,9 +351,6 @@ body {
     padding: 10px 10px;
     height: 100%;
     background: #fff;
-    border-radius: 5px;
-    box-shadow: 0px 4px 34px rgb(0 0 0 / 8%);
-    border: 0px solid #e1e1e1;
     margin-top: 15px;
 }
 .product_content img{height: auto !important;}
@@ -1324,3 +1320,5 @@ ul.link-follow li a:hover {
     margin-right: 10px;
 }
 .breadcrumbs .items .item a{color: #444;}
+.new_product_i{padding: 7px 10px;border-bottom: 1px solid #ebebeb;overflow: hidden;min-height: 90px;background: #fff;}
+.new_products ul li{list-style: none;}
