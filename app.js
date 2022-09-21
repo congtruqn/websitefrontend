@@ -119,7 +119,6 @@ app.use(function(req, res, next) {
   next();
 });
 app.use(async function(req, res, next) {
-  var curent_date = new Date().getTime();
   var hostname = req.headers.host;
   if(!caches.websiteinfo[hostname]||caches.websiteinfo[hostname]==null){
     systems.getwebsiteinfo(hostname,async function(err, websitein){
@@ -128,63 +127,7 @@ app.use(async function(req, res, next) {
       }
       if(websitein){
         caches.websiteinfo[hostname] = websitein;
-        caches.websiteinfo[hostname].date = curent_date+(1000*60*1);
-        if(!caches.productcat[hostname]||caches.productcat[hostname]==null){
-          let productcat = await systems.gethotproductcat(websitein.customer_id);
-          caches.productcat[hostname] = productcat;
-        }
-        if(!caches.hotproductcategory[hostname]||caches.hotproductcategory[hostname]==null){
-          let hotproductcategory = await systems.gethotproductcategory(websitein.customer_id);
-          caches.hotproductcategory[hostname] = hotproductcategory;
-        }
-        if(!caches.productmenu[hostname]||caches.productmenu[hostname]==null){
-          let productmenu = await systems.getproductmenu(websitein.customer_id);
-          caches.productmenu[hostname] = productmenu;
-        }
-        if(!caches.mainmenu[hostname]||caches.mainmenu[hostname]==null){
-          let mainmenu = await systems.rendermainmenu(websitein.customer_id);
-          caches.mainmenu[hostname] = mainmenu;
-        }
-        if(!caches.footer[hostname]||caches.footer[hostname]==null){
-          let footer1 = await systems.getfooterbycustomer(websitein.customer_id);
-          caches.footer[hostname] = footer1;
-        }
-        if(!caches.hotproducts[hostname]||!caches.hotproducts[hostname]==null){
-          let hotproducts = await systems.gethotproductbycustomer(websitein.customer_id,10,websitein.products_name_letters);
-          caches.hotproducts[hostname] = hotproducts;
-        }
-        if(!caches.newproducts[hostname]||caches.newproducts[hostname]==null){
-          let newproducts = await systems.getnewproductbycustomer(websitein.customer_id,10,websitein.products_name_letters);
-          caches.newproducts[hostname] = newproducts;
-        }
-        if(!caches.saleproducts[hostname]||caches.saleproducts[hostname]==null){
-          let saleproducts = await systems.getSaleProductsbyCustomer(websitein.customer_id,10,websitein.products_name_letters);
-          caches.saleproducts[hostname] = saleproducts;
-        }
-        if(!caches.productmoreinfos[hostname]||caches.productmoreinfos[hostname]==null){
-          let productmoreinfos = await systems.getallchoiseproductmoreinfos(websitein.customer_id);
-          caches.productmoreinfos[hostname] = productmoreinfos;
-        }
-        if(!caches.list_products_by_more_info[hostname]||caches.list_products_by_more_info[hostname]==null){
-          let productmoreinfos = await systems.getproductbyproductmoreinfos(websitein.customer_id,4);
-          caches.list_products_by_more_info[hostname] = productmoreinfos;
-        }
-        if(!caches.hotandnewproducts[hostname]||caches.hotandnewproducts[hostname]==null){
-          let hotandnewproducts = await systems.gethotandnewproductsbycustomer(websitein.customer_id,websitein.num_hot_products);
-          caches.hotandnewproducts[hostname] = hotandnewproducts;
-        }
-        if(!caches.hotnews[hostname]||caches.hotnews[hostname]==null){
-          let hotnews = await systems.gethotnewsbycustomer(websitein.customer_id,websitein.num_hot_news);
-          caches.hotnews[hostname] = hotnews;
-        }
-        if(!caches.policies[hostname]){
-          let policies = await systems.policies.getPolicyByCustomer(websitein.customer_id);
-          caches.policies[hostname] = policies;
-        }
-        if(!caches.advertises[hostname]){
-          let advertises = await systems.advertises.getAdvertisesByCustomer(websitein.customer_id);
-          caches.advertises[hostname] = advertises;
-        }
+        await caches.storeCaches(caches,hostname,websitein)
         app.engine('handlebars', exphbs({
           partialsDir: __dirname + '/views/partials/'+websitein.customer_username
         }));
@@ -194,62 +137,7 @@ app.use(async function(req, res, next) {
   }
   else{
     let websitein = caches.websiteinfo[hostname];
-    if(!caches.productcat[hostname]||caches.productcat[hostname]==null){
-      let productcat = await systems.gethotproductcat(websitein.customer_id);
-      caches.productcat[hostname] = productcat;
-    }
-    if(!caches.hotproductcategory[hostname]||caches.hotproductcategory[hostname]==null){
-      let hotproductcategory = await systems.gethotproductcategory(websitein.customer_id);
-      caches.hotproductcategory[hostname] = hotproductcategory;
-    }
-    if(!caches.productmenu[hostname]||caches.productmenu[hostname]==null){
-      let productmenu = await systems.getproductmenu(websitein.customer_id);
-      caches.productmenu[hostname] = productmenu;
-    }
-    if(!caches.mainmenu[hostname]||caches.mainmenu[hostname]==null){
-      let mainmenu = await systems.rendermainmenu(websitein.customer_id);
-      caches.mainmenu[hostname] = mainmenu;
-    }
-    if(!caches.footer[hostname]||caches.footer[hostname]==null){
-      let footer1 = await systems.getfooterbycustomer(websitein.customer_id);
-      caches.footer[hostname] = footer1;
-    }
-    if(!caches.hotproducts[hostname]||!caches.hotproducts[hostname]==null){
-      let hotproducts = await systems.gethotproductbycustomer(websitein.customer_id,10,websitein.products_name_letters);
-      caches.hotproducts[hostname] = hotproducts;
-    }
-    if(!caches.newproducts[hostname]||caches.newproducts[hostname]==null){
-      let newproducts = await systems.getnewproductbycustomer(websitein.customer_id,10,websitein.products_name_letters);
-      caches.newproducts[hostname] = newproducts;
-    }
-    if(!caches.saleproducts[hostname]||caches.saleproducts[hostname]==null){
-      let saleproducts = await systems.getSaleProductsbyCustomer(websitein.customer_id,10,websitein.products_name_letters);
-      caches.saleproducts[hostname] = saleproducts;
-    }
-    if(!caches.productmoreinfos[hostname]||caches.productmoreinfos[hostname]==null){
-      var productmoreinfos = await systems.getallchoiseproductmoreinfos(websitein.customer_id);
-      caches.productmoreinfos[hostname] = productmoreinfos;
-    }
-    if(!caches.list_products_by_more_info[hostname]){
-      let productmoreinfos = await systems.getproductbyproductmoreinfos(websitein.customer_id,4);
-      caches.list_products_by_more_info[hostname] = productmoreinfos;
-    }
-    if(!caches.hotandnewproducts[hostname]){
-      let hotandnewproducts = await systems.gethotandnewproductsbycustomer(websitein.customer_id,websitein.num_hot_products);
-      caches.hotandnewproducts[hostname] = hotandnewproducts;
-    }
-    if(!caches.hotnews[hostname]){
-      let hotnews = await systems.gethotnewsbycustomer(websitein.customer_id,websitein.num_hot_news);
-      caches.hotnews[hostname] = hotnews;
-    }
-    if(!caches.policies[hostname]){
-      let policies = await systems.policies.getPolicyByCustomer(websitein.customer_id);
-      caches.policies[hostname] = policies;
-    }
-    if(!caches.advertises[hostname]){
-      let advertises = await systems.advertises.getAdvertisesByCustomer(websitein.customer_id);
-      caches.advertises[hostname] = advertises;
-    }
+    await caches.storeCaches(caches,hostname,websitein);
     app.engine('handlebars', exphbs({
        partialsDir: __dirname + '/views/partials/'+websitein.customer_username  
     }));

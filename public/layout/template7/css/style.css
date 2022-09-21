@@ -248,7 +248,7 @@ body {
 .new_product_detail{width: 67%;float: right;}
 .newproductcont ul li{list-style: none;width: 50%;float: left;}
 .newproductcont{max-height: 300px;display: block;}
-.new_product_item{padding: 15px 10px;border: 1px solid #ebebeb;overflow: hidden;min-height: 105px;}
+.new_product_item{padding: 15px 10px;border: 1px solid #ebebeb;overflow: hidden;min-height: 105px;background: #fff;}
 .newproductcont .item_pos0{border-left: none;border-right: none;}
 .newproductcont .item_pos1{border-left: none;}
 .newproductcont .item7,.newproductcont .item8{border-bottom: none;}
@@ -1268,4 +1268,7 @@ footer .footer-top {
 .footer ul li{
     list-style: none;
     padding: 3px 0;
+}
+.newsletter-group{
+    margin-top: 20px;
 }

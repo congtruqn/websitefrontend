@@ -151,6 +151,8 @@ router.get('/clearcache', function (req, res, next) {
   caches.hotproductcategory[hostname] = null;
   caches.hotandnewproducts[hostname] = null;
   caches.saleproducts[hostname] = null;
+  caches.advertises[hostname] = null;
+  caches.policies[hostname] = null;
   res.send('ok');
 })
 router.get('/lien-he', function (req, res, next) {
@@ -521,6 +523,7 @@ router.get('/getshippingcod', function (req, res, next) {
   });
 });
 const renderhomepage = async function (req, res, language) {
+  console.log(caches)
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
   var productmenu = caches.productcat[hostname];
@@ -550,9 +553,9 @@ const renderhomepage = async function (req, res, language) {
   }
   [testimonials, listtemplates, cusbanner] = await Promise.all(promises).catch(function (err) { console.log(err) })
   //console.log(testimonials,listtemplates,cusbanner,process.env.ENV)
-  var hotproducts = caches.hotproducts[hostname];
-  var newproducts = caches.newproducts[hostname];
-  var hotproductcategory = caches.hotproductcategory[hostname];
+  let hotproducts = caches.hotproducts[hostname];
+  let newproducts = caches.newproducts[hostname];
+  let hotproductcategory = caches.hotproductcategory[hostname];
   let hotandnewproducts = caches.hotandnewproducts[hostname];
   let hotnews = caches.hotnews[hostname];
   let saleproducts = caches.saleproducts[hostname];
@@ -603,6 +606,7 @@ const renderhomepage = async function (req, res, language) {
       policies:policies,
       language: language,
       lang: homelang,
+      socialmedias:caches.socialmedias[hostname]?caches.socialmedias[hostname]:[],
       ishomepage:1,
       istemplate:istemplate
     });
@@ -667,6 +671,7 @@ const renderpage = async function (req, res, website_url,language='vi') {
       hotnews:hotnews,
       productmoreinfos: productmoreinfos,
       policies:policies,
+      socialmedias:caches.socialmedias[hostname]?caches.socialmedias[hostname]:[],
       istemplate:istemplate
     });
   });
@@ -713,6 +718,7 @@ const render404page = async function (req, res, website_url,language='vi') {
       lang: homelang,
       productmoreinfos: productmoreinfos,
       policies:policies,
+      socialmedias:caches.socialmedias[hostname]?caches.socialmedias[hostname]:[],
       istemplate:istemplate
   });
 }
@@ -770,6 +776,7 @@ const rendernewcontentpage = async function (req, res, website_url,language='vi'
         lang:homelang,
         productmoreinfos: productmoreinfos,
         policies:policies,
+        socialmedias:caches.socialmedias[hostname]?caches.socialmedias[hostname]:[],
         istemplate:istemplate
       });
     });
@@ -843,6 +850,7 @@ const rendernewcatpage = async function (req, res, website_url, language = 'vi')
       productmoreinfos: productmoreinfos,
       layout: customer_username,
       policies:policies,
+      socialmedias:caches.socialmedias[hostname]?caches.socialmedias[hostname]:[],
       istemplate:istemplate
     });
   });
@@ -920,6 +928,7 @@ const renderproductcatpage = async function (req, res, website_url) {
       productmoreinfos: productmoreinfos,
       hotproducts:hotproducts,
       policies:policies,
+      socialmedias:caches.socialmedias[hostname]?caches.socialmedias[hostname]:[],
       istemplate:istemplate
     });
   });
@@ -1006,6 +1015,7 @@ const renderproductdetailpage = async function (req, res, website_url) {
         language: language,
         productmoreinfos: productmoreinfos,
         policies:policies,
+        socialmedias:caches.socialmedias[hostname]?caches.socialmedias[hostname]:[],
         istemplate:istemplate
       });
     });
@@ -1082,6 +1092,7 @@ const renderproductmoreinfocategorypage = async function (req, res, website_url)
           language: language,
           productmoreinfos: productmoreinfos,
           policies:policies,
+          socialmedias:caches.socialmedias[hostname]?caches.socialmedias[hostname]:[],
           istemplate:istemplate
         });
       });

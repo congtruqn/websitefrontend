@@ -92,6 +92,13 @@
                     {{siteinfo.customer_email}}</a></li>
               </ul>
             </div>
+            <div class="header-top-right">
+              <ul>
+                {{#each socialmedias as |item|}}
+                  <li><a class="{{item.icon_font}}" title="Youtube" href="{{item.link}}"></a></li>
+                {{/each}}
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -140,7 +147,7 @@
         {{{body}}}
       </div>
     </div>
-    <div clas="newsletter-group">
+    <div class="newsletter-group">
       <div class="container">
         <div class="center">
         <div class="row">
