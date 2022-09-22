@@ -93,16 +93,13 @@
 			</div>
 			<div class="row">
 				{{#each rateproducts as |rateproduct_item|}}
-	                <div class="col-xs-6 col-sm-6 col-md-2">
+	                <div class="col-xs-6 col-sm-6 col-md-3">
 	                  <div class="product_item">
 	                      <div class="product_images">
 	                        <a href="/{{rateproduct_item.seo_url}}"><img src="/static/{{rateproduct_item.image_path}}/medium/{{rateproduct_item.image}}" alt="{{rateproduct_item.alt}}"></a>
 							<ul class="cdz-product-labels">
-							{{#if rateproduct_item.new}}
-								<li class="label-item new"><div class="label-content">New</div></li>
-							{{/if}}
 							{{#if rateproduct_item.salepec}}
-								<li class="label-item sale"><div class="label-content">-{{rateproduct_item.salepec}}%</div></li>
+								<li class="label-item sale hot-sale"><div class="label-content">-{{rateproduct_item.salepec}}%</div></li>
 							{{/if}}
 							</ul>
 	                      </div>
