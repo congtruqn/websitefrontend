@@ -1,5 +1,13 @@
  <link rel="stylesheet" href="/layout/{{layout}}/css/images/pgwslider.min.css" type="text/css" media="screen" />
 <script type="text/javascript" src="/layout/{{layout}}/js/images/pgwslider.min.js"></script>
+			<div class="breadcrumbs">
+				<div id="bread">
+					<ul class="items">
+						<li class="item home"><a href="/">Trang chủ</a></li>
+						<li class="item product"><strong>{{{details.name}}}</strong></li>
+					</ul>
+				</div>
+			</div>
 <div class="block">
 	<div class="left_menu">
 		<div id="product_menu" class="product_menu detail_menu">
@@ -12,17 +20,6 @@
 		</div>
 	</div>
 	<div class="content_detail">
-		<div class="main_news">
-			<div class="breadcrumbs">
-				<div id="bread">
-					<ul class="items">
-						<li class="item home"><a href="/">Trang chủ</a></li>
-						<li class="item product"><strong>{{{details.name}}}</strong></li>
-					</ul>
-				</div>
-			
-			</div>
-		</div>
 		<div class="product_detail">
 			<div class="product_detail_image">
 				<ul class="pgwSlider">
@@ -96,16 +93,13 @@
 			</div>
 			<div class="row">
 				{{#each rateproducts as |rateproduct_item|}}
-	                <div class="col-xs-6 col-sm-6 col-md-2">
+	                <div class="col-xs-6 col-sm-6 col-md-3">
 	                  <div class="product_item">
 	                      <div class="product_images">
 	                        <a href="/{{rateproduct_item.seo_url}}"><img src="/static/{{rateproduct_item.image_path}}/medium/{{rateproduct_item.image}}" alt="{{rateproduct_item.alt}}"></a>
 							<ul class="cdz-product-labels">
-							{{#if rateproduct_item.new}}
-								<li class="label-item new"><div class="label-content">New</div></li>
-							{{/if}}
 							{{#if rateproduct_item.salepec}}
-								<li class="label-item sale"><div class="label-content">-{{rateproduct_item.salepec}}%</div></li>
+								<li class="label-item sale hot-sale"><div class="label-content">-{{rateproduct_item.salepec}}%</div></li>
 							{{/if}}
 							</ul>
 	                      </div>

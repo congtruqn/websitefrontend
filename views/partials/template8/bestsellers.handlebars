@@ -1,25 +1,24 @@
-<div class="cdz-block-title">
-		<p class="b-title">Sản phẩm mới</p>
+<div class="group-title1">
+  <p>Sản phẩm khuyến mãi</p>
 </div>
-<div class="new_products">
+<div class="newproductcont">
   <ul>
-    {{#each newproducts as |productitem|}}
+    {{#each saleproducts as |productitem|}}
     <li>
-      <div class="new_product_i">
+      <div class="new_product_item {{productitem.css_class}}">
         <div class="new_product_images">
           <a href="/{{productitem.seo_url}}"><img src="/static/{{productitem.image_path}}thumb/{{productitem.image}}"
               alt={{productitem.alt}}></a>
         </div>
         <div class="new_product_detail">
-          <p class="new_product_name"><a href="/{{productitem.seo_url}}">{{truncateString productitem.detail.[0].name
-              45}}</a></p>
+          <p class="new_product_name"><a href="/{{productitem.seo_url}}">{{truncateString productitem.detail.[0].name 45}}</a></p>
           <div id="clear"></div>
           <div class="product_price">
-            <p>{{productitem.pricebeauty}}₫</p>
+            <p>{{formatCurrency productitem.price}}₫</p>
           </div>
           {{#if productitem.salepec}}
           <div class="sale_pricebeauty">
-            <p>{{productitem.sale_pricebeauty}}₫</p>
+            <p>{{formatCurrency productitem.sale_price}}₫</p>
           </div>
           {{/if}}
           <div id="clear"></div>
