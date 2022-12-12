@@ -22,8 +22,6 @@ const limiter = rateLimit({
 	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
 	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 })
-
-// Apply the rate limiting middleware to all requests
 app.use(limiter)
 var index = require('./routes/index');
 var systems = require('./models/systems'); 
@@ -166,7 +164,7 @@ const options = {
   keepAliveInitialDelay: 300000,
   useNewUrlParser: true
 };
-var db = mongoose.connect("mongodb://"+process.env.DB_URL+"/website",options);
+mongoose.connect("mongodb://"+process.env.DB_URL+"/website",options);
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;

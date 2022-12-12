@@ -104,8 +104,8 @@ module.exports.getproductcatsById = function(id, callback){
 	var query = {_id:id};
 	productcats.findOne(query, callback);
 }
-module.exports.getproductcatsbycatid = function(cat_id, callback){
-	var query = {cat_id:cat_id};
+module.exports.getproductcatsbycatid = function(customer_id,cat_id, callback){
+	var query = {cat_id:cat_id,customer_id:customer_id};
 	productcats.findOne(query, callback);
 }
 module.exports.getproductcatsparent = function(customer_id,cat_id, callback){
@@ -115,7 +115,7 @@ module.exports.getproductcatsparent = function(customer_id,cat_id, callback){
   	});
 }
 module.exports.getproductcatsparentnotthis = function(id,cat_id, callback){
-	productcats.getproductcatsbycatid(cat_id,function(err, productcat) {
+	productcats.getproductcatsbycatid(customer_id,cat_id,function(err, productcat) {
  		var query = {cat_id:productcat.parent_id};
 		productcats.findOne(query, callback);
   	});

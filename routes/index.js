@@ -870,7 +870,7 @@ const renderproductcatpage = async function (req, res, website_url) {
   let website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : "http";
   var page = req.param('page', '1');
   var count = await countproductsbycat(website_url.content_id);
-  var catinfo = await getproductcatinfo(website_url.content_id);
+  var catinfo = await getproductcatinfo(customer_id,website_url.content_id);
   let policies = caches.policies[hostname]?caches.policies[hostname]:[];
   let language = i18n.getLocale();
   if (language == 'vi')
@@ -1510,9 +1510,9 @@ function countproductsbycat(cat_id) {
     });
   });
 }
-function getproductcatinfo(cat_id) {
+function getproductcatinfo(customer_id,cat_id) {
   return new Promise((resolve, reject) => {
-    ProductCat.getproductcatsbycatid(cat_id, function (err, count) {
+    ProductCat.getproductcatsbycatid(customer_id,cat_id, function (err, count) {
       if (count) {
         resolve(count);
       }
