@@ -24,6 +24,15 @@ var productlistsSchema = mongoose.Schema({
 	image:{
 		type: String,
 	},
+	image1:{
+		type: String,
+	},
+	image2:{
+		type: String,
+	},
+	image3:{
+		type: String,
+	},
 	image_path:{
 		type: String,
 	},
@@ -121,8 +130,8 @@ module.exports.getproductlistsById = function(id, callback){
 	var query = {_id:id};
 	productlists.findOne(query, callback);
 }
-module.exports.getproductbyproductid = function(id, callback){
-	var query = {product_id:id};
+module.exports.getproductbyproductid = function(customer_id,id, callback){
+	var query = {customer_id:customer_id,product_id:id};
 	productlists.findOne(query, callback);
 }
 module.exports.getAllproductlists = function(customer_id,page,per_page,callback){
@@ -151,8 +160,8 @@ module.exports.countproductlists = function(customer_id,callback){
 	var query = {customer_id:customer_id};
 	productlists.count(query, callback);
 }
-module.exports.countproductlistsbycat = function(cat_id,callback){
-	var query = {'list_parent.parent_id': cat_id,show:1};
+module.exports.countproductlistsbycat = function(customer_id,cat_id,callback){
+	var query = {customer_id:customer_id,'list_parent.parent_id': cat_id,show:1};
 	productlists.count(query, callback);
 }
 module.exports.counthotproducts = function(customer_id,callback){

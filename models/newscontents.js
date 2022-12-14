@@ -24,6 +24,9 @@ var newscontentsSchema = mongoose.Schema({
 	image2:{
 		type: String,
 	},
+	image3:{
+		type: String,
+	},
 	image_path:{
 		type: String,
 	},

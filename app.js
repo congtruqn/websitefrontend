@@ -22,7 +22,10 @@ const limiter = rateLimit({
 	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
 	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 })
-app.use(limiter)
+if(process.env.NODE_ENV!='development'){
+  app.use(limiter)
+}
+
 var index = require('./routes/index');
 var systems = require('./models/systems'); 
 var caches = require('./models/cache');
@@ -47,6 +50,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/public')));
 app.use('/static',express.static(path.join(process.env.UPLOAD_DIR)));
+app.use('/public',express.static(path.join(process.env.UPLOAD_DIR)));
 // Express Session
 app.use(session({
     secret: 'secret',

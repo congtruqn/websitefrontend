@@ -869,7 +869,7 @@ const renderproductcatpage = async function (req, res, website_url) {
   var per_page = websiteinfo.products_per_page?websiteinfo.products_per_page:24;
   let website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : "http";
   var page = req.param('page', '1');
-  var count = await countproductsbycat(website_url.content_id);
+  var count = await countproductsbycat(customer_id,website_url.content_id);
   var catinfo = await getproductcatinfo(customer_id,website_url.content_id);
   let policies = caches.policies[hostname]?caches.policies[hostname]:[];
   let language = i18n.getLocale();
@@ -935,6 +935,7 @@ const renderproductcatpage = async function (req, res, website_url) {
 const renderproductdetailpage = async function (req, res, website_url) {
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
+  const customer_id = websiteinfo.customer_id;
   var customer_username = websiteinfo.customer_username;
   var mainmenu = caches.mainmenu[hostname];
   var productmenu = caches.productcat[hostname];
@@ -951,7 +952,7 @@ const renderproductdetailpage = async function (req, res, website_url) {
   if(websiteinfo && websiteinfo.is_template &&websiteinfo.is_template ==1){
     istemplate = true
   }
-  Productlists.getproductbyproductid(website_url.content_id, async function (err, conten) {
+  Productlists.getproductbyproductid(customer_id,website_url.content_id, async function (err, conten) {
     Productlists.getrateproductlistscatcount(conten.parent_id, conten.product_id, 8, function (err, rateproducts) {
       for (var x in rateproducts) {
         var productiteam = JSON.parse(JSON.stringify(rateproducts[x]));
@@ -1364,6 +1365,8 @@ router.post('/gettrial', async function (req, res, next) {
   res.send('1');
 });
 router.post('/addtocart', function (req, res, next) {
+  var websiteinfo = caches.websiteinfo[hostname];
+  const customer_id = websiteinfo.customer_id;
   var listproducts = [];
   var total_price = 0;
   if (req.session.total_price) {
@@ -1376,7 +1379,7 @@ router.post('/addtocart', function (req, res, next) {
     listproducts = req.session.products;
   }
   var product1 = req.param('productadd');
-  Productlists.getproductbyproductid(product1, function (err, product) {
+  Productlists.getproductbyproductid(customer_id,product1, function (err, product) {
     var pricebeauty = String(product.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
     var productincart = {
       id: product.product_id,
@@ -1498,9 +1501,9 @@ function countnewsbycat(cat_id) {
     });
   });
 }
-function countproductsbycat(cat_id) {
+function countproductsbycat(customer_id,cat_id) {
   return new Promise((resolve, reject) => {
-    Productlists.countproductlistsbycat(cat_id, function (err, count) {
+    Productlists.countproductlistsbycat(customer_id,cat_id, function (err, count) {
       if (count) {
         resolve(count);
       }
