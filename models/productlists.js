@@ -160,9 +160,9 @@ module.exports.countproductlists = function(customer_id,callback){
 	var query = {customer_id:customer_id};
 	productlists.count(query, callback);
 }
-module.exports.countproductlistsbycat = function(customer_id,cat_id,callback){
+module.exports.countproductlistsbycat = async function(customer_id,cat_id){
 	var query = {customer_id:customer_id,'list_parent.parent_id': cat_id,show:1};
-	productlists.count(query, callback);
+	return productlists.count(query).exec();
 }
 module.exports.counthotproducts = function(customer_id,callback){
 	var query = {hot:1,show:1,customer_id:customer_id};
@@ -184,9 +184,9 @@ module.exports.getallproductbycat = function(cat_id,page,per_page,callback){
 	var query = {'list_parent.parent_id': cat_id};
 	productlists.find(query, callback).sort({'productlists_id': -1 });
 }
-module.exports.getallproductbycatshow = function(customer_id,cat_id,page,per_page,callback){
+module.exports.getallproductbycatshow = async function(customer_id,cat_id,page,per_page){
 	var query = {customer_id:customer_id,'list_parent.parent_id': cat_id,show:1};
-	productlists.find(query, callback).skip(per_page * (page - 1)).limit(per_page).sort({'rank': -1 });
+	return await productlists.find(query).skip(per_page * (page - 1)).limit(per_page).sort({'rank': -1 }).exec();
 }
 
 module.exports.getallhotproductsbypage = function(customer_id,page,per_page,callback){

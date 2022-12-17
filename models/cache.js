@@ -19,6 +19,9 @@ var provinces = ''
 var policies = {}
 var advertises = {}
 var socialmedias = {}
+var productcatcount = []
+var listproductsperpage = []
+var productcatinfo = []
 module.exports = {
     websiteinfo,
     hotnewcats,
@@ -38,7 +41,10 @@ module.exports = {
     hotandnewproducts,
     policies,
     advertises,
-    socialmedias
+    socialmedias,
+    productcatcount,
+    listproductsperpage,
+    productcatinfo
 }
 module.exports.storeCaches = async function (caches,hostname, websitein) {
     if (!caches.productcat[hostname]) {
@@ -100,5 +106,35 @@ module.exports.storeCaches = async function (caches,hostname, websitein) {
     if (!caches.socialmedias[hostname]) {
         let socialmedias = await systems.socialmedias.getSocialMediasByCustomer(websitein.customer_id);
         caches.socialmedias[hostname] = socialmedias;
+        console.log(caches.socialmedias)
     }
+}
+module.exports.storeProductCatCaches = async function (hostname,caches,url,productcatcount,listproductsperpage,productcatinfo) {
+    if(!caches.productcatinfo[hostname]){
+        var countmap = new Map();
+        countmap.set(url, productcatcount);
+        caches.productcatcount[hostname] = countmap;
+    
+        var listproductmap = new Map();
+        listproductmap.set(url, listproductsperpage);
+        caches.listproductsperpage[hostname] = listproductmap;
+    
+        var pageinffo = new Map();
+        pageinffo.set(url, productcatinfo);
+        caches.productcatinfo[hostname] = pageinffo;
+    
+        return true;
+    }
+    else{
+        if(!caches.productcatinfo[hostname].get(url)){
+            caches.productcatinfo[hostname].set(url, productcatinfo);
+            caches.listproductsperpage[hostname].set(url, listproductsperpage);
+            caches.productcatcount[hostname].set(url, productcatcount);
+            return true;
+        }
+        else{
+            return true;
+        }
+    }
+
 }
