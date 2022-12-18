@@ -1,5 +1,8 @@
 <div class="block">
 	<div class="menu_slider">
+		<div class="main_left_menu">
+			{{>productmenucenter}}
+		</div>
 		<div class="slider">
 			{{>slider}}
 		</div>
@@ -8,36 +11,27 @@
 {{adverttises}}
 <div class="ads">
 	<ul>
-	{{#each (filterAds advertises 'top') as |advertise|}}
+		{{#each (filterAds advertises 'top') as |advertise|}}
 		<li class="left">
 			<a href="#"><img src="/static{{advertise.image_path}}"></a>
-		</li>		
-	{{/each}}
+		</li>
+		{{/each}}
 	</ul>
 	<div id="clear"></div>
 </div>
 
 <div class="block">
+	<div class="row">
 		<div class="col-md-12 col-sm-12 col-xs-12">
-			<div class="hot_product">
-				<div class="cdz-block-title">
-					<p class="b-title">Sản phẩm hot</p>
-				</div>
-				<div class="hot_product">
-					{{>hotproducts}}
-				</div>
-				<div id="clear"></div>
+			<div class="main_product_center">
+				{{>hotproductcats}}
+			</div>
+			<div class="right_hot_prpduct">
+				{{>newproducts}}
 			</div>
 		</div>
-		
+	</div>
 </div>
 <div class="block">
-	<div class="row">
-		<div class="col-md-6 col-sm-12 col-xs-12">
-			{{>bestsellers}}
-		</div>
-		<div class="col-md-6 col-sm-12 col-xs-12">
-			{{>newproducts1}}
-		</div>
-	</div>
+
 </div>

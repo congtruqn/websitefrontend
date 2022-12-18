@@ -1039,20 +1039,23 @@ const renderproductdetailpage = async function (req, res, website_url) {
   });
 }
 const renderproductmoreinfocategorypage = async function (req, res, website_url) {
+  
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
   var customer_id = websiteinfo.customer_id;
   var customer_username = websiteinfo.customer_username;
+
+
   var mainmenu = caches.mainmenu[hostname];
   var productmenu = caches.productcat[hostname];
   var productmenu1 = caches.productmenu[hostname];
   var sitefooter = caches.footer[hostname];
   var newproducts = caches.newproducts[hostname];
   var productmoreinfos = caches.productmoreinfos[hostname];
+  let policies = caches.policies[hostname] ? caches.policies[hostname] : [];
   var per_page = websiteinfo.products_per_page;
   var page = req.param('page', '1');
   let website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : "http";
-  let policies = caches.policies[hostname] ? caches.policies[hostname] : [];
   let language = i18n.getLocale();
   if (language == 'vi')
     language = ''

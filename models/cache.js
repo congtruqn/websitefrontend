@@ -136,5 +136,34 @@ module.exports.storeProductCatCaches = async function (hostname,caches,url,produ
             return true;
         }
     }
+}
+
+module.exports.getPartialCacheValue = async function (hostname,caches) {
+    if(!caches.productcatinfo[hostname]){
+        var countmap = new Map();
+        countmap.set(url, productcatcount);
+        caches.productcatcount[hostname] = countmap;
+    
+        var listproductmap = new Map();
+        listproductmap.set(url, listproductsperpage);
+        caches.listproductsperpage[hostname] = listproductmap;
+    
+        var pageinffo = new Map();
+        pageinffo.set(url, productcatinfo);
+        caches.productcatinfo[hostname] = pageinffo;
+    
+        return true;
+    }
+    else{
+        if(!caches.productcatinfo[hostname].get(url)){
+            caches.productcatinfo[hostname].set(url, productcatinfo);
+            caches.listproductsperpage[hostname].set(url, listproductsperpage);
+            caches.productcatcount[hostname].set(url, productcatcount);
+            return true;
+        }
+        else{
+            return true;
+        }
+    }
 
 }
