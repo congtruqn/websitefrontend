@@ -484,7 +484,6 @@ router.get('/getshippingcod', function (req, res, next) {
     body: raw1,
   };
   request(options1, function (err, res1, body) {
-    console.log(body.data)
     let json = JSON.parse(body);
     var serviceid = 0
     if (body.data) {
@@ -1448,7 +1447,6 @@ router.post('/addtocart', function (req, res, next) {
 });
 router.post('/updatecartnumber', function (req, res, next) {
   var product_id = req.body.id;
-  console.log(product_id)
   var num = req.body.num;
   var listproducts = [];
   var total_price = 0;

@@ -106,7 +106,6 @@ module.exports.storeCaches = async function (caches,hostname, websitein) {
     if (!caches.socialmedias[hostname]) {
         let socialmedias = await systems.socialmedias.getSocialMediasByCustomer(websitein.customer_id);
         caches.socialmedias[hostname] = socialmedias;
-        console.log(caches.socialmedias)
     }
 }
 module.exports.storeProductCatCaches = async function (hostname,caches,url,productcatcount,listproductsperpage,productcatinfo) {
