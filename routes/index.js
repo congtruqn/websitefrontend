@@ -556,7 +556,6 @@ const renderhomepage = async function (req, res, language) {
     promises.push([], [], systems.getbanner(websiteinfo.customer_id))
   }
   [testimonials, listtemplates, cusbanner] = await Promise.all(promises).catch(function (err) { console.log(err) })
-  //console.log(testimonials,listtemplates,cusbanner,process.env.ENV)
   let hotproducts = caches.hotproducts[hostname];
   let newproducts = caches.newproducts[hostname];
   let hotproductcategory = caches.hotproductcategory[hostname];
