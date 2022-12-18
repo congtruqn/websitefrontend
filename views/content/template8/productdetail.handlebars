@@ -61,7 +61,7 @@
                     {{/each}}
 					{{#if instock}}
 						<div class="box-tocart large-box-tocart att-scr-qty scr-top">
-							<button id="product-buynow" class="action primary buy-now" title="Add to Cart" type="submit" onclick="Buynow({{{contents.product_id}}})">
+							<button id="product-buynow" class="action primary buy-now" title="Add to Cart" type="submit" onclick="Buynow('{{details.name}}')">
 								<span>Mua ngay</span>
 							</button>
 						</div>
@@ -142,22 +142,7 @@ function addToCart(ID){
     });
 };
 function Buynow(ID){
-    var productcount = 1;
-    var productadd = 1;
-    var datastring =  'productcount='+productcount+'&productadd='+ID;
-    $.ajax({
-      type: "POST",
-      url: '/addtocart?'+datastring,
-      data: {id: ID},
-      success: function (result) {
-        if(result==1){
-          alert('Sản phẩm trong kho không đủ!');
-        }
-        else{
-          window.location = '/gio-hang';           
-        }
-      }
-    });
+	window.location.href = '/lien-he?content='+'Tôi quan tâm sản phẩm : '+ ID;
 };
   
 </script>

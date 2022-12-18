@@ -13,9 +13,10 @@
           <a href="/{{hotnew.seo_url}}"><img src="/static/{{hotnew.image_path}}{{hotnew.image3}}" alt="{{hotnew.alt}}"
               class="img-fluid"></a>
           {{/if}}
-
+          {{#if hotnew.image}}
           <a href="/{{hotnew.url}}"><img src="{{hotnew.image_path}}/medium/{{hotnew.image}}" alt="{{hotnew.alt}}"
               class="img-fluid" /></a>
+          {{/if}}
         </div>
         <div class="hot_news_detail">
           <p class="news_create_date">{{timestampToString hotnew.create_date}}</p>

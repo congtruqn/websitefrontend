@@ -175,6 +175,7 @@ router.get('/lien-he', function (req, res, next) {
   let productmoreinfos = caches.productmoreinfos[hostname];
   let hotnews = caches.hotnews[hostname];
   let policies = caches.policies[hostname] ? caches.policies[hostname] : [];
+  let content = req.param('content');
   hotnews = utils.filterDetailByLang(hotnews, language)
   res.render('content/' + customer_username + '/contact', {
     title: 'Liên hệ',
@@ -188,7 +189,8 @@ router.get('/lien-he', function (req, res, next) {
     language: language,
     lang: homelang,
     policies: policies,
-    productmoreinfos: productmoreinfos
+    productmoreinfos: productmoreinfos,
+    content:content
   });
 });
 router.get('/thankorder', async function (req, res, next) {
@@ -1534,6 +1536,42 @@ function getproductcatinfo(customer_id, cat_id) {
   });
 }
 
+router.post('/addcustomercontact', function (req, res, next) {
+  const hostname = req.headers.host;
+  const websiteinfo = caches.websiteinfo[hostname];
+  const nodeMailer = require('nodemailer');
+  let name = req.param('name');
+  let email = req.param('email');
+  let phone = req.param('phone');
+  let content = req.param('content');
+  var cont = 'Tên Khách hàng:' + name + '<br>Email:' + email + '<br>Điện thoại: ' + phone + '<br>Nội dung: ' + content + '<br>';
+  let transporter = nodeMailer.createTransport({
+    host: 'smtp.coresender.com',
+    port: 465,
+    secure: true,
+    auth: {
+      user: '2f7b9e54-3b07-4107-85ce-cb1a220d19a3',
+      pass: 'efe90ac3-263e-4e62-95ba-1f407d446779'
+    },
+    tls: {
+      rejectUnauthorized: false
+    }
+  });
+  let mailOptions = {
+    from: 'trutc@smartvas.com.vn', // sender address
+    to: websiteinfo.customer_email, // list of receivers
+    subject: "Khách hàng đăt hàng từ website", // Subject line
+    text: cont, // plain text body
+    html: cont, // html body
+  };
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return console.log(error);
+    }
+    console.log('Message %s sent: %s', info.messageId, info.response);
+  });
+  res.send('ok');
+});
 router.post('/addorder', function (req, res, next) {
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
@@ -1624,17 +1662,6 @@ router.post('/addorder', function (req, res, next) {
   });
   res.send('ok');
 });
-function getwebsiteinfo(hostname) {
-  return new Promise((resolve, reject) => {
-    website.getwebsitesbyurl(hostname, function (err, websi) {
-      if (websi) {
-        resolve(websi);
-      } else {
-        resolve(0);
-      }
-    });
-  });
-}
 function removeArrayItemByAttr(arr, attr, value) {
   var i = arr.length;
   while (i--) {
