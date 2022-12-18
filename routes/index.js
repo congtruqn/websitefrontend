@@ -1385,6 +1385,7 @@ router.post('/gettrial', async function (req, res, next) {
   res.send('1');
 });
 router.post('/addtocart', function (req, res, next) {
+  var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
   const customer_id = websiteinfo.customer_id;
   var listproducts = [];

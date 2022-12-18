@@ -606,10 +606,13 @@ body {
     width: 74.36% !important;
     float: right;
     line-height: 25px;
+    margin-top: 10px;
+    background: #fff;
+    padding:10px
 }
 .page_content img{max-width: 100%;}
 .cat_image img{width: 100%;}
-.cat_image{min-height: 200px;overflow: hidden;}
+.cat_image{min-height: 200px;overflow: hidden;max-height: 200px;}
 .list_news{min-height: 430px;}
 .list_news a{color:#0b79bf;font-size: 15px;}
 .content_page{padding: 7px 0;border-top: 1px solid #ccc;overflow: hidden;}
