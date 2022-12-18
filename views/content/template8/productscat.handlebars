@@ -22,25 +22,19 @@
 			<div class="row">
 				{{#each contents as |productitem|}}
 	                <div class="col-xs-6 col-sm-6 col-md-3 {{images.class}}">
-						<div class="product_item">
+						<div class="product_item cat_product_item">
 							<div class="product_images">
-								<a href="/{{productitem.seo_url}}"><img src="/static/{{productitem.image_path}}/{{productitem.image2}}" alt="{{productitem.alt}}"></a>
-								<ul class="cdz-product-labels">
-									{{#if productitem.new}}
-										<li class="label-item new"><div class="label-content">New</div></li>
-									{{/if}}
-									{{#if productitem.salepec}}
-										<li class="label-item sale hot-sale"><div class="label-content">-{{productitem.salepec}}%</div></li>
-									{{/if}}
-								</ul>
+								{{#if productitem.image2}}
+									<a href="/{{productitem.seo_url}}"><img src="/static/{{productitem.image_path}}/{{productitem.image2}}" alt="{{productitem.alt}}"></a>
+								{{/if}}
+								{{#if productitem.image}}
+									<a href="/{{productitem.seo_url}}"><img src="/static/{{productitem.image_path}}/medium/{{productitem.image}}" alt="{{productitem.alt}}"></a>
+								{{/if}}
 							</div>
 							<div class="product_detail">
-								<p class="product_name"><a href="/{{productitem.seo_url}}">{{truncateString productitem.detail.[0].name 50}}</a></p>
+								<p class="product_name"><a href="/{{productitem.seo_url}}">{{truncateString productitem.detail.[0].name 40}}</a></p>
 								<div id="clear"></div>
-								<div class="product_price"><p>{{productitem.pricebeauty}}₫</p></div>
-								{{#if productitem.salepec}}
-									<p class="product_sale_price">{{formatCurrency productitem.sale_price}}₫</p>
-								{{/if}}
+								<div class="product_price"><p>Giá: Liên hệ</p></div>
 								<div id="clear"></div>
 							</div>
 						</div>

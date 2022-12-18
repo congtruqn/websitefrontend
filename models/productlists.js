@@ -232,8 +232,8 @@ module.exports.getproductlistsByDate = function(type,from_date,to_date,callback)
 	}
 	productlists.find(query, callback).where("create_date").gte(from_date).lte(to_date);
 }
-module.exports.getrateproductlistscatcount = function(cat_id,product_id,count,callback){
-	var query = {parent_id:cat_id,show:1,product_id:{ $ne: product_id }};
+module.exports.getrateproductlistscatcount = function(customer_id,cat_id,product_id,count,callback){
+	var query = {customer_id:customer_id,parent_id:cat_id,show:1,product_id:{ $ne: product_id }};
 	productlists.find(query, callback).skip(0).limit(count).sort({'create_date': -1 });
 }
 module.exports.getallproductbymoreinfo = function(customer_id,moreinfo_id,page,per_page,callback){

@@ -970,7 +970,7 @@ const renderproductdetailpage = async function (req, res, website_url) {
     istemplate = true
   }
   Productlists.getproductbyproductid(customer_id, website_url.content_id, async function (err, conten) {
-    Productlists.getrateproductlistscatcount(conten.parent_id, conten.product_id, 8, function (err, rateproducts) {
+    Productlists.getrateproductlistscatcount(customer_id,conten.parent_id, conten.product_id, 8, function (err, rateproducts) {
       for (var x in rateproducts) {
         var productiteam = JSON.parse(JSON.stringify(rateproducts[x]));
         var pricebeauty = String(productiteam.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
