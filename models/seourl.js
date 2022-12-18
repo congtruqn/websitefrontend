@@ -25,9 +25,8 @@ module.exports.getAllSeourl = function(page,per_page,callback){
 }
 module.exports.CountSeourl = function(callback){
 	var query = {};
-	Seourl.count(query, callback);
+	Seourl.countDocuments(query, callback);
 }
-
 module.exports.getSeourlById = function(id, callback){
 	Seourl.findById(id, callback);
 }

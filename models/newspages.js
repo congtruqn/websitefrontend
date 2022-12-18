@@ -48,7 +48,7 @@ module.exports.getAllNewsPages = function(customer_id,page,per_page,callback){
 
 module.exports.countNewsPages = function(customer_id,callback){
 	var query = {customer_id:customer_id};
-	NewsPages.count(query, callback);
+	NewsPages.countDocuments(query, callback);
 }
 
 module.exports.getAllNewsPagesByUser = function(userid,page,per_page,callback){

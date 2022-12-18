@@ -94,7 +94,7 @@ module.exports.getrootmenu = function(customer_id,callback){
 }
 module.exports.countmenu = function(callback){
 	var query = {};
-	menu.count(query, callback);
+	menu.countDocuments(query, callback);
 }
 module.exports.countMaxProductCatID = function(callback){
 	var query = {};

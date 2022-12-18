@@ -120,7 +120,7 @@ module.exports.getrootnewscontents = function(callback){
 }
 module.exports.countnewscontents = function(customer_id,callback){
 	var query = {customer_id:customer_id};
-	newscontents.count(query, callback);
+	newscontents.countDocuments(query, callback);
 }
 module.exports.getnewcontents = function(customer_id,count,callback){
 	var query = {customer_id:customer_id,'new':1};

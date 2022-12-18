@@ -78,7 +78,7 @@ module.exports.getAllUserNotPage = function(callback){
 
 module.exports.CountUser = function(callback){
 	var query = {};
-	User.count(query, callback);
+	User.countDocuments(query, callback);
 }
 module.exports.getUserByUsername = function(username, callback){
 	var query = {username: username};

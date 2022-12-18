@@ -60,7 +60,7 @@ module.exports.getAllProductsorders = function(page,per_page,callback){
 }
 module.exports.countProductsorders = function(callback){
 	var query = {};
-	Productsorders.count(query, callback);
+	Productsorders.countDocuments(query, callback);
 }
 module.exports.countProductsOrdersByDate = function(from_date,to_date,callback){
 	var query = {$and: [

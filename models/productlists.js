@@ -158,7 +158,7 @@ module.exports.getrootproductlists = function(callback){
 }
 module.exports.countproductlists = function(customer_id,callback){
 	var query = {customer_id:customer_id};
-	productlists.count(query, callback);
+	productlists.countDocuments(query, callback);
 }
 module.exports.countproductlistsbycat = async function(customer_id,cat_id){
 	var query = {customer_id:customer_id,'list_parent.parent_id': cat_id,show:1};
@@ -166,11 +166,11 @@ module.exports.countproductlistsbycat = async function(customer_id,cat_id){
 }
 module.exports.counthotproducts = function(customer_id,callback){
 	var query = {hot:1,show:1,customer_id:customer_id};
-	productlists.count(query, callback);
+	productlists.countDocuments(query, callback);
 }
 module.exports.countnewproducts = function(customer_id,callback){
 	var query = {new:1,show:1,customer_id:customer_id};
-	productlists.count(query, callback);
+	productlists.countDocuments(query, callback);
 }
 module.exports.countMaxproductlistID = function(callback){
 	var query = {};
@@ -242,7 +242,7 @@ module.exports.getallproductbymoreinfo = function(customer_id,moreinfo_id,page,p
 }
 module.exports.countproductbymoreinfo = function(customer_id,moreinfo_id,callback){
 	var query = {customer_id:customer_id,'product_more_info.defaultid': moreinfo_id,show:1};
-	productlists.count(query, callback);
+	productlists.countDocuments(query, callback);
 }
 module.exports.getproductsbymoreinfo = function(customer_id,num,moreinfo_id,callback){
 	var query = {customer_id:customer_id,'product_more_info.defaultid': moreinfo_id,show:1};

@@ -143,7 +143,7 @@ module.exports.gethotproductcategory = function(customer_id,callback){
 }
 module.exports.countproductcats = function(callback){
 	var query = {};
-	productcats.count(query, callback);
+	productcats.countDocuments(query, callback);
 }
 
 module.exports.countMaxProductCatID = function(callback){

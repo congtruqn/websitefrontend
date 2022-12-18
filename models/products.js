@@ -60,7 +60,7 @@ module.exports.SumAllPrice = function(callback){
 }
 module.exports.countProducts = function(callback){
 	var query = {status: { $ne: 0 }};
-	Products.count(query, callback);
+	Products.countDocuments(query, callback);
 }
 module.exports.countMaxProductCode = function(callback){
 	//Tweet.findOne({}, {}, { sort: { 'created_at' : -1 } }, function(err, post) {

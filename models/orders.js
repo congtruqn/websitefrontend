@@ -85,7 +85,7 @@ module.exports.countOrdersByDate = function(from_date,to_date,callback){
 }
 module.exports.countCompanyInOrders = function(companyid,callback){
 	var query = {company_id:companyid};
-	Orders.count(query, callback);
+	Orders.countDocuments(query, callback);
 }
 module.exports.getOrderCode = function(callback){
 	var jsons = {};

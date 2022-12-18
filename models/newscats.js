@@ -108,7 +108,7 @@ module.exports.getrootnewscats = function(customer_id,callback){
 }
 module.exports.countnewscats = function(callback){
 	var query = {};
-	newscats.count(query, callback);
+	newscats.countDocuments(query, callback);
 }
 module.exports.gethotnewcatbyrank = function(callback){
 	var query = {hot:1};

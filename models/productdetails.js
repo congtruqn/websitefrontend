@@ -15,7 +15,7 @@ module.exports.getAllProductsDetail = function(page,per_page,callback){
 }
 module.exports.CountProductsDetail = function(callback){
 	var query = {};
-	ProductsDetail.count(query, callback);
+	ProductsDetail.countDocuments(query, callback);
 }
 module.exports.getUserByUsername = function(username, callback){
 	var query = {fullname: congtruqn};
