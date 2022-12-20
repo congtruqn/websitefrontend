@@ -136,7 +136,7 @@ module.exports.getproductbyproductid = function(customer_id,id, callback){
 }
 module.exports.getAllproductlists = function(customer_id,page,per_page,callback){
 	var query = {customer_id:customer_id};
-	productlists.find(query, callback).skip(per_page * (page - 1)).limit(per_page).sort({'rank': -1 });
+	productlists.find(query, callback).skip(per_page * (page - 1)).limit(per_page).sort({'product_id': -1,'rank': -1 });
 }
 module.exports.findproductbykey = function(key,customer_id,callback){
 	var query = {$or:[{title:new RegExp(key, "i"),show:1},{'detail.name':new RegExp(key, "i"),show:1}],customer_id:customer_id};
@@ -154,7 +154,7 @@ module.exports.getproductlistsbyparent = function(parent,callback){
 }
 module.exports.getrootproductlists = function(callback){
 	var query = {parent_id:0};
-	productlists.find(query, callback).sort({'create_date': -1 });
+	productlists.find(query, callback).sort({'product_id': -1,'rank': -1 ,'create_date': -1 });
 }
 module.exports.countproductlists = function(customer_id,callback){
 	var query = {customer_id:customer_id};
@@ -178,7 +178,7 @@ module.exports.countMaxproductlistID = function(callback){
 }
 module.exports.getAllproductlistsByUser = function(userid,page,per_page,callback){
 	var query = {create_user: userid};
-	productlists.find(query, callback).skip(per_page * (page - 1)).limit(per_page).sort({'productlists_id': -1 });
+	productlists.find(query, callback).skip(per_page * (page - 1)).limit(per_page).sort({'product_id': -1 });
 }
 module.exports.getallproductbycat = function(cat_id,page,per_page,callback){
 	var query = {'list_parent.parent_id': cat_id};
@@ -186,37 +186,37 @@ module.exports.getallproductbycat = function(cat_id,page,per_page,callback){
 }
 module.exports.getallproductbycatshow = async function(customer_id,cat_id,page,per_page){
 	var query = {customer_id:customer_id,'list_parent.parent_id': cat_id,show:1};
-	return await productlists.find(query).skip(per_page * (page - 1)).limit(per_page).sort({'rank': -1 }).exec();
+	return await productlists.find(query).skip(per_page * (page - 1)).limit(per_page).sort({'rank': -1,'create_date': -1 ,'product_id': -1  }).exec();
 }
 
 module.exports.getallhotproductsbypage = function(customer_id,page,per_page,callback){
 	var query = {customer_id:customer_id,show:1,hot:1};
-	productlists.find(query, callback).skip(per_page * (page - 1)).limit(per_page).sort({'rank': -1 });
+	productlists.find(query, callback).skip(per_page * (page - 1)).limit(per_page).sort({'rank': -1,'create_date': -1 ,'product_id': -1  });
 }
 module.exports.getallnewproductsbypage = function(customer_id,page,per_page,callback){
 	var query = {customer_id:customer_id,show:1,new:1};
-	productlists.find(query, callback).skip(per_page * (page - 1)).limit(per_page).sort({'rank': -1 });
+	productlists.find(query, callback).skip(per_page * (page - 1)).limit(per_page).sort({'rank': -1,'create_date': -1 ,'product_id': -1  });
 }
 module.exports.getproductbycatcount = function(customer_id,cat_id,count,callback){
 	var query = {customer_id:customer_id,'list_parent.parent_id': cat_id,show:1};
-	productlists.find(query, callback).skip(0).limit(count).sort({'rank': -1 });
+	productlists.find(query, callback).skip(0).limit(count).sort({'rank': -1,'create_date': -1 ,'product_id': -1  });
 }
 module.exports.getnewproducts = function(customer_id,count,callback){
 	var query = {customer_id:customer_id,'new':1,'show':1};
-	productlists.find(query, callback).skip(0).limit(count).sort({'rank': -1 });
+	productlists.find(query, callback).skip(0).limit(count).sort({'rank': -1,'create_date': -1 ,'product_id': -1  });
 }
 module.exports.getSaleProducts = function(customer_id,count,callback){
 	var query = {customer_id:customer_id,'sale':1,'show':1};
-	productlists.find(query, callback).skip(0).limit(count).sort({'rank': -1 });
+	productlists.find(query, callback).skip(0).limit(count).sort({'rank': -1,'create_date': -1 ,'product_id': -1  });
 }
 
 module.exports.gethotproducts = function(customer_id,count,callback){
 	var query = {customer_id:customer_id,'hot':1,'show':1};
-	productlists.find(query, callback).skip(0).limit(count).sort({'rank': -1 });
+	productlists.find(query, callback).skip(0).limit(count).sort({'rank': -1,'create_date': -1 ,'product_id': -1  });
 }
 module.exports.gethotandnewproducts = function(customer_id,count,callback){
 	var query = {customer_id:customer_id,'show':1,$or:[{'new':1},{'hot':1}]};
-	productlists.find(query, callback).skip(0).limit(count).sort({'rank': -1 });
+	productlists.find(query, callback).skip(0).limit(count).sort({'rank': -1,'create_date': -1 ,'product_id': -1  });
 }
 module.exports.getproductbydetailid = function(productid,detailid,callback){
 	var query = {_id:productid,'product_detail.detail_id': detailid};
@@ -234,11 +234,11 @@ module.exports.getproductlistsByDate = function(type,from_date,to_date,callback)
 }
 module.exports.getrateproductlistscatcount = function(customer_id,cat_id,product_id,count,callback){
 	var query = {customer_id:customer_id,parent_id:cat_id,show:1,product_id:{ $ne: product_id }};
-	productlists.find(query, callback).skip(0).limit(count).sort({'create_date': -1 });
+	productlists.find(query, callback).skip(0).limit(count).sort({'rank': -1,'create_date': -1 ,'product_id': -1  });
 }
 module.exports.getallproductbymoreinfo = function(customer_id,moreinfo_id,page,per_page,callback){
 	var query = {customer_id:customer_id,'product_more_info.defaultid': moreinfo_id,show:1};
-	productlists.find(query, callback).skip(per_page * (page - 1)).limit(per_page).sort({'rank': -1 });
+	productlists.find(query, callback).skip(per_page * (page - 1)).limit(per_page).sort({'rank': -1,'create_date': -1 ,'product_id': -1  });
 }
 module.exports.countproductbymoreinfo = function(customer_id,moreinfo_id,callback){
 	var query = {customer_id:customer_id,'product_more_info.defaultid': moreinfo_id,show:1};
@@ -246,5 +246,5 @@ module.exports.countproductbymoreinfo = function(customer_id,moreinfo_id,callbac
 }
 module.exports.getproductsbymoreinfo = function(customer_id,num,moreinfo_id,callback){
 	var query = {customer_id:customer_id,'product_more_info.defaultid': moreinfo_id,show:1};
-	productlists.find(query, callback).limit(num).sort({'rank': -1 });
+	productlists.find(query, callback).limit(num).sort({'rank': -1,'create_date': -1 ,'product_id': -1  });
 }
