@@ -230,7 +230,7 @@ body {
     width: 100%;
     padding: 3px;
     background: #fff;
-    min-height: 200px;
+    height: 200px;
 }
 .product_item .product_images img{width: 100%;}
 .product_image li{list-style: none;}

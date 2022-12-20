@@ -27,6 +27,12 @@ var province = require('../models/province');
 var productmoreinfo = require('../models/productmoreinfo');
 const request = require('request');
 var i18n = require('i18n');
+router.get('/sitemap.xml', (req, res) => {
+  var hostname = req.headers.host;
+  var websiteinfo = caches.websiteinfo[hostname];
+  res.setHeader('X-Robots-Tag', 'noindex, follow')
+  res.sendFile(`${process.env.UPLOAD_DIR}/${websiteinfo.customer_username}/sitemap.xml`)
+})
 router.get('/website-mau', async function (req, res, next) {
   let language = i18n.getLocale();
   let homelang = language

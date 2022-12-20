@@ -180,6 +180,10 @@
 		width: 100% !important;
 	}
 	.new_product_images img{width: 100%;}
+	.main_left_menu{display: none;}
+	.main_product_center{width: 100% !important;}
+	.right_hot_prpduct{width: 100%;}
+	.product_menu_item{background: none;}
 }
 
 @media (max-width: 768px) {
