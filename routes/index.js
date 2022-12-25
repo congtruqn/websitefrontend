@@ -252,7 +252,6 @@ router.get('/gio-hang', async function (req, res, next) {
     layout: 'layout',
     productmenu: productmenu,
     mainmenu: mainmenu,
-    layout: customer_username,
     siteinfo: websiteinfo,
     sitefooter: sitefooter,
     newproducts: newproducts,
@@ -296,7 +295,6 @@ router.get('/tim-kiem', async function (req, res, next) {
     res.render(`${customer_username}/content/search`, {
       contents: countproduct,
       title: 'Tìm kiếm sản phẩm',
-      layout: customer_username,
       productmenu: productmenu,
       mainmenu: mainmenu,
       layout: 'layout',
@@ -629,7 +627,7 @@ const renderhomepage = async function (req, res, language) {
   else {
     res.render('content/template1/error404', {
       canonical: hostname + '/',
-      layout: 'template1',
+      layout: 'layout',
     });
   }
 }
