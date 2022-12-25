@@ -1,0 +1,50 @@
+<div class="block">
+	<div class="left_menu">
+		<div id="product_menu" class="product_menu detail_menu">
+    		{{> productmenu}}
+		</div>
+		<div class="new_product">
+			<div class="block_new_product">
+				{{>newproducts}}
+			</div>
+		</div>
+	</div>
+	<div class="content_detail">
+		<div class="main_news">
+			<div class="breadcrumbs">
+				<div id="bread">
+					<ul class="items">
+						<li class="homes"><a href="/">Trang chủ</a></li>
+						<li class="homes"><a href="/{{{contents.seo_url}}}">{{{newcatdetail.name}}}</a></li>
+					</ul>
+				</div>
+			
+			</div>
+		</div>
+		<div class="product_detail">
+			<div class="cats_content">
+				<div class="row">
+				{{#each contents as |content_item|}}
+					<div class="col-lg-4 col-md-6 col-sm-6 list_news_item">
+					   <div class="cat_image">
+					   		<a href="/{{content_item.seo_url}}"><img src="{{content_item.image_path}}/medium/{{content_item.image}}"></a>
+					   </div>
+					  	<div class="cat_detail">
+							<p class="item_name"><a href="/{{content_item.seo_url}}">{{truncateString content_item.detail.[0].name 50}}</a></p>
+							<p class="item_desc">{{truncateString content_item.detail.[0].desc 150}}</p>
+					   </div>
+					</div>	
+				{{/each}}
+				</div>
+				<div class="content_page">
+					<ul>
+					{{#each allpage as |page|}}
+						<li><a href="/{{{page.seo_url}}}?page={{page.pagecount}}">{{{page.pagecount}}}</a></li>
+					{{/each}}
+					</ul>
+				</div>
+				<div id="clear"></div>
+			</div>
+		</div>
+	</div>
+</div>

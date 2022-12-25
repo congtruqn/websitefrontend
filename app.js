@@ -127,7 +127,7 @@ app.use(async function(req, res, next) {
         caches.websiteinfo[hostname] = websitein;
         await caches.storeCaches(caches,hostname,websitein)
         app.engine('handlebars', exphbs({
-          partialsDir: __dirname + '/views/partials/'+websitein.customer_username,
+          partialsDir: __dirname + `/views/${websitein.customer_username}/partials`,
           layoutsDir:__dirname +`/views/${websitein.customer_username}`,
         }));
         next();
@@ -138,8 +138,8 @@ app.use(async function(req, res, next) {
     let websitein = caches.websiteinfo[hostname];
     await caches.storeCaches(caches,hostname,websitein);
     app.engine('handlebars', exphbs({
-       partialsDir: __dirname + '/views/partials/'+websitein.customer_username,
-       layoutsDir:__dirname +`/views/${websitein.customer_username}`,
+      partialsDir: __dirname + `/views/${websitein.customer_username}/partials`,
+      layoutsDir:__dirname +`/views/${websitein.customer_username}`,
     }));
     next();
   }

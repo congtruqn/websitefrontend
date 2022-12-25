@@ -1,0 +1,82 @@
+<script type="text/javascript" src="/layout/js/jquery.validate.js"></script>
+<div class="breadcrumbs">
+	<div id="bread">
+		<ul class="items">
+			<li class="item homes"><a href="/">Trang chủ</a></li>
+			<li class="item">Liên hệ</li>
+		</ul>
+	</div>
+</div>
+<div class="block">
+	<div class="contact_form">
+		<div class="row">
+			<div class="f-col col-md-6 col-sm-6 col-xs-12">
+				<form class="cmxform" id="cusinfo" action="#" method="post">
+					<div class="form-group">
+							<label class="col-sm-3 control-label">Họ và Tên</label>
+							<div class="col-sm-9"><input class="form-control" id="name" required="true" name="name"></div>
+					</div>
+					<div class="form-group">
+							<label class="col-sm-3 control-label">Điện thoại</label>
+							<div class="col-sm-9"><input class="form-control"  required="true" id="phone"  name="phone"></div>
+					</div>
+					<div class="form-group">
+							<label class="col-sm-3 control-label">Email</label>
+							<div class="col-sm-9"><input class="form-control" id="email"  name="email"></div>
+					</div>
+					<div class="form-group">
+							<label class="col-sm-3 control-label">Nội dung</label>
+							<div class="col-sm-9"><textarea class="form-control" required="true"  id="content"  name="content">{{content}}</textarea></div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label"></label>
+						<div class="col-sm-9"><button class="form-control" id="userNextStepBottom">Gửi</button></div>
+					</div>
+				</form>
+			</div>
+			<div class="f-col col-md-6 col-sm-6 col-xs-12">
+				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5542.015430873625!2d106.45753650788187!3d10.826865039418976!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x310ad43ef4a35db3%3A0x404c1b6820e43ab1!2zNTAyIMSQVDgyNCwgxJDhu6ljIEjDsmEgSOG6oSwgxJDhu6ljIEjDsmEsIExvbmcgQW4sIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1671359879038!5m2!1svi!2s" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$().ready(function() {
+		// validate signup form on keyup and submit
+		$("#cusinfo").validate({
+			rules: {
+				name: "required",
+				phone: "required",
+				email:"required",
+				content:"required"
+			},
+			messages: {
+				name: "Họ và tên không được để trống!",
+				phone: "Số điện thoại không được để trống!",
+				email:"Email không được để trống",
+				content:"Nội dung không được để trống"
+			},
+			submitHandler: function(form) {
+				var name = document.getElementById("name").value;
+				var phone = document.getElementById("phone").value;
+				var email = document.getElementById("email").value;
+				//var content = document.getElementById("content").value;
+				var content = $("textarea#content").val();
+		        $.ajax({
+		            url:"/addcustomercontact",
+		            type: "POST",
+		            data:{name:name,phone:phone,email:email,content:content},
+		            success: function(response) {
+		            	if(response=="ok"){
+		            		window.location.href = '/thankorder';
+		            	}
+		            	else{
+		            		alert("Có lổi trong quá trình đặt hàng!");
+		            	}
+		               
+		            }            
+		        });
+		    },
+		});
+});
+</script>

@@ -1,0 +1,40 @@
+<div class="container-fluid">
+  <div class="navbar-header">
+  </div>
+  <ul class="nav navbar-nav navbar-right">
+    <li>
+    </li>
+    <li class="dropdown">
+    </li>
+    <li class="dropdown navbar-user">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;" aria-expanded="false">
+        <img alt="" src="/images/user.jpg">
+        <span class="hidden-xs">Adam Schwartz</span>
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu animated fadeInLeft">
+        <li class="arrow"></li>
+        <li><a href="/administrator/editprofile">Edit Profile</a></li>
+        <li><a href="/products/indexsearch"><span class="badge badge-danger pull-right">2</span>Inbox</a></li>
+
+        <li class="divider"></li>
+        <li><a onclick="Logout()" href="#">Log Out</a></li>
+      </ul>
+    </li>
+  </ul>
+</div>
+<script type="text/javascript">
+         function setlang(L) {
+             $.ajax({
+                 type: "POST",
+                 url: '/administrator/rest/user/setlanguage',
+                 data: { lang: L },
+                 success: function (result) {
+                   window.location.reload(true);
+                 }
+             });
+         }
+         function Logout() {
+            window.location.href = 'user/logout';
+         }          
+</script>

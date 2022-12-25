@@ -1,0 +1,37 @@
+<div class="footer-container">
+  <div class="container">
+    <div class="row">
+      {{#each sitefooter as |footer|}}
+        <div class="col-md-3 col-xs-6">
+          <span class="fmn">{{footer.footer_name}}</span>
+          <ul>
+          {{#each footer.footer_child as |childfooter|}}
+            <li><a href="/{{childfooter.child_url}}">{{{childfooter.child_name}}}</a></li>
+          {{/each}}
+          </ul>
+        </div>
+      {{/each}}
+      <div class="col-md-5 col-sm-7 col-xs-12">
+          <span class="fmn">Liên hệ với {{siteinfo.company_name}}</span>
+            <div class="footer_address">
+              <i class="fa fa-map-marker" aria-hidden="true"></i>
+                  Địa chỉ: {{siteinfo.customer_address}}
+            </div>
+            <div class="footer_address">
+                  <i class="fa fa-phone" aria-hidden="true"></i>
+                  Điện thoại: {{siteinfo.hotline}}
+            </div>
+            <div class="footer_address">
+                  <i class="fa fa-envelope" aria-hidden="true"></i>
+                  Email: {{siteinfo.customer_email}}
+            </div>
+      </div>
+      <div id="clear"></div>
+    </div>
+  </div>
+</div>
+<div class="footer-bottom">
+  <div class="container">
+    Thiết kế bởi <a href="http://tns.vn">tns.vn</a>
+  </div>
+</div>

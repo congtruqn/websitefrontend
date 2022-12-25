@@ -1,0 +1,171 @@
+ <link rel="stylesheet" href="/layout/{{siteinfo.customer_username}}/css/images/pgwslider.min.css" type="text/css" media="screen" />
+<script type="text/javascript" src="/layout/{{siteinfo.customer_username}}/js/images/pgwslider.min.js"></script>
+			<div class="breadcrumbs">
+				<div id="bread">
+					<ul class="items">
+						<li class="item home"><a href="/">Trang chủ</a></li>
+						<li class="item product"><strong>{{{details.name}}}</strong></li>
+					</ul>
+				</div>
+			</div>
+<div class="block">
+	<div class="left_menu">
+		<div id="product_menu" class="product_menu detail_menu">
+    		{{> productmenu}}
+		</div>
+		<div class="new_product">
+			<div class="block_new_product">
+				{{>newproducts}}
+			</div>
+		</div>
+	</div>
+	<div class="content_detail">
+		<div class="product_detail">
+			<div class="product_detail_image">
+				<ul class="pgwSlider">
+                    <li><img class="mainimg" src="/static/{{siteinfo.customer_username}}/images/products/medium/{{contents.image}}" alt='' data-large-src="/static/{{siteinfo.customer_username}}/images/products/fullsize/{{contents.image}}"></li>
+					{{#each contents.list_images as |image|}}
+					<li><img src="{{image.image_path}}thumb/{{image.image}}" alt=''  data-large-src="{{image.image_path}}fullsize/{{image.image}}"></li>
+                    {{/each}}
+				</ul>			
+			</div>
+			<div class="product_info">
+				<div class="col-lg-12 col-md-12 col-xs-12">
+					<h1>{{{details.name}}}</h1>
+					<p>{{{details.desc}}}</p>
+					<p class="price">{{{price}}} ₫</p>
+					{{islogin}}
+					{{#if instock}}
+						<p class="instock">Tình trạng:<span> Còn hàng<span></p>
+					{{else}}
+						<p class="outstock">Tình trạng:<span> Hết hàng<span></p>
+					{{/if}}
+
+					<ul class="product_detail_moreinfo">
+					{{#each product_more_info as |list_detail|}}
+						{{#if list_detail.info_value}}
+						<li><p class="more_info_detail"> {{{list_detail.info_name}}}: <span class="more_info_price">{{{list_detail.info_value}}}</span></p></li>
+						{{else}}
+						{{/if}}
+					{{/each}}
+					</ul>
+					{{#each product_details as |list_detail|}}
+                        <p class="choise_size">Chọn {{{list_detail.detail_name}}}</p>
+						<div class="pro_detail">
+							<ul>
+							{{#each list_detail.detail_value as |value|}}
+								<li class="list_size">{{{value.value}}}</li>
+							{{/each}}
+							</ul>
+						</div>
+                    {{/each}}
+					{{#if instock}}
+						<div class="box-tocart large-box-tocart att-scr-qty scr-top">
+							<button id="product-addtocart-button" class="action primary tocart" title="Add to Cart" type="submit" onclick="addToCart({{{contents.product_id}}})">
+								<span>Thêm vào giỏ hàng</span>
+							</button>
+							<button id="product-buynow" class="action primary buy-now" title="Add to Cart" type="submit" onclick="Buynow({{{contents.product_id}}})">
+								<span>Mua ngay</span>
+							</button>
+						</div>
+					{{else}}
+					{{/if}}
+				</div>
+			</div>
+			<div id="clear"></div>
+		</div>
+		<div class="product_content">
+			<div class="product_content_title">
+				<div class="product_content_tit">
+					<a>Chi tiết</a>
+				</div>
+			</div>
+			{{{details.content}}}
+		</div>
+
+		<div class="rate_product">
+			<div class="product_content_title">
+				<div class="product_content_tit">
+					<div class="block-title">
+						<a>Có thể bạn quan tâm</a>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				{{#each rateproducts as |rateproduct_item|}}
+	                <div class="col-xs-6 col-sm-6 col-md-3">
+	                  <div class="product_item">
+	                      <div class="product_images">
+	                        <a href="/{{rateproduct_item.seo_url}}"><img src="/static/{{rateproduct_item.image_path}}/medium/{{rateproduct_item.image}}" alt="{{rateproduct_item.alt}}"></a>
+							<ul class="cdz-product-labels">
+							{{#if rateproduct_item.salepec}}
+								<li class="label-item sale hot-sale"><div class="label-content">-{{rateproduct_item.salepec}}%</div></li>
+							{{/if}}
+							</ul>
+	                      </div>
+	                      <div class="product_detail">
+							<p class="product_name"><a href="/{{rateproduct_item.seo_url}}">{{truncateString rateproduct_item.detail.[0].name 50}}</a></p>
+	                        <div class="product_price"><p>{{formatCurrency rateproduct_item.price}}₫</p></div>
+							{{#if rateproduct_item.salepec}}
+								<p class="product_sale_price">{{formatCurrency rateproduct_item.sale_price}}₫</p>
+							{{/if}}
+							<div id="clear"></div>
+	                      </div>
+	                    </div>
+	                </div>	
+				{{/each}}
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+$(document).ready(function() {
+    $('.pgwSlider').pgwSlider();
+});
+</script>
+<script type="text/javascript">
+$('.pro_detail').delegate('.list_size','click', function(){
+  $('.list_size').removeClass('sizeactive');
+  $(this).addClass('sizeactive');
+});
+function addToCart(ID){
+    var productcount = 1;
+    var productadd = 1;
+    var datastring =  'productcount='+productcount+'&productadd='+ID;
+    $.ajax({
+      type: "POST",
+      url: '/addtocart?'+datastring,
+      data: {id: ID},
+      success: function (result) {
+        if(result==1){
+          alert('Sản phẩm trong kho không đủ!');
+        }
+        else{
+			var aaa = $("#cart-total").html();
+			$('#cart-total').html(Number(aaa)+1);
+           $("#addedproduct").slideDown("slow");
+		   $("#addedproduct").slideToggle(2000);
+        }
+      }
+    });
+};
+function Buynow(ID){
+    var productcount = 1;
+    var productadd = 1;
+    var datastring =  'productcount='+productcount+'&productadd='+ID;
+    $.ajax({
+      type: "POST",
+      url: '/addtocart?'+datastring,
+      data: {id: ID},
+      success: function (result) {
+        if(result==1){
+          alert('Sản phẩm trong kho không đủ!');
+        }
+        else{
+          window.location = '/gio-hang';           
+        }
+      }
+    });
+};
+  
+</script>

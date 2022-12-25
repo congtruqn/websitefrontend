@@ -55,7 +55,7 @@ router.get('/website-mau', async function (req, res, next) {
     arraypage.push(temp);
   };
   var customer_username = websiteinfo.customer_username
-  res.render('content/' + customer_username + '/websitetemplate', {
+  res.render(`${customer_username}/content/websitetemplate`, {
     title: 'Giao diện website mẫu, template website miễn phí',
     listtemplates: listTemplate,
     siteinfo: websiteinfo,
@@ -63,7 +63,7 @@ router.get('/website-mau', async function (req, res, next) {
     hotnews: hotnews,
     language: language,
     lang: homelang,
-    layout: websiteinfo.customer_username,
+    layout: 'layout',
   });
 });
 router.get('/getcart', function (req, res, next) {
@@ -92,9 +92,9 @@ router.get('/templateregister', function (req, res, next) {
   let customer_username = websiteinfo.customer_username ? websiteinfo.customer_username : 'template1'
   let hotnews = caches.hotnews[hostname];
   hotnews = utils.filterDetailByLang(hotnews, language)
-  res.render('content/' + customer_username + '/templateregister', {
+  res.render(`${customer_username}/content/templateregister`, {
     title: 'Register this template',
-    layout: customer_username,
+    layout: 'layout',
     productmenu: productmenu,
     mainmenu: mainmenu,
     siteinfo: websiteinfo,
@@ -117,7 +117,7 @@ router.get('/thankyou', async function (req, res, next) {
   let customer_username = websiteinfo.customer_username ? websiteinfo.customer_username : 'template1'
   let hotnews = caches.hotnews[hostname];
   hotnews = utils.filterDetailByLang(hotnews, language)
-  res.render('content/' + customer_username + '/thankyou', {
+  res.render(`${customer_username}/content/thankyou`, {
     title: 'Ragister complete',
     productmenu: productmenu,
     mainmenu: mainmenu,
@@ -125,7 +125,7 @@ router.get('/thankyou', async function (req, res, next) {
     hotnews: hotnews,
     lang: homelang,
     policies: policies,
-    layout: websiteinfo.customer_username,
+    layout: 'layout',
   });
 });
 router.get('/login', function (req, res, next) {
@@ -135,9 +135,9 @@ router.get('/login', function (req, res, next) {
   let websiteinfo = caches.websiteinfo[hostname];
   var customer_username = websiteinfo.customer_username;
   let policies = caches.policies[hostname] ? caches.policies[hostname] : [];
-  res.render('content/' + customer_username + '/login', {
+  res.render(`${customer_username}/content/login`, {
     title: 'Đăng nhập',
-    layout: customer_username,
+    layout: 'layout',
     productmenu: productmenu,
     mainmenu: mainmenu,
     lang: homelang,
@@ -188,12 +188,12 @@ router.get('/lien-he', function (req, res, next) {
   let policies = caches.policies[hostname] ? caches.policies[hostname] : [];
   let content = req.param('content');
   hotnews = utils.filterDetailByLang(hotnews, language)
-  res.render('content/' + customer_username + '/contact', {
+  res.render(`${customer_username}/content/contact`, {
     title: 'Liên hệ',
     layout: customer_username,
     productmenu: productmenu,
     mainmenu: mainmenu,
-    layout: customer_username,
+    layout: 'layout',
     siteinfo: websiteinfo,
     sitefooter: sitefooter,
     hotnews: hotnews,
@@ -215,13 +215,13 @@ router.get('/thankorder', async function (req, res, next) {
   var customer_username = websiteinfo.customer_username;
   var productmoreinfos = caches.productmoreinfos[hostname];
   let policies = caches.policies[hostname] ? caches.policies[hostname] : [];
-  res.render('content/' + customer_username + '/thankorder', {
+  res.render(`${customer_username}/content/thankorder`, {
     productmenu: productmenu,
     mainmenu: mainmenu,
     newproducts: newproducts,
     siteinfo: websiteinfo,
     title: '',
-    layout: customer_username,
+    layout: 'layout',
     sitefooter: sitefooter,
     policies: policies,
     productmoreinfos: productmoreinfos
@@ -244,12 +244,12 @@ router.get('/gio-hang', async function (req, res, next) {
   var provinces = caches.provinces;
   var productmoreinfos = caches.productmoreinfos[hostname];
   let policies = caches.policies[hostname] ? caches.policies[hostname] : [];
-  res.render('content/' + customer_username + '/shoppingcart', {
+  res.render(`${customer_username}/content/shoppingcart`, {
     listproducts: listproduct,
     total_money: req.session.total_price,
     total_price_pricebeauty: req.session.total_price_pricebeauty,
     title: 'Giỏ hàng',
-    layout: websiteinfo.customer_username,
+    layout: 'layout',
     productmenu: productmenu,
     mainmenu: mainmenu,
     layout: customer_username,
@@ -293,13 +293,13 @@ router.get('/tim-kiem', async function (req, res, next) {
       }
       countproduct[x] = productiteam;
     }
-    res.render('content/' + customer_username + '/search', {
+    res.render(`${customer_username}/content/search`, {
       contents: countproduct,
       title: 'Tìm kiếm sản phẩm',
       layout: customer_username,
       productmenu: productmenu,
       mainmenu: mainmenu,
-      layout: customer_username,
+      layout: 'layout',
       siteinfo: websiteinfo,
       sitefooter: sitefooter,
       newproducts: newproducts,
@@ -339,14 +339,14 @@ router.get('/san-pham-ban-chay', async function (req, res, next) {
         }
         arraypage.push(temp);
       };
-      res.render('content/' + customer_username + '/hotproduct', {
+      res.render(`${customer_username}/content/hotproduct`, {
         contents: conten,
         allpage: arraypage,
         title: "Sản phẩm bán chạy",
         canonical: '/san-pham-moi',
         description: "catinfo.detail[0].description",
         keyword: "catinfo.detail[0].keyword",
-        layout: customer_username,
+        layout: 'layout',
         productmenu: productmenu,
         mainmenu: mainmenu,
         siteinfo: websiteinfo,
@@ -389,14 +389,14 @@ router.get('/san-pham-moi', async function (req, res, next) {
         }
         arraypage.push(temp);
       };
-      res.render('content/' + customer_username + '/hotproduct', {
+      res.render(`${customer_username}/content/hotproduct`, {
         contents: conten,
         allpage: arraypage,
         title: "Sản phẩm mới về",
         canonical: '/san-pham-moi',
         description: "catinfo.detail[0].description",
         keyword: "catinfo.detail[0].keyword",
-        layout: customer_username,
+        layout: 'layout',
         productmenu: productmenu,
         mainmenu: mainmenu,
         siteinfo: websiteinfo,
@@ -594,7 +594,7 @@ const renderhomepage = async function (req, res, language) {
       }
       tranData = websiteinfo.detail.find(obj => obj.lang == lang)
     }
-    res.render('content/' + customer_username + '/index', {
+    res.render(`${customer_username}/content/index`, {
       productcats: productcat,
       canonical: website_protocol + '://' + hostname + '/' + homelang,
       title: tranData && tranData.title ? tranData.title : websiteinfo.title,
@@ -667,14 +667,14 @@ const renderpage = async function (req, res, website_url, language = 'vi') {
       tranData = conten.detail.find(obj => obj.lang == language);
       hotnews = utils.filterDetailByLang(hotnews, language, 1)
     }
-    res.render('content/' + customer_username + '/page', {
+    res.render(`${customer_username}/content/page`, {
       contents: conten,
       details: tranData ? tranData : conten.detail[0],
       title: tranData && tranData.title ? tranData.title : conten.detail[0].title,
       description: tranData && tranData.description ? tranData.description : conten.detail[0].description,
       keyword: tranData && tranData.keyword ? tranData.keyword : conten.detail[0].keyword,
       canonical: website_protocol + '/' + hostname + '/' + canonical,
-      layout: customer_username,
+      layout: "layout",
       productmenu: productmenu,
       productmenu1: productmenu1,
       mainmenu: mainmenu,
@@ -717,12 +717,12 @@ const render404page = async function (req, res, website_url, language = 'vi') {
       homelang = language
     }
   }
-  res.render('content/' + customer_username + '/error404', {
+  res.render(`${customer_username}/content/error404`, {
     title: 'Error 404',
     description: '',
     keyword: '',
     canonical: '/',
-    layout: customer_username,
+    layout: "layout",
     productmenu: productmenu,
     productmenu1: productmenu1,
     mainmenu: mainmenu,
@@ -771,7 +771,7 @@ const rendernewcontentpage = async function (req, res, website_url, language = '
         ratenews = utils.filterDetailByLang(ratenews, language, 1)
         hotnews = utils.filterDetailByLang(hotnews, language, 1)
       }
-      res.render('content/' + customer_username + '/newscontent', {
+      res.render(`${customer_username}/content/newscontent`, {
         contents: conten,
         hotnews: hotnews,
         ratenews: ratenews,
@@ -781,7 +781,7 @@ const rendernewcontentpage = async function (req, res, website_url, language = '
         keyword: tranData && tranData.keyword ? tranData.keyword : conten.detail[0].keyword,
         canonical: website_protocol + '://' + hostname + '/' + canonical,
         orgimage: website_protocol + '://' + hostname + '/static/' + customer_username + '/images/news/fullsize/' + conten.image2,
-        layout: customer_username,
+        layout: 'layout',
         productmenu: productmenu,
         productmenu1: productmenu1,
         mainmenu: mainmenu,
@@ -846,7 +846,7 @@ const rendernewcatpage = async function (req, res, website_url, language = 'vi')
     else {
       conten = utils.filterDetailByLang(conten, language, 1)
     }
-    res.render('content/' + customer_username + '/newscat', {
+    res.render(`${customer_username}/content/newscat`, {
       contents: conten,
       hotnews: hotnews1,
       allpage: arraypage,
@@ -866,7 +866,7 @@ const rendernewcatpage = async function (req, res, website_url, language = 'vi')
       language: language,
       lang: homelang,
       productmoreinfos: productmoreinfos,
-      layout: customer_username,
+      layout: 'layout',
       policies: policies,
       socialmedias: caches.socialmedias[hostname] ? caches.socialmedias[hostname] : [],
       istemplate: istemplate
@@ -937,7 +937,7 @@ const renderproductcatpage = async function (req, res, website_url) {
     }
     arraypage.push(temp);
   };
-  res.render('content/' + customer_username + '/productscat', {
+  res.render(`${customer_username}/content/productscat`, {
     contents: countproduct,
     allpage: arraypage,
     newscatinfo: countproduct,
@@ -946,7 +946,7 @@ const renderproductcatpage = async function (req, res, website_url) {
     canonical: website_protocol + '://' + hostname + '/' + catinfo.seo_url + '/',
     description: catinfo.detail[0].description,
     keyword: catinfo.detail[0].keyword,
-    layout: customer_username,
+    layout: 'layout',
     productmenu: productmenu,
     productmenu1: productmenu1,
     mainmenu: mainmenu,
@@ -1021,7 +1021,7 @@ const renderproductdetailpage = async function (req, res, website_url) {
       if (conten.show == 1) {
         instock = 1;
       }
-      res.render('content/' + customer_username + '/productdetail', {
+      res.render(`${customer_username}/content/productdetail`, {
         description: conten.detail[0].description,
         canonical: website_protocol + '://' + hostname + '/' + conten.seo_url,
         orgimage: website_protocol + '://' + hostname + '/images/products/fullsize/' + conten.image2,
@@ -1030,7 +1030,7 @@ const renderproductdetailpage = async function (req, res, website_url) {
         price: pricebeauty,
         details: procontent,
         title: conten.detail[0].title,
-        layout: customer_username,
+        layout: 'layout',
         productmenu: productmenu,
         productmenu1: productmenu1,
         instock: instock,
@@ -1105,7 +1105,7 @@ const renderproductmoreinfocategorypage = async function (req, res, website_url)
           }
           arraypage.push(temp);
         };
-        res.render('content/' + customer_username + '/productmoreinfo', {
+        res.render(`${customer_username}/content/productmoreinfo`, {
           contents: countproduct,
           allpage: arraypage,
           newscatinfo: countproduct,
@@ -1114,7 +1114,7 @@ const renderproductmoreinfocategorypage = async function (req, res, website_url)
           canonical: website_protocol + '://' + hostname + '/' + productmorein[0].default_value[0].seo_url + '/',
           description: productmorein[0].default_value[0].description,
           keyword: productmorein[0].default_value[0].keyword,
-          layout: customer_username,
+          layout: 'layout',
           productmenu: productmenu,
           productmenu1: productmenu1,
           mainmenu: mainmenu,
