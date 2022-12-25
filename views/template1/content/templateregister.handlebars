@@ -1,0 +1,68 @@
+<div class="bread_images" style="background: url(/static/template1/images/news/background-createtemplate.png) no-repeat center center transparent;background-size: cover;">
+	<div class="container">
+		<div class="breadcrumb">
+			<h1  class="title_page">{{i18n "website_registration"}}</h1>
+				<nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a href="/">{{i18n "homepage"}}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{i18n "website_registration"}}</li>
+                    </ol>
+                </nav>
+		</div>
+	</div>
+</div>
+<div class="list_contact">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-6 col-md-6 register_left">
+				<div class="hpr-form">
+					<h2>{{i18n "7_day_free"}}</h2>
+					<p>{{i18n "unlimited_features"}}</p>
+					<div class="hpr-input hpr-text">
+						<input id="template" type="text" placeholder="{{i18n "full_name"}} *" class="validate required" maxlength="255" value ="{{template}}" disabled="disabled">
+					</div>
+					<div class="hpr-input hpr-text">
+						<input id="name" type="text" placeholder="{{i18n "full_name"}} *"  class="validate required" maxlength="255">
+					</div>
+					<div class="hpr-input hpr-text">
+						<input id="email" type="text" placeholder="Email *" class="validate required" maxlength="255">
+					</div>
+					<div class="hpr-input hpr-text">
+						<input id="phone" type="text" placeholder="{{i18n "phone"}}*"  class="validate required" maxlength="255">
+					</div>
+
+					<div class="hpr-button"><a id="next" onclick="senttrial()">{{i18n "register"}}</a></div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-6 col-md-6 register_right">
+				<img src="/images/tns-web-design.png">
+			</div>
+
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+        function senttrial() {
+          var name = document.getElementById('name').value;
+          var phone = document.getElementById('phone').value;
+          var email = document.getElementById('email').value;
+		  var template = document.getElementById('template').value;
+          var dataString = 'name='+name+'&email='+email+'&phone='+phone+'&template='+template;;
+          //alert(dataString);
+          if(email==""||phone==""||name==""){
+              alert('Bạn vui lòng nhập đầy đủ thông tin');
+          }
+          else{
+            $.ajax({
+                    type: "POST",
+                    url: '/registertouse?'+dataString,
+                    data: {},
+                    success: function (result) {
+						window.location.href = '/thankyou';
+                         //alert(result);
+                    }
+                });
+          }
+          
+        }
+</script>

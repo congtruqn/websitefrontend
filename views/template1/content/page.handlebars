@@ -1,0 +1,31 @@
+
+<div class="bread_images" style="background: url({{contents.image_path}}{{contents.image}}) no-repeat center center transparent;background-size: cover;">
+<div class="left_menu">
+	<div id="product_menu" class="product_menu detail_menu">
+    	{{> productmenu}}
+	</div>
+	<div class="new_product">
+		<div class="block_new_product">
+				{{>newproducts}}
+		</div>
+	</div>
+</div>	
+	<div class="container">
+		<div class="breadcrumb">
+			<h1  class="title_page">{{{details.name}}}</h1>
+				<nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item"><a href="/">{{i18n "homepage"}}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{{details.name}}}</li>
+                    </ol>
+                </nav>
+		</div>
+	</div>
+</div>
+<div class="block">
+	<div class="container">
+		<div class="news_detail">
+			{{{details.content}}}
+		</div>
+	</div>
+</div>

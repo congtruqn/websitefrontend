@@ -1,0 +1,58 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md-4 col-sm-7 col-xs-12">
+          <h3 class="widget-title">{{i18n "contact"}}
+            <span class="small-line"></span>
+          </h3>
+          <div class="textwidget">
+            <p>
+                <i class="fa fa-phone" aria-hidden="true"></i>
+                <span>{{i18n "phone"}} :</span>{{siteinfo.hotline}}
+
+            </p>
+          </div>
+          <div class="textwidget">
+            <p><i class="fa fa-envelope" aria-hidden="true"></i><span>Email:</span>{{siteinfo.customer_email}}</p>
+          </div>
+          <div class="textwidget">
+            <p><i class="fa fa-globe" aria-hidden="true"></i><span>Website:</span>www.tns.vn</p>
+          </div>
+          <div class="textwidget">
+            <p><i class="fa fa-location-arrow" aria-hidden="true"></i><span>{{siteinfo.customer_address}}</span></p>
+          </div>
+      </div>
+      <div class="col-md-4 col-sm-7 col-xs-12">
+          <h3 class="widget-title">{{i18n "popular_post"}}
+            <span class="small-line"></span>
+          </h3>
+          <div class="post_widget">
+                {{#each hotnews as |listnews|}}
+                  <div class="blog-box">
+                      <div class="blog-img">
+                          <img class="img-fluid" src="{{listnews.image_path}}/thumb/{{listnews.image}}" alt="" />
+                      </div>
+                      <div class="blog-content">
+                          <div class="title-blog">
+                              <p><a href="/{{listnews.url}}">{{truncateString listnews.details.name 47}}</a></p>
+                          </div>
+                      </div>
+                  </div>
+                  <div id="clear"></div>
+                {{/each}}            
+          </div>
+      </div>
+      <div class="col-md-4 col-sm-7 col-xs-12 footer_textwidget">
+          <h3 class="widget-title">{{i18n "newsletter_subscription"}}
+            <span class="small-line"></span>
+          </h3>
+          <p>{{i18n 'newsletter_subscription_c'}}</p>
+          <form name="frmNewsletter" method="post" class="mailchimp-form">
+            <p>
+              <input type="email" placeholder="Enter Email" name="dt_mc_emailid" id="dt_mc_emailid" value="" required="">
+              <input type="hidden" name="dt_mc_apikey" id="dt_mc_apikey" value="c94a1d38b6683d601a324aeeb4d4ffe3-us1">
+              <input type="hidden" name="dt_mc_listid" id="dt_mc_listid" value="314bbca712">	<input type="submit" name="submit" class="dt-sc-button" value="">	
+            </p>
+          </form>
+      </div>
+    </div>
+</div>

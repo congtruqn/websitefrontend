@@ -18,9 +18,6 @@ var websitesSchema = mongoose.Schema({
 		company_name:String,
 		slogan:String
 	}],
-	website_name:{
-		type: String
-	},
 	website_image:{
 		type: String
 	},
@@ -69,6 +66,9 @@ var websitesSchema = mongoose.Schema({
 	logo:{
 		type: String
 	},
+	image_path:{
+		type: String
+	},
 	type:{
 		type: String
 	},
@@ -99,10 +99,10 @@ var websitesSchema = mongoose.Schema({
 	news_size_large:{
 		type: Number
 	},
-	products_per_cat_home:{
+	image_height_ratio:{
 		type: Number
 	},
-	news_per_cat_home:{
+	products_per_cat_home:{
 		type: Number
 	},
 	products_name_letters:{
@@ -115,6 +115,9 @@ var websitesSchema = mongoose.Schema({
 		type: Number
 	},
 	num_hot_news:{
+		type: Number
+	},
+	logo_size:{
 		type: Number
 	},
 	multi_language:{

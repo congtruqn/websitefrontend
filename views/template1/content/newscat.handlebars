@@ -1,0 +1,52 @@
+<div class="bread_images_con" style="background: url(/static/template1/images/news/child-banner.png)  right -5px no-repeat;">
+	<div class="container">
+		
+			<div class="breadcrumbs">
+				<div id="bread">
+					<ul class="items">
+						<li class="homes"><a href="/">{{i18n "homepage"}}</a></li>
+						<li class="homes"><a href="/{{{contents.seo_url}}}">{{newcatdetail.name}}</a></li>
+					</ul>
+				</div>
+			</div>
+		
+	</div>
+</div>
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12 col-sm-9">
+			<div class="newscat_content">
+				{{#each contents as |images|}}
+					<div class="col-lg-12 col-md-12 col-sm-12 list_news_item">
+					   <div class="cat_image">
+					   		<a href="/{{images.seo_url}}"><img src="{{images.image_path}}medium/{{images.image}}"></a>
+					   </div>
+					  	<div class="cat_detail">
+						<h4><a href="/{{images.url}}">{{images.details.name}}</a></h4>
+						<p>{{images.details.desc}}...</p>
+						<i><a href="/{{images.url}}">{{i18n "view_more"}}</a></i>
+					   </div>
+					</div>	
+				{{/each}}
+				<div id="clear"></div>	
+				<div class="content_page">
+					<ul>
+					{{#each allpage as |page|}}
+						<li><a href="/{{{page.url}}}?page={{page.pagecount}}">{{{page.pagecount}}}</a></li>
+					{{/each}}
+					</ul>
+				</div>
+			</div>
+		</div>
+		 <div class="col-xs-12 col-sm-6 col-md-3">
+			<div class="new_news_title">{{i18n "featured_news"}}</div>
+			{{#each hotnews as |hotnew|}}
+                <div class="hot_news_item">
+                    <div class="hot_news_detail">
+                        <p class="hot_news_name"><a href="/{{hotnew.url}}">{{{hotnew.details.name}}}</a></p>
+                    </div>
+                </div>
+  			{{/each}}
+		 </div>
+	</div>
+</div>

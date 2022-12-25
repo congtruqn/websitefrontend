@@ -1,0 +1,45 @@
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9097087537942167"
+crossorigin="anonymous"></script>
+<div class="bread_images_con" style="background: url(/static/template1/images/news/child-banner.png)  right -5px no-repeat;">
+	<div class="container">
+		
+			<div class="breadcrumbs">
+				<div id="bread">
+					<ul class="items">
+						<li class="homes"><a href="/">{{i18n "homepage"}}</a></li>
+						<li class="homes"><a href="/{{{contents.seo_url}}}">{{{details.name}}}</a></li>
+					</ul>
+				</div>
+			</div>
+		
+	</div>
+</div>
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12 col-sm-9">
+			<div class="news_content">
+				{{{details.content}}}
+				<div class="rate_news">
+					<div class="rate_news_title">Bài viết liên quan</div>
+					<ul>
+					{{#each ratenews as |hotnew|}}
+						<li class="rate_news_item">
+							<a href="/{{hotnew.url}}">{{{hotnew.details.name}}}</a>
+						</li>
+					{{/each}}
+					</ul>
+				</div>
+			</div>
+		</div>
+		 <div class="col-xs-12 col-sm-6 col-md-3">
+			<div class="new_news_title">{{i18n "featured_news"}}</div>
+			{{#each hotnews as |hotnew|}}
+                <div class="hot_news_item">
+                    <div class="hot_news_detail">
+						<p class="hot_news_name"><a href="/{{hotnew.url}}">{{{hotnew.details.name}}}</a></p>
+                    </div>
+                </div>
+  			{{/each}}
+		 </div>
+	</div>
+</div>

@@ -164,6 +164,11 @@ router.get('/clearcache', function (req, res, next) {
   caches.saleproducts[hostname] = null;
   caches.advertises[hostname] = null;
   caches.policies[hostname] = null;
+  caches.advertises[hostname] = null;
+  caches.socialmedias[hostname] = null;
+  caches.productcatcount[hostname] = null;
+  caches.listproductsperpage[hostname] = null;
+  caches.productcatinfo[hostname] = null;
   res.send('ok');
 })
 router.get('/lien-he', function (req, res, next) {
@@ -556,7 +561,7 @@ const renderhomepage = async function (req, res, language) {
   let testimonials = [];
   let cusbanner = [];
   let promises = [];
-  if (hostname == 'template1.tns.vn:3005' || hostname == 'tns.vn') {
+  if (hostname == 'template1.tns.com:3005' || hostname == 'tns.vn') {
     promises.push(systems.testimonials.getTestimonialsByCustomer(3, websiteinfo.customer_id), systems.gettemplates(), systems.getbanner(websiteinfo.customer_id))
   }
   else {
@@ -598,7 +603,7 @@ const renderhomepage = async function (req, res, language) {
       banners: cusbanner,
       productmenu: productmenu,
       mainmenu: mainmenu,
-      layout: customer_username,
+      layout: 'layout',
       siteinfo: websiteinfo,
       sitefooter: sitefooter,
       hotproducts: hotproducts,
@@ -744,6 +749,7 @@ const rendernewcontentpage = async function (req, res, website_url, language = '
     istemplate = true
   }
   let customer_username = websiteinfo.customer_username;
+  var customer_id = websiteinfo.customer_id;
   let mainmenu = caches.mainmenu[hostname];
   let productmenu = caches.productcat[hostname];
   var productmenu1 = caches.productmenu[hostname];
@@ -753,7 +759,7 @@ const rendernewcontentpage = async function (req, res, website_url, language = '
   let website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : "http";
   let hotnews = caches.hotnews[hostname];
   let policies = caches.policies[hostname] ? caches.policies[hostname] : [];
-  NewsContents.getnewscontentbycontentid(website_url.content_id, function (err, conten) {
+  NewsContents.getnewscontentbycontentid(customer_id,website_url.content_id, function (err, conten) {
     NewsContents.getratenewcontentbycatcount(conten.parent_id, conten.content_id, 8, function (err, ratenews) {
       let tranData = null
       let canonical = conten.seo_url

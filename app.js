@@ -25,7 +25,6 @@ const limiter = rateLimit({
 if(process.env.NODE_ENV!='development'){
   app.use(limiter)
 }
-
 var index = require('./routes/index');
 var systems = require('./models/systems'); 
 var caches = require('./models/cache');
@@ -39,9 +38,6 @@ i18n.configure({
   directory: "" + __dirname + "/locales"
 });
 app.set('views', path.join(__dirname, 'views'));
-app.engine('handlebars', exphbs({
-  defaultLayout:'layout',
-}));
 app.set('view engine', 'handlebars');
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
@@ -131,7 +127,8 @@ app.use(async function(req, res, next) {
         caches.websiteinfo[hostname] = websitein;
         await caches.storeCaches(caches,hostname,websitein)
         app.engine('handlebars', exphbs({
-          partialsDir: __dirname + '/views/partials/'+websitein.customer_username
+          partialsDir: __dirname + '/views/partials/'+websitein.customer_username,
+          layoutsDir:__dirname +`/views/${websitein.customer_username}`,
         }));
         next();
       }
@@ -141,7 +138,8 @@ app.use(async function(req, res, next) {
     let websitein = caches.websiteinfo[hostname];
     await caches.storeCaches(caches,hostname,websitein);
     app.engine('handlebars', exphbs({
-       partialsDir: __dirname + '/views/partials/'+websitein.customer_username  
+       partialsDir: __dirname + '/views/partials/'+websitein.customer_username,
+       layoutsDir:__dirname +`/views/${websitein.customer_username}`,
     }));
     next();
   }

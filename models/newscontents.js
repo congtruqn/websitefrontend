@@ -98,8 +98,8 @@ module.exports.getNewsContentsById = function(id, callback){
 	var query = {_id:id};
 	newscontents.findOne(query, callback);
 }
-module.exports.getnewscontentbycontentid = function(id, callback){
-	var query = {content_id:id};
+module.exports.getnewscontentbycontentid = function(customer_id,id, callback){
+	var query = {content_id:id,customer_id:customer_id};
 	newscontents.findOne(query, callback);
 }
 module.exports.getAllnewscontents = function(customer_id,page,per_page,callback){

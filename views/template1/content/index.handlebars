@@ -1,0 +1,141 @@
+<div class="slider" id="slider">
+    {{>slider}}
+</div>
+<div class="intro-text type1" style="">
+    <div class="container">
+        <div class="column dt-sc-two-third first" style="">
+            <h4 class="">{{{i18n "choisetemplate"}}}</h4>
+        </div>
+        <div class="column dt-sc-one-third" style="">
+            <a href="#" target="_blank" class="dt-sc-button large"> {{i18n "choise_a_template"}} <span class="fa fa-angle-right"> </span> </a>
+        </div>
+    </div>
+</div>
+<div id="dt-sc-margin65"></div>
+
+<div id="clear"></div>
+<div class="block">
+	<div class="container">
+		<div class="benefit_title aos-init aos-animate" data-aos="fade-up">
+			<p class="title">{{i18n "why_to_choise_us"}}</p>
+			<p>{{i18n "why_to_choise_us_text1"}}</br>{{i18n "why_to_choise_us_text2"}}</br>{{i18n "why_to_choise_us_text3"}}</br></p>
+		</div>
+	</div>
+</div>
+<div class="list_quality">
+	<div class="container">
+		<div class="row">
+	        <div class="col-xs-6 col-sm-6 col-md-3 {{images.class}} aos-init aos-animate" data-aos="fade-up">
+	            <div class="list_quality_item">
+	                <div class="list_quality_images">
+	                    <img src="/static/template1/images/icon1artboard_1_copy_10.png">
+	                </div>
+	                <div class="list_quality_detail">
+	                    <p class="quality_name">{{i18n "time_savings"}}</p>
+						<p>{{i18n "time_savings_text"}}</p>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="col-xs-6 col-sm-6 col-md-3 {{images.class}} aos-init aos-animate" data-aos="fade-up" dat-aos-delay="100">
+	            <div class="list_quality_item">
+	                <div class="list_quality_images">
+	                    <img src="/static/template1/images/tinhnang2-min.png">
+	                </div>
+	                <div class="list_quality_detail">
+	                    <p class="quality_name">{{i18n "cost_savings"}}</p>
+						<p>{{i18n "cost_savings_text"}}</p>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="col-xs-6 col-sm-6 col-md-3 {{images.class}} aos-init aos-animate" data-aos="fade-up">
+	            <div class="list_quality_item">
+	                <div class="list_quality_images">
+	                    <img src="/static/template1/images/icon1artboard_1_copy_13.png">
+	                </div>
+	                <div class="list_quality_detail">
+	                    <p class="quality_name">{{i18n "standard_seo"}}</p>
+						<p>{{i18n "standard_seo_text"}}</p>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="col-xs-6 col-sm-6 col-md-3 {{images.class}} aos-init aos-animate" data-aos="fade-up">
+	            <div class="list_quality_item">
+	                <div class="list_quality_images">
+	                    <img src="/static/template1/images/icon1artboard_1_copy_12.png">
+	                </div>
+	                <div class="list_quality_detail">
+	                    <p class="quality_name">{{i18n "easy_to_use"}}</p>
+						<p>{{i18n "easy_to_use_text"}}</p>
+	                </div>
+	            </div>
+	        </div>			
+		</div>
+	</div>
+</div>
+<div class="list_template">
+	<div class="container">
+		<div class="list_template_title">
+			<p class="title"><a href="#">{{i18n "template"}}</a></p>
+		</div>
+		<div class="row">
+				{{#each listtemplates as |template|}}
+	                <div class="col-xs-6 col-sm-6 col-md-4 {{images.class}} aos-init aos-animate" data-aos="fade-up">
+	                  <div class="list_template_item">
+	                      <div class="list_template_images">
+	                        <a href="http://{{template.website_url}}"><img src="{{template.website_image_path}}{{template.website_image}}" alt="{{template.title}}"></a>
+	                      </div>
+	                      <div class="list_template_detail">
+							<p class="product_name"><a href="http://{{template.website_url}}">Xem demo</a></p>
+	                      </div>
+	                    </div>
+	                </div>	
+				{{/each}}
+		</div>
+	</div>
+</div>
+<div class="full-width-section">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-6 col-sm-6 dt-sc-two-third aos-init aos-animate" data-aos="fade-up">
+				<img src="/images/screen-section.png">
+			</div>
+			<div class="column dt-sc-one-third">
+				<div class="dt-sc-ico-content type3 aos-init aos-animate" data-aos="fade-left">
+					<div class="custom-icon">
+						<span class="fa fa-inbox"></span>
+					</div>
+					<h4>{{i18n "lot_of_features"}}</h4>
+					<p>{{i18n "lot_of_features_text"}}</p>
+				</div>
+				<div class="dt-sc-ico-content type3 aos-init aos-animate" data-aos="fade-left">
+					<div class="custom-icon">
+						<span class="fa fa-tablet"></span>
+					</div>
+					<h4>{{i18n "mobile_friendly"}}</h4>
+					<p>{{i18n "mobile_friendly_text"}}</p>
+				</div>
+				<div class="dt-sc-ico-content type3 aos-init aos-animate" data-aos="fade-left">
+					<div class="custom-icon">
+						<span class="fa fa-th"></span>
+					</div>
+					<h4>{{i18n "easy_manager"}}</h4>
+					<p>{{i18n "easy_manager_text"}}</p>
+				</div>
+				<div class="dt-sc-ico-content type3 aos-init aos-animate" data-aos="fade-left">
+					<div class="custom-icon">
+						<span class="fa fa-html5"></span>
+					</div>
+					<h4>HTML5 & CSS3 Awesomeness</h4>
+					<p>{{i18n "website_inprove"}}</p>
+				</div>
+				<div class="dt-sc-ico-content type3 aos-init aos-animate" data-aos="fade-left">
+					<div class="custom-icon">
+						<span class="fa fa-anchor"></span>
+					</div>
+					<h4>{{i18n "build_on_cloud"}}</h4>
+					<p>{{i18n "build_on_cloud_text"}}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
