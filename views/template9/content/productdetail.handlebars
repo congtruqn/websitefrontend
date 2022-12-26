@@ -1,5 +1,13 @@
  <link rel="stylesheet" href="/layout/{{siteinfo.customer_username}}/css/images/pgwslider.min.css" type="text/css" media="screen" />
 <script type="text/javascript" src="/layout/{{siteinfo.customer_username}}/js/images/pgwslider.min.js"></script>
+			<div class="breadcrumbs">
+				<div id="bread">
+					<ul class="items">
+						<li class="item home"><a href="/">Trang chủ</a></li>
+						<li class="item product"><strong>{{{details.name}}}</strong></li>
+					</ul>
+				</div>
+			</div>
 <div class="block">
 	<div class="left_menu">
 		<div id="product_menu" class="product_menu detail_menu">
@@ -12,23 +20,12 @@
 		</div>
 	</div>
 	<div class="content_detail">
-		<div class="main_news">
-			<div class="breadcrumbs">
-				<div id="bread">
-					<ul class="items">
-						<li class="item home"><a href="/">Trang chủ</a></li>
-						<li class="item product"><strong>{{{details.name}}}</strong></li>
-					</ul>
-				</div>
-			
-			</div>
-		</div>
 		<div class="product_detail">
 			<div class="product_detail_image">
 				<ul class="pgwSlider">
-                    <li><img class="mainimg" src="/static/{{siteinfo.customer_username}}/images/products/medium/{{contents.image}}" alt='' data-large-src="/static/{{siteinfo.customer_username}}/images/products/fullsize/{{contents.image}}"></li>
+                    <li><img class="mainimg" src="/static/{{contents.image_path}}/{{contents.image2}}" alt='' data-large-src="/static/{{contents.image_path}}/{{contents.image3}}"></li>
 					{{#each contents.list_images as |image|}}
-					<li><img src="{{image.image_path}}thumb/{{image.image}}" alt=''  data-large-src="{{image.image_path}}fullsize/{{image.image}}"></li>
+					<li><img src="/static/{{image.image_path}}/{{image.image}}" alt=''  data-large-src="/static/{{image.image_path}}/{{image.image2}}"></li>
                     {{/each}}
 				</ul>			
 			</div>
@@ -36,7 +33,7 @@
 				<div class="col-lg-12 col-md-12 col-xs-12">
 					<h1>{{{details.name}}}</h1>
 					<p>{{{details.desc}}}</p>
-					<p class="price">{{{price}}} ₫</p>
+					<p class="price">Giá: Liên hệ</p>
 					{{islogin}}
 					{{#if instock}}
 						<p class="instock">Tình trạng:<span> Còn hàng<span></p>
@@ -64,10 +61,7 @@
                     {{/each}}
 					{{#if instock}}
 						<div class="box-tocart large-box-tocart att-scr-qty scr-top">
-							<button id="product-addtocart-button" class="action primary tocart" title="Add to Cart" type="submit" onclick="addToCart({{{contents.product_id}}})">
-								<span>Thêm vào giỏ hàng</span>
-							</button>
-							<button id="product-buynow" class="action primary buy-now" title="Add to Cart" type="submit" onclick="Buynow({{{contents.product_id}}})">
+							<button id="product-buynow" class="action primary buy-now" title="Add to Cart" type="submit" onclick="Buynow('{{details.name}}')">
 								<span>Mua ngay</span>
 							</button>
 						</div>
@@ -77,7 +71,7 @@
 			</div>
 			<div id="clear"></div>
 		</div>
-		<div class="product_content">
+		<div class="product_content product_detail_content">
 			<div class="product_content_title">
 				<div class="product_content_tit">
 					<a>Chi tiết</a>
@@ -89,32 +83,24 @@
 		<div class="rate_product">
 			<div class="product_content_title">
 				<div class="product_content_tit">
-					<div class="block-title">
-						<a>Có thể bạn quan tâm</a>
-					</div>
+					<a>Có thể bạn quan tâm</a>
 				</div>
 			</div>
 			<div class="row">
 				{{#each rateproducts as |rateproduct_item|}}
-	                <div class="col-xs-6 col-sm-6 col-md-2">
-	                  <div class="product_item">
+	                <div class="col-xs-6 col-sm-6 col-md-3">
+	                  <div class="product_item cat_product_item">
 	                      <div class="product_images">
-	                        <a href="/{{rateproduct_item.seo_url}}"><img src="/static/{{rateproduct_item.image_path}}/medium/{{rateproduct_item.image}}" alt="{{rateproduct_item.alt}}"></a>
-							<ul class="cdz-product-labels">
-							{{#if rateproduct_item.new}}
-								<li class="label-item new"><div class="label-content">New</div></li>
-							{{/if}}
-							{{#if rateproduct_item.salepec}}
-								<li class="label-item sale"><div class="label-content">-{{rateproduct_item.salepec}}%</div></li>
-							{{/if}}
-							</ul>
+								{{#if rateproduct_item.image2}}
+									<a href="/{{rateproduct_item.seo_url}}"><img src="/static/{{rateproduct_item.image_path}}/{{rateproduct_item.image2}}" alt="{{rateproduct_item.alt}}"></a>
+								{{/if}}
+								{{#if rateproduct_item.image}}
+									<a href="/{{rateproduct_item.seo_url}}"><img src="/static/{{rateproduct_item.image_path}}/medium/{{rateproduct_item.image}}" alt="{{rateproduct_item.alt}}"></a>
+								{{/if}}
 	                      </div>
 	                      <div class="product_detail">
-							<p class="product_name"><a href="/{{rateproduct_item.seo_url}}">{{truncateString rateproduct_item.detail.[0].name 50}}</a></p>
-	                        <div class="product_price"><p>{{formatCurrency rateproduct_item.price}}₫</p></div>
-							{{#if rateproduct_item.salepec}}
-								<p class="product_sale_price">{{formatCurrency rateproduct_item.sale_price}}₫</p>
-							{{/if}}
+							<p class="product_name"><a href="/{{rateproduct_item.seo_url}}">{{truncateString rateproduct_item.detail.[0].name 40}}</a></p>
+	                        <div class="product_price"><p>Giá: Liên hệ</p></div>
 							<div id="clear"></div>
 	                      </div>
 	                    </div>
@@ -156,22 +142,7 @@ function addToCart(ID){
     });
 };
 function Buynow(ID){
-    var productcount = 1;
-    var productadd = 1;
-    var datastring =  'productcount='+productcount+'&productadd='+ID;
-    $.ajax({
-      type: "POST",
-      url: '/addtocart?'+datastring,
-      data: {id: ID},
-      success: function (result) {
-        if(result==1){
-          alert('Sản phẩm trong kho không đủ!');
-        }
-        else{
-          window.location = '/gio-hang';           
-        }
-      }
-    });
+	window.location.href = '/lien-he?content='+'Tôi quan tâm sản phẩm : '+ ID;
 };
   
 </script>

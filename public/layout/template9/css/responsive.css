@@ -146,7 +146,6 @@
 		background:none;
 		background-position: left center;
 		background-repeat: no-repeat;
-		border-bottom: 1px solid #ccc;
 	}
 	.breadcrumbs li strong{background: none;}
 	.addtocart{margin-top: 10px;width: 98%;}
@@ -167,6 +166,24 @@
 	.middle-top{width: 100%;}
 	.newsletter_control{width: 70%;margin: 0 5px;}
 	#newsletter{width: 100%;}
+	#navition .container .center {
+		width: 100%;
+		min-height: 45px;
+		position: relative;
+	}
+	.newsletter-group img{width: 100%;margin: 5px 0;}
+	.ads img{width: 100%;}
+	.mm-listitem{text-align: left;}
+	.mm-listitem__text{padding: 10px !important;}
+	.mm-listitem:after{left: 0px !important;}
+	.product_cat,.content_detail{
+		width: 100% !important;
+	}
+	.new_product_images img{width: 100%;}
+	.main_left_menu{display: none;}
+	.main_product_center{width: 100% !important;}
+	.right_hot_prpduct{width: 100%;}
+	.product_menu_item{background: none;}
 }
 
 @media (max-width: 768px) {

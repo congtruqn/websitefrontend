@@ -1,0 +1,31 @@
+<div class="group-title1">
+  <p>Sản phẩm khuyến mãi</p>
+</div>
+<div class="newproductcont">
+  <ul>
+    {{#each saleproducts as |productitem|}}
+    <li>
+      <div class="new_product_item {{productitem.css_class}}">
+        <div class="new_product_images">
+          <a href="/{{productitem.seo_url}}"><img src="/static/{{productitem.image_path}}thumb/{{productitem.image}}"
+              alt={{productitem.alt}}></a>
+        </div>
+        <div class="new_product_detail">
+          <p class="new_product_name"><a href="/{{productitem.seo_url}}">{{truncateString productitem.detail.[0].name 45}}</a></p>
+          <div id="clear"></div>
+          <div class="product_price">
+            <p>{{formatCurrency productitem.price}}₫</p>
+          </div>
+          {{#if productitem.salepec}}
+          <div class="sale_pricebeauty">
+            <p>{{formatCurrency productitem.sale_price}}₫</p>
+          </div>
+          {{/if}}
+          <div id="clear"></div>
+        </div>
+      </div>
+    </li>
+    {{/each}}
+  </ul>
+  <div id="clear"></div>
+</div>

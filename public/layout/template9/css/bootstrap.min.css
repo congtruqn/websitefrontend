@@ -1953,7 +1953,7 @@ pre code {
 
 @media (min-width:1200px) {
     .container {
-        width: 1360px
+        width: 1200px
     }
 }
 
@@ -4928,11 +4928,6 @@ textarea.input-group-sm>.input-group-btn>.btn {
 
 .nav-pills>li.active>a,
 .nav-pills>li.active>a:focus,
-.nav-pills>li.active>a:hover {
-    color: #fff;
-    background-color: #337ab7
-}
-
 .nav-stacked>li {
     float: none
 }

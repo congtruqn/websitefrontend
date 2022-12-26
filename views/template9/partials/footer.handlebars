@@ -1,62 +1,53 @@
-<div class="footer-container">
-  <div class="footer-content-top">
-    <div class="container">
-      {{>policies}}
-    </div>
-  </div>
-  <div class="footer-content-middle">
-    <div class="container">
-      <div class="col-sm-14">
-      <div class="row middle-top">
-        <div class="newsletter_control newsletter_item">
-            <span class="title">Đăng ký nhận tin khuyến mãi!</span>
-        </div>
-        <div class="newsletter_control">
-          <input name="email" type="email" id="newsletter" placeholder="Đăng ký nhận bản tin">
-        </div>
-        <div class="newsletter_control">
-          <button class="action subscribe primary" title="Subscribe" type="submit"><span>Đăng ký</span></button>
-        </div>        
-      </div>
-      </div>
-    </div>
-  </div>
-
+<div class="information-group">
   <div class="container">
-    <div class="row">
-      {{#each sitefooter as |footer|}}
-      <div class="col-md-3 col-xs-6">
-        <span class="fmn">{{footer.footer_name}}</span>
-        {{#each footer.footer_child as |childfooter|}}
-        <p><a href="/{{childfooter.child_url}}">{{{childfooter.child_name}}}</a></p>
+    <div class="container-inner">
+      <div class="row">
+        <div class="f-col f-col-1 col-sm-6 col-md-3 col-xs-12">
+          <div class="title"><h3>Về chúng tôi</h3></div>
+          <div class="content"><p>{{siteinfo.detail.[0].slogan}}</p></div>
+        </div>
+        {{#each sitefooter as |footer|}}
+        <div class="f-col f-col-1 col-sm-6 col-md-3 col-xs-12">
+          <div class="title"><h3>{{footer.footer_name}}</h3></div>
+          <ul>
+            {{#each footer.footer_child as |childfooter|}}
+            <li><a href="/{{childfooter.child_url}}">{{{childfooter.child_name}}}</a></li>
+            {{/each}}
+          </ul>
+        </div>
         {{/each}}
-      </div>
-      {{/each}}
-      <div class="col-md-4 col-sm-7 col-xs-12">
-        <span class="fmn">Liên hệ với chúng tôi</span>
-        <div class="footer_address">
-          {{siteinfo.company_name}}
-        </div>
-        <div class="footer_address">
-          <i class="fa fa-map-marker" aria-hidden="true"></i>
-          Địa chỉ: {{siteinfo.customer_address}}
-        </div>
-        <div class="footer_address">
-          <i class="fa fa-phone" aria-hidden="true"></i>
-          Điện thoại: {{siteinfo.customer_phone}}
-        </div>
+        <div class="f-col col-md-4 col-sm-7 col-xs-12">
+          <div class="title"><h3>Liên hệ với chúng tôi</h3></div>
+          <div class="footer_address">
+            {{siteinfo.company_name}}
+          </div>
+          <div class="footer_address">
+            <i class="fa fa-map-marker" aria-hidden="true"></i>
+            Địa chỉ: {{siteinfo.customer_address}}
+          </div>
+          <div class="footer_address">
+            <i class="fa fa-phone" aria-hidden="true"></i>
+            Điện thoại: {{siteinfo.customer_phone}}
+          </div>
 
-        <div class="footer_address">
-          <i class="fa fa-envelope" aria-hidden="true"></i>
-          Email: {{siteinfo.customer_email}}
+          <div class="footer_address">
+            <i class="fa fa-envelope" aria-hidden="true"></i>
+            Email: {{siteinfo.customer_email}}
+          </div>
+        </div>
+        <div class="f-col col-md-4 col-sm-7 col-xs-12">
+          <div class="title"><h3>Kết nối với chúng tôi</h3></div>
+          <div class="footer_social">
+            <div class="fb-like-box" data-href="https://www.facebook.com/278647005896612" data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="false" data-show-border="true"></div>
+          </div>
         </div>
       </div>
+      <div id="clear"></div>
     </div>
-    <div id="clear"></div>
   </div>
 </div>
 <div class="footer-content-bottom">
   <div class="container">
-    <p>© 2018 tns.vn</p>
+    <p>Copyright © 2016 <a href="https://tns.vn">www.tns.vn.</a> All rights reserved.</p>
   </div>
 </div>
