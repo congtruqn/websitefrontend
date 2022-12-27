@@ -164,8 +164,8 @@ module.exports.gethotnewcontentcount = function(count,callback){
 	var query = {hot:1,show:1};
 	newscontents.find(query, callback).skip(0).limit(count).sort({'rank': -1 ,'content_id':-1,'create_date': -1 });
 }
-module.exports.getratenewcontentbycatcount = function(cat_id,content_id,count,callback){
-	var query = {parent_id:cat_id,show:1,content_id:{ $ne: content_id }};
+module.exports.getratenewcontentbycatcount = function(cat_id,content_id,count,customer_id,callback){
+	var query = {customer_id:customer_id,parent_id:cat_id,show:1,content_id:{ $ne: content_id }};
 	newscontents.find(query, callback).skip(0).limit(count).sort({'rank': -1 ,'content_id':-1,'create_date': -1 });
 }
 module.exports.countnewscontentsbycat = function(cat_id,callback){

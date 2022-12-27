@@ -23,11 +23,10 @@
                           
                       </div>
                       <div class="product_detail">
-                        <p class="product_name"><a href="/{{product_item.seo_url}}">{{{product_item.productname}}}</a></p>
-                        <div id="clear"></div>
-                          <div class="product_price"><p>Giá : Liên hệ</p></div>
-                          <div class="sale_pricebeauty"><p><a href="/{{product_item.seo_url}}">Chi tiết</a></p></div>
-                        <div id="clear"></div>
+                        <p class="product_name"><a href="/{{product_item.seo_url}}">{{{product_item.detail.[0].name}}}, <span>{{{product_item.detail.[0].desc}}}</span></a></p>
+                        <div class="desc_win8">
+                          <a href="/{{product_item.seo_url}}"><img src="/static/template9/images/systems/zoom_icon.png" alt="Search image"></a>
+                        </div>
                       </div>
                   </div>
                 </div>

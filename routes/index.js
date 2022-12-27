@@ -758,7 +758,7 @@ const rendernewcontentpage = async function (req, res, website_url, language = '
   let hotnews = caches.hotnews[hostname];
   let policies = caches.policies[hostname] ? caches.policies[hostname] : [];
   NewsContents.getnewscontentbycontentid(customer_id,website_url.content_id, function (err, conten) {
-    NewsContents.getratenewcontentbycatcount(conten.parent_id, conten.content_id, 8, function (err, ratenews) {
+    NewsContents.getratenewcontentbycatcount(conten.parent_id, conten.content_id, 8,customer_id, function (err, ratenews) {
       let tranData = null
       let canonical = conten.seo_url
       if (websiteinfo.multi_language == 1) {

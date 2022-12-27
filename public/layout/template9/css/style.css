@@ -3,9 +3,9 @@
     padding: 0;
 }
 body {
-    background: url(../images/bg_pattern.jpg);
+    background: url(../images/bg.jpg);
     color: #333333;
-    font-family: "Roboto",sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 13px;
     font-weight: 400;
     line-height: 1.8em;
@@ -18,14 +18,16 @@ body {
 .wrapper {
     display: inline-block;
     vertical-align: top;
-    width: 100%;
+    width: 1124px;
     text-align: left;
-    -webkit-box-shadow: 0 0 20px 0 rgb(0 0 0 / 15%);
-    box-shadow: 0 0 20px 0 rgb(0 0 0 / 15%);
+    box-shadow: 4px 1px 4px -4px #d9d8d8, -4px 1px 4px -4px #d9d8d8;
     flex-direction: column;
     margin: 0;
     min-height: 100%;
     position: relative;
+    padding: 0 50px;
+    background: #fff;
+
 }
 #top {
     background: #181413;
@@ -37,7 +39,7 @@ body {
     overflow: hidden;
 }
 #navition .container .center{
-    background: #181413;
+    background: #00adf0;
     
 }
 #top_mobile{display: none;background: #111111 none repeat scroll 0 0;
@@ -51,9 +53,9 @@ body {
 }
 .menu_slider{height: 350px;margin-top: 10px;clear: both;display: block;z-index:10000}
 .slider{
-    width: 74%;
+    width: 100%;
     float: right;
-    height: 350px;
+    height: 430px;
     overflow: hidden;
 }
 .sale_title {
@@ -101,6 +103,7 @@ body {
 .ads ul li:first-child{float: left;}
 .right-block {
     float: right;
+    position: relative;
 }
 #cart{width: 120px;margin-top: 24px;position: relative;}
 #cart p{color: #fff;font-weight: 500;}
@@ -226,11 +229,10 @@ body {
     float: right;
 }
 .product_images{
-    text-align: center;overflow: hidden;position: relative;padding: 7px;
+    text-align: center;overflow: hidden;position: relative;
     width: 100%;
-    padding: 3px;
     background: #fff;
-    height: 200px;
+    height: 210px;
 }
 .product_item .product_images img{width: 100%;}
 .product_image li{list-style: none;}
@@ -244,9 +246,21 @@ body {
 .productcat_name{width: 70%;float: left;font-size: 15px;font-weight: normal}
 .viewall a{font-style: italic;color: #fff !important;font-size: 13px !important;font-weight: 400 !important;}
 .productcat_title h2{font-size: 14px;text-transform: uppercase;padding: 0 7px;font-weight: 500;color: #333}
-.product_item{background: #fff;margin-bottom: 20px;}
-.product_item .product_detail{padding: 7px;}
-.product_item .product_detail .product_name{border-bottom:1px solid #ccc; }
+.product_item{
+    background: #fff;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    border: 1px solid #e8e8e8;
+}
+.product_item .product_detail{
+    padding: 20px 7px;
+    position: relative;
+}
+.product_item .product_detail .desc_win8{
+    position: absolute;
+    right: 20px;
+    top: -20px;
+}
 #clear{clear: both;}
 .new_product{
     float: left;
@@ -303,7 +317,12 @@ body {
     overflow: hidden;
 }
 .hot_product_item .product_images img{width: 100%;}
-.hot_product_item .product_detail .product_name,.product_item .product_detail .product_name{line-height: 17px;padding-bottom: 4px;margin-bottom: 3px;min-height: 25px;  min-height: 40px;}
+.hot_product_item .product_detail .product_name,.product_item .product_detail .product_name{
+    line-height: 17px;
+    padding-bottom: 4px;
+    margin-bottom: 3px;
+    min-height: 25px;
+    min-height: 60px;}
 .hot_product_item .product_detail .product_price,.product_item .product_detail .product_price{
     width: 50%;
     float: left;
@@ -332,9 +351,15 @@ body {
 }
 .hot_product_item .product_detail .product_name a,.product_item .product_detail .product_name a{
     font-size: 13px;
-    color: #378849;
+    color: #333;
     font-weight: 500;
     text-transform: uppercase;
+}
+.product_detail .product_name a span{
+    font-size: 12px;
+    font-weight: 400;
+    font-style: italic;
+    text-transform: lowercase;
 }
 .hot_product_item .product_detail .product_price ,.product_item .product_detail .product_price p{color: #ffa415;font-size: 14px;font-weight: 500;}
 .list_news_content{
@@ -400,8 +425,8 @@ body {
     padding-right: 2%;
 }
 .main_product_center{
-    width: 860px;
-    float: left;
+    width: 1--%;
+    
 }
 .right_hot_prpduct {
     width: 300px;
@@ -413,10 +438,11 @@ body {
     margin-top: 10px;
 }
 .block-title{
-    background: url(../images/menubg.png) left top repeat transparent;
+    background: #2a82a3;
     padding: 10px 15px;
     display: table;
     width: 100%;
+    border-bottom: 2px solid #4fb6e1;
 }
 .block-title h3{
     color: #fff; text-transform: uppercase;
@@ -435,7 +461,6 @@ body {
     padding: 15px 0;
     height: 100%;
     background: #fff;
-    text-align: center;
 }
 .product_content{
     height: 100%;
@@ -729,10 +754,19 @@ body {
 .list_news_item .cat_detail .item_desc{color: #777;}
 .fa-caret-right{position: absolute;right: 10px;top: 7px;color: #25B430}
 .desktop_menu{position: relative;}
-.mainmenu_item{list-style: none;float: left;position: relative;padding: 12px 0;}
+.mainmenu_item{
+    list-style: none;
+    float: left;
+    position: relative;
+    padding: 12px 0;
+    background: url(../images/menu-split.png) left center no-repeat transparent;
+}
+.mainmenu_item:FIRST-CHILD{background: none;}
+.mainmenu_item:hover{background: #fff;}
+.mainmenu_item:hover span a {color: #00adf0;}
 .mainmenu_item span{padding: 5px 4px}
-.mainmenu_item span a{color: #fff;text-transform: uppercase;font-weight: 450;padding: 7px 15px;position: relative;}
-.mainmenu_item span a:hover{background: #fff;color: #0083c1;}
+.mainmenu_item span a{color: #fff;text-transform: uppercase;font-weight: 400;padding: 7px 15px;position: relative;font-size: 16px;}
+
 .mainmenu_item ul{display: none;}
 .slick-arrow{display: none !important;}
 #addedproduct{background: #fff;text-align: justify;margin-top: 10px;text-align: left;position: absolute;left: -10px;padding: 10px; border: 1px solid #ddd;display: none;font-weight: bold;}
@@ -1279,9 +1313,9 @@ footer .footer-top {
 }
 .top-search {
     position: absolute;
-    right: 15px;
+    right: 0px;
     margin: auto;
-    top: 50%;
+    top: 70px;
     width: 340px;
     z-index: 4;
     -moz-transform: translateY(-50%);
@@ -1295,12 +1329,13 @@ footer .footer-top {
     position: relative;
     border: 0;
     margin: 0;
+    border: 1px solid #e6e6e6;
 }
 .top-search .control input {
     background: #fff;
     border: 0;
     border-radius: 25px;
-    font-size: 14px;
+    font-size: 13px;
     color: #909090;
     height: 34px;
     padding: 0 40px 0 25px;
