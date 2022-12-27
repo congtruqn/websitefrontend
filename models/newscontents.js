@@ -156,8 +156,8 @@ module.exports.getAllNewsContentsBycat = function(cat_id,page,per_page,callback)
 	var query = {newscat_id:cat_id};
 	newscontents.find(query, callback).skip(per_page * (page - 1)).limit(per_page).sort({'rank': -1 ,'content_id':-1,'create_date': -1 });
 }
-module.exports.getnewsnontentsbycatcount = async function(cat_id,page,per_page){
-	var query = {'list_parent.parent_id':cat_id,show:1};
+module.exports.getnewsnontentsbycatcount = async function(cat_id,page,per_page,customer_id){
+	var query = {'list_parent.parent_id':cat_id,show:1,customer_id:customer_id};
 	return await newscontents.find(query).skip(per_page * (page - 1)).limit(per_page).sort({'rank': -1 ,'content_id':-1,'create_date': -1 }).exec();
 }
 module.exports.gethotnewcontentcount = function(count,callback){
@@ -168,8 +168,8 @@ module.exports.getratenewcontentbycatcount = function(cat_id,content_id,count,cu
 	var query = {customer_id:customer_id,parent_id:cat_id,show:1,content_id:{ $ne: content_id }};
 	newscontents.find(query, callback).skip(0).limit(count).sort({'rank': -1 ,'content_id':-1,'create_date': -1 });
 }
-module.exports.countnewscontentsbycat = function(cat_id,callback){
-	var query = {'list_parent.parent_id':cat_id,show:1};
+module.exports.countnewscontentsbycat = function(cat_id,customer_id,callback){
+	var query = {'list_parent.parent_id':cat_id,show:1,customer_id:customer_id};
 	newscontents.count(query, callback);
 }
 module.exports.getAllNewsContentsBycatCount = function(cat_id,count,callback){

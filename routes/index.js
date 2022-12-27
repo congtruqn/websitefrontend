@@ -827,7 +827,7 @@ const rendernewcatpage = async function (req, res, website_url, language = 'vi')
     if (websiteinfo.multi_language == 1) {
       newsCatData = newcatinfo.detail.find(obj => obj.lang == language)
     }
-    let [count, conten] = await Promise.all([countnewsbycat(newcatinfo.cat_id), NewsContents.getnewsnontentsbycatcount(website_url.content_id, page, per_page)]);
+    let [count, conten] = await Promise.all([countnewsbycat(newcatinfo.cat_id,customer_id), NewsContents.getnewsnontentsbycatcount(website_url.content_id, page, per_page,customer_id)]);
 
     var allpage = (count / per_page) + 1;
     var arraypage = [];
@@ -1519,9 +1519,9 @@ router.get('/thong-tin-khach-hang', function (req, res, next) {
     });
   });
 });
-function countnewsbycat(cat_id) {
+function countnewsbycat(cat_id,customer_id) {
   return new Promise((resolve, reject) => {
-    NewsContents.countnewscontentsbycat(cat_id, function (err, count) {
+    NewsContents.countnewscontentsbycat(cat_id,customer_id, function (err, count) {
       if (count) {
         resolve(count);
       }
