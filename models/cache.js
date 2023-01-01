@@ -129,8 +129,8 @@ module.exports.getCaches = async function (caches,hostname) {
         hotproducts : caches.hotproducts[hostname]?caches.hotproducts[hostname]:[],
         advertises : caches.advertises[hostname]?caches.advertises[hostname]:[],
         saleproducts : caches.saleproducts[hostname]?caches.saleproducts[hostname]:[],
+        hotpage:caches.hotpage[hostname]?caches.hotpage[hostname]:[]
     }
-
 }
 module.exports.storeProductCatCaches = async function (hostname,caches,url,productcatcount,listproductsperpage,productcatinfo) {
     if(!caches.productcatinfo[hostname]){

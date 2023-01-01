@@ -50,7 +50,7 @@ body {
     width: auto;
     margin: 3px 0;
 }
-.menu_slider{height: 350px;clear: both;display: block;z-index:10000}
+.menu_slider{clear: both;display: block;z-index:10000}
 .slider{
     width: 100%;
     float: right;
@@ -438,7 +438,7 @@ body {
 }
 .left_menu{
     float: left;
-    width: 25.64% !important;
+    width: 229px;
     border-radius: 2px;
     min-height: 270px;
     z-index: 10000 !important;
@@ -463,9 +463,46 @@ body {
     float: right;
 }
 .content_detail {
-    width: 74.36% !important;
+    width: 736px;
+    overflow: hidden;
+    background: #fff;
+    margin: 5px 2px;
+    border: 1px solid #eee;
+    overflow: hidden;
     float: right;
-    margin-top: 10px;
+    box-shadow: 0 0 2px 0 #ddd;
+}
+.about_content {
+    border-bottom: 1px solid #220000;
+    overflow: hidden;
+}
+.about_us .title {
+    width: 740px;
+    overflow: hidden;
+    height: 30px;
+    background: #f7f7f7;
+    border-bottom: 2px solid #054505;
+}
+.about_us .about_content p {
+    text-align: justify;
+    margin: 5px 8px 0 5px;
+    font-family: Arial;
+    font-size: 13px;
+    float: right;
+    width: 545px;
+    font-style: italic;
+}
+.about_us .title h1 {
+    margin: 5px 10px;
+    color: #054505;
+    font-size: 15px;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 1px #eee !important;
+}
+.about_us .about_content img {
+    width: 160px;
+    float: left;
+    margin: 8px;
 }
 .block-title{
     background: #2a82a3;

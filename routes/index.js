@@ -759,7 +759,6 @@ const rendernewcatpage = async function (req, res, website_url, language = 'vi')
       newsCatData = newcatinfo.detail.find(obj => obj.lang == language)
     }
     let [count, conten] = await Promise.all([countnewsbycat(newcatinfo.cat_id,customer_id), NewsContents.getnewsnontentsbycatcount(website_url.content_id, page, per_page,customer_id)]);
-
     var allpage = (count / per_page) + 1;
     var arraypage = [];
     for (var i = 1; i <= allpage; i++) {
