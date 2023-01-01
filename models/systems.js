@@ -374,3 +374,4 @@ module.exports.policies  = require('./policies')
 module.exports.advertises  = require('./advertises')
 module.exports.testimonials = require('./testimonials');
 module.exports.socialmedias = require('./socialmedias');
+module.exports.newpages = require('./newspages');

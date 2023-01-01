@@ -169,6 +169,7 @@ router.get('/clearcache', function (req, res, next) {
   caches.productcatcount[hostname] = null;
   caches.listproductsperpage[hostname] = null;
   caches.productcatinfo[hostname] = null;
+  caches.hotpage[hostname] = null;
   res.send('ok');
 })
 router.get('/lien-he', function (req, res, next) {
@@ -539,9 +540,8 @@ router.get('/getshippingcod', function (req, res, next) {
 });
 const renderhomepage = async function (req, res, language) {
   var hostname = req.headers.host;
+  const cacheInfo = await caches.getCaches(caches,hostname);
   var websiteinfo = caches.websiteinfo[hostname];
-  var productmenu = caches.productcat[hostname];
-  var productmenu1 = caches.productmenu[hostname];
   var product_per_cat_home = 0;
   if (websiteinfo && websiteinfo.products_per_cat_home) {
     product_per_cat_home = websiteinfo.products_per_cat_home;
@@ -550,10 +550,6 @@ const renderhomepage = async function (req, res, language) {
   if (websiteinfo && websiteinfo.is_template && websiteinfo.is_template == 1) {
     istemplate = true
   }
-  var sitefooter = caches.footer[hostname];
-  var mainmenu = caches.mainmenu[hostname];
-  let advertises = caches.advertises[hostname];
-  var productmoreinfos = caches.productmoreinfos[hostname];
   var list_products_by_more_info = caches.list_products_by_more_info[hostname];
   let listtemplates = [];
   let testimonials = [];
@@ -566,13 +562,9 @@ const renderhomepage = async function (req, res, language) {
     promises.push([], [], systems.getbanner(websiteinfo.customer_id))
   }
   [testimonials, listtemplates, cusbanner] = await Promise.all(promises).catch(function (err) { console.log(err) })
-  let hotproducts = caches.hotproducts[hostname];
-  let newproducts = caches.newproducts[hostname];
   let hotproductcategory = caches.hotproductcategory[hostname];
   let hotandnewproducts = caches.hotandnewproducts[hostname];
   let hotnews = caches.hotnews[hostname];
-  let saleproducts = caches.saleproducts[hostname];
-  let policies = caches.policies[hostname] ? caches.policies[hostname] : [];
   hotnews = utils.filterDetailByLang(hotnews, language)
   let website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : "http";
   let homelang = ''
@@ -599,29 +591,18 @@ const renderhomepage = async function (req, res, language) {
       description: tranData && tranData.description ? tranData.description : websiteinfo.description,
       keyword: tranData && tranData.keyword ? tranData.keyword : websiteinfo.keyword,
       banners: cusbanner,
-      productmenu: productmenu,
-      mainmenu: mainmenu,
       layout: 'layout',
-      siteinfo: websiteinfo,
-      sitefooter: sitefooter,
-      hotproducts: hotproducts,
-      newproducts: newproducts,
-      saleproducts: saleproducts,
-      productmoreinfos: productmoreinfos,
       list_products_by_more_info: list_products_by_more_info,
-      productmenu1: productmenu1,
       hotproductcategory: hotproductcategory,
       hotandnewproducts: hotandnewproducts,
       hotnews: hotnews,
       listtemplates: listtemplates,
       testimonials: testimonials,
-      advertises: advertises,
-      policies: policies,
       language: language,
       lang: homelang,
-      socialmedias: caches.socialmedias[hostname] ? caches.socialmedias[hostname] : [],
       ishomepage: 1,
-      istemplate: istemplate
+      istemplate: istemplate,
+      ...cacheInfo
     });
   }
   else {
@@ -637,22 +618,16 @@ const renderpage = async function (req, res, website_url, language = 'vi') {
     homelang = ''
   }
   let istemplate = false;
+  var websiteinfo = caches.websiteinfo[hostname];
   if (websiteinfo && websiteinfo.is_template && websiteinfo.is_template == 1) {
     istemplate = true
   }
   var hostname = req.headers.host;
-  var websiteinfo = caches.websiteinfo[hostname];
+  const cacheInfo = await caches.getCaches(caches,hostname);
   var customer_id = websiteinfo.customer_id;
   var customer_username = websiteinfo.customer_username;
-  var mainmenu = caches.mainmenu[hostname];
-  var productmenu = caches.productcat[hostname];
-  var productmenu1 = caches.productmenu[hostname];
-  var sitefooter = caches.footer[hostname];
-  var newproducts = caches.newproducts[hostname];
-  var productmoreinfos = caches.productmoreinfos[hostname];
   let hotnews = caches.hotnews[hostname];
   let website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : "http";
-  let policies = caches.policies[hostname] ? caches.policies[hostname] : [];
   newspages.getNewsPagesById(customer_id, website_url.content_id, function (err, conten) {
     let tranData = null
     let canonical = conten.seo_url
@@ -673,19 +648,11 @@ const renderpage = async function (req, res, website_url, language = 'vi') {
       keyword: tranData && tranData.keyword ? tranData.keyword : conten.detail[0].keyword,
       canonical: website_protocol + '/' + hostname + '/' + canonical,
       layout: "layout",
-      productmenu: productmenu,
-      productmenu1: productmenu1,
-      mainmenu: mainmenu,
-      siteinfo: websiteinfo,
-      sitefooter: sitefooter,
-      newproducts: newproducts,
       language: language,
       lang: homelang,
       hotnews: hotnews,
-      productmoreinfos: productmoreinfos,
-      policies: policies,
-      socialmedias: caches.socialmedias[hostname] ? caches.socialmedias[hostname] : [],
-      istemplate: istemplate
+      istemplate: istemplate,
+      ...cacheInfo
     });
   });
 }
@@ -696,19 +663,12 @@ const render404page = async function (req, res, website_url, language = 'vi') {
   }
   let istemplate = false;
   let hostname = req.headers.host;
+  const cacheInfo = await caches.getCaches(caches,hostname);
   let websiteinfo = caches.websiteinfo[hostname];
   if (websiteinfo && websiteinfo.is_template && websiteinfo.is_template == 1) {
     istemplate = true
   }
-
   let customer_username = websiteinfo.customer_username;
-  let mainmenu = caches.mainmenu[hostname];
-  let productmenu = caches.productcat[hostname];
-  let productmenu1 = caches.productmenu[hostname];
-  let sitefooter = caches.footer[hostname];
-  let newproducts = caches.newproducts[hostname];
-  let productmoreinfos = caches.productmoreinfos[hostname];
-  let policies = caches.policies[hostname] ? caches.policies[hostname] : [];
   if (websiteinfo.multi_language == 1) {
     if (language != 'vi') {
       lang = language
@@ -721,22 +681,15 @@ const render404page = async function (req, res, website_url, language = 'vi') {
     keyword: '',
     canonical: '/',
     layout: "layout",
-    productmenu: productmenu,
-    productmenu1: productmenu1,
-    mainmenu: mainmenu,
-    siteinfo: websiteinfo,
-    sitefooter: sitefooter,
-    newproducts: newproducts,
     language: language,
     lang: homelang,
-    productmoreinfos: productmoreinfos,
-    policies: policies,
-    socialmedias: caches.socialmedias[hostname] ? caches.socialmedias[hostname] : [],
-    istemplate: istemplate
+    istemplate: istemplate,
+    ...cacheInfo
   });
 }
 const rendernewcontentpage = async function (req, res, website_url, language = 'vi') {
   let hostname = req.headers.host;
+  const cacheInfo = await caches.getCaches(caches,hostname);
   let websiteinfo = caches.websiteinfo[hostname];
   let homelang = language
   if (language == 'vi') {
@@ -748,15 +701,8 @@ const rendernewcontentpage = async function (req, res, website_url, language = '
   }
   let customer_username = websiteinfo.customer_username;
   var customer_id = websiteinfo.customer_id;
-  let mainmenu = caches.mainmenu[hostname];
-  let productmenu = caches.productcat[hostname];
-  var productmenu1 = caches.productmenu[hostname];
-  let sitefooter = caches.footer[hostname];
-  let newproducts = caches.newproducts[hostname];
-  let productmoreinfos = caches.productmoreinfos[hostname];
   let website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : "http";
   let hotnews = caches.hotnews[hostname];
-  let policies = caches.policies[hostname] ? caches.policies[hostname] : [];
   NewsContents.getnewscontentbycontentid(customer_id,website_url.content_id, function (err, conten) {
     NewsContents.getratenewcontentbycatcount(conten.parent_id, conten.content_id, 8,customer_id, function (err, ratenews) {
       let tranData = null
@@ -780,18 +726,10 @@ const rendernewcontentpage = async function (req, res, website_url, language = '
         canonical: website_protocol + '://' + hostname + '/' + canonical,
         orgimage: website_protocol + '://' + hostname + '/static/' + customer_username + '/images/news/fullsize/' + conten.image2,
         layout: 'layout',
-        productmenu: productmenu,
-        productmenu1: productmenu1,
-        mainmenu: mainmenu,
-        siteinfo: websiteinfo,
-        sitefooter: sitefooter,
-        newproducts: newproducts,
         language: language,
         lang: homelang,
-        productmoreinfos: productmoreinfos,
-        policies: policies,
-        socialmedias: caches.socialmedias[hostname] ? caches.socialmedias[hostname] : [],
-        istemplate: istemplate
+        istemplate: istemplate,
+        ...cacheInfo
       });
     });
   });
@@ -799,6 +737,7 @@ const rendernewcontentpage = async function (req, res, website_url, language = '
 const rendernewcatpage = async function (req, res, website_url, language = 'vi') {
   let homelang = language;
   var hostname = req.headers.host;
+  const cacheInfo = await caches.getCaches(caches,hostname);
   var websiteinfo = caches.websiteinfo[hostname];
   if (language == 'vi') {
     homelang = ''
@@ -809,19 +748,11 @@ const rendernewcatpage = async function (req, res, website_url, language = 'vi')
   }
   var customer_id = websiteinfo.customer_id;
   var customer_username = websiteinfo.customer_username;
-  var mainmenu = caches.mainmenu[hostname];
-  var productmenu = caches.productcat[hostname];
-  var productmenu1 = caches.productmenu[hostname];
-  var sitefooter = caches.footer[hostname];
-  var newproducts = caches.newproducts[hostname];
-  var productmoreinfos = caches.productmoreinfos[hostname];
   var per_page = 18;
   var page = req.param('page', '1');
   let website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : "http";
   let hotnews = caches.hotnews[hostname];
   let hotnews1 = utils.filterDetailByLang(hotnews, language, 1)
-  let policies = caches.policies[hostname] ? caches.policies[hostname] : [];
-
   NewsCats.getnewscatsbycatid(customer_id, website_url.content_id, async function (err, newcatinfo) {
     let newsCatData = null
     if (websiteinfo.multi_language == 1) {
@@ -855,40 +786,24 @@ const rendernewcatpage = async function (req, res, website_url, language = 'vi')
       keyword: newsCatData ? newsCatData.keyword : newcatinfo.detail[0].keyword,
       canonical: language ? website_protocol + '://' + hostname + '/' + language + '/' + newcatinfo.seo_url + '/' : website_protocol + '://' + hostname + '/' + newcatinfo.seo_url + '/',
       orgimage: website_protocol + '://' + hostname + '/images/news/fullsize/' + conten.image,
-      productmenu: productmenu,
-      productmenu1: productmenu1,
-      mainmenu: mainmenu,
-      siteinfo: websiteinfo,
-      sitefooter: sitefooter,
-      newproducts: newproducts,
       language: language,
       lang: homelang,
-      productmoreinfos: productmoreinfos,
       layout: 'layout',
-      policies: policies,
-      socialmedias: caches.socialmedias[hostname] ? caches.socialmedias[hostname] : [],
-      istemplate: istemplate
+      istemplate: istemplate,
+      ...cacheInfo
     });
   });
 }
 const renderproductcatpage = async function (req, res, website_url) {
   const hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
-  var hotproducts = caches.hotproducts[hostname];
-  let policies = caches.policies[hostname] ? caches.policies[hostname] : [];
-  var mainmenu = caches.mainmenu[hostname];
-  var productmenu = caches.productcat[hostname];
-  var productmenu1 = caches.productmenu[hostname];
-  var sitefooter = caches.footer[hostname];
-  var newproducts = caches.newproducts[hostname];
-  const productmoreinfos = caches.productmoreinfos[hostname];
+  const cacheInfo = await caches.getCaches(caches,hostname);
   const customer_id = websiteinfo.customer_id;
   var customer_username = websiteinfo.customer_username;
   var per_page = websiteinfo.products_per_page ? websiteinfo.products_per_page : 24;
   let website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : "http";
   const pageurl = req.headers.host + req.url
   var page = req.param('page', '1');
-  
   if (!caches.productcatinfo[hostname]||!caches.productcatinfo[hostname].get(pageurl)) {
     const [count,catinfo,listproductsperpage] = await Promise.all([
       countproductlistsbycat(customer_id, website_url.content_id),
@@ -907,7 +822,6 @@ const renderproductcatpage = async function (req, res, website_url) {
   if (websiteinfo && websiteinfo.is_template && websiteinfo.is_template == 1) {
     istemplate = true
   }
-
   for (var x in countproduct) {
     var productiteam = JSON.parse(JSON.stringify(countproduct[x]));
     var pricebeauty = String(productiteam.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
@@ -945,33 +859,18 @@ const renderproductcatpage = async function (req, res, website_url) {
     description: catinfo.detail[0].description,
     keyword: catinfo.detail[0].keyword,
     layout: 'layout',
-    productmenu: productmenu,
-    productmenu1: productmenu1,
-    mainmenu: mainmenu,
-    siteinfo: websiteinfo,
-    sitefooter: sitefooter,
-    newproducts: newproducts,
     language: language,
-    productmoreinfos: productmoreinfos,
-    hotproducts: hotproducts,
-    policies: policies,
-    socialmedias: caches.socialmedias[hostname] ? caches.socialmedias[hostname] : [],
-    istemplate: istemplate
+    istemplate: istemplate,
+    ...cacheInfo
   });
 }
 const renderproductdetailpage = async function (req, res, website_url) {
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
+  const cacheInfo = await caches.getCaches(caches,hostname);
   const customer_id = websiteinfo.customer_id;
   var customer_username = websiteinfo.customer_username;
-  var mainmenu = caches.mainmenu[hostname];
-  var productmenu = caches.productcat[hostname];
-  var productmenu1 = caches.productmenu[hostname];
-  var sitefooter = caches.footer[hostname];
-  var newproducts = caches.newproducts[hostname];
-  var productmoreinfos = caches.productmoreinfos[hostname];
   let website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : "http";
-  let policies = caches.policies[hostname] ? caches.policies[hostname] : [];
   let language = i18n.getLocale();
   if (language == 'vi')
     language = ''
@@ -998,7 +897,6 @@ const renderproductdetailpage = async function (req, res, website_url) {
         }
         rateproducts[x] = productiteam;
       }
-
       var procontent = JSON.parse(JSON.stringify(conten.detail[0]));
       var product_details = conten.product_detail;
       var product_more_info = conten.product_more_info;
@@ -1029,33 +927,22 @@ const renderproductdetailpage = async function (req, res, website_url) {
         details: procontent,
         title: conten.detail[0].title,
         layout: 'layout',
-        productmenu: productmenu,
-        productmenu1: productmenu1,
         instock: instock,
         product_more_info: product_more_info,
         islogin: islogin,
-        mainmenu: mainmenu,
-        siteinfo: websiteinfo,
-        sitefooter: sitefooter,
         rateproducts: rateproducts,
-        newproducts: newproducts,
         language: language,
-        productmoreinfos: productmoreinfos,
-        policies: policies,
-        socialmedias: caches.socialmedias[hostname] ? caches.socialmedias[hostname] : [],
-        istemplate: istemplate
+        istemplate: istemplate,
+        ...cacheInfo
       });
     });
   });
 }
 const renderproductmoreinfocategorypage = async function (req, res, website_url) {
-  
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
   var customer_id = websiteinfo.customer_id;
   var customer_username = websiteinfo.customer_username;
-
-
   var mainmenu = caches.mainmenu[hostname];
   var productmenu = caches.productcat[hostname];
   var productmenu1 = caches.productmenu[hostname];

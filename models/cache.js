@@ -22,6 +22,7 @@ var socialmedias = {}
 var productcatcount = []
 var listproductsperpage = []
 var productcatinfo = []
+var hotpage = {}
 module.exports = {
     websiteinfo,
     hotnewcats,
@@ -44,7 +45,8 @@ module.exports = {
     socialmedias,
     productcatcount,
     listproductsperpage,
-    productcatinfo
+    productcatinfo,
+    hotpage
 }
 module.exports.storeCaches = async function (caches,hostname, websitein) {
     if (!caches.productcat[hostname]) {
@@ -107,6 +109,28 @@ module.exports.storeCaches = async function (caches,hostname, websitein) {
         let socialmedias = await systems.socialmedias.getSocialMediasByCustomer(websitein.customer_id);
         caches.socialmedias[hostname] = socialmedias;
     }
+    if (!caches.hotpage[hostname]) {
+        let hotpage = await systems.newpages.getHotPage(websitein.customer_id)
+        caches.hotpage[hostname] = hotpage;
+    }
+}
+module.exports.getCaches = async function (caches,hostname) {
+    return {
+        mainmenu:caches.mainmenu[hostname],
+        productmenu : caches.productcat[hostname],
+        productmenu1 : caches.productmenu[hostname],
+        sitefooter : caches.footer[hostname],
+        newproducts : caches.newproducts[hostname],
+        newproducts : caches.newproducts[hostname],
+        productmoreinfos : caches.productmoreinfos[hostname],
+        policies: caches.policies[hostname] ? caches.policies[hostname] : [],
+        socialmedias: caches.socialmedias[hostname] ? caches.socialmedias[hostname] : [],
+        siteinfo:caches.websiteinfo[hostname]? caches.websiteinfo[hostname] :{},
+        hotproducts : caches.hotproducts[hostname]?caches.hotproducts[hostname]:[],
+        advertises : caches.advertises[hostname]?caches.advertises[hostname]:[],
+        saleproducts : caches.saleproducts[hostname]?caches.saleproducts[hostname]:[],
+    }
+
 }
 module.exports.storeProductCatCaches = async function (hostname,caches,url,productcatcount,listproductsperpage,productcatinfo) {
     if(!caches.productcatinfo[hostname]){

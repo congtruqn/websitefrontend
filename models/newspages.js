@@ -66,7 +66,7 @@ module.exports.getNewsPagesByDate = function(type,from_date,to_date,callback){
 	}
 	NewsPages.find(query, callback).where("create_date").gte(from_date).lte(to_date);
 }
-module.exports.getHotPage = async function(id,customer_id){
-	var query = {_id:id,customer_id:customer_id};
+module.exports.getHotPage = async function(customer_id){
+	var query = {customer_id:customer_id,hot:1};
 	return await NewsPages.findOne(query).exec();
 }
