@@ -107,89 +107,11 @@
         {{{body}}}
       </div>
     </div>
-    <footer class="footer">
-      {{>footer}}
-    </footer>
-    <script>(function (d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.5";
-        fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));</script>
-    <style>
-      #cfacebook {
-        position: fixed;
-        bottom: 0px;
-        right: 0px;
-        z-index: 999999999999999;
-        width: 300px;
-        height: auto;
-        box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
-        border-top-left-radius: 3px;
-        border-top-right-radius: 3px;
-        overflow: hidden;
-      }
-
-      #cfacebook .fchat {
-        float: left;
-        width: 100%;
-        height: 270px;
-        overflow: hidden;
-        display: none;
-        background-color: #fff;
-      }
-
-      #cfacebook .fchat .fb-page {
-        margin-top: -130px;
-        float: left;
-      }
-
-      #cfacebook a.chat_fb {
-        float: left;
-        padding: 0 25px;
-        width: 300px;
-        color: #fff;
-        text-decoration: none;
-        height: 40px;
-        line-height: 40px;
-        text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-        background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAPWSURBVEhLtVVdaBxVFF4RRfyrFCmCpVhIERbcnZk7s9kV0rxJLYJCBS0iCkoRnwQfKihUBAs+1Fep4KMvglYEpdrYremm+zOz/z9J/0yhqU0aAyptart7z/E7d2/TpEuwNfGDw8z97p3z3XvOuWdiy+GWabvfpi+9ij7qhvrn2zM66tfpe9XovWXdrIKv+G5Vo4PBFLNX1tfcSP8JB7dnEf/hRfpyMMnstzlyjtE263UlvFB/kf4NAjV6Vx1f3JJu0cY7scQEbXJC2ulP0kVE4nyyyo9Y1314IT0TnIRAid6x1H9G4hfamjoNX1Fvn6X6QGiyXpkuq4g3WGpNcEs0jsiEdtgHiDZiOpv4kR6w1JqA4jmEXLXssA+I1GGXnszRQ5aKJbO3xFSA4hj6gR62oyXET9BG+2rgRfQd/NX67/oAIrRlQMQpdZ9NnaV57ObwaHb6PuEklCjVgj9Fs9hpRjiBG/b2Ds/QAhx/YqmVIqGedks6NyCCRftGriN5FWapHOFSBdoanGIeWWSGyNJ9QNGMjTK4UDcs1ReJ+iLgj/tN5gER2XXQpg+8Yvc5Gd8AnL+kGvwe5u+3lHBDw9P8IZ4JS60QwTPrd0Qk0i2IzCVq65N4iHwLn3XzHupjuKAsu8nLDY9n+UGzao1wi/oIfJbNe6jHjYhX7L2SQrzdPL1sVq0B6ghv8Dv6Ok5yQMY4SeS3ICJwy/qw3Hq0hufjLb7XkHcC5rucwt9xv61Df1IvBkV+DLm7ByeZV1UrIslWTT2WnmFWdfodk/lb+487QdtVi6bQHS5hp3NLhnziuZA6gwbZ0QtejkZkvVOg3VKR8NUzDm4gqNEOv6l/UnVmaXqWjiGUu1BF7DWo6ZX0p7gzH+Pj/cbKtN+r64/QHHfZ5VLaHjY7K+WLfHctfROyA5Qqx+0dQbW8nZnDLlv6kFkABDPsOBVKLlmBkuLYCbsvIvSfe1W6Kgn3Iliotf3sJrD4Tfy0yMS0Su8/vYCFdf2ZzKksP6rqupP6VUIzaBIe6cISCclF+rwROWEcLwfUX1cVfQ0/sW8yF7Go0m/bbvnqEEIwk5nvOzI5QOWY3ZatRWQ6heEbdEU19NfJKj1uHC+HCmm37GD4nPlwj6VR/+T7J3kPWvmrOO1rqkJvwGnH/D9COIeAapLk4GzQoUyqTpvtp4OQcKFB6mSh+4KlVsVThSubVYNOyz0TIfkFoyEW7fTqcIvdHU6OdtrhvyKZ5ycgdE7yESAvOEnOTq0vnDxtQ/wvpC/IifSYpdcfKON4cIr+wt2ZsNT/A2ecRiFy0A4tYrF/AMpMKAyP7zdhAAAAAElFTkSuQmCC);
-        background-repeat: no-repeat;
-        background-size: auto;
-        background-position: 250px 10px;
-        background-color: #309b05;
-        border: 0;
-        border-bottom: 1px solid #133783;
-        z-index: 9999999;
-        margin-right: 12px;
-        font-size: 18px;
-      }
-
-      #cfacebook a.chat_fb:hover {
-        color: yellow;
-        text-decoration: none;
-      }
-    </style>
-    <script>
-      jQuery(document).ready(function () {
-        jQuery(".chat_fb").click(function () {
-          jQuery('.fchat').toggle('slow');
-        });
-      });
-    </script>
-    <div id="fb-root"></div>
-    <div id="cfacebook">
-      <a href="javascript:;" class="chat_fb" onclick="return:false;">Chat với giaxenang.com</a>
-      <div class="fchat">
-        <div class="fb-page" data-tabs="messages"
-          data-href="https://www.facebook.com/Giaxenangcom-278647005896612/?hc_ref=NEWSFEED" data-width="300"
-          data-height="400" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false"
-          data-show-facepile="true" data-show-posts="false"></div>
-      </div>
-    </div>
   </div> <!-- /container -->
   {{>mobilenavi}}
+    <footer class="footer">
+      {{>footer}}
+    </footer>  
 </body>
 <script type="text/javascript">
   $('.pro_detail').delegate('.list_size', 'click', function () {

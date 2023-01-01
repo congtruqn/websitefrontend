@@ -7,35 +7,25 @@
 	</div>
 </div>
 <div class="block">
-	<div class="left_menu">
-		<div id="product_menu" class="product_menu detail_menu">
-    		{{> productmenu}}
-		</div>
-		<div class="new_product">
-			<div class="block_new_product">
-				{{>newproducts}}
-			</div>
-		</div>
-	</div>
 	<div class="product_cat">
 		<div class="product_content">
 			<div class="row">
-				{{#each contents as |productitem|}}
-	                <div class="col-xs-6 col-sm-6 col-md-3 {{images.class}}">
+				{{#each contents as |product_item|}}
+	                <div class="col-xs-6 col-sm-6 col-md-4 {{images.class}}">
 						<div class="product_item cat_product_item">
 							<div class="product_images">
-								{{#if productitem.image2}}
-									<a href="/{{productitem.seo_url}}"><img src="/static/{{productitem.image_path}}/{{productitem.image2}}" alt="{{truncateString productitem.detail.[0].name 40}}"></a>
+								{{#if product_item.image2}}
+									<a href="/{{product_item.seo_url}}"><img src="/static/{{product_item.image_path}}/{{product_item.image2}}" alt="{{truncateString product_item.detail.[0].name 40}}"></a>
 								{{/if}}
-								{{#if productitem.image}}
-									<a href="/{{productitem.seo_url}}"><img src="/static/{{productitem.image_path}}/medium/{{productitem.image}}" alt="{{truncateString productitem.detail.[0].name 40}}"></a>
+								{{#if product_item.image}}
+									<a href="/{{product_item.seo_url}}"><img src="/static/{{product_item.image_path}}/medium/{{product_item.image}}" alt="{{truncateString product_item.detail.[0].name 40}}"></a>
 								{{/if}}
 							</div>
 							<div class="product_detail">
-								<p class="product_name"><a href="/{{productitem.seo_url}}">{{truncateString productitem.detail.[0].name 40}}</a></p>
-								<div id="clear"></div>
-								<div class="product_price"><p>Giá: Liên hệ</p></div>
-								<div id="clear"></div>
+								<p class="product_name"><a href="/{{product_item.seo_url}}">{{{product_item.detail.[0].name}}}, <span>{{{product_item.detail.[0].desc}}}</span></a></p>
+								<div class="desc_win8">
+								<a href="/{{product_item.seo_url}}"><img src="/static/template9/images/systems/zoom_icon.png" alt="Search image"></a>
+								</div>
 							</div>
 						</div>
 	                </div>	

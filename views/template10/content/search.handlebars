@@ -1,53 +1,44 @@
-<div class="block">
-	<div class="left_menu">
-		<div id="product_menu" class="product_menu detail_menu">
-    		{{> productmenu}}
-		</div>
-		<div class="new_product">
-			<div class="block_new_product">
-				{{>newproducts}}
-			</div>
-		</div>
+<div class="breadcrumbs">
+	<div id="bread">
+		<ul class="items">
+			<li class="item home"><a href="/">Trang chủ</a></li>
+			<li class="item product"><strong>Tìm kiếm</strong></li>
+		</ul>
 	</div>
+</div>
+<div class="block">
 	<div class="product_cat">
-		<div class="main_news">
-			<div class="breadcrumbs">
-				<div id="bread">
-					<ul class="items">
-						<li class="item home"><a href="/">Trang chủ</a></li>
-						<li class="item product"><strong>Tìm kiếm</strong></li>
-					</ul>
-				</div>
-			
-			</div>
-		</div>
 		<div class="product_content">
 			<div class="row">
-				{{#each contents as |listnews|}}
-	                <div class="col-xs-6 col-sm-6 col-md-2 {{images.class}}">
-						<div class="product_item">
+				{{#each contents as |product_item|}}
+	                <div class="col-xs-6 col-sm-6 col-md-4 {{images.class}}">
+						<div class="product_item cat_product_item">
 							<div class="product_images">
-								<a href="/{{listnews.seo_url}}"><img src="/static/{{listnews.image_path}}/medium/{{listnews.image}}" alt="{{listnews.alt}}"></a>
+								{{#if product_item.image2}}
+									<a href="/{{product_item.seo_url}}"><img src="/static/{{product_item.image_path}}/{{product_item.image2}}" alt="{{truncateString product_item.detail.[0].name 40}}"></a>
+								{{/if}}
+								{{#if product_item.image}}
+									<a href="/{{product_item.seo_url}}"><img src="/static/{{product_item.image_path}}/medium/{{product_item.image}}" alt="{{truncateString product_item.detail.[0].name 40}}"></a>
+								{{/if}}
 							</div>
 							<div class="product_detail">
-								<p class="product_name"><a href="/{{listnews.seo_url}}">{{{listnews.productname}}}</a></p>
-								<div id="clear"></div>
-								<div class="product_price"><p>{{listnews.pricebeauty}}₫</p></div>
-								<div class="sale_pricebeauty"><p>{{listnews.sale_pricebeauty}}₫</p></div>
-								<div id="clear"></div>
+								<p class="product_name"><a href="/{{product_item.seo_url}}">{{{product_item.detail.[0].name}}}, <span>{{{product_item.detail.[0].desc}}}</span></a></p>
+								<div class="desc_win8">
+								<a href="/{{product_item.seo_url}}"><img src="/static/template9/images/systems/zoom_icon.png" alt="Search image"></a>
+								</div>
 							</div>
 						</div>
-	                </div>		
+	                </div>	
 				{{/each}}
 			</div>
-				<div class="content_page">
-					<ul>
+			<div class="content_page">
+				<ul>
 					{{#each allpage as |page|}}
-						<li><a href="/{{{page.seo_url}}}?page={{page.pagecount}}">{{{page.pagecount}}}</a></li>
+					<li><a href="/{{{page.seo_url}}}?page={{page.pagecount}}">{{{page.pagecount}}}</a></li>
 					{{/each}}
-					</ul>
-				</div>
-				<div id="clear"></div>				
+				</ul>
+			</div>
+			<div id="clear"></div>
 		</div>
 	</div>
 </div>

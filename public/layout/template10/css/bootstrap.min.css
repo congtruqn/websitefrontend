@@ -1735,14 +1735,6 @@ a.bg-danger:hover {
     margin: 40px 0 20px;
     border-bottom: 1px solid #eee
 }
-
-ol,
-ul {
-    margin-top: 0;
-    margin-bottom: 10px;
-	padding: 0
-}
-
 ol ol,
 ol ul,
 ul ol,
@@ -1933,8 +1925,6 @@ pre code {
 }
 
 .container {
-    padding-right: 10px;
-    padding-left: 10px;
     margin-right: auto;
     margin-left: auto
 }
@@ -1953,7 +1943,7 @@ pre code {
 
 @media (min-width:1200px) {
     .container {
-        width: 1360px
+        width: 980px
     }
 }
 
@@ -3019,26 +3009,6 @@ table th[class*=col-] {
     .table-responsive>.table-bordered>tfoot>tr:last-child>th {
         border-bottom: 0
     }
-}
-
-fieldset {
-    min-width: 0;
-    padding: 0;
-    margin: 0;
-
-    border: 0
-}
-
-legend {
-    display: block;
-    width: 100%;
-    padding: 0;
-    margin-bottom: 20px;
-    font-size: 21px;
-    line-height: inherit;
-    color: #333;
-    border: 0;
-    border-bottom: 1px solid #e5e5e5
 }
 
 input[type=search] {
@@ -4928,11 +4898,6 @@ textarea.input-group-sm>.input-group-btn>.btn {
 
 .nav-pills>li.active>a,
 .nav-pills>li.active>a:focus,
-.nav-pills>li.active>a:hover {
-    color: #fff;
-    background-color: #337ab7
-}
-
 .nav-stacked>li {
     float: none
 }

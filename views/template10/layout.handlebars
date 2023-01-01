@@ -18,20 +18,21 @@
   <link rel="stylesheet" href="/layout/{{siteinfo.customer_username}}/css/mmenu.css" />
   <link rel="stylesheet" href="/layout/{{siteinfo.customer_username}}/css/slick.css" />
   <link rel="stylesheet" href="/layout/{{siteinfo.customer_username}}/css/font-awesome.min.css" />
+
   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-  <script type="text/javascript" src="/layout/{{siteinfo.customer_username}}/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="/layout/{{siteinfo.customer_username}}/js/jcarousel.responsive.js"></script>
-  <script type="text/javascript" src="/layout/{{siteinfo.customer_username}}j/s/jquery.jcarousel.min.js"></script>
+  <script type="text/javascript" src="/layout/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/layout/js/jcarousel.responsive.js"></script>
+  <script type="text/javascript" src="/layout/js/jquery.jcarousel.min.js"></script>
   <script type="text/javascript" src="/layout/{{siteinfo.customer_username}}/js/slick.js"></script>
   <script type="text/javascript" src="/layout/{{siteinfo.customer_username}}/js/mmenu.js"></script>
 
-
-
   <meta name="viewport" content="width=device-width">
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="/layout/{{siteinfo.customer_username}}/sitemap.xml">
   <link type="text/css" rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Roboto:400,500&subset=vietnamese">
   <meta content="INDEX,FOLLOW" name="robots">
+  <link rel="shortcut icon" href="/static/template8/images/favicon.ico">
   <meta name="copyright" content="Giayfutsal.com.vn - Giày đá bóng chính hãng">
   <meta name="author" content="Giayfutsal.com.vn - Giày đá bóng chính hãng">
   <meta http-equiv="audience" content="General">
@@ -72,59 +73,45 @@
       <img src="/images/logo2_small.png">
     </div>
     <div class="istemplate_right">
-        <a href="http://tns.vn/templateregister?template={{siteinfo.customer_username}}" class="big-link" data-reveal-id="myModal" data-animation="fade">{{i18n "register_to_use"}}</a>
+      <a href="http://tns.vn/templateregister?template={{siteinfo.customer_username}}" class="big-link"
+        data-reveal-id="myModal" data-animation="fade">{{i18n "register_to_use"}}</a>
     </div>
     <div id="clear"></div>
   </div>
   {{/if}}
   <div class="wrapper">
+    <div id="topmenu">
+      <div class="topmenu_center">
+        <div class="topmenu_left">
+          <marquee behavior="scroll" direction="left">Hoàng Việt là nhà sản xuất trực tiếp các sản phẩm gỗ mỹ nghệ, hộp
+            gỗ tại Việt Nam</marquee>
+        </div>
+        <div class="topmenu_right">
+          <ul>
+            <li class=""><a href="javascript:void(0);" onclick="setlang('en')"><img
+                  src="http://gohoangviet.com/public/images/en.png" alt="English" title=" English "></a></li>
+            <li><a href="javascript:void(0);" onclick="setlang('vi')"><img
+                  src="http://gohoangviet.com/public/images/vi.png" alt="English" title=" English "></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
     <header>
-      <div id="top">
-        <div class="container">
-          <div class="header-top-left">
-            <ul>
-              <li></i><a href="#">Liên hệ</a></li>
-              <li><i class="icon-link fa fa-mobile" aria-hidden="true"></i><a href="#">Hotline: {{siteinfo.hotline}}</a>
-              </li>
-              <li><i class="icon-link fa fa-envelope" aria-hidden="true"></i><a href="#">Email:
-                  {{siteinfo.customer_email}}</a></li>
-            </ul>
-          </div>
-          <div class="header-top-right">
-
-          </div>
-        </div>
-      </div>
-      <div id="top_mobile">
-        <div class="container">
-          <div class="header-top-left">
-            <p class="hotline"><i class="fa fa-phone"></i> <a href="tel:+84903392491"> Hotline: {{siteinfo.hotline}}</a>
-            </p>
-
-          </div>
-
-        </div>
-      </div>
       <div class="cont-header">
         <div class="container">
           {{>head}}
         </div>
         <div id="navition">
           <div class="container">
-            <a href="#menu" class="mobimenuicon"><span></span></a>
-            <div class="desktop_menu">
-              <div class="desktop_menu_left">
-                <div>
-                  <span></span>
-                  <span></span>
-                  <span></span>
+            <div class="center">
+              <a href="#menu" class="mobimenuicon"><span></span></a>
+              <div class="desktop_menu">
+                <div class="desktop_menu_right">
+                  {{>mainmenu}}
                 </div>
-                <p>Danh mục sản phẩm</p>
+                <div id="clear"></div>
+
               </div>
-              <div class="desktop_menu_right">
-                {{>mainmenu}}
-              </div>
-              <div id="clear"></div>
             </div>
           </div>
         </div>
@@ -135,13 +122,12 @@
       <div class="container">
         {{{body}}}
       </div>
-
     </div>
-    <footer class="footer">
-      {{>footer}}
-    </footer>
   </div> <!-- /container -->
   {{>mobilenavi}}
+  <footer class="footer">
+    {{>footer}}
+  </footer>
 </body>
 <script type="text/javascript">
   $('.pro_detail').delegate('.list_size', 'click', function () {
@@ -162,16 +148,6 @@
     data: '',
     success: function (result) {
       document.getElementById('cart-total').innerHTML = result;
-    }
-  });
-</script>
-<script>
-  new Mmenu(document.querySelector('#menu'));
-  document.addEventListener('click', (evnt) => {
-    let anchor = evnt.target.closest('a[href^="#/"]');
-    if (anchor) {
-      alert('Thank you for clicking, but that\'s a demo link.');
-      evnt.preventDefault();
     }
   });
 </script>
@@ -197,8 +173,8 @@
         }
       });
     }
-
   }
 </script>
+
 
 </html>

@@ -35,6 +35,9 @@ var NewsPagesSchema = mongoose.Schema({
 	seo_url:{
 		type: String,
 	},
+	hot:{
+		type: Number,
+	},
 });
 var NewsPages = module.exports = mongoose.model('newspages', NewsPagesSchema);
 module.exports.getNewsPagesById = function(customer_id,id, callback){
@@ -45,12 +48,10 @@ module.exports.getAllNewsPages = function(customer_id,page,per_page,callback){
 	var query = {customer_id:customer_id};
 	NewsPages.find(query, callback).skip(per_page * (page - 1)).limit(per_page).sort({'create_date': -1 });
 }
-
 module.exports.countNewsPages = function(customer_id,callback){
 	var query = {customer_id:customer_id};
 	NewsPages.countDocuments(query, callback);
 }
-
 module.exports.getAllNewsPagesByUser = function(userid,page,per_page,callback){
 	var query = {create_user: userid};
 	NewsPages.find(query, callback).skip(per_page * (page - 1)).limit(per_page).sort({'NewsPages_id': -1 });
@@ -64,4 +65,8 @@ module.exports.getNewsPagesByDate = function(type,from_date,to_date,callback){
 		query = {};
 	}
 	NewsPages.find(query, callback).where("create_date").gte(from_date).lte(to_date);
+}
+module.exports.getHotPage = async function(id,customer_id){
+	var query = {_id:id,customer_id:customer_id};
+	return await NewsPages.findOne(query).exec();
 }

@@ -425,8 +425,7 @@ body {
     padding-right: 2%;
 }
 .main_product_center{
-    width: 1--%;
-    
+    width: 100%;
 }
 .right_hot_prpduct {
     width: 300px;
@@ -455,7 +454,6 @@ body {
 .hot_new_content{
     display: table;
     overflow: hidden;
-    padding-top: 15px;
 }
 .product_detail{
     padding: 15px 0;
@@ -491,13 +489,13 @@ body {
 .thank_content_detail{background: #fff;padding: 10px;width: 870px;float: right;margin-top: 10px;}
 .contact_form .control-label{font-weight: 500;}
 .product_image{width: 35%;float: left;}
-.product_info{width: 62%;float: right;text-align: left;}
+.product_info{width: 45%;float: right;text-align: left;}
 .product_image .image{width: 100%;}
 .product_image .image img{width: 100%}
 .product_images_list img{width: 80px !important;margin: 3px 3px 10px 3px;}
 .product_images_list{border: 1px solid #ccc;padding: 2px;width: 100%;height: 70px;overflow: hidden;margin-top:5px;}
 #top_mobile .hotline a{color: #fff;}
-.product_detail_image{width: 35%;float: left;}
+.product_detail_image{width: 50%;float: left;}
 .product_detail_image li{list-style: none;}
 .product_detail_image img{width: 100% !important;}
 .product_info h1 {
@@ -510,6 +508,16 @@ body {
     text-transform: uppercase;
     color: #666;
     font-weight: 400;
+}
+.product_rate fieldset {
+    border: 1px solid #eee;
+    border-radius: 4px;
+    padding: 7px 7px 14px 7px;
+    margin-bottom: 5px;
+}
+.product_rate fieldset legend {
+    margin-left: 5px;
+    font-size: 12px;
 }
 .policy ul li {
     border-bottom: 1px solid #e6e6e6;
@@ -639,8 +647,16 @@ body {
 .instock, .outstock{color: #111;padding: 7px 0}
 .instock span{color: #43b728}
 .outstock span{color: red}
-.product_cat,.page_content {
-    width: 74.36% !important;
+.product_cat{
+    width: 100% !important;
+    float: right;
+    line-height: 25px;
+    margin-top: 10px;
+    background: #fff;
+    padding:10px
+}
+.page_content {
+    width: 74% !important;
     float: right;
     line-height: 25px;
     margin-top: 10px;
@@ -789,6 +805,17 @@ body {
     font-size: 14px;
 }
 .mainmenu_item ul li a:hover{color: #333;}
+._about_title {
+    font-size: 23px;
+    color: #333;
+    font-weight: 400;
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+    margin-bottom: 15px;
+}
+._about_content img{
+    width: 100%;
+}
 .slick-arrow{display: none !important;}
 #addedproduct{background: #fff;text-align: justify;margin-top: 10px;text-align: left;position: absolute;left: -10px;padding: 10px; border: 1px solid #ddd;display: none;font-weight: bold;}
 .shipping_type{text-align: center;}
@@ -880,15 +907,18 @@ body {
     background: #fff;
     padding: 7px;
     overflow: hidden;
-    min-height: 370px;
 }
 .hot_news_img {
     overflow: hidden;
     position: relative;
     display: inline-block;
     vertical-align: top;
-    width: 100%;
-    height: 200px;
+    width: 20%;
+    height: 60px;
+    float: left;
+}
+._about_content{
+    float: right;
 }
 .news_create_date{
     padding-top: 5px;
@@ -1199,15 +1229,25 @@ footer .footer-top {
     display: table;
     width: 100%;
 }
+.footer{
+    color: #fff;
+    font-size: 13px;
+    padding-top: 10px;
+    background: url(../images/bottombg.gif);
+    margin: auto;
+    box-shadow: 4px 1px 4px -4px #d9d8d8, -4px 1px 4px -4px #d9d8d8;
+    margin: auto;
+    padding: 0 60px;
+    width: 1124px;
+}
 .footer-content-bottom{
     background: #232323;
     color: #fff;
-    text-align: center;
     padding: 5px 0;
     margin-top: 30px;
 }
 .information-group {
-    margin-top: 50px;
+    padding: 50px 0 0px 0;
 }
 .information-group .container-inner {
     background: #fff;
