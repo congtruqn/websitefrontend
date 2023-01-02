@@ -30,7 +30,7 @@ var partnersSchema = mongoose.Schema({
 	
 });
 var partners = module.exports = mongoose.model('partners', partnersSchema);
-module.exports.getpartnersbycustomer = function(customer_id,page,per_page, callback){
+module.exports.getPartnerByCustomer = async function(customer_id){
 	var query = {customer_id:customer_id};
-	partners.find(query, callback).skip(per_page * (page - 1)).limit(per_page);
+	return await partners.find(query, callback).exec();
 }
