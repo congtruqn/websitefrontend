@@ -1,0 +1,61 @@
+<section class="regular slider1">
+  {{#each hotproducts as |product_item|}}
+  <div>
+    <div class="hot_product_item">
+      <div class="product_images">
+        {{#if product_item.image2}}
+        <a href="/{{product_item.seo_url}}"><img src="/static/{{product_item.image_path}}/{{product_item.image2}}"
+            alt="{{truncateString product_item.detail.[0].name 40}}"></a>
+        {{/if}}
+        {{#if product_item.image}}
+        <a href="/{{product_item.seo_url}}"><img src="/static/{{product_item.image_path}}/medium/{{product_item.image}}"
+            alt="{{truncateString product_item.detail.[0].name 40}}"></a>
+        {{/if}}
+      </div>
+      <div class="product_detail">
+        <p class="product_name"><a href="/{{product_item.seo_url}}">{{truncateString product_item.detail.[0].name
+            50}}</a></p>
+        <div id="clear"></div>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</section>
+<script type="text/javascript">
+  $(document).on('ready', function () {
+    $(".regular").slick({
+      dots: false,
+      infinite: false,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 2000,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            infinite: true,
+            dots: true
+          }
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 2
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 2
+          }
+        }
+      ]
+    });
+
+  });
+</script>

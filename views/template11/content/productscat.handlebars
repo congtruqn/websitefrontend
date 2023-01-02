@@ -1,0 +1,95 @@
+<div class="block">
+	<div id="left_content">
+		<div id="left_menu" class="product_menu detail_menu">
+			{{> productmenu}}
+		</div>
+		<div id="clear"></div>
+		<div id="search">
+			<input type="text" name="keyword" id="" value="Nhập nội dung tìm kiếm" onclick="this.value = '';">
+			<input class="bt_submit" type="submit" name="df" id="submit" value="">
+		</div>
+		<div id="left_menu">
+			<div class="title1">
+				<p>Hỗ trợ trực tuyến</p>
+			</div>
+			<div class="content">
+				<ul>
+					<li class="support">
+						<p class="name">Kinh Doanh</p>
+						<div id="clear"></div>
+						<p class="hotline">0934.772.606</p>
+						<div id="clear"></div>
+						<p class="item"><a re_target="blank" target="blank" href="skype:dieukhac.hoangviet?chat"><img
+									height="40" src="http://gohoangviet.com/public/images/skype.png"
+									style="border: medium none;" alt="My status"></a></p>
+						<div id="clear"></div>
+					</li>
+					<div id="clear"></div>
+				</ul>
+			</div>
+		</div>
+		<div id="left_menu">
+			<div class="title1">
+				<p>Sản Phẩm Mới</p>
+			</div>
+			{{> hotproducts}}
+		</div>
+		<div id="email_suport">
+			<h4>Đăng ký nhận tin</h4>
+			<div id="clear"></div>
+			<div class="email">
+				<input type="text" name="email" value="Email" onfocus="Focus(this)" onblur="Blur(this)" id="mail">
+			</div>
+			<div class="dangky">
+				<input type="submit" name="dangky" value="Đăng ký" onclick="sent()">
+			</div>
+		</div>
+	</div>
+	<div class="product_cat">
+		<div class="breadcrumbs">
+			<div id="bread">
+				<ul class="items">
+					<li class="item home"><a href="/">Trang chủ</a></li>
+					<li class="item product"><strong>{{{productcatinfo.name}}}</strong></li>
+				</ul>
+			</div>
+		</div>
+		<div class="product_content">
+			<div class="row">
+				{{#each contents as |product_item|}}
+				<div class="col-xs-6 col-sm-6 col-md-3 {{images.class}}">
+					<div class="product_item cat_product_item">
+						<div class="product_images">
+							{{#if product_item.image}}
+							<a href="/{{product_item.seo_url}}"><img
+									src="/static/{{product_item.image_path}}/medium/{{product_item.image}}"
+									alt="{{truncateString product_item.detail.[0].name 40}}"></a>
+
+							{{else}}
+							<a href="/{{product_item.seo_url}}"><img
+									src="/static/{{product_item.image_path}}/{{product_item.image2}}"
+									alt="{{truncateString product_item.detail.[0].name 40}}"></a>
+							{{/if}}
+						</div>
+						<div class="product_detail">
+							<p class="product_name"><a
+									href="/{{product_item.seo_url}}">{{{product_item.detail.[0].name}}}
+								</a></p>
+							<div class="show_detail1"><a href="{{product_item.seo_url}}">Chi tiết</a></div>
+						</div>
+					</div>
+				</div>
+				{{/each}}
+			</div>
+			<div class="content_page">
+				<ul>
+					{{#each allpage as |page|}}
+					<li><a href="/{{{page.seo_url}}}?page={{page.pagecount}}">{{{page.pagecount}}}</a></li>
+					{{/each}}
+				</ul>
+			</div>
+			<div id="clear"></div>
+			<div class="product_content">{{{catinfo.content}}}</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,26 @@
+<div class="cdz-block-title">
+		<p class="b-title">Sản phẩm mới</p>
+</div>
+<div class="new_products">
+  <ul>
+    {{#each newproducts as |productitem|}}
+    <li>
+      <div class="new_product_i">
+        <div class="new_product_images">
+          <a href="/{{productitem.seo_url}}"><img src="/static/{{productitem.image_path}}/{{productitem.image1}}" alt="{{productitem.alt}}"></a>
+        </div>
+        <div class="new_product_detail">
+          <p class="new_product_name"><a href="/{{productitem.seo_url}}">{{truncateString productitem.detail.[0].name
+              45}}</a></p>
+          <div id="clear"></div>
+          <div class="product_price">
+            <p>Liên hệ</p>
+          </div>
+          <div id="clear"></div>
+        </div>
+      </div>
+    </li>
+    {{/each}}
+  </ul>
+  <div id="clear"></div>
+</div>

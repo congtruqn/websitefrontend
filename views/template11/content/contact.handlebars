@@ -1,0 +1,102 @@
+<script type="text/javascript" src="/layout/js/jquery.validate.js"></script>
+<div class="breadcrumbs">
+	<div id="bread">
+		<ul class="items">
+			<li class="item homes"><a href="/">Trang chủ</a></li>
+			<li class="item">Liên hệ</li>
+		</ul>
+	</div>
+</div>
+<div class="block">
+	<div class="contact_form">
+		<div class="row">
+			<div class="f-col col-md-6 col-sm-6 col-xs-12">
+				<div class="contact_info">
+					<div class="footer_address">
+						<h3>{{{siteinfo.company_name}}}</h3>
+					</div>
+					<div class="footer_address">
+						{{{siteinfo.customer_address}}}
+					</div>
+					<div class="footer_address">
+						<i class="fa fa-phone" aria-hidden="true"></i>
+						Điện thoại: {{siteinfo.customer_phone}}
+					</div>
+					<div class="footer_address">
+						<i class="fa fa-envelope" aria-hidden="true"></i>
+						Email: {{siteinfo.customer_email}}
+					</div>
+				</div>
+				<form class="cmxform" id="cusinfo" action="#" method="post">
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Họ và Tên</label>
+						<div class="col-sm-9"><input class="form-control" id="name" required="true" name="name"></div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Điện thoại</label>
+						<div class="col-sm-9"><input class="form-control" required="true" id="phone" name="phone"></div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Email</label>
+						<div class="col-sm-9"><input class="form-control" id="email" name="email"></div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label">Nội dung</label>
+						<div class="col-sm-9"><textarea class="form-control" required="true" id="content"
+								name="content">{{content}}</textarea></div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-3 control-label"></label>
+						<div class="col-sm-9"><button class="form-control" id="userNextStepBottom">Gửi</button></div>
+					</div>
+				</form>
+			</div>
+			<div class="f-col col-md-6 col-sm-6 col-xs-12">
+				<iframe width="100%" height="480" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+					src="https://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=119+Quang+Trung,+T%C4%83ng+Nh%C6%A1n+Ph%C3%BA+B,+Ho+Chi+Minh+City,+Qu%E1%BA%ADn+9,+Vietnam&aq=0&oq=119+Quang+Trung,+tang,+Qu%E1%BA%ADn+9,+Ho+Chi+Minh+City,+Vietnam&sll=10.841968,106.772733&sspn=0.010727,0.021136&ie=UTF8&hq=&hnear=119+Quang+Trung,+T%C4%83ng+Nh%C6%A1n+Ph%C3%BA+B,+Ho+Chi+Minh+City,+Vietnam&t=m&ll=10.843338,106.773634&spn=0.010116,0.013733&z=16&output=embed"></iframe><br /><small><a
+						href="https://maps.google.com/maps?f=q&source=embed&hl=en&geocode=&q=119+Quang+Trung,+T%C4%83ng+Nh%C6%A1n+Ph%C3%BA+B,+Ho+Chi+Minh+City,+Qu%E1%BA%ADn+9,+Vietnam&aq=0&oq=119+Quang+Trung,+tang,+Qu%E1%BA%ADn+9,+Ho+Chi+Minh+City,+Vietnam&sll=10.841968,106.772733&sspn=0.010727,0.021136&ie=UTF8&hq=&hnear=119+Quang+Trung,+T%C4%83ng+Nh%C6%A1n+Ph%C3%BA+B,+Ho+Chi+Minh+City,+Vietnam&t=m&ll=10.843338,106.773634&spn=0.010116,0.013733&z=16"
+						style="color:#0000FF;text-align:left">View Larger Map</a></small>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$().ready(function () {
+		// validate signup form on keyup and submit
+		$("#cusinfo").validate({
+			rules: {
+				name: "required",
+				phone: "required",
+				email: "required",
+				content: "required"
+			},
+			messages: {
+				name: "Họ và tên không được để trống!",
+				phone: "Số điện thoại không được để trống!",
+				email: "Email không được để trống",
+				content: "Nội dung không được để trống"
+			},
+			submitHandler: function (form) {
+				var name = document.getElementById("name").value;
+				var phone = document.getElementById("phone").value;
+				var email = document.getElementById("email").value;
+				//var content = document.getElementById("content").value;
+				var content = $("textarea#content").val();
+				$.ajax({
+					url: "/addcustomercontact",
+					type: "POST",
+					data: { name: name, phone: phone, email: email, content: content },
+					success: function (response) {
+						if (response == "ok") {
+							window.location.href = '/thankorder';
+						}
+						else {
+							alert("Có lổi trong quá trình đặt hàng!");
+						}
+
+					}
+				});
+			},
+		});
+	});
+</script>

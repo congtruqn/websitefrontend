@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <title>{{title}}</title>
+  <meta name="keyword" content="">
+  <meta content="{{description}}" name="description">
+  <meta property="og:title" content="{{title}}">
+  <meta property="og:description" content="{{description}}">
+  <meta property="og:image" content="{{orgimage}}">
+  <link rel="canonical" href="{{canonical}}">
+
+  <link rel="stylesheet" href="/layout/{{siteinfo.customer_username}}/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/layout/{{siteinfo.customer_username}}/css/style.css" />
+  <link rel="stylesheet" href="/layout/{{siteinfo.customer_username}}/css/addon.css" />
+  <link rel="stylesheet" href="/layout/{{siteinfo.customer_username}}/css/responsive.css" />
+  <link rel="stylesheet" href="/layout/{{siteinfo.customer_username}}/css/jcarousel.responsive.css" />
+  <link rel="stylesheet" href="/layout/{{siteinfo.customer_username}}/css/mmenu.css" />
+  <link rel="stylesheet" href="/layout/{{siteinfo.customer_username}}/css/slick.css" />
+  <link rel="stylesheet" href="/layout/{{siteinfo.customer_username}}/css/font-awesome.min.css" />
+
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script type="text/javascript" src="/layout/{{siteinfo.customer_username}}/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/layout/{{siteinfo.customer_username}}/js/jcarousel.responsive.js"></script>
+  <script type="text/javascript" src="/layout/{{siteinfo.customer_username}}/js/jquery.jcarousel.min.js"></script>
+  <script type="text/javascript" src="/layout/{{siteinfo.customer_username}}/js/slick.js"></script>
+  <script type="text/javascript" src="/layout/{{siteinfo.customer_username}}/js/mmenu.js"></script>
+
+  <meta name="viewport" content="width=device-width">
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="/layout/{{siteinfo.customer_username}}/sitemap.xml">
+  <link type="text/css" rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Roboto:400,500&subset=vietnamese">
+  <meta content="INDEX,FOLLOW" name="robots">
+  <link rel="shortcut icon" href="/static/{{siteinfo.customer_username}}/images/favicon.ico">
+  <meta name="copyright" content="{{title}}">
+  <meta name="author" content="{{title}}">
+  <meta http-equiv="audience" content="General">
+  <meta name="resource-type" content="Document">
+  <meta name="distribution" content="Global">
+  <meta name="revisit-after" content="1 days">
+  <meta name="GENERATOR" content="{{title}}">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta property="og:site_name" content="{{customer_username}}">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="vi_VN">
+  <meta name="RATING" content="GENERAL">
+  <meta charset="utf-8">
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-78751937-1']);
+    _gaq.push(['_trackPageview']);
+    (function () {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script>(function (d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/vi_VN/all.js#xfbml=1&appId=670934746292134";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
+</head>
+
+<body>
+  {{#if istemplate}}
+  <div id="istemplate">
+    <div class="istemplate_left">
+      <img src="/images/logo2_small.png">
+    </div>
+    <div class="istemplate_right">
+      <a href="http://tns.vn/templateregister?template={{siteinfo.customer_username}}" class="big-link"
+        data-reveal-id="myModal" data-animation="fade">{{i18n "register_to_use"}}</a>
+    </div>
+    <div id="clear"></div>
+  </div>
+  {{/if}}
+  <div class="wrapper">
+    <div id="topmenu">
+      <div class="topmenu_center">
+        <div class="topmenu_left">
+          <marquee behavior="scroll" direction="left">Hoàng Việt là nhà sản xuất trực tiếp các sản phẩm gỗ mỹ nghệ, hộp
+            gỗ tại Việt Nam</marquee>
+        </div>
+        <div class="topmenu_right">
+          <ul>
+            <li class=""><a href="javascript:void(0);" onclick="setlang('en')"><img
+                  src="http://gohoangviet.com/public/images/en.png" alt="English" title=" English "></a></li>
+            <li><a href="javascript:void(0);" onclick="setlang('vi')"><img
+                  src="http://gohoangviet.com/public/images/vi.png" alt="English" title=" English "></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <header>
+      <div class="cont-header">
+        <div class="container">
+          {{>head}}
+        </div>
+        <div id="navition">
+          <div class="container">
+            <div class="center">
+              <a href="#menu" class="mobimenuicon"><span></span></a>
+              <div class="desktop_menu">
+                <div class="desktop_menu_right">
+                  {{>mainmenu}}
+                </div>
+                <div id="clear"></div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="content" id="content">
+      <div class="container">
+        {{{body}}}
+      </div>
+    </div>
+  </div> <!-- /container -->
+  {{>mobilenavi}}
+  <footer class="footer">
+    {{>footer}}
+  </footer>
+</body>
+<script type="text/javascript">
+  $('.pro_detail').delegate('.list_size', 'click', function () {
+    $('.list_size').removeClass('sizeactive');
+    $(this).addClass('sizeactive');
+  });
+</script>
+<script type="text/javascript">
+  function DoSubmitSingleExts() {
+    var txt = $('#ime').val().trim();
+    window.location = '/tim-kiem?key=' + txt.toLowerCase();
+  };
+</script>
+<script>
+  new Mmenu(document.querySelector('#menu'));
+  document.addEventListener('click', (evnt) => {
+    let anchor = evnt.target.closest('a[href^="#/"]');
+    if (anchor) {
+      alert('Thank you for clicking, but that\'s a demo link.');
+      evnt.preventDefault();
+    }
+  });
+</script>
+<script type="text/javascript">
+  $.ajax({
+    dataType: "json",
+    url: '/getcart',
+    data: '',
+    success: function (result) {
+      document.getElementById('cart-total').innerHTML = result;
+    }
+  });
+</script>
+<script type="text/javascript">
+  function sent() {
+    var name = document.getElementById('name').value;
+    var phone = document.getElementById('phone').value;
+    var email = document.getElementById('email').value;
+    var dataString = 'name=' + name + '&email=' + email + '&phone=' + phone;
+    //alert(dataString);
+    if (email == "" || phone == "" || name == "") {
+      alert('Bạn vui lòng nhập đầy đủ thông tin');
+    }
+    else {
+      $.ajax({
+        type: "POST",
+        url: '/registertouse?' + dataString,
+        data: { email: email },
+        success: function (result) {
+          document.getElementById("register_info").style.display = "none";
+          document.getElementById("thank_register").style.display = "block";
+          //alert(result);
+        }
+      });
+    }
+  }
+</script>
+</html>

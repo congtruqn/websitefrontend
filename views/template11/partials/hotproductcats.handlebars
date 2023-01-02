@@ -1,0 +1,40 @@
+{{#each productcats as |productcat|}}
+  <div class="row">
+    <div class="col-xs-12 col-sm-12">
+        <div class="list_product_content">
+           <div class="block-title">
+                {{#each productcat.detail as |productcatdetail|}}
+                    <h3><a href="/{{productcat.seo_url}}">{{{productcatdetail.name}}}</a></h3>
+                    <p class="viewall"><a href="{{productcat.seo_url}}">Xem tất cả</a></>
+                {{/each}}
+           </div>
+            <div class="cont">
+            <div class="row">
+              {{#each productcat.product as |product_item|}}
+                <div class="col-xs-6 col-sm-6 col-md-4 {{product_item.class}}">
+                  <div class="product_item">
+                      <div class="product_images">
+                        {{#if product_item.image2}}
+                          <a href="/{{product_item.seo_url}}"><img src="/static/{{product_item.image_path}}/{{product_item.image2}}" alt="{{product_item.alt}}"></a>
+                        {{/if}}
+                        {{#if product_item.image}}
+                          <a href="/{{product_item.seo_url}}"><img src="/static/{{product_item.image_path}}/medium/{{product_item.image}}" alt="{{product_item.alt}}"></a>
+                        {{/if}}
+                          
+                      </div>
+                      <div class="product_detail">
+                        <p class="product_name"><a href="/{{product_item.seo_url}}">{{{product_item.detail.[0].name}}}, <span>{{{product_item.detail.[0].desc}}}</span></a></p>
+                        <div class="desc_win8">
+                          <a href="/{{product_item.seo_url}}"><img src="/static/template9/images/systems/zoom_icon.png" alt="Search image"></a>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              {{/each}}
+            </div>  
+           </div>
+
+        </div>  
+      </div>
+    </div>
+{{/each}}

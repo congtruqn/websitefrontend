@@ -1,0 +1,70 @@
+<div class="block">
+	<div class="menu_slider">
+		<div class="slider">
+			{{>slider}}
+		</div>
+	</div>
+</div>
+<div class="block">
+	<div id="left_content">
+		<div id="left_menu" class="product_menu detail_menu">
+			{{> productmenu}}
+		</div>
+		<div id="clear"></div>
+		<div id="search">
+			<input type="text" name="keyword" id="" value="Nhập nội dung tìm kiếm" onclick="this.value = '';">
+			<input class="bt_submit" type="submit" name="df" id="submit" value="">
+		</div>
+		<div id="left_menu">
+			<div class="title1">
+				<p>Hỗ trợ trực tuyến</p>
+			</div>
+			<div class="content">
+				<ul>
+					<li class="support">
+						<p class="name">Kinh Doanh</p>
+						<div id="clear"></div>
+						<p class="hotline">0934.772.606</p>
+						<div id="clear"></div>
+						<p class="item"><a re_target="blank" target="blank" href="skype:dieukhac.hoangviet?chat"><img
+									height="40" src="http://gohoangviet.com/public/images/skype.png"
+									style="border: medium none;" alt="My status"></a></p>
+						<div id="clear"></div>
+					</li>
+					<div id="clear"></div>
+				</ul>
+			</div>
+		</div>
+		<div id="left_menu">
+			<div class="title1">
+				<p>Sản Phẩm Mới</p>
+			</div>
+			{{> hotproducts}}
+		</div>
+		<div id="email_suport">
+			<h4>Đăng ký nhận tin</h4>
+			<div id="clear"></div>
+			<div class="email">
+				<input type="text" name="email" value="Email" onfocus="Focus(this)" onblur="Blur(this)" id="mail">
+			</div>
+			<div class="dangky">
+				<input type="submit" name="dangky" value="Đăng ký" onclick="sent()">
+			</div>
+		</div>
+	</div>
+	<div class="content_detail">
+		<div class="about_us">
+			<div class="title">
+				<h1>Sản xuất Hộp gỗ, quà tặng Gỗ</h1>
+			</div>
+			<div class="about_content">
+				<img src="{{hotpage.image_path}}{{hotpage.image}}" alt="Sản xuất Hộp gỗ, quà tặng Gỗ">
+				<p>{{hotpage.detail.[0].desc}}</p>
+			</div>
+			<div class="about_content1">
+				{{{hotpage.detail.[0].content}}}
+			</div>
+		</div>
+		{{>hotnews}}
+	</div>
+</div>
