@@ -20,9 +20,9 @@
   <link rel="stylesheet" href="/layout/{{siteinfo.customer_username}}/css/font-awesome.min.css" />
 
   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-  <script type="text/javascript" src="/layout/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="/layout/js/jcarousel.responsive.js"></script>
-  <script type="text/javascript" src="/layout/js/jquery.jcarousel.min.js"></script>
+  <script type="text/javascript" src="/layout/{{siteinfo.customer_username}}/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/layout/{{siteinfo.customer_username}}/js/jcarousel.responsive.js"></script>
+  <script type="text/javascript" src="/layout/{{siteinfo.customer_username}}/js/jquery.jcarousel.min.js"></script>
   <script type="text/javascript" src="/layout/{{siteinfo.customer_username}}/js/slick.js"></script>
   <script type="text/javascript" src="/layout/{{siteinfo.customer_username}}/js/mmenu.js"></script>
 
@@ -32,16 +32,16 @@
   <link type="text/css" rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Roboto:400,500&subset=vietnamese">
   <meta content="INDEX,FOLLOW" name="robots">
-  <link rel="shortcut icon" href="/static/template8/images/favicon.ico">
-  <meta name="copyright" content="Giayfutsal.com.vn - Giày đá bóng chính hãng">
-  <meta name="author" content="Giayfutsal.com.vn - Giày đá bóng chính hãng">
+  <link rel="shortcut icon" href="/static/{{siteinfo.customer_username}}/images/favicon.ico">
+  <meta name="copyright" content="{{title}}">
+  <meta name="author" content="{{title}}">
   <meta http-equiv="audience" content="General">
   <meta name="resource-type" content="Document">
   <meta name="distribution" content="Global">
   <meta name="revisit-after" content="1 days">
-  <meta name="GENERATOR" content="Giayfutsal.com.vn - Giày đá bóng chính hãng">
+  <meta name="GENERATOR" content="{{title}}">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta property="og:site_name" content="Giayfutsal.com.vn">
+  <meta property="og:site_name" content="{{customer_username}}">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="vi_VN">
   <meta name="RATING" content="GENERAL">
@@ -141,6 +141,16 @@
     window.location = '/tim-kiem?key=' + txt.toLowerCase();
   };
 </script>
+<script>
+  new Mmenu(document.querySelector('#menu'));
+  document.addEventListener('click', (evnt) => {
+    let anchor = evnt.target.closest('a[href^="#/"]');
+    if (anchor) {
+      alert('Thank you for clicking, but that\'s a demo link.');
+      evnt.preventDefault();
+    }
+  });
+</script>
 <script type="text/javascript">
   $.ajax({
     dataType: "json",
@@ -175,6 +185,4 @@
     }
   }
 </script>
-
-
 </html>

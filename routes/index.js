@@ -618,11 +618,11 @@ const renderpage = async function (req, res, website_url, language = 'vi') {
     homelang = ''
   }
   let istemplate = false;
+  var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
   if (websiteinfo && websiteinfo.is_template && websiteinfo.is_template == 1) {
     istemplate = true
   }
-  var hostname = req.headers.host;
   const cacheInfo = await caches.getCaches(caches,hostname);
   var customer_id = websiteinfo.customer_id;
   var customer_username = websiteinfo.customer_username;
@@ -857,6 +857,7 @@ const renderproductcatpage = async function (req, res, website_url) {
     canonical: website_protocol + '://' + hostname + '/' + catinfo.seo_url + '/',
     description: catinfo.detail[0].description,
     keyword: catinfo.detail[0].keyword,
+    catinfo:catinfo,
     layout: 'layout',
     language: language,
     istemplate: istemplate,

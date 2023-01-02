@@ -1,49 +1,89 @@
-<div class="breadcrumbs">
-	<div id="bread">
-		<ul class="items">
-			<li class="homes item"><a href="/">Trang chủ</a></li>
-			<li class="item"><a href="/{{{contents.seo_url}}}">{{{newcatdetail.name}}}</a></li>
-		</ul>
-	</div>
-</div>
 <div class="block">
-	<div class="left_menu">
-		<div id="product_menu" class="product_menu detail_menu">
-    		{{> productmenu}}
+	<div id="left_content">
+		<div id="left_menu" class="product_menu detail_menu">
+			{{> productmenu}}
 		</div>
-		<div class="new_product">
-			<div class="block_new_product">
-				{{>newproducts}}
+		<div id="clear"></div>
+		<div id="search">
+			<input type="text" name="keyword" id="" value="Nhập nội dung tìm kiếm" onclick="this.value = '';">
+			<input class="bt_submit" type="submit" name="df" id="submit" value="">
+		</div>
+		<div id="left_menu">
+			<div class="title1">
+				<p>Hỗ trợ trực tuyến</p>
+			</div>
+			<div class="content">
+				<ul>
+					<li class="support">
+						<p class="name">Kinh Doanh</p>
+						<div id="clear"></div>
+						<p class="hotline">0934.772.606</p>
+						<div id="clear"></div>
+						<p class="item"><a re_target="blank" target="blank" href="skype:dieukhac.hoangviet?chat"><img
+									height="40" src="http://gohoangviet.com/public/images/skype.png"
+									style="border: medium none;" alt="My status"></a></p>
+						<div id="clear"></div>
+					</li>
+					<div id="clear"></div>
+				</ul>
+			</div>
+		</div>
+		<div id="left_menu">
+			<div class="title1">
+				<p>Sản Phẩm Mới</p>
+			</div>
+			{{> hotproducts}}
+		</div>
+		<div id="email_suport">
+			<h4>Đăng ký nhận tin</h4>
+			<div id="clear"></div>
+			<div class="email">
+				<input type="text" name="email" value="Email" onfocus="Focus(this)" onblur="Blur(this)" id="mail">
+			</div>
+			<div class="dangky">
+				<input type="submit" name="dangky" value="Đăng ký" onclick="sent()">
 			</div>
 		</div>
 	</div>
 	<div class="content_detail">
+		<div class="breadcrumbs">
+			<div id="bread">
+				<ul class="items">
+					<li class="homes item"><a href="/">Trang chủ</a></li>
+					<li class="item"><a href="/{{{contents.seo_url}}}">{{{newcatdetail.name}}}</a></li>
+				</ul>
+			</div>
+		</div>
 		<div class="product_detail">
 			<div class="cats_content">
 				<div class="row">
-				{{#each contents as |content_item|}}
-					<div class="col-lg-4 col-md-6 col-sm-6 list_news_item">
-					   <div class="cat_image">
+					{{#each contents as |content_item|}}
+					<div class="col-lg-12 col-md-12 col-sm-12 list_news_item">
+						<div class="cat_image">
 							{{#if content_item.image3}}
-								<a href="/{{content_item.seo_url}}"><img src="/static/{{content_item.image_path}}{{content_item.image3}}" alt="{{truncateString content_item.detail.[0].name 50}}"></a>
+							<a href="/{{content_item.seo_url}}"><img
+									src="/static/{{content_item.image_path}}{{content_item.image3}}"
+									alt="{{truncateString content_item.detail.[0].name 50}}"></a>
 							{{/if}}
 							{{#if content_item.image}}
-							<a href="/{{content_item.url}}"><img src="{{content_item.image_path}}/medium/{{content_item.image}}" alt="{{truncateString content_item.detail.[0].name 50}}"
-								class="img-fluid" /></a>
+							<a href="/{{content_item.url}}"><img
+									src="{{content_item.image_path}}/medium/{{content_item.image}}"
+									alt="{{truncateString content_item.detail.[0].name 50}}" class="img-fluid" /></a>
 							{{/if}}
-					   </div>
-					  	<div class="cat_detail">
-							<p class="item_name"><a href="/{{content_item.seo_url}}">{{truncateString content_item.detail.[0].name 50}}</a></p>
-							<p class="item_desc">{{truncateString content_item.detail.[0].desc 80}}</p>
-					   </div>
-					</div>	
-				{{/each}}
+						</div>
+						<div class="cat_detail">
+							<p class="item_name"><a href="/{{content_item.seo_url}}">{{truncateString
+									content_item.detail.[0].name 50}}</a></p>
+							<p class="item_desc">{{truncateString content_item.detail.[0].description 300}}</p>
+						</div>
+					</div>
+					{{/each}}
 				</div>
 				<div class="content_page">
 					<ul>
-					{{#each allpage as |page|}}
+						{{#each allpage as |page|}}
 						<li><a href="/{{{page.seo_url}}}?page={{page.pagecount}}">{{{page.pagecount}}}</a></li>
-					{{/each}}
+						{{/each}}
 					</ul>
 				</div>
 				<div id="clear"></div>

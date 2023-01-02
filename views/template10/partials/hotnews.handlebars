@@ -1,12 +1,11 @@
-<div class="row">
-  <div class="col-xs-12 col-sm-12 col-md-12">
-    <div class="_about_title">
-      Tin tức
-    </div>
+<div id="topnews">
+  <div class="title">
+    <p>TIN TỨC , SỰ KIỆN</p>
   </div>
   <div class="hot_new_content">
+    <ul>
     {{#each hotnews as |hotnew|}}
-    <div class="col-xs-12 col-sm-12 col-md-12">
+    <li>
       <div class="hot_news_item">
         <div class="hot_news_img">
           {{#if hotnew.image2}}
@@ -19,11 +18,12 @@
           {{/if}}
         </div>
         <div class="hot_news_detail">
-          <p class="hot_news_name"><a href="/{{hotnew.url}}">{{{truncateString hotnew.details.name 40}}}</a></p>
-          <p class="hot_news_desc">{{{truncateString hotnew.details.desc 80}}}</p>
+          <h3 class="hot_news_name"><a href="/{{hotnew.url}}">{{{truncateString hotnew.details.name 70}}}</a></h3>
+          <p class="hot_news_desc">{{{truncateString hotnew.details.description 260}}}</p>
         </div>
       </div>
-    </div>
+    </li>
     {{/each}}
+    </ul>
   </div>
 </div>
