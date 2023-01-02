@@ -619,6 +619,7 @@ body {
 .product_content{
     height: 100%;
     margin-top: 10px;
+    width: 100%;
 }
 .product_images{
     text-align: center;overflow: hidden;position: relative;
