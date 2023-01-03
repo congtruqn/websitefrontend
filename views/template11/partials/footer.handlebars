@@ -1,13 +1,11 @@
 <div class="information-group">
   <div class="footer_address">
-    <h3>{{{siteinfo.company_name}}}</h3>
-  </div>
-  <div class="footer_address">
-    {{{siteinfo.customer_address}}}
+    <i class="fa fa-location-arrow" aria-hidden="true"></i>
+    {{i18n 'address'}}: {{{siteinfo.customer_address}}}
   </div>
   <div class="footer_address">
     <i class="fa fa-phone" aria-hidden="true"></i>
-    Điện thoại: {{siteinfo.customer_phone}}
+    {{i18n 'phone'}}: : {{siteinfo.customer_phone}}
   </div>
   <div class="footer_address">
     <i class="fa fa-envelope" aria-hidden="true"></i>
