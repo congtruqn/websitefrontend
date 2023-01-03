@@ -50,7 +50,7 @@ module.exports = {
     hotpage,
     partners,
 }
-module.exports.storeCaches = async function (caches,hostname, websitein) {
+module.exports.storeCaches = async function (caches,hostname,websitein) {
     if (!caches.productcat[hostname]) {
         let productcat = await systems.gethotproductcat(websitein.customer_id);
         caches.productcat[hostname] = productcat;

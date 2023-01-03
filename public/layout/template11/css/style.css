@@ -24,15 +24,6 @@ body {
     position: relative;
 }
 #logo{padding: 10px 0;}
-.product_content {
-    overflow: hidden;
-    background: #fff;
-    margin: 5px 2px;
-    border: 1px solid #eee;
-    overflow: hidden;
-    float: right;
-    box-shadow: 0 0 2px 0 #ddd;
-}
 #top {
     background: #181413;
     float: left;
@@ -111,7 +102,7 @@ body {
     list-style: none;
     float: left;
     position: relative;
-    padding: 10px 0;
+    padding: 10px;
     background: url(../images/menu-split.png) left center no-repeat transparent;
 }
 .mainmenu_item:FIRST-CHILD{background: none;}
@@ -235,11 +226,11 @@ body {
     margin: 6px 0 0 3px;
 }
 #left_menu .title1 {
-    background: #f7f7f7;
-    padding: 6px 5px 4px 5px;
+    background: #1aa3db;
+    border-bottom: 2px solid #f12a55;
+    padding: 6px 5px 4px 15px;
     display: block;
     overflow: hidden;
-    border-bottom: 1px solid #054505;
 }
 #left_menu .content .support .name {
     border-bottom: 1px solid #ddd;
@@ -262,10 +253,10 @@ body {
     text-align: center;
 }
 #left_menu .title1 p {
-    color: #054505;
+    color: #fff;
     text-transform: uppercase;
-    font-size: 15px;
-    font-weight: bold;
+    font-size: 14px;
+    font-weight: normal;
 }
 .fa-caret-right{display: none !important;}
 .product_menu ul li span a:hover{color: #25B430}
@@ -343,7 +334,14 @@ body {
     text-transform: uppercase;
     font-weight: 500;
 }
-.breadcrumbs{background: #fff;margin-left: 5px;}
+.partner_item1{
+    text-align: center;
+}
+.partner_item1 img{
+    max-width: 90%;
+    margin: 10px 0;
+}
+.breadcrumbs{background: #fff;}
 .new_product_images{float: left;width: 35%;}
 .new_product_images img{max-width: 100%;}
 .new_product_detail{width: 62%;float: right;}
@@ -459,7 +457,7 @@ body {
 #left_content {
     width: 229px;
     float: left;
-    margin: 5px 0px;
+    margin: 10px 0px;
     background: #fff;
     display: block;
     overflow: hidden;
@@ -520,18 +518,15 @@ body {
     float: right;
 }
 .content_detail {
-    width: 736px;
+    width: 100%;
     overflow: hidden;
     background: #fff;
-    margin: 5px 2px;
-    border: 1px solid #eee;
     overflow: hidden;
     float: right;
-    box-shadow: 0 0 2px 0 #ddd;
 }
 .about_content {
-    border-bottom: 1px solid #220000;
     overflow: hidden;
+    padding: 20px 0;
 }
 .about_us .title {
     width: 740px;
@@ -546,9 +541,18 @@ body {
     font-family: Arial;
     font-size: 13px;
     float: right;
-    width: 545px;
+    width: 65%;
     font-style: italic;
 }
+.partner{
+    border-top: 2px solid #aaa;
+    padding-top: 20px;
+}
+.partner_item{
+    height: 90px;
+    text-align: center;
+}
+.partner_item img{max-width: 100%;max-height: 80px;}
 .about_us .title h1 {
     margin: 5px 10px;
     color: #054505;
@@ -557,9 +561,9 @@ body {
     text-shadow: 1px 1px 1px #eee !important;
 }
 .about_us .about_content img {
-    width: 160px;
+    width: 30%;
     float: left;
-    margin: 8px;
+    margin: 8px 0;
 }
 .block-title{
     background: #2a82a3;
@@ -786,7 +790,7 @@ body {
     padding:10px
 }
 .page_content {
-    width: 736px !important;
+    width: 785px !important;
     float: right;
     line-height: 25px;
     margin-top: 10px;
