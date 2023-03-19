@@ -118,14 +118,29 @@ app.use(function(req, res, next) {
 });
 app.use(async function(req, res, next) {
   var hostname = req.headers.host;
+  		if (hostname.match(/^www/) !== null ) {
+			res.redirect(301,'http://' + hostname.replace(/^www\./, '') + req.url);
+		}
+  var lang = 'vi'
+  if(req.url.length>=3){
+    const expectLang  = req.url.substring(1,3)
+    switch(expectLang){
+      case 'en':
+        lang = 'en';
+        break;
+      case 'fr':
+        lang = 'fr';
+        break;
+    }
+  }
   if(!caches.websiteinfo[hostname]||caches.websiteinfo[hostname]==null){
     systems.getwebsiteinfo(hostname,async function(err, websitein){
       if(websitein===null){
-        res.redirect(301, 'http://tns.vn');
+        res.redirect(301, 'https://tns.vn');
       }
       if(websitein){
         caches.websiteinfo[hostname] = websitein;
-        await caches.storeCaches(caches,hostname,websitein)
+        await caches.storeCaches(caches,hostname,websitein,lang)
         app.engine('handlebars', exphbs({
           partialsDir: __dirname + `/views/${websitein.customer_username}/partials`,
           layoutsDir:__dirname +`/views/${websitein.customer_username}`,
@@ -136,7 +151,7 @@ app.use(async function(req, res, next) {
   }
   else{
     let websitein = caches.websiteinfo[hostname];
-    await caches.storeCaches(caches,hostname,websitein);
+    await caches.storeCaches(caches,hostname,websitein,lang);
     app.engine('handlebars', exphbs({
       partialsDir: __dirname + `/views/${websitein.customer_username}/partials`,
       layoutsDir:__dirname +`/views/${websitein.customer_username}`,

@@ -1,19 +1,21 @@
 var express = require('express');
+
 var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+const request = require('request');
+var i18n = require('i18n');
 var newspages = require('../models/newspages');
 var NewsContents = require('../models/newscontents');
 var NewsCats = require('../models/newscats');
 var Productlists = require('../models/productlists');
-const { 
+const {
   getallproductbycatshow,
   countproductlistsbycat
 } = require('../models/productlists');
 var ProductCat = require('../models/productcats');
 var listorders = require('../models/listorders');
 const utils = require('../models/utils');
-var website = require('../models/websites');
 const {
   countWebsitesTemplate,
   getAllWebsiteTemplateByPage
@@ -25,127 +27,126 @@ const { storeProductCatCaches } = require('../models/cache');
 var User = require('../models/register');
 var province = require('../models/province');
 var productmoreinfo = require('../models/productmoreinfo');
-const request = require('request');
-var i18n = require('i18n');
+
 router.get('/sitemap.xml', (req, res) => {
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
-  res.setHeader('X-Robots-Tag', 'noindex, follow')
-  res.sendFile(`${process.env.UPLOAD_DIR}/${websiteinfo.customer_username}/sitemap.xml`)
-})
-router.get('/website-mau', async function (req, res, next) {
-  let language = i18n.getLocale();
-  let homelang = language
+  res.setHeader('X-Robots-Tag', 'noindex, follow');
+  res.sendFile(`${process.env.UPLOAD_DIR}/${websiteinfo.customer_username}/sitemap.xml`);
+});
+router.get('/website-mau', async (req, res, next) => {
+  const language = i18n.getLocale();
+  let homelang = language;
   if (language == 'vi') {
-    homelang = ''
+    homelang = '';
   }
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
   let hotnews = caches.hotnews[hostname];
-  hotnews = utils.filterDetailByLang(hotnews, language, 1)
-  let per_page = 30;
-  let [count, listTemplate] = await Promise.all([countWebsitesTemplate(), getAllWebsiteTemplateByPage()])
+  hotnews = utils.filterDetailByLang(hotnews, language, 1);
+  const per_page = 30;
+  const [count, listTemplate] = await Promise.all([countWebsitesTemplate(), getAllWebsiteTemplateByPage()]);
   var allpage = (count / per_page) + 1;
   var arraypage = [];
   for (var i = 1; i <= allpage; i++) {
     var temp = {
       pagecount: i,
       seo_url: 'website-mau'
-    }
+    };
     arraypage.push(temp);
-  };
-  var customer_username = websiteinfo.customer_username
+  }
+  var { customer_username } = websiteinfo;
   res.render(`${customer_username}/content/websitetemplate`, {
     title: 'Giao diện website mẫu, template website miễn phí',
     listtemplates: listTemplate,
     siteinfo: websiteinfo,
-    arraypage: arraypage,
-    hotnews: hotnews,
-    language: language,
+    arraypage,
+    hotnews,
+    language,
     lang: homelang,
-    layout: 'layout',
+    layout: 'layout'
   });
 });
-router.get('/getcart', function (req, res, next) {
+router.get('/getcart', (req, res, next) => {
   if (req.session.products) {
     res.send(req.session.products.length.toString());
   }
   else {
-    res.send("0")
+    res.send('0');
   }
 });
-router.get('/logout', function (req, res) {
+router.get('/logout', (req, res) => {
   req.logout();
   res.redirect('/');
 });
-router.get('/templateregister', function (req, res, next) {
-  let language = i18n.getLocale();
-  let homelang = language
+router.get('/templateregister', (req, res, next) => {
+  const language = i18n.getLocale();
+  let homelang = language;
   if (language == 'vi') {
-    homelang = ''
+    homelang = '';
   }
-  let template = req.param('template', '');
-  let hostname = req.headers.host;
-  let productmenu = caches.productcat[hostname];
-  let mainmenu = caches.mainmenu[hostname];
-  let websiteinfo = caches.websiteinfo[hostname];
-  let customer_username = websiteinfo.customer_username ? websiteinfo.customer_username : 'template1'
+  const template = req.param('template', '');
+  const hostname = req.headers.host;
+  const productmenu = caches.productcat[hostname];
+  const mainmenu = caches.mainmenu[hostname];
+  const websiteinfo = caches.websiteinfo[hostname];
+  const customer_username = websiteinfo.customer_username ? websiteinfo.customer_username : 'template1';
   let hotnews = caches.hotnews[hostname];
-  hotnews = utils.filterDetailByLang(hotnews, language)
+  hotnews = utils.filterDetailByLang(hotnews, language);
   res.render(`${customer_username}/content/templateregister`, {
     title: 'Register this template',
     layout: 'layout',
-    productmenu: productmenu,
-    mainmenu: mainmenu,
+    productmenu,
+    mainmenu,
     siteinfo: websiteinfo,
-    hotnews: hotnews,
+    hotnews,
     lang: homelang,
-    template: template
+    template
   });
 });
-router.get('/thankyou', async function (req, res, next) {
-  let language = i18n.getLocale();
-  let homelang = language
+router.get('/thankyou', async (req, res, next) => {
+  const language = i18n.getLocale();
+  let homelang = language;
   if (language == 'vi') {
-    homelang = ''
+    homelang = '';
   }
-  let policies = caches.policies[hostname] ? caches.policies[hostname] : [];
+  const policies = caches.policies[hostname] ? caches.policies[hostname] : [];
   let hostname = req.headers.host;
-  let productmenu = caches.productcat[hostname];
-  let mainmenu = caches.mainmenu[hostname];
-  let websiteinfo = caches.websiteinfo[hostname];
-  let customer_username = websiteinfo.customer_username ? websiteinfo.customer_username : 'template1'
+  const productmenu = caches.productcat[hostname];
+  const mainmenu = caches.mainmenu[hostname];
+  const websiteinfo = caches.websiteinfo[hostname];
+  const customer_username = websiteinfo.customer_username ? websiteinfo.customer_username : 'template1';
   let hotnews = caches.hotnews[hostname];
-  hotnews = utils.filterDetailByLang(hotnews, language)
+  hotnews = utils.filterDetailByLang(hotnews, language);
   res.render(`${customer_username}/content/thankyou`, {
     title: 'Ragister complete',
-    productmenu: productmenu,
-    mainmenu: mainmenu,
+    productmenu,
+    mainmenu,
     siteinfo: websiteinfo,
-    hotnews: hotnews,
+    hotnews,
     lang: homelang,
-    policies: policies,
-    layout: 'layout',
+    policies,
+    layout: 'layout'
   });
 });
-router.get('/login', function (req, res, next) {
+router.get('/login', (req, res, next) => {
   var hostname = req.headers.host;
   var productmenu = caches.productcat[hostname];
   var mainmenu = caches.mainmenu[hostname];
-  let websiteinfo = caches.websiteinfo[hostname];
-  var customer_username = websiteinfo.customer_username;
-  let policies = caches.policies[hostname] ? caches.policies[hostname] : [];
+  const websiteinfo = caches.websiteinfo[hostname];
+  var { customer_username } = websiteinfo;
+  const policies = caches.policies[hostname] ? caches.policies[hostname] : [];
   res.render(`${customer_username}/content/login`, {
     title: 'Đăng nhập',
     layout: 'layout',
-    productmenu: productmenu,
-    mainmenu: mainmenu,
+    productmenu,
+    mainmenu,
     lang: homelang,
-    policies: policies,
-    siteinfo: websiteinfo,
+    policies,
+    siteinfo: websiteinfo
   });
 });
-router.get('/clearcache', function (req, res, next) {
+router.get('/clearcache', (req, res, next) => {
   var hostname = req.headers.host;
   caches.productcat[hostname] = null;
   caches.hotnewcats[hostname] = null;
@@ -171,117 +172,119 @@ router.get('/clearcache', function (req, res, next) {
   caches.productcatinfo[hostname] = null;
   caches.hotpage[hostname] = null;
   res.send('ok');
-})
-router.get('/lien-he', function (req, res, next) {
-  let language = i18n.getLocale();
-  let homelang = language
+});
+router.get('/lien-he', async (req, res, next) => {
+  const language = i18n.getLocale();
+  let homelang = language;
   if (language == 'vi') {
-    homelang = ''
+    homelang = '';
   }
-  let hostname = req.headers.host;
-  let websiteinfo = caches.websiteinfo[hostname];
-  let productmenu = caches.productcat[hostname];
-  let sitefooter = caches.footer[hostname];
-  let customer_username = websiteinfo.customer_username;
-  let mainmenu = caches.mainmenu[hostname];
-  let productmoreinfos = caches.productmoreinfos[hostname];
+  const hostname = req.headers.host;
+  const websiteinfo = caches.websiteinfo[hostname];
+  const { customer_username } = websiteinfo;
   let hotnews = caches.hotnews[hostname];
-  let policies = caches.policies[hostname] ? caches.policies[hostname] : [];
-  let content = req.param('content');
-  hotnews = utils.filterDetailByLang(hotnews, language)
+  const cacheInfo = await caches.getCaches(caches, hostname, language);
+  const content = req.param('content');
+  hotnews = utils.filterDetailByLang(hotnews, language);
   res.render(`${customer_username}/content/contact`, {
     title: 'Liên hệ',
     layout: customer_username,
-    productmenu: productmenu,
-    mainmenu: mainmenu,
     layout: 'layout',
-    siteinfo: websiteinfo,
-    sitefooter: sitefooter,
-    hotnews: hotnews,
-    language: language,
+    hotnews,
+    language,
     lang: homelang,
-    policies: policies,
-    productmoreinfos: productmoreinfos,
-    content:content
+    content,
+    ...cacheInfo
   });
 });
-router.get('/thankorder', async function (req, res, next) {
+router.get('/:lang/lien-he', async (req, res, next) => {
+  const language = req.params.lang;
+  let homelang = language;
+  if (language == 'vi') {
+    homelang = '';
+  }
+  const hostname = req.headers.host;
+  const websiteinfo = caches.websiteinfo[hostname];
+  const { customer_username } = websiteinfo;
+  let hotnews = caches.hotnews[hostname];
+  const cacheInfo = await caches.getCaches(caches, hostname, language);
+  const content = req.param('content');
+  hotnews = utils.filterDetailByLang(hotnews, language);
+  res.render(`${customer_username}/content/contact`, {
+    title: 'Liên hệ',
+    layout: customer_username,
+    layout: 'layout',
+    hotnews,
+    language,
+    lang: homelang,
+    content,
+    ...cacheInfo
+  });
+});
+router.get('/thankorder', async (req, res, next) => {
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
-  var productmenu = caches.productcat[hostname];
-  var sitefooter = caches.footer[hostname];
-  var mainmenu = caches.mainmenu[hostname];
-  var newproducts = caches.newproducts[hostname];
   var websiteinfo = caches.websiteinfo[hostname];
-  var customer_username = websiteinfo.customer_username;
-  var productmoreinfos = caches.productmoreinfos[hostname];
-  let policies = caches.policies[hostname] ? caches.policies[hostname] : [];
+  // eslint-disable-next-line camelcase
+  var { customer_username } = websiteinfo;
+  const language = i18n.getLocale();
+  let homelang = language;
+  if (language == 'vi') {
+    homelang = '';
+  }
+  const cacheInfo = await caches.getCaches(caches, hostname, language);
   res.render(`${customer_username}/content/thankorder`, {
-    productmenu: productmenu,
-    mainmenu: mainmenu,
-    newproducts: newproducts,
-    siteinfo: websiteinfo,
     title: '',
     layout: 'layout',
-    sitefooter: sitefooter,
-    policies: policies,
-    productmoreinfos: productmoreinfos
+    ...cacheInfo
   });
 });
-router.get('/gio-hang', async function (req, res, next) {
+router.get('/gio-hang', async (req, res, next) => {
+  const language = i18n.getLocale();
+  let homelang = language;
+  if (language == 'vi') {
+    homelang = '';
+  }
   if (!caches.provinces || caches.provinces == null) {
     var province1 = await getcartprovinces();
-    caches.provinces = province1
+    caches.provinces = province1;
   }
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
-  var productmenu = caches.productcat[hostname];
-  var productmenu1 = caches.productmenu[hostname];
-  var sitefooter = caches.footer[hostname];
-  var customer_username = websiteinfo.customer_username
+  var { customer_username } = websiteinfo;
   var listproduct = req.session.products;
-  var mainmenu = caches.mainmenu[hostname];
-  var newproducts = caches.newproducts[hostname];
-  var provinces = caches.provinces;
-  var productmoreinfos = caches.productmoreinfos[hostname];
-  let policies = caches.policies[hostname] ? caches.policies[hostname] : [];
+  var { provinces } = caches;
+  const cacheInfo = await caches.getCaches(caches, hostname, language);
   res.render(`${customer_username}/content/shoppingcart`, {
     listproducts: listproduct,
     total_money: req.session.total_price,
     total_price_pricebeauty: req.session.total_price_pricebeauty,
     title: 'Giỏ hàng',
     layout: 'layout',
-    productmenu: productmenu,
-    mainmenu: mainmenu,
-    siteinfo: websiteinfo,
-    sitefooter: sitefooter,
-    newproducts: newproducts,
-    provinces: provinces,
-    policies: policies,
-    productmoreinfos: productmoreinfos,
-    productmenu1: productmenu1,
+    provinces,
+    ...cacheInfo
   });
 });
 
-router.get('/tim-kiem', async function (req, res, next) {
+router.get('/tim-kiem', async (req, res, next) => {
+  const language = i18n.getLocale();
+  let homelang = language;
+  if (language == 'vi') {
+    homelang = '';
+  }
   var key = req.param('key', '');
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
-  var productmenu = caches.productcat[hostname];
-  var sitefooter = caches.footer[hostname];
-  var customer_username = websiteinfo.customer_username
-  var mainmenu = caches.mainmenu[hostname];
-  var newproducts = caches.newproducts[hostname];
-  var productmoreinfos = caches.productmoreinfos[hostname];
-  let policies = caches.policies[hostname] ? caches.policies[hostname] : [];
-  Productlists.findproductbykey(key, websiteinfo.customer_id, function (err, countproduct) {
+  var { customer_username } = websiteinfo;
+  const cacheInfo = await caches.getCaches(caches, hostname, language);
+  Productlists.findproductbykey(key, websiteinfo.customer_id, (err, countproduct) => {
     for (var x in countproduct) {
       var productiteam = JSON.parse(JSON.stringify(countproduct[x]));
       var pricebeauty = String(productiteam.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
       var sale_pricebeauty = String(productiteam.sale_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
       var productname = countproduct[x].detail[0].name;
       if (productname.length > websiteinfo.products_name_letters) {
-        productname = countproduct[x].detail[0].name.substring(0, websiteinfo.products_name_letters) + "...";
+        productname = `${countproduct[x].detail[0].name.substring(0, websiteinfo.products_name_letters)}...`;
       }
       productiteam.pricebeauty = pricebeauty;
       productiteam.sale_pricebeauty = sale_pricebeauty;
@@ -296,32 +299,26 @@ router.get('/tim-kiem', async function (req, res, next) {
     res.render(`${customer_username}/content/search`, {
       contents: countproduct,
       title: 'Tìm kiếm sản phẩm',
-      productmenu: productmenu,
-      mainmenu: mainmenu,
       layout: 'layout',
-      siteinfo: websiteinfo,
-      sitefooter: sitefooter,
-      newproducts: newproducts,
-      policies: policies,
-      productmoreinfos: productmoreinfos
+      ...cacheInfo
     });
-  })
+  });
 });
-router.get('/san-pham-ban-chay', async function (req, res, next) {
+router.get('/san-pham-ban-chay', async (req, res, next) => {
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
   var per_page = websiteinfo.products_per_page;
-  var customer_username = websiteinfo.customer_username;
-  var customer_id = websiteinfo.customer_id;
+  var { customer_username } = websiteinfo;
+  var { customer_id } = websiteinfo;
   var mainmenu = caches.mainmenu[hostname];
   var productmenu = caches.productcat[hostname];
   var sitefooter = caches.footer[hostname];
   var newproducts = caches.newproducts[hostname];
   var productmoreinfos = caches.productmoreinfos[hostname];
   var page = req.param('page', '1');
-  let policies = caches.policies[hostname] ? caches.policies[hostname] : [];
-  Productlists.counthotproducts(customer_id, function (err, count) {
-    Productlists.getallhotproductsbypage(customer_id, page, per_page, async function (err, conten) {
+  const policies = caches.policies[hostname] ? caches.policies[hostname] : [];
+  Productlists.counthotproducts(customer_id, (err, count) => {
+    Productlists.getallhotproductsbypage(customer_id, page, per_page, async (err, conten) => {
       for (var x in conten) {
         var productiteam = JSON.parse(JSON.stringify(conten[x]));
         var pricebeauty = String(productiteam.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
@@ -334,44 +331,44 @@ router.get('/san-pham-ban-chay', async function (req, res, next) {
       for (var i = 1; i <= allpage; i++) {
         var temp = {
           pagecount: i,
-          seo_url: "san-pham-ban-chay"
-        }
+          seo_url: 'san-pham-ban-chay'
+        };
         arraypage.push(temp);
-      };
+      }
       res.render(`${customer_username}/content/hotproduct`, {
         contents: conten,
         allpage: arraypage,
-        title: "Sản phẩm bán chạy",
+        title: 'Sản phẩm bán chạy',
         canonical: '/san-pham-moi',
-        description: "catinfo.detail[0].description",
-        keyword: "catinfo.detail[0].keyword",
+        description: 'catinfo.detail[0].description',
+        keyword: 'catinfo.detail[0].keyword',
         layout: 'layout',
-        productmenu: productmenu,
-        mainmenu: mainmenu,
+        productmenu,
+        mainmenu,
         siteinfo: websiteinfo,
-        sitefooter: sitefooter,
-        newproducts: newproducts,
-        policies: policies,
-        productmoreinfos: productmoreinfos
+        sitefooter,
+        newproducts,
+        policies,
+        productmoreinfos
       });
-    })
-  })
+    });
+  });
 });
-router.get('/san-pham-moi', async function (req, res, next) {
+router.get('/san-pham-moi', async (req, res, next) => {
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
   var per_page = websiteinfo.products_per_page;
-  var customer_username = websiteinfo.customer_username;
-  var customer_id = websiteinfo.customer_id;
+  var { customer_username } = websiteinfo;
+  var { customer_id } = websiteinfo;
   var mainmenu = caches.mainmenu[hostname];
   var productmenu = caches.productcat[hostname];
   var sitefooter = caches.footer[hostname];
   var newproducts = caches.newproducts[hostname];
   var productmoreinfos = caches.productmoreinfos[hostname];
   var page = req.param('page', '1');
-  let policies = caches.policies[hostname] ? caches.policies[hostname] : [];
-  Productlists.countnewproducts(customer_id, function (err, count) {
-    Productlists.getallnewproductsbypage(customer_id, page, per_page, async function (err, conten) {
+  const policies = caches.policies[hostname] ? caches.policies[hostname] : [];
+  Productlists.countnewproducts(customer_id, (err, count) => {
+    Productlists.getallnewproductsbypage(customer_id, page, per_page, async (err, conten) => {
       for (var x in conten) {
         var productiteam = JSON.parse(JSON.stringify(conten[x]));
         var pricebeauty = String(productiteam.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
@@ -385,103 +382,103 @@ router.get('/san-pham-moi', async function (req, res, next) {
         var temp = {
           pagecount: i,
           seo_url: 'san-pham-moi'
-        }
+        };
         arraypage.push(temp);
-      };
+      }
       res.render(`${customer_username}/content/hotproduct`, {
         contents: conten,
         allpage: arraypage,
-        title: "Sản phẩm mới về",
+        title: 'Sản phẩm mới về',
         canonical: '/san-pham-moi',
-        description: "catinfo.detail[0].description",
-        keyword: "catinfo.detail[0].keyword",
+        description: 'catinfo.detail[0].description',
+        keyword: 'catinfo.detail[0].keyword',
         layout: 'layout',
-        productmenu: productmenu,
-        mainmenu: mainmenu,
+        productmenu,
+        mainmenu,
         siteinfo: websiteinfo,
-        sitefooter: sitefooter,
-        newproducts: newproducts,
-        policies: policies,
-        productmoreinfos: productmoreinfos
+        sitefooter,
+        newproducts,
+        policies,
+        productmoreinfos
       });
-    })
-  })
+    });
+  });
 });
-router.get('/getdistrictbyprovinces', function (req, res, next) {
+router.get('/getdistrictbyprovinces', (req, res, next) => {
   var provinceid = req.param('provinceid');
-  var temp = provinceid.split(";");
+  var temp = provinceid.split(';');
   var raw = 1457;
   if (Number(temp[0]) != NaN) {
-    raw = JSON.stringify({ "province_id": Number(temp[0]) });
+    raw = JSON.stringify({ province_id: Number(temp[0]) });
   }
   const options = {
     url: 'https://online-gateway.ghn.vn/shiip/public-api/master-data/district',
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'Token': '8df4cc58-7c87-11eb-9035-ae038bcc764b'
+      Token: '8df4cc58-7c87-11eb-9035-ae038bcc764b'
     },
-    body: raw,
+    body: raw
   };
-  request(options, function (err, res1, body) {
-    let json = JSON.parse(body);
+  request(options, (err, res1, body) => {
+    const json = JSON.parse(body);
     var districts = '<option value="0">--Vui lòng chọn--</option>';
     var temp = json.data;
     for (var x in temp) {
       if (temp[x].DistrictID != 3442 && temp[x].DistrictID != 3450 && temp[x].DistrictID != 3448 && temp[x].DistrictID != 3449 && temp[x].DistrictID != 1580) {
-        districts = districts + '<option value="' + temp[x].DistrictID + ';' + temp[x].DistrictName + '">' + temp[x].DistrictName + '</option>';
+        districts = `${districts}<option value="${temp[x].DistrictID};${temp[x].DistrictName}">${temp[x].DistrictName}</option>`;
       }
     }
     res.send(districts);
   });
 });
-router.get('/getwardbydistrict', function (req, res, next) {
+router.get('/getwardbydistrict', (req, res, next) => {
   var districtid = req.param('districtid');
-  var temp = districtid.split(";");
+  var temp = districtid.split(';');
   var raw = 3286;
   if (Number(temp[0]) != NaN) {
-    raw = JSON.stringify({ "district_id": Number(temp[0]) });
+    raw = JSON.stringify({ district_id: Number(temp[0]) });
   }
   const options = {
     url: 'https://online-gateway.ghn.vn/shiip/public-api/master-data/ward?district_id',
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'Token': '8df4cc58-7c87-11eb-9035-ae038bcc764b'
+      Token: '8df4cc58-7c87-11eb-9035-ae038bcc764b'
     },
-    body: raw,
+    body: raw
   };
-  request(options, function (err, res1, body) {
-    let json = JSON.parse(body);
+  request(options, (err, res1, body) => {
+    const json = JSON.parse(body);
     var districts = '<option value="0" select="selected">--Vui lòng chọn--</option>';
     var temp = json.data;
     for (var x in temp) {
-      districts = districts + '<option value="' + temp[x].WardCode + ';' + temp[x].WardName + '">' + temp[x].WardName + '</option>';
+      districts = `${districts}<option value="${temp[x].WardCode};${temp[x].WardName}">${temp[x].WardName}</option>`;
     }
     res.send(districts);
   });
 });
-router.get('/getshippingcod', function (req, res, next) {
+router.get('/getshippingcod', (req, res, next) => {
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
   var districtid1 = req.param('districtid');
-  var temp = districtid1.split(";");
+  var temp = districtid1.split(';');
   var districtid = 3286;
   if (Number(temp[0]) != NaN) {
     districtid = Number(temp[0]);
   }
   var wardid1 = req.param('wardid');
-  var temp1 = wardid1.split(";");
+  var temp1 = wardid1.split(';');
   var wardid = 471009;
   if (Number(temp1[0]) != NaN) {
     wardid = Number(temp[0]);
   }
 
   var temp1 = {
-    "shop_id": 102838,
-    "from_district": 1457,
-    "to_district": Number(districtid)
-  }
+    shop_id: 102838,
+    from_district: 1457,
+    to_district: Number(districtid)
+  };
 
   var raw1 = JSON.stringify(temp1);
   const options1 = {
@@ -489,13 +486,13 @@ router.get('/getshippingcod', function (req, res, next) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Token': '7b0a7cf5-7c86-11eb-9035-ae038bcc764b',
+      Token: '7b0a7cf5-7c86-11eb-9035-ae038bcc764b'
     },
-    body: raw1,
+    body: raw1
   };
-  request(options1, function (err, res1, body) {
-    let json = JSON.parse(body);
-    var serviceid = 0
+  request(options1, (err, res1, body) => {
+    const json = JSON.parse(body);
+    var serviceid = 0;
     if (body.data) {
       serviceid = json.data[0].service_id;
     }
@@ -503,31 +500,31 @@ router.get('/getshippingcod', function (req, res, next) {
       serviceid = 0;
     }
     var temp = {
-      'from_district_id': Number(websiteinfo.from_district_id),
-      'service_id': Number(serviceid),
-      'service_type_id': null,
-      'to_district_id': Number(districtid),
-      'to_ward_code': wardid,
-      'height': 10,
-      'length': 10,
-      'weight': 200,
-      'width': 10,
-      'insurance_value': 0,
-      'coupon': null
-    }
+      from_district_id: Number(websiteinfo.from_district_id),
+      service_id: Number(serviceid),
+      service_type_id: null,
+      to_district_id: Number(districtid),
+      to_ward_code: wardid,
+      height: 10,
+      length: 10,
+      weight: 200,
+      width: 10,
+      insurance_value: 0,
+      coupon: null
+    };
     var raw = JSON.stringify(temp);
     const options = {
       url: 'https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Token': '8df4cc58-7c87-11eb-9035-ae038bcc764b',
-        'ShopId': 102838,
+        Token: '8df4cc58-7c87-11eb-9035-ae038bcc764b',
+        ShopId: 102838
       },
-      body: raw,
+      body: raw
     };
-    request(options, function (err, res1, body) {
-      let json = JSON.parse(body);
+    request(options, (err, res1, body) => {
+      const json = JSON.parse(body);
       if (json.data) {
         var temp = json.data.total;
         res.send(temp.toString());
@@ -540,7 +537,6 @@ router.get('/getshippingcod', function (req, res, next) {
 });
 const renderhomepage = async function (req, res, language) {
   var hostname = req.headers.host;
-  const cacheInfo = await caches.getCaches(caches,hostname);
   var websiteinfo = caches.websiteinfo[hostname];
   var product_per_cat_home = 0;
   if (websiteinfo && websiteinfo.products_per_cat_home) {
@@ -548,131 +544,136 @@ const renderhomepage = async function (req, res, language) {
   }
   let istemplate = false;
   if (websiteinfo && websiteinfo.is_template && websiteinfo.is_template == 1) {
-    istemplate = true
+    istemplate = true;
   }
   var list_products_by_more_info = caches.list_products_by_more_info[hostname];
   let listtemplates = [];
   let testimonials = [];
   let cusbanner = [];
-  let promises = [];
+  const promises = [];
   if (hostname == 'template1.tns.com:3005' || hostname == 'tns.vn') {
-    promises.push(systems.testimonials.getTestimonialsByCustomer(3, websiteinfo.customer_id), systems.gettemplates(), systems.getbanner(websiteinfo.customer_id))
+    promises.push(systems.testimonials.getTestimonialsByCustomer(3, websiteinfo.customer_id), systems.gettemplates(), systems.getbanner(websiteinfo.customer_id));
   }
   else {
-    promises.push([], [], systems.getbanner(websiteinfo.customer_id))
+    promises.push([], [], systems.getbanner(websiteinfo.customer_id));
   }
-  [testimonials, listtemplates, cusbanner] = await Promise.all(promises).catch(function (err) { console.log(err) })
-  let hotproductcategory = caches.hotproductcategory[hostname];
-  let hotandnewproducts = caches.hotandnewproducts[hostname];
+  [testimonials, listtemplates, cusbanner] = await Promise.all(promises).catch((err) => {
+    console.log(err);
+  });
+  const hotproductcategory = caches.hotproductcategory[hostname];
+  const hotandnewproducts = caches.hotandnewproducts[hostname];
   let hotnews = caches.hotnews[hostname];
-  hotnews = utils.filterDetailByLang(hotnews, language)
-  let website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : "http";
-  let homelang = ''
-  let lang = 'vi'
+  hotnews = utils.filterDetailByLang(hotnews, language);
+  const website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : 'http';
+  let homelang = '';
+  let lang = 'vi';
   if (websiteinfo.website_url === hostname) {
-    var customer_username = websiteinfo.customer_username;
+    var { customer_username } = websiteinfo;
     if (!caches.hotproductcats[hostname] || caches.hotproductcats[hostname] == null) {
       var hotproductcats = await gethotproductcat(websiteinfo.customer_id, product_per_cat_home, websiteinfo.products_name_letters);
       caches.hotproductcats[hostname] = hotproductcats;
     }
-    var productcat = caches.hotproductcats[hostname]
-    let tranData = {}
+    var productcat = caches.hotproductcats[hostname];
+    let tranData = {};
     if (websiteinfo.multi_language == 1) {
       if (language != 'vi') {
-        lang = language
-        homelang = language
+        lang = language;
+        homelang = language;
       }
-      tranData = websiteinfo.detail.find(obj => obj.lang == lang)
+      tranData = websiteinfo.detail.find((obj) => obj.lang == lang);
     }
+    const cacheInfo = await caches.getCaches(caches, hostname, lang);
     res.render(`${customer_username}/content/index`, {
       productcats: productcat,
-      canonical: website_protocol + '://' + hostname + '/' + homelang,
+      canonical: `${website_protocol}://${hostname}/${homelang}`,
       title: tranData && tranData.title ? tranData.title : websiteinfo.title,
       description: tranData && tranData.description ? tranData.description : websiteinfo.description,
       keyword: tranData && tranData.keyword ? tranData.keyword : websiteinfo.keyword,
       banners: cusbanner,
       layout: 'layout',
-      list_products_by_more_info: list_products_by_more_info,
-      hotproductcategory: hotproductcategory,
-      hotandnewproducts: hotandnewproducts,
-      hotnews: hotnews,
-      listtemplates: listtemplates,
-      testimonials: testimonials,
-      language: language,
+      list_products_by_more_info,
+      hotproductcategory,
+      hotandnewproducts,
+      hotnews,
+      listtemplates,
+      testimonials,
+      language,
       lang: homelang,
       ishomepage: 1,
-      istemplate: istemplate,
+      istemplate,
+      index: 'all',
       ...cacheInfo
     });
   }
   else {
     res.render('content/template1/error404', {
-      canonical: hostname + '/',
-      layout: 'layout',
+      canonical: `${hostname}/`,
+      layout: 'layout'
     });
   }
-}
+};
 const renderpage = async function (req, res, website_url, language = 'vi') {
-  let homelang = language
+  let homelang = language;
   if (language == 'vi') {
-    homelang = ''
+    homelang = '';
   }
   let istemplate = false;
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
   if (websiteinfo && websiteinfo.is_template && websiteinfo.is_template == 1) {
-    istemplate = true
+    istemplate = true;
   }
-  const cacheInfo = await caches.getCaches(caches,hostname);
-  var customer_id = websiteinfo.customer_id;
-  var customer_username = websiteinfo.customer_username;
+  const cacheInfo = await caches.getCaches(caches, hostname, language);
+  var { customer_id } = websiteinfo;
+  var { customer_username } = websiteinfo;
   let hotnews = caches.hotnews[hostname];
-  let website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : "http";
-  newspages.getNewsPagesById(customer_id, website_url.content_id, function (err, conten) {
-    let tranData = null
-    let canonical = conten.seo_url
+  const website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : 'http';
+  newspages.getNewsPagesById(customer_id, website_url.content_id, (err, conten) => {
+    let tranData = null;
+    let canonical = conten.seo_url;
     if (websiteinfo.multi_language == 1) {
       if (language != 'vi') {
-        lang = language
-        homelang = language
+        lang = language;
+        homelang = language;
       }
-      canonical = language + '/' + canonical
-      tranData = conten.detail.find(obj => obj.lang == language);
-      hotnews = utils.filterDetailByLang(hotnews, language, 1)
+      canonical = `${language}/${canonical}`;
+      tranData = conten.detail.find((obj) => obj.lang == language);
+      hotnews = utils.filterDetailByLang(hotnews, language, 1);
     }
     res.render(`${customer_username}/content/page`, {
       contents: conten,
-      details: tranData ? tranData : conten.detail[0],
+      details: tranData || conten.detail[0],
       title: tranData && tranData.title ? tranData.title : conten.detail[0].title,
       description: tranData && tranData.description ? tranData.description : conten.detail[0].description,
       keyword: tranData && tranData.keyword ? tranData.keyword : conten.detail[0].keyword,
-      canonical: website_protocol + '/' + hostname + '/' + canonical,
-      layout: "layout",
-      language: language,
+      canonical: `${website_protocol}://${hostname}/${canonical}`,
+      layout: 'layout',
+      language,
       lang: homelang,
-      hotnews: hotnews,
-      istemplate: istemplate,
+      hotnews,
+      istemplate,
+      index: 'all',
       ...cacheInfo
     });
   });
-}
+};
 const render404page = async function (req, res, website_url, language = 'vi') {
-  let homelang = language
+  let homelang = language;
   if (language == 'vi') {
-    homelang = ''
+    homelang = '';
   }
   let istemplate = false;
-  let hostname = req.headers.host;
-  const cacheInfo = await caches.getCaches(caches,hostname);
-  let websiteinfo = caches.websiteinfo[hostname];
+  const hostname = req.headers.host;
+  const cacheInfo = await caches.getCaches(caches, hostname, language);
+  const websiteinfo = caches.websiteinfo[hostname];
   if (websiteinfo && websiteinfo.is_template && websiteinfo.is_template == 1) {
-    istemplate = true
+    istemplate = true;
   }
-  let customer_username = websiteinfo.customer_username;
+  const { customer_username } = websiteinfo;
   if (websiteinfo.multi_language == 1) {
     if (language != 'vi') {
-      lang = language
-      homelang = language
+      lang = language;
+      homelang = language;
     }
   }
   res.render(`${customer_username}/content/error404`, {
@@ -680,146 +681,150 @@ const render404page = async function (req, res, website_url, language = 'vi') {
     description: '',
     keyword: '',
     canonical: '/',
-    layout: "layout",
-    language: language,
+    layout: 'layout',
+    language,
     lang: homelang,
-    istemplate: istemplate,
+    index: 'noindex',
+    istemplate,
     ...cacheInfo
   });
-}
+};
 const rendernewcontentpage = async function (req, res, website_url, language = 'vi') {
-  let hostname = req.headers.host;
-  const cacheInfo = await caches.getCaches(caches,hostname);
-  let websiteinfo = caches.websiteinfo[hostname];
-  let homelang = language
+  const hostname = req.headers.host;
+  const cacheInfo = await caches.getCaches(caches, hostname);
+  const websiteinfo = caches.websiteinfo[hostname];
+  let homelang = language;
   if (language == 'vi') {
-    homelang = ''
+    homelang = '';
   }
   let istemplate = false;
   if (websiteinfo && websiteinfo.is_template && websiteinfo.is_template == 1) {
-    istemplate = true
+    istemplate = true;
   }
-  let customer_username = websiteinfo.customer_username;
-  var customer_id = websiteinfo.customer_id;
-  let website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : "http";
+  const { customer_username } = websiteinfo;
+  var { customer_id } = websiteinfo;
+  const website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : 'http';
   let hotnews = caches.hotnews[hostname];
-  NewsContents.getnewscontentbycontentid(customer_id,website_url.content_id, function (err, conten) {
-    NewsContents.getratenewcontentbycatcount(conten.parent_id, conten.content_id, 8,customer_id, function (err, ratenews) {
-      let tranData = null
-      let canonical = conten.seo_url
+  NewsContents.getnewscontentbycontentid(customer_id, website_url.content_id, (err, conten) => {
+    NewsContents.getratenewcontentbycatcount(conten.parent_id, conten.content_id, 8, customer_id, (err, ratenews) => {
+      let tranData = null;
+      let canonical = conten.seo_url;
       if (websiteinfo.multi_language == 1) {
         if (language != 'vi') {
-          canonical = language + '/' + canonical
+          canonical = `${language}/${canonical}`;
         }
-        tranData = conten.detail.find(obj => obj.lang == language)
-        ratenews = utils.filterDetailByLang(ratenews, language, 1)
-        hotnews = utils.filterDetailByLang(hotnews, language, 1)
+        tranData = conten.detail.find((obj) => obj.lang == language);
+        ratenews = utils.filterDetailByLang(ratenews, language, 1);
+        hotnews = utils.filterDetailByLang(hotnews, language, 1);
       }
       res.render(`${customer_username}/content/newscontent`, {
         contents: conten,
-        hotnews: hotnews,
-        ratenews: ratenews,
-        details: tranData ? tranData : conten.detail[0],
+        hotnews,
+        ratenews,
+        details: tranData || conten.detail[0],
         title: tranData && tranData.title ? tranData.title : conten.detail[0].title,
         description: tranData && tranData.description ? tranData.description : conten.detail[0].description,
         keyword: tranData && tranData.keyword ? tranData.keyword : conten.detail[0].keyword,
-        canonical: website_protocol + '://' + hostname + '/' + canonical,
-        orgimage: website_protocol + '://' + hostname + '/static/' + customer_username + '/images/news/fullsize/' + conten.image2,
+        canonical: `${website_protocol}://${hostname}/${canonical}`,
+        orgimage: `${website_protocol}://${hostname}/static/${customer_username}/images/news/fullsize/${conten.image2}`,
         layout: 'layout',
-        language: language,
+        language,
         lang: homelang,
-        istemplate: istemplate,
+        istemplate,
+        index: 'all',
         ...cacheInfo
       });
     });
   });
-}
+};
 const rendernewcatpage = async function (req, res, website_url, language = 'vi') {
   let homelang = language;
   var hostname = req.headers.host;
-  const cacheInfo = await caches.getCaches(caches,hostname);
+  const cacheInfo = await caches.getCaches(caches, hostname);
   var websiteinfo = caches.websiteinfo[hostname];
   if (language == 'vi') {
-    homelang = ''
+    homelang = '';
   }
   let istemplate = false;
   if (websiteinfo && websiteinfo.is_template && websiteinfo.is_template == 1) {
-    istemplate = true
+    istemplate = true;
   }
-  var customer_id = websiteinfo.customer_id;
-  var customer_username = websiteinfo.customer_username;
+  var { customer_id } = websiteinfo;
+  var { customer_username } = websiteinfo;
   var per_page = 18;
   var page = req.param('page', '1');
-  let website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : "http";
-  let hotnews = caches.hotnews[hostname];
-  let hotnews1 = utils.filterDetailByLang(hotnews, language, 1)
-  NewsCats.getnewscatsbycatid(customer_id, website_url.content_id, async function (err, newcatinfo) {
-    let newsCatData = null
+  const website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : 'http';
+  const hotnews = caches.hotnews[hostname];
+  const hotnews1 = utils.filterDetailByLang(hotnews, language, 1);
+  NewsCats.getnewscatsbycatid(customer_id, website_url.content_id, async (err, newcatinfo) => {
+    let newsCatData = null;
     if (websiteinfo.multi_language == 1) {
-      newsCatData = newcatinfo.detail.find(obj => obj.lang == language)
+      newsCatData = newcatinfo.detail.find((obj) => obj.lang == language);
     }
-    let [count, conten] = await Promise.all([countnewsbycat(newcatinfo.cat_id,customer_id), NewsContents.getnewsnontentsbycatcount(website_url.content_id, page, per_page,customer_id)]);
+    let [count, conten] = await Promise.all([countnewsbycat(newcatinfo.cat_id, customer_id), NewsContents.getnewsnontentsbycatcount(website_url.content_id, page, per_page, customer_id)]);
     var allpage = (count / per_page) + 1;
     var arraypage = [];
     for (var i = 1; i <= allpage; i++) {
       var temp = {
         pagecount: i,
         seo_url: newcatinfo.seo_url
-      }
+      };
       arraypage.push(temp);
-    };
+    }
     if (language == 'vi') {
-      conten = utils.filterDetailByLang(conten, language, 0)
+      conten = utils.filterDetailByLang(conten, language, 0);
     }
     else {
-      conten = utils.filterDetailByLang(conten, language, 1)
+      conten = utils.filterDetailByLang(conten, language, 1);
     }
     res.render(`${customer_username}/content/newscat`, {
       contents: conten,
       hotnews: hotnews1,
       allpage: arraypage,
       newscatinfo: newcatinfo,
-      newcatdetail: newsCatData ? newsCatData : newcatinfo.detail[0],
+      newcatdetail: newsCatData || newcatinfo.detail[0],
       title: newsCatData ? newsCatData.title : newcatinfo.detail[0].title,
       description: newsCatData ? newsCatData.description : newcatinfo.detail[0].description,
       keyword: newsCatData ? newsCatData.keyword : newcatinfo.detail[0].keyword,
-      canonical: language ? website_protocol + '://' + hostname + '/' + language + '/' + newcatinfo.seo_url + '/' : website_protocol + '://' + hostname + '/' + newcatinfo.seo_url + '/',
-      orgimage: website_protocol + '://' + hostname + '/images/news/fullsize/' + conten.image,
-      language: language,
+      canonical: language ? `${website_protocol}://${hostname}/${language}/${newcatinfo.seo_url}/` : `${website_protocol}://${hostname}/${newcatinfo.seo_url}/`,
+      orgimage: `${website_protocol}://${hostname}/images/news/fullsize/${conten.image}`,
+      language,
       lang: homelang,
       layout: 'layout',
-      istemplate: istemplate,
+      istemplate,
+      index: 'all',
       ...cacheInfo
     });
   });
-}
+};
 const renderproductcatpage = async function (req, res, website_url) {
   const hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
-  const cacheInfo = await caches.getCaches(caches,hostname);
-  const customer_id = websiteinfo.customer_id;
-  var customer_username = websiteinfo.customer_username;
+  const cacheInfo = await caches.getCaches(caches, hostname);
+  const { customer_id } = websiteinfo;
+  var { customer_username } = websiteinfo;
   var per_page = websiteinfo.products_per_page ? websiteinfo.products_per_page : 24;
-  let website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : "http";
-  const pageurl = req.headers.host + req.url
+  const website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : 'http';
+  const pageurl = req.headers.host + req.url;
   var page = req.param('page', '1');
-  if (!caches.productcatinfo[hostname]||!caches.productcatinfo[hostname].get(pageurl)) {
-    const [count,catinfo,listproductsperpage] = await Promise.all([
+  if (!caches.productcatinfo[hostname] || !caches.productcatinfo[hostname].get(pageurl)) {
+    const [count, catinfo, listproductsperpage] = await Promise.all([
       countproductlistsbycat(customer_id, website_url.content_id),
       getproductcatinfo(customer_id, website_url.content_id),
       getallproductbycatshow(customer_id, website_url.content_id, page, per_page)
-    ])
-    await storeProductCatCaches(hostname,caches, pageurl, count, listproductsperpage, catinfo)
+    ]);
+    await storeProductCatCaches(hostname, caches, pageurl, count, listproductsperpage, catinfo);
   }
   const count = caches.productcatcount[hostname].get(pageurl);
   const catinfo = caches.productcatinfo[hostname].get(pageurl);
   const countproduct = caches.listproductsperpage[hostname].get(pageurl);
   let language = i18n.getLocale();
-  if (language == 'vi')
-    language = ''
+  if (language == 'vi') {
+    language = '';
+  }
   let istemplate = false;
   if (websiteinfo && websiteinfo.is_template && websiteinfo.is_template == 1) {
-    istemplate = true
+    istemplate = true;
   }
   for (var x in countproduct) {
     var productiteam = JSON.parse(JSON.stringify(countproduct[x]));
@@ -827,7 +832,7 @@ const renderproductcatpage = async function (req, res, website_url) {
     var sale_pricebeauty = String(productiteam.sale_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
     var productname = countproduct[x].detail[0].name;
     if (productname.length > websiteinfo.products_name_letters) {
-      productname = countproduct[x].detail[0].name.substring(0, websiteinfo.products_name_letters) + "...";
+      productname = `${countproduct[x].detail[0].name.substring(0, websiteinfo.products_name_letters)}...`;
     }
     productiteam.pricebeauty = pricebeauty;
     productiteam.sale_pricebeauty = sale_pricebeauty;
@@ -845,47 +850,49 @@ const renderproductcatpage = async function (req, res, website_url) {
     var temp = {
       pagecount: i,
       seo_url: catinfo.seo_url
-    }
+    };
     arraypage.push(temp);
-  };
+  }
   res.render(`${customer_username}/content/productscat`, {
     contents: countproduct,
     allpage: arraypage,
     newscatinfo: countproduct,
     productcatinfo: catinfo.detail[0],
     title: catinfo.detail[0].title,
-    canonical: website_protocol + '://' + hostname + '/' + catinfo.seo_url + '/',
+    canonical: `${website_protocol}://${hostname}/${catinfo.seo_url}/`,
     description: catinfo.detail[0].description,
     keyword: catinfo.detail[0].keyword,
-    catinfo:catinfo,
+    catinfo,
     layout: 'layout',
-    language: language,
-    istemplate: istemplate,
+    language,
+    istemplate,
+    index: 'all',
     ...cacheInfo
   });
-}
+};
 const renderproductdetailpage = async function (req, res, website_url) {
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
-  const cacheInfo = await caches.getCaches(caches,hostname);
-  const customer_id = websiteinfo.customer_id;
-  var customer_username = websiteinfo.customer_username;
-  let website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : "http";
+  const cacheInfo = await caches.getCaches(caches, hostname);
+  const { customer_id } = websiteinfo;
+  var { customer_username } = websiteinfo;
+  const website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : 'http';
   let language = i18n.getLocale();
-  if (language == 'vi')
-    language = ''
+  if (language == 'vi') {
+    language = '';
+  }
   let istemplate = false;
   if (websiteinfo && websiteinfo.is_template && websiteinfo.is_template == 1) {
-    istemplate = true
+    istemplate = true;
   }
-  Productlists.getproductbyproductid(customer_id, website_url.content_id, async function (err, conten) {
-    Productlists.getrateproductlistscatcount(customer_id,conten.parent_id, conten.product_id, 8, function (err, rateproducts) {
+  Productlists.getproductbyproductid(customer_id, website_url.content_id, async (err, conten) => {
+    Productlists.getrateproductlistscatcount(customer_id, conten.parent_id, conten.product_id, 8, (err, rateproducts) => {
       for (var x in rateproducts) {
         var productiteam = JSON.parse(JSON.stringify(rateproducts[x]));
         var pricebeauty = String(productiteam.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
         productiteam.pricebeauty = pricebeauty;
         productiteam.alt = rateproducts[x].detail[0].name;
-        let salepec = parseInt(((productiteam.sale_price - productiteam.price) / productiteam.sale_price) * 100);
+        const salepec = parseInt(((productiteam.sale_price - productiteam.price) / productiteam.sale_price) * 100);
         if (productiteam.sale == 1) {
           productiteam.salepec = salepec;
         }
@@ -899,13 +906,13 @@ const renderproductdetailpage = async function (req, res, website_url) {
       }
       var procontent = JSON.parse(JSON.stringify(conten.detail[0]));
       var product_details = conten.product_detail;
-      var product_more_info = conten.product_more_info;
+      var { product_more_info } = conten;
       for (var x in product_more_info) {
         if (product_more_info[x].status == 1) {
-          product_more_info[x].status = undefined
+          product_more_info[x].status = undefined;
         }
         if (product_more_info[x].status == 1) {
-          product_more_info[x].status = undefined
+          product_more_info[x].status = undefined;
         }
       }
       var pricebeauty = String(conten.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
@@ -919,57 +926,59 @@ const renderproductdetailpage = async function (req, res, website_url) {
       }
       res.render(`${customer_username}/content/productdetail`, {
         description: conten.detail[0].description,
-        canonical: website_protocol + '://' + hostname + '/' + conten.seo_url,
-        orgimage: website_protocol + '://' + hostname + '/images/products/fullsize/' + conten.image2,
+        canonical: `${website_protocol}://${hostname}/${conten.seo_url}`,
+        orgimage: `${website_protocol}://${hostname}/images/products/fullsize/${conten.image2}`,
         contents: conten,
-        product_details: product_details,
+        product_details,
         price: pricebeauty,
         details: procontent,
         title: conten.detail[0].title,
         layout: 'layout',
-        instock: instock,
-        product_more_info: product_more_info,
-        islogin: islogin,
-        rateproducts: rateproducts,
-        language: language,
-        istemplate: istemplate,
+        instock,
+        product_more_info,
+        islogin,
+        rateproducts,
+        language,
+        istemplate,
+        index: 'all',
         ...cacheInfo
       });
     });
   });
-}
+};
 const renderproductmoreinfocategorypage = async function (req, res, website_url) {
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
-  var customer_id = websiteinfo.customer_id;
-  var customer_username = websiteinfo.customer_username;
+  var { customer_id } = websiteinfo;
+  var { customer_username } = websiteinfo;
   var mainmenu = caches.mainmenu[hostname];
   var productmenu = caches.productcat[hostname];
   var productmenu1 = caches.productmenu[hostname];
   var sitefooter = caches.footer[hostname];
   var newproducts = caches.newproducts[hostname];
   var productmoreinfos = caches.productmoreinfos[hostname];
-  let policies = caches.policies[hostname] ? caches.policies[hostname] : [];
+  const policies = caches.policies[hostname] ? caches.policies[hostname] : [];
   var per_page = websiteinfo.products_per_page;
   var page = req.param('page', '1');
-  let website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : "http";
+  const website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : 'http';
   let language = i18n.getLocale();
-  if (language == 'vi')
-    language = ''
+  if (language == 'vi') {
+    language = '';
+  }
   let istemplate = false;
   if (websiteinfo && websiteinfo.is_template && websiteinfo.is_template == 1) {
-    istemplate = true
+    istemplate = true;
   }
-  Productlists.countproductbymoreinfo(customer_id, website_url.content_id, async function (err, count) {
-    productmoreinfo.getmoreinfovalue(customer_id, website_url.content_id, function (err, productmorein) {
-      Productlists.getallproductbymoreinfo(customer_id, website_url.content_id, Number(page), per_page, async function (err, countproduct) {
+  Productlists.countproductbymoreinfo(customer_id, website_url.content_id, async (err, count) => {
+    productmoreinfo.getmoreinfovalue(customer_id, website_url.content_id, (err, productmorein) => {
+      Productlists.getallproductbymoreinfo(customer_id, website_url.content_id, Number(page), per_page, async (err, countproduct) => {
         for (var x in countproduct) {
           var productiteam = JSON.parse(JSON.stringify(countproduct[x]));
           var pricebeauty = String(productiteam.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
           var sale_pricebeauty = String(productiteam.sale_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
           var productname = countproduct[x].detail[0].name;
           if (productname.length > websiteinfo.products_name_letters) {
-            productname = countproduct[x].detail[0].name.substring(0, websiteinfo.products_name_letters) + "...";
+            productname = `${countproduct[x].detail[0].name.substring(0, websiteinfo.products_name_letters)}...`;
           }
           productiteam.pricebeauty = pricebeauty;
           productiteam.sale_pricebeauty = sale_pricebeauty;
@@ -987,46 +996,47 @@ const renderproductmoreinfocategorypage = async function (req, res, website_url)
           var temp = {
             pagecount: i,
             seo_url: productmorein[0].default_value[0].seo_url
-          }
+          };
           arraypage.push(temp);
-        };
+        }
         res.render(`${customer_username}/content/productmoreinfo`, {
           contents: countproduct,
           allpage: arraypage,
           newscatinfo: countproduct,
           productcatinfo: productmorein[0].default_value[0],
           title: productmorein[0].default_value[0].title,
-          canonical: website_protocol + '://' + hostname + '/' + productmorein[0].default_value[0].seo_url + '/',
+          canonical: `${website_protocol}://${hostname}/${productmorein[0].default_value[0].seo_url}/`,
           description: productmorein[0].default_value[0].description,
           keyword: productmorein[0].default_value[0].keyword,
           layout: 'layout',
-          productmenu: productmenu,
-          productmenu1: productmenu1,
-          mainmenu: mainmenu,
+          productmenu,
+          productmenu1,
+          mainmenu,
           siteinfo: websiteinfo,
-          sitefooter: sitefooter,
-          newproducts: newproducts,
-          language: language,
-          productmoreinfos: productmoreinfos,
-          policies: policies,
+          sitefooter,
+          newproducts,
+          language,
+          productmoreinfos,
+          policies,
           socialmedias: caches.socialmedias[hostname] ? caches.socialmedias[hostname] : [],
-          istemplate: istemplate
+          istemplate,
+          index: 'all'
         });
       });
-    })
-  })
-}
-router.get('/', async function (req, res) {
+    });
+  });
+};
+router.get('/', async (req, res) => {
   res.cookie('locale', 'vi');
   i18n.setLocale('vi');
-  renderhomepage(req, res, 'vi')
+  renderhomepage(req, res, 'vi');
 });
-router.get('/:seourl', async function (req, res, next) {
-  var seourl = req.params.seourl;
+router.get('/:seourl', async (req, res, next) => {
+  var { seourl } = req.params;
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
-  var customer_id = websiteinfo.customer_id;
-  var customer_username = websiteinfo.customer_username;
+  var { customer_id } = websiteinfo;
+  var { customer_username } = websiteinfo;
   switch (seourl) {
     case 'en':
       res.cookie('locale', 'en');
@@ -1039,10 +1049,10 @@ router.get('/:seourl', async function (req, res, next) {
       res.redirect('/');
       break;
     default:
-      const website_url = await systems.getwebsitebyseourl(customer_id, seourl)
+      const website_url = await systems.getwebsitebyseourl(customer_id, seourl);
       if (!website_url) {
         if (customer_username) {
-          render404page(req, res, website_url)
+          render404page(req, res, website_url);
         }
       }
       else {
@@ -1069,15 +1079,15 @@ router.get('/:seourl', async function (req, res, next) {
       }
   }
 });
-router.get('/:seourl1/:selurl2', async function (req, res, next) {
-  var seourl1 = req.params.seourl1;
+router.get('/:seourl1/:selurl2', async (req, res, next) => {
+  var { seourl1 } = req.params;
   var seourl2 = req.params.selurl2;
-  var seourl = seourl1 + '/' + seourl2;
+  var seourl = `${seourl1}/${seourl2}`;
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
-  var customer_id = websiteinfo.customer_id;
-  var customer_username = websiteinfo.customer_username;
-  let lang = 'vi'
+  var { customer_id } = websiteinfo;
+  var { customer_username } = websiteinfo;
+  let lang = 'vi';
   if (seourl1.length === 2) {
     lang = seourl1;
     seourl = seourl2;
@@ -1097,7 +1107,7 @@ router.get('/:seourl1/:selurl2', async function (req, res, next) {
     res.cookie('locale', 'vi');
     i18n.setLocale('vi');
   }
-  const website_url = await systems.getwebsitebyseourl(customer_id, seourl)
+  const website_url = await systems.getwebsitebyseourl(customer_id, seourl);
   if (!website_url) {
     if (customer_username) {
       render404page(req, res, website_url, lang);
@@ -1125,11 +1135,10 @@ router.get('/:seourl1/:selurl2', async function (req, res, next) {
         break;
     }
   }
-
 });
 function gethotproductcat(customer_id, product_per_cat_home, products_name_letters) {
   return new Promise((resolve, reject) => {
-    ProductCat.gethotrootproductcats(customer_id, async function (err, productcat) {
+    ProductCat.gethotrootproductcats(customer_id, async (err, productcat) => {
       var productcatdetail = JSON.parse(JSON.stringify(productcat));
       if (productcat) {
         for (var x in productcat) {
@@ -1140,14 +1149,14 @@ function gethotproductcat(customer_id, product_per_cat_home, products_name_lette
         resolve(productcatdetail);
       }
       else {
-        reject('productcat null')
+        reject('productcat null');
       }
     });
   });
 }
 function getproductbycatcout(customer_id, cat_id, product_per_cat_home, products_name_letters) {
   return new Promise((resolve, reject) => {
-    Productlists.getproductbycatcount(customer_id, cat_id, product_per_cat_home, function (err, countproduct) {
+    Productlists.getproductbycatcount(customer_id, cat_id, product_per_cat_home, (err, countproduct) => {
       if (countproduct) {
         for (var x in countproduct) {
           var productiteam = JSON.parse(JSON.stringify(countproduct[x]));
@@ -1155,7 +1164,7 @@ function getproductbycatcout(customer_id, cat_id, product_per_cat_home, products
           var sale_pricebeauty = String(productiteam.sale_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
           var productname = countproduct[x].detail[0].name;
           if (productname.length > products_name_letters) {
-            productname = countproduct[x].detail[0].name.substring(0, products_name_letters) + "...";
+            productname = `${countproduct[x].detail[0].name.substring(0, products_name_letters)}...`;
           }
           productiteam.pricebeauty = pricebeauty;
           productiteam.sale_pricebeauty = sale_pricebeauty;
@@ -1170,38 +1179,37 @@ function getproductbycatcout(customer_id, cat_id, product_per_cat_home, products
         resolve(countproduct);
       }
       else {
-        reject('productcat null')
+        reject('productcat null');
       }
     });
   });
 }
 
-
 function rendercatsbyparent(customer_id, parent_id, listcat) {
   return new Promise((resolve, reject) => {
     var listcat = '';
-    ProductCat.getproductcatsbyparent(customer_id, Number(parent_id), async function (err, productcat) {
+    ProductCat.getproductcatsbyparent(customer_id, Number(parent_id), async (err, productcat) => {
       if (productcat) {
-        listcat = listcat + '<ul>';
+        listcat += '<ul>';
         for (var x in productcat) {
-          listcat = listcat + '<li><span><a href="/' + productcat[x].seo_url + '">' + productcat[x].detail[0].name + '</a></span>';
+          listcat = `${listcat}<li><span><a href="/${productcat[x].seo_url}">${productcat[x].detail[0].name}</a></span>`;
           if (productcat[x].list_child.length == 0 || productcat[x].list_child[0] == undefined) {
           }
           else {
             await rendercatsbyparent(customer_id, productcat[x].cat_id, listcat);
           }
-          listcat = listcat + '</li>';
+          listcat += '</li>';
         }
-        listcat = listcat + '</ul>';
+        listcat += '</ul>';
         resolve(listcat);
       }
       else {
-        reject('productcat null')
+        reject('productcat null');
       }
     });
   });
 }
-router.post('/registertouse', async function (req, res, next) {
+router.post('/registertouse', async (req, res, next) => {
   nodeMailer = require('nodemailer');
   var newcustomers = customers({
     name: req.param('name') ? req.param('name') : '',
@@ -1210,7 +1218,7 @@ router.post('/registertouse', async function (req, res, next) {
     template_name: req.param('template') ? req.param('template') : '',
     status: 0
   });
-  customers.createcustomers(newcustomers, function (err, custo) {
+  customers.createcustomers(newcustomers, (err, custo) => {
     if (err) {
 
     }
@@ -1218,8 +1226,8 @@ router.post('/registertouse', async function (req, res, next) {
       var name = req.param('name');
       var email = req.param('email');
       var phone = req.param('phone');
-      var cont = 'Tên Khách hàng:' + name + '<br>-Email:' + email + '<br>-Điện thoại: ' + phone;
-      let transporter = nodeMailer.createTransport({
+      var cont = `Tên Khách hàng:${name}<br>-Email:${email}<br>-Điện thoại: ${phone}`;
+      const transporter = nodeMailer.createTransport({
         host: 'smtp.coresender.com',
         port: 465,
         secure: true,
@@ -1231,33 +1239,32 @@ router.post('/registertouse', async function (req, res, next) {
           rejectUnauthorized: false
         }
       });
-      let mailOptions = {
+      const mailOptions = {
         from: '"Khách hàng đăng ký dùng thử" <trutc@smartvas.com.vn>', // sender address
-        to: "congtruqn@gmail.com", // list of receivers
-        subject: "Khách hàng đăng ký", // Subject line
+        to: 'congtruqn@gmail.com', // list of receivers
+        subject: 'Khách hàng đăng ký', // Subject line
         text: cont, // plain text body
-        html: cont, // html body
+        html: cont // html body
       };
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
           return console.log(error);
         }
         console.log('Message %s sent: %s', info.messageId, info.response);
-
       });
     }
-  })
+  });
   res.send('1');
 });
 
-router.post('/gettrial', async function (req, res, next) {
+router.post('/gettrial', async (req, res, next) => {
   nodeMailer = require('nodemailer');
   var name = req.param('name');
   var email = req.param('email');
   var phone = req.param('phone');
   var career = req.param('career');
-  var cont = 'Tên Khách hàng:' + name + '<br>-Email:' + email + '<br>-Điện thoại: ' + phone + '<br>-Lĩnh vực : ' + career;
-  let transporter = nodeMailer.createTransport({
+  var cont = `Tên Khách hàng:${name}<br>-Email:${email}<br>-Điện thoại: ${phone}<br>-Lĩnh vực : ${career}`;
+  const transporter = nodeMailer.createTransport({
     host: 'mail.smartsign.com.vn',
     port: 25,
     secure: false,
@@ -1266,12 +1273,12 @@ router.post('/gettrial', async function (req, res, next) {
       pass: 'VinaCA@123'
     }
   });
-  let mailOptions = {
+  const mailOptions = {
     from: '"Thiết kế web dùng thử " <admin@smartsign.com.vn>', // sender address
-    to: "congtruqn@gmail.com", // list of receivers
-    subject: "Khách hàng đăng ký dùng thử", // Subject line
+    to: 'congtruqn@gmail.com', // list of receivers
+    subject: 'Khách hàng đăng ký dùng thử', // Subject line
     text: cont, // plain text body
-    html: cont, // html body
+    html: cont // html body
   };
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
@@ -1281,10 +1288,10 @@ router.post('/gettrial', async function (req, res, next) {
   });
   res.send('1');
 });
-router.post('/addtocart', function (req, res, next) {
+router.post('/addtocart', (req, res, next) => {
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
-  const customer_id = websiteinfo.customer_id;
+  const { customer_id } = websiteinfo;
   var listproducts = [];
   var total_price = 0;
   if (req.session.total_price) {
@@ -1297,7 +1304,7 @@ router.post('/addtocart', function (req, res, next) {
     listproducts = req.session.products;
   }
   var product1 = req.param('productadd');
-  Productlists.getproductbyproductid(customer_id, product1, function (err, product) {
+  Productlists.getproductbyproductid(customer_id, product1, (err, product) => {
     var pricebeauty = String(product.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
     var productincart = {
       id: product.product_id,
@@ -1308,9 +1315,9 @@ router.post('/addtocart', function (req, res, next) {
       price: product.price,
       product_total_price: product.price,
       product_total_price_b: pricebeauty,
-      pricebeauty: pricebeauty,
+      pricebeauty,
       num: 1
-    }
+    };
     if (listproducts.length == 0) {
       listproducts.push(productincart);
       req.session.products = listproducts;
@@ -1319,32 +1326,30 @@ router.post('/addtocart', function (req, res, next) {
       req.session.total_price_pricebeauty = total_price_pricebeauty;
       res.send(req.session.products);
     }
+    else if (findObjectByKey(listproducts, product1) == -1) {
+      listproducts.push(productincart);
+      req.session.products = listproducts;
+      req.session.total_price = (Number(total_price) + Number(product.price));
+      var total_price_pricebeauty = String(req.session.total_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+      req.session.total_price_pricebeauty = total_price_pricebeauty;
+      res.send(req.session.products);
+    }
     else {
-      if (findObjectByKey(listproducts, product1) == -1) {
-        listproducts.push(productincart);
-        req.session.products = listproducts;
-        req.session.total_price = (Number(total_price) + Number(product.price));
-        var total_price_pricebeauty = String(req.session.total_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-        req.session.total_price_pricebeauty = total_price_pricebeauty;
-        res.send(req.session.products);
-      }
-      else {
-        var xx = findObjectByKey(listproducts, product1);
-        listproducts[xx].num = Number(listproducts[xx].num) + 1;
-        listproducts[xx].product_total_price = listproducts[xx].price * listproducts[xx].num;
-        listproducts[xx].product_total_price_b = String(listproducts[xx].product_total_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-        req.session.products = listproducts;
-        req.session.total_price = (Number(total_price) + Number(product.price) * (listproducts[xx].num - 1));
-        var total_price_pricebeauty = String(req.session.total_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-        req.session.total_price_pricebeauty = total_price_pricebeauty;
-        res.send(req.session.products);
-      }
+      var xx = findObjectByKey(listproducts, product1);
+      listproducts[xx].num = Number(listproducts[xx].num) + 1;
+      listproducts[xx].product_total_price = listproducts[xx].price * listproducts[xx].num;
+      listproducts[xx].product_total_price_b = String(listproducts[xx].product_total_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+      req.session.products = listproducts;
+      req.session.total_price = (Number(total_price) + Number(product.price) * (listproducts[xx].num - 1));
+      var total_price_pricebeauty = String(req.session.total_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+      req.session.total_price_pricebeauty = total_price_pricebeauty;
+      res.send(req.session.products);
     }
   });
 });
-router.post('/updatecartnumber', function (req, res, next) {
+router.post('/updatecartnumber', (req, res, next) => {
   var product_id = req.body.id;
-  var num = req.body.num;
+  var { num } = req.body;
   var listproducts = [];
   var total_price = 0;
   if (req.session.total_price) {
@@ -1353,7 +1358,7 @@ router.post('/updatecartnumber', function (req, res, next) {
   if (req.session.products) {
     listproducts = req.session.products;
     var xx = findObjectByKey(listproducts, product_id);
-    total_price = total_price - (listproducts[xx].price * listproducts[xx].num);
+    total_price -= (listproducts[xx].price * listproducts[xx].num);
     listproducts[xx].num = num;
     listproducts[xx].product_total_price = listproducts[xx].price * num;
     listproducts[xx].product_total_price_b = String(listproducts[xx].product_total_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
@@ -1363,7 +1368,7 @@ router.post('/updatecartnumber', function (req, res, next) {
     req.session.total_price_pricebeauty = total_price_pricebeauty;
     res.send(req.session.products);
   }
-})
+});
 function findObjectByKey(array, value) {
   for (var i = 0; i < array.length; i++) {
     if (array[i].id == Number(value)) {
@@ -1372,43 +1377,43 @@ function findObjectByKey(array, value) {
   }
   return -1;
 }
-router.post('/removecartitem', function (req, res, next) {
+router.post('/removecartitem', (req, res, next) => {
   var array = req.session.products;
   var total_price = 0;
   if (req.session.total_price) {
     total_price = req.session.total_price;
   }
-  var id = req.param('id')
+  var id = req.param('id');
   var listproducts = req.session.products;
   var xx = findObjectByKey(listproducts, id);
-  total_price = total_price - (listproducts[xx].price * listproducts[xx].num);
-  req.session.total_price = total_price
+  total_price -= (listproducts[xx].price * listproducts[xx].num);
+  req.session.total_price = total_price;
   var temp = removeArrayItemByAttr(array, 'id', id);
-  //req.session.destroy();
+  // req.session.destroy();
   req.session.products = temp;
   res.send('ok');
 });
-router.get('/thong-tin-khach-hang', function (req, res, next) {
+router.get('/thong-tin-khach-hang', (req, res, next) => {
   var listcat = '';
-  ProductCat.getrootproductcats(async function (err, productcatroot) {
+  ProductCat.getrootproductcats(async (err, productcatroot) => {
     var newproduct = await getnewproducts(10);
     for (var x in productcatroot) {
-      listcat = listcat + '<li class="product_menu_item"><span><a href="/' + productcatroot[x].seo_url + '">' + productcatroot[x].detail[0].name + '</a></span>';
+      listcat = `${listcat}<li class="product_menu_item"><span><a href="/${productcatroot[x].seo_url}">${productcatroot[x].detail[0].name}</a></span>`;
       var listcat1 = await rendercatsbyparent(productcatroot[x].cat_id, '');
-      listcat = listcat + listcat1;
-      listcat = listcat + '</li>';
+      listcat += listcat1;
+      listcat += '</li>';
     }
     res.render('content/customerinfo', {
       listproductmenus: listcat,
       newproducts: newproduct,
       title: '',
-      layout: 'public',
+      layout: 'public'
     });
   });
 });
-function countnewsbycat(cat_id,customer_id) {
+function countnewsbycat(cat_id, customer_id) {
   return new Promise((resolve, reject) => {
-    NewsContents.countnewscontentsbycat(cat_id,customer_id, function (err, count) {
+    NewsContents.countnewscontentsbycat(cat_id, customer_id, (err, count) => {
       if (count) {
         resolve(count);
       }
@@ -1420,27 +1425,27 @@ function countnewsbycat(cat_id,customer_id) {
 }
 function getproductcatinfo(customer_id, cat_id) {
   return new Promise((resolve, reject) => {
-    ProductCat.getproductcatsbycatid(customer_id, cat_id, function (err, count) {
+    ProductCat.getproductcatsbycatid(customer_id, cat_id, (err, count) => {
       if (count) {
         resolve(count);
       }
       else {
-        reject('productcat null')
+        reject('productcat null');
       }
     });
   });
 }
 
-router.post('/addcustomercontact', function (req, res, next) {
+router.post('/addcustomercontact', (req, res, next) => {
   const hostname = req.headers.host;
   const websiteinfo = caches.websiteinfo[hostname];
   const nodeMailer = require('nodemailer');
-  let name = req.param('name');
-  let email = req.param('email');
-  let phone = req.param('phone');
-  let content = req.param('content');
-  var cont = 'Tên Khách hàng:' + name + '<br>Email:' + email + '<br>Điện thoại: ' + phone + '<br>Nội dung: ' + content + '<br>';
-  let transporter = nodeMailer.createTransport({
+  const name = req.param('name');
+  const email = req.param('email');
+  const phone = req.param('phone');
+  const content = req.param('content');
+  var cont = `Tên Khách hàng:${name}<br>Email:${email}<br>Điện thoại: ${phone}<br>Nội dung: ${content}<br>`;
+  const transporter = nodeMailer.createTransport({
     host: 'smtp.coresender.com',
     port: 465,
     secure: true,
@@ -1452,12 +1457,12 @@ router.post('/addcustomercontact', function (req, res, next) {
       rejectUnauthorized: false
     }
   });
-  let mailOptions = {
+  const mailOptions = {
     from: 'trutc@smartvas.com.vn', // sender address
     to: websiteinfo.customer_email, // list of receivers
-    subject: "Khách hàng đăt hàng từ website", // Subject line
+    subject: 'Khách hàng đăt hàng từ website', // Subject line
     text: cont, // plain text body
-    html: cont, // html body
+    html: cont // html body
   };
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
@@ -1467,7 +1472,7 @@ router.post('/addcustomercontact', function (req, res, next) {
   });
   res.send('ok');
 });
-router.post('/addorder', function (req, res, next) {
+router.post('/addorder', (req, res, next) => {
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
   nodeMailer = require('nodemailer');
@@ -1477,20 +1482,20 @@ router.post('/addorder', function (req, res, next) {
   var address = req.param('address');
   var note = req.param('note');
   var province1 = req.param('province');
-  var province = "";
-  var temp1 = province1.split(";");
+  var province = '';
+  var temp1 = province1.split(';');
   if (temp1[1]) {
     province = temp1[1];
   }
   var district1 = req.param('district');
-  var district = "";
-  var temp2 = district1.split(";");
+  var district = '';
+  var temp2 = district1.split(';');
   if (temp2[1]) {
     district = temp2[1];
   }
   var ward1 = req.param('ward');
-  var ward = "";
-  var temp3 = ward1.split(";");
+  var ward = '';
+  var temp3 = ward1.split(';');
   if (temp3[1]) {
     ward = temp3[1];
   }
@@ -1498,20 +1503,20 @@ router.post('/addorder', function (req, res, next) {
   var create_date = new Date().getTime();
   var products = '';
   var neworders = new listorders({
-    name: name,
-    email: email,
-    phone: phone,
-    address: address,
-    create_date: create_date,
+    name,
+    email,
+    phone,
+    address,
+    create_date,
     total_money: req.session.total_price,
     shipping_fee: shippingcod,
-    province: province,
-    district: district,
-    ward: ward,
+    province,
+    district,
+    ward,
     customer_note: note,
     customer_id: websiteinfo.customer_id
   });
-  listorders.createlistorders(neworders, function (err, producttypess) {
+  listorders.createlistorders(neworders, (err, producttypess) => {
     for (var i in req.session.products) {
       var list_product = {
         product_id: req.session.products[i].product_id,
@@ -1519,14 +1524,14 @@ router.post('/addorder', function (req, res, next) {
         product_price: req.session.products[i].price,
         product_image: req.session.products[i].image,
         product_total_price: req.session.products[i].product_total_price,
-        count: req.session.products[i].num,
-      }
-      products = 'Tên sản phẩm :' + req.session.products[i].name + '<br>';
-      products = products + 'Giá sản phẩm :' + req.session.products[i].price + '<br>';
-      listorders.editlistorders(producttypess._id, { $push: { list_products: list_product } }, function (err, companys) {
-        var cont = 'Tên Khách hàng:' + name + '<br>-Email:' + email + '<br>-Điện thoại: ' + phone + '<br>Địa chỉ: ' + address + '<br>';
-        cont = cont + products;
-        let transporter = nodeMailer.createTransport({
+        count: req.session.products[i].num
+      };
+      products = `Tên sản phẩm :${req.session.products[i].name}<br>`;
+      products = `${products}Giá sản phẩm :${req.session.products[i].price}<br>`;
+      listorders.editlistorders(producttypess._id, { $push: { list_products: list_product } }, (err, companys) => {
+        var cont = `Tên Khách hàng:${name}<br>-Email:${email}<br>-Điện thoại: ${phone}<br>Địa chỉ: ${address}<br>`;
+        cont += products;
+        const transporter = nodeMailer.createTransport({
           host: 'smtp.coresender.com',
           port: 465,
           secure: true,
@@ -1538,12 +1543,12 @@ router.post('/addorder', function (req, res, next) {
             rejectUnauthorized: false
           }
         });
-        let mailOptions = {
+        const mailOptions = {
           from: 'trutc@smartvas.com.vn', // sender address
           to: websiteinfo.customer_email, // list of receivers
-          subject: "Khách hàng đăt hàng từ website", // Subject line
+          subject: 'Khách hàng đăt hàng từ website', // Subject line
           text: cont, // plain text body
-          html: cont, // html body
+          html: cont // html body
         };
         transporter.sendMail(mailOptions, (error, info) => {
           if (error) {
@@ -1551,8 +1556,8 @@ router.post('/addorder', function (req, res, next) {
           }
           console.log('Message %s sent: %s', info.messageId, info.response);
         });
-      })
-    };
+      });
+    }
     req.session.destroy();
   });
   res.send('ok');
@@ -1563,72 +1568,74 @@ function removeArrayItemByAttr(arr, attr, value) {
     if (arr[i]
       && arr[i].hasOwnProperty(attr)
       && (arguments.length > 2 && arr[i][attr] == value)) {
-
       arr.splice(i, 1);
-
     }
   }
   return arr;
 }
-router.post('/login', function (req, res, next) {
+router.post('/login', (req, res, next) => {
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
-  User.getcustomeruser(req.body.username, websiteinfo.customer_id, function (err, users) {
+  User.getcustomeruser(req.body.username, websiteinfo.customer_id, (err, users) => {
     if (users) {
       if (users.type == 6) {
-        passport.authenticate('local', function (err, user, info) {
-          if (err) { return next(err); }
-          if (!user) { return res.redirect('/login?msg=usernotfound'); }
-          req.logIn(user, function (err) {
+        passport.authenticate('local', (err, user, info) => {
+          if (err) {
+            return next(err);
+          }
+          if (!user) {
+            return res.redirect('/login?msg=usernotfound');
+          }
+          req.logIn(user, (err) => {
             if (err) {
-              res.redirect('/login?msg=usernotfound')
+              res.redirect('/login?msg=usernotfound');
             }
             else {
-              res.redirect('/')
+              res.redirect('/');
             }
           });
         })(req, res, next);
       }
       else {
-        res.redirect('/login?msg=usernotfound')
+        res.redirect('/login?msg=usernotfound');
       }
     }
     else {
-      res.redirect('/login?msg=usernotfound')
+      res.redirect('/login?msg=usernotfound');
     }
-  })
-})
-passport.serializeUser(function (users, done) {
+  });
+});
+passport.serializeUser((users, done) => {
   done(null, users.id);
 });
-passport.deserializeUser(function (id, done) {
-  User.getUserById(id, function (err, users) {
+passport.deserializeUser((id, done) => {
+  User.getUserById(id, (err, users) => {
     done(err, users);
   });
 });
 passport.use(new LocalStrategy(
-  function (username, password, done) {
-    User.getUserByUsername(username, function (err, users) {
+  (username, password, done) => {
+    User.getUserByUsername(username, (err, users) => {
       if (err) throw err;
       if (!users) {
         return done(null, false, { message: 'Unknown User' });
       }
-      User.comparePassword(password, users.password, function (err, isMatch) {
+      User.comparePassword(password, users.password, (err, isMatch) => {
         if (err) throw err;
         if (isMatch) {
           return done(null, users);
-        } else {
-          return done(null, false, { message: 'Invalid password' });
         }
+
+        return done(null, false, { message: 'Invalid password' });
       });
     });
-  }));
+  }
+));
 function getcartprovinces() {
   return new Promise((resolve, reject) => {
-    province.getallprovinces(function (err, producttypess) {
+    province.getallprovinces((err, producttypess) => {
       resolve(producttypess);
-    })
+    });
   });
 }
 module.exports = router;
-

@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="/layout/{{siteinfo.customer_username}}/css/slick.css" />
   <link rel="stylesheet" href="/layout/{{siteinfo.customer_username}}/css/font-awesome.min.css" />
 
-  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="/layout/{{siteinfo.customer_username}}/js/jquery-1.9.1.js"></script>
   <script type="text/javascript" src="/layout/{{siteinfo.customer_username}}/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/layout/{{siteinfo.customer_username}}/js/jcarousel.responsive.js"></script>
   <script type="text/javascript" src="/layout/{{siteinfo.customer_username}}/js/jquery.jcarousel.min.js"></script>
@@ -89,9 +89,11 @@
         <div class="topmenu_right">
           <ul>
             <li class=""><a href="javascript:void(0);" onclick="setlang('en')"><img
-                  src="/static/{{siteinfo.customer_username}}/images/systems/en.png" alt="English" title=" English "></a></li>
+                  src="/static/{{siteinfo.customer_username}}/images/systems/en.png" alt="English"
+                  title=" English "></a></li>
             <li><a href="javascript:void(0);" onclick="setlang('vi')"><img
-                  src="/static/{{siteinfo.customer_username}}/images/systems/vi.png" alt="English" title=" English "></a></li>
+                  src="/static/{{siteinfo.customer_username}}/images/systems/vi.png" alt="English"
+                  title=" English "></a></li>
           </ul>
         </div>
       </div>
@@ -124,6 +126,32 @@
       </div>
     </div>
   </div> <!-- /container -->
+<div class="hotline-footer">
+<div class="left">
+<a href="https://zalo.me/0934772606" id="linkzalo" target="_blank" rel="noopener noreferrer"><img src="/static/template10/images/systems/zalo2.png">Chat Zalo ngay</a>
+</div>
+<div class="right">
+<a href="tel:0934772606"><img src="/static/template10/images/systems/call.png">Gọi ngay</a>
+</div>
+<div class="clearboth"></div>
+</div>
+  <div class="hal">
+    <div class="halitem">
+      <div class="halbg" style="background: #dd3333"></div>
+      <div class="halcontent" style="background: #dd3333">Gọi ngay</div>
+      <div class="halimg" style="background: #dd3333"><a href="tel:0934772606"><img
+            src="/static/template10/images/systems/call.png" alt="Gọi cho Gift One"></a></div>
+      <p></p>
+    </div>
+    <div class="halitem">
+      <div class="halbg" style="background: #2196F3"></div>
+      <div class="halcontent" style="background: #2196F3">Chat Zalo ngay</div>
+      <div class="halimg" style="background: #2196F3"><a href="https://zalo.me/0934772606"><img
+            src="/static/template10/images/systems/zalo2.png" alt="Chat Zalo"></a></div>
+      <p></p>
+    </div>
+    <p></p>
+  </div>
   {{>mobilenavi}}
   <footer class="footer">
     {{>footer}}
@@ -185,4 +213,5 @@
     }
   }
 </script>
+
 </html>

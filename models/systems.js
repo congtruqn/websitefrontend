@@ -89,13 +89,19 @@ function rendercatsbyparent(customer_id, parent_id, listcat) {
     });
   });
 }
-module.exports.rendermainmenu = async function (customer_id) {
+module.exports.rendermainmenu = async function (customer_id,lang) {
   return new Promise((resolve, reject) => {
     menu.getrootmenu(customer_id, async function (err, menuroot) {
       var listcat = '<ul class="ul_mainmenu">';
       for (var x in menuroot) {
-        listcat = listcat + '<li class="mainmenu_item"><span><a href="/' + menuroot[x].link + '">' + menuroot[x].detail[0].name + '</a></span>';
-        var listcat1 = await renderrootmenuparent(customer_id, menuroot[x].cat_id, '');
+        let tranData = menuroot[x].detail.find(obj => obj.lang == lang)?menuroot[x].detail.find(obj => obj.lang == lang):menuroot[x].detail.find(obj => obj.lang == 'vi')
+        if(lang=='vi'){
+          listcat = listcat + '<li class="mainmenu_item"><span><a href="/' + menuroot[x].link + '">' + tranData.name + '</a></span>';
+        }
+        else{
+          listcat = listcat + '<li class="mainmenu_item"><span><a href="/'+lang+'/' + menuroot[x].link + '">' + tranData.name + '</a></span>';
+        }
+        var listcat1 = await renderrootmenuparent(customer_id, menuroot[x].cat_id, '',lang);
         listcat = listcat + listcat1;
         listcat = listcat + '</li>';
       }
@@ -104,14 +110,20 @@ module.exports.rendermainmenu = async function (customer_id) {
     });
   });
 }
-function renderrootmenuparent(customer_id, parent_id, listcat) {
+function renderrootmenuparent(customer_id, parent_id, listcat,lang = 'vi') {
   return new Promise((resolve, reject) => {
     menu.getmenubyparent(customer_id, Number(parent_id), async function (err, productcat) {
       if (productcat.length > 0) {
         listcat = listcat + '<ul>';
         for (var x in productcat) {
-          listcat = listcat + '<li><span><a href="/' + productcat[x].link + '">' + productcat[x].detail[0].name + '</a></span>';
-          if (productcat[x].list_child.length == 0 || productcat[x].list_child[0] == undefined) {
+          let tranData = productcat[x].detail.find(obj => obj.lang == lang)?productcat[x].detail.find(obj => obj.lang == lang):productcat[x].detail.find(obj => obj.lang == 'vi')
+          if(lang=='vi'){
+            listcat = listcat + '<li><span><a href="/' + productcat[x].link + '">' + tranData.name + '</a></span>';
+          }
+          else{
+            listcat = listcat + '<li><span><a href="/'+lang+'/' + productcat[x].link + '">' + tranData.name + '</a></span>';
+          }
+          if (productcat[x].list_child.length == 0 || !productcat[x].list_child[0]) {
           }
           else {
             var temp = await renderrootmenuparent(customer_id, productcat[x].cat_id, listcat);

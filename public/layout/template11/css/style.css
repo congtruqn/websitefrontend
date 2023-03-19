@@ -524,10 +524,20 @@ body {
     overflow: hidden;
     float: right;
 }
+.error_content{
+    width: 770px;
+    float: right;
+}
 .about_content {
     overflow: hidden;
     padding: 20px 0;
 }
+.right-block{float: right;}
+.right-block ul{
+    padding: 20px 0;
+}
+.right-block ul li{list-style: none;display: inline;}
+.right-block ul li img{width: 35px; height: 20px;}
 .about_us .title {
     width: 740px;
     overflow: hidden;

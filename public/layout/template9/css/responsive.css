@@ -15,7 +15,6 @@
 	.search {
 	    padding-left: 0;
 	    position: relative;
-	    width: 77%;
 	}
 	
 	.logo-mobile {
@@ -184,6 +183,11 @@
 	.main_product_center{width: 100% !important;}
 	.right_hot_prpduct{width: 100%;}
 	.product_menu_item{background: none;}
+	.wrapper{
+		width: 100%;
+		padding: 0px;
+	}
+	.top-search{width: 240px;}
 }
 
 @media (max-width: 768px) {

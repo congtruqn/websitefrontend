@@ -1,23 +1,28 @@
 <div class="block">
-	<div class="left_menu">
-		<div id="product_menu" class="product_menu detail_menu">
-    		{{> productmenu}}
-		</div>
-		<div class="new_product">
-			<div class="block_new_product">
-				{{>newproducts}}
+	<div id="left_content">
+		<div id="left_menu">
+			<div class="title1">
+				<p>{{i18n 'partner'}}</p>
+			</div>
+			<div class="content">
+				<div class="row">
+					{{#each partners as |partner|}}
+					<div class="partner_item1 col-xs-12 col-sm-12 col-md-12">
+						<a href="{{partner.url}}"><img src="/static{{partner.image_path}}" alt="{{partner.name}}"
+								class="img-fluid"></a>
+					</div>
+					{{/each}}
+				</div>
 			</div>
 		</div>
 	</div>
-	<div class="content_detail">
-		<div class="main_news">
-			<div class="breadcrumbs">
-				<div id="bread">
-					<ul class="items">
-						<li class="homes"><a href="/">Trang chủ</a></li>
-						<li class="homes"><a href="#">Trang lổi</a></li>
-					</ul>
-				</div>
+	<div class="error_content">
+		<div class="breadcrumbs">
+			<div id="bread">
+				<ul class="items">
+					<li class="item homes"><a href="/">{{i18n 'homepage'}}</a></li>
+					<li class="item"><a href="#">{{i18n 'error_page'}}</a></li>
+				</ul>
 			</div>
 		</div>
 		<div class="thank_order">

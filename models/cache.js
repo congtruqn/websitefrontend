@@ -50,7 +50,7 @@ module.exports = {
     hotpage,
     partners,
 }
-module.exports.storeCaches = async function (caches,hostname,websitein) {
+module.exports.storeCaches = async function (caches,hostname,websitein,lang = 'vi') {
     if (!caches.productcat[hostname]) {
         let productcat = await systems.gethotproductcat(websitein.customer_id);
         caches.productcat[hostname] = productcat;
@@ -64,8 +64,16 @@ module.exports.storeCaches = async function (caches,hostname,websitein) {
         caches.productmenu[hostname] = productmenu;
     }
     if (!caches.mainmenu[hostname]) {
-        let mainmenu = await systems.rendermainmenu(websitein.customer_id);
-        caches.mainmenu[hostname] = mainmenu;
+        let mainmenu = await systems.rendermainmenu(websitein.customer_id,lang);
+        var menumap = new Map();
+        menumap.set(lang, mainmenu);
+        caches.mainmenu[hostname] = menumap;
+    }
+    else{
+        if(!caches.mainmenu[hostname].get(lang)){
+            let mainmenu = await systems.rendermainmenu(websitein.customer_id,lang);
+            caches.mainmenu[hostname].set(lang,mainmenu);
+        }
     }
     if (!caches.footer[hostname]) {
         let footer1 = await systems.getfooterbycustomer(websitein.customer_id);
@@ -120,9 +128,10 @@ module.exports.storeCaches = async function (caches,hostname,websitein) {
         caches.partners[hostname] = partners;
     }
 }
-module.exports.getCaches = async function (caches,hostname) {
+module.exports.getCaches = async function (caches,hostname,lang = 'vi') {
+    let mainmenu = caches.mainmenu[hostname].get(lang)
     return {
-        mainmenu:caches.mainmenu[hostname],
+        mainmenu:mainmenu,
         productmenu : caches.productcat[hostname],
         productmenu1 : caches.productmenu[hostname],
         sitefooter : caches.footer[hostname],
