@@ -10,6 +10,13 @@ var websitesSchema = mongoose.Schema({
 	website_protocol:{
 		type: String
 	},
+	template:{
+        type: String,
+    },
+    customer: {
+        type: String,
+        unique: true,
+    },
 	detail:[{
 		lang: String,
 		title: String,

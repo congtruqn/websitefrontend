@@ -11,6 +11,8 @@ var session = require('express-session');
 var passport = require('passport');
 var mongoose = require('mongoose');
 const rateLimit = require('express-rate-limit')
+const { createTunnel } = require('tunnel-ssh');
+const { databaseConnect } = require('./configs/database.config');
 var app = express();
 var port = process.env.PORT || 3005;
 app.set('port', port);
@@ -116,6 +118,9 @@ app.use(function(req, res, next) {
   });
   next();
 });
+const db = new databaseConnect()
+db.create();
+
 app.use(async function(req, res, next) {
   var hostname = req.headers.host;
   		if (hostname.match(/^www/) !== null ) {
@@ -133,6 +138,7 @@ app.use(async function(req, res, next) {
         break;
     }
   }
+  //await db.closeConnection();
   if(!caches.websiteinfo[hostname]||caches.websiteinfo[hostname]==null){
     systems.getwebsiteinfo(hostname,async function(err, websitein){
       if(websitein===null){
@@ -142,8 +148,8 @@ app.use(async function(req, res, next) {
         caches.websiteinfo[hostname] = websitein;
         await caches.storeCaches(caches,hostname,websitein,lang)
         app.engine('handlebars', exphbs({
-          partialsDir: __dirname + `/views/${websitein.customer_username}/partials`,
-          layoutsDir:__dirname +`/views/${websitein.customer_username}`,
+          partialsDir: __dirname + `/views/${websitein.template}/partials`,
+          layoutsDir:__dirname +`/views/${websitein.template}`,
         }));
         next();
       }
@@ -153,8 +159,8 @@ app.use(async function(req, res, next) {
     let websitein = caches.websiteinfo[hostname];
     await caches.storeCaches(caches,hostname,websitein,lang);
     app.engine('handlebars', exphbs({
-      partialsDir: __dirname + `/views/${websitein.customer_username}/partials`,
-      layoutsDir:__dirname +`/views/${websitein.customer_username}`,
+      partialsDir: __dirname + `/views/${websitein.template}/partials`,
+      layoutsDir:__dirname +`/views/${websitein.template}`,
     }));
     next();
   }
@@ -174,15 +180,8 @@ mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
-const options = {
-  user:process.env.MONGO_USER,
-  pass:process.env.MONGO_PASSWORD,
-  keepAlive: true,
-  keepAliveInitialDelay: 300000,
-  useNewUrlParser: true
-};
-mongoose.connect("mongodb://"+process.env.DB_URL+"/website",options);
-app.use(function(req, res, next) {
+
+app.use(async function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next();

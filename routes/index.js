@@ -105,20 +105,20 @@ router.get('/templateregister', (req, res, next) => {
   });
 });
 router.get('/thankyou', async (req, res, next) => {
+  const hostname = req.headers.host;
   const language = i18n.getLocale();
   let homelang = language;
   if (language == 'vi') {
     homelang = '';
   }
   const policies = caches.policies[hostname] ? caches.policies[hostname] : [];
-  let hostname = req.headers.host;
   const productmenu = caches.productcat[hostname];
   const mainmenu = caches.mainmenu[hostname];
   const websiteinfo = caches.websiteinfo[hostname];
-  const customer_username = websiteinfo.customer_username ? websiteinfo.customer_username : 'template1';
+  const template = websiteinfo.template ? websiteinfo.template : 'template1';
   let hotnews = caches.hotnews[hostname];
   hotnews = utils.filterDetailByLang(hotnews, language);
-  res.render(`${customer_username}/content/thankyou`, {
+  res.render(`${template}/content/thankyou`, {
     title: 'Ragister complete',
     productmenu,
     mainmenu,
@@ -134,9 +134,9 @@ router.get('/login', (req, res, next) => {
   var productmenu = caches.productcat[hostname];
   var mainmenu = caches.mainmenu[hostname];
   const websiteinfo = caches.websiteinfo[hostname];
-  var { customer_username } = websiteinfo;
+  const { template } = websiteinfo;
   const policies = caches.policies[hostname] ? caches.policies[hostname] : [];
-  res.render(`${customer_username}/content/login`, {
+  res.render(`${template}/content/login`, {
     title: 'Đăng nhập',
     layout: 'layout',
     productmenu,
@@ -181,14 +181,14 @@ router.get('/lien-he', async (req, res, next) => {
   }
   const hostname = req.headers.host;
   const websiteinfo = caches.websiteinfo[hostname];
-  const { customer_username } = websiteinfo;
+  const { template } = websiteinfo;
   let hotnews = caches.hotnews[hostname];
   const cacheInfo = await caches.getCaches(caches, hostname, language);
   const content = req.param('content');
   hotnews = utils.filterDetailByLang(hotnews, language);
-  res.render(`${customer_username}/content/contact`, {
+  res.render(`${template}/content/contact`, {
     title: 'Liên hệ',
-    layout: customer_username,
+    layout: template,
     layout: 'layout',
     hotnews,
     language,
@@ -205,14 +205,14 @@ router.get('/:lang/lien-he', async (req, res, next) => {
   }
   const hostname = req.headers.host;
   const websiteinfo = caches.websiteinfo[hostname];
-  const { customer_username } = websiteinfo;
+  const { template } = websiteinfo;
   let hotnews = caches.hotnews[hostname];
   const cacheInfo = await caches.getCaches(caches, hostname, language);
   const content = req.param('content');
   hotnews = utils.filterDetailByLang(hotnews, language);
-  res.render(`${customer_username}/content/contact`, {
+  res.render(`${template}/content/contact`, {
     title: 'Liên hệ',
-    layout: customer_username,
+    layout: template,
     layout: 'layout',
     hotnews,
     language,
@@ -226,14 +226,14 @@ router.get('/thankorder', async (req, res, next) => {
   var websiteinfo = caches.websiteinfo[hostname];
   var websiteinfo = caches.websiteinfo[hostname];
   // eslint-disable-next-line camelcase
-  var { customer_username } = websiteinfo;
+  const { template } = websiteinfo;
   const language = i18n.getLocale();
   let homelang = language;
   if (language == 'vi') {
     homelang = '';
   }
   const cacheInfo = await caches.getCaches(caches, hostname, language);
-  res.render(`${customer_username}/content/thankorder`, {
+  res.render(`${template}/content/thankorder`, {
     title: '',
     layout: 'layout',
     ...cacheInfo
@@ -251,11 +251,11 @@ router.get('/gio-hang', async (req, res, next) => {
   }
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
-  var { customer_username } = websiteinfo;
+  var { template } = websiteinfo;
   var listproduct = req.session.products;
   var { provinces } = caches;
   const cacheInfo = await caches.getCaches(caches, hostname, language);
-  res.render(`${customer_username}/content/shoppingcart`, {
+  res.render(`${template}/content/shoppingcart`, {
     listproducts: listproduct,
     total_money: req.session.total_price,
     total_price_pricebeauty: req.session.total_price_pricebeauty,
@@ -275,7 +275,7 @@ router.get('/tim-kiem', async (req, res, next) => {
   var key = req.param('key', '');
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
-  var { customer_username } = websiteinfo;
+  var { template } = websiteinfo;
   const cacheInfo = await caches.getCaches(caches, hostname, language);
   Productlists.findproductbykey(key, websiteinfo.customer_id, (err, countproduct) => {
     for (var x in countproduct) {
@@ -296,7 +296,7 @@ router.get('/tim-kiem', async (req, res, next) => {
       }
       countproduct[x] = productiteam;
     }
-    res.render(`${customer_username}/content/search`, {
+    res.render(`${template}/content/search`, {
       contents: countproduct,
       title: 'Tìm kiếm sản phẩm',
       layout: 'layout',
@@ -308,7 +308,7 @@ router.get('/san-pham-ban-chay', async (req, res, next) => {
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
   var per_page = websiteinfo.products_per_page;
-  var { customer_username } = websiteinfo;
+  var { template } = websiteinfo;
   var { customer_id } = websiteinfo;
   var mainmenu = caches.mainmenu[hostname];
   var productmenu = caches.productcat[hostname];
@@ -335,7 +335,7 @@ router.get('/san-pham-ban-chay', async (req, res, next) => {
         };
         arraypage.push(temp);
       }
-      res.render(`${customer_username}/content/hotproduct`, {
+      res.render(`${template}/content/hotproduct`, {
         contents: conten,
         allpage: arraypage,
         title: 'Sản phẩm bán chạy',
@@ -358,7 +358,7 @@ router.get('/san-pham-moi', async (req, res, next) => {
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
   var per_page = websiteinfo.products_per_page;
-  var { customer_username } = websiteinfo;
+  var { template } = websiteinfo;
   var { customer_id } = websiteinfo;
   var mainmenu = caches.mainmenu[hostname];
   var productmenu = caches.productcat[hostname];
@@ -385,7 +385,7 @@ router.get('/san-pham-moi', async (req, res, next) => {
         };
         arraypage.push(temp);
       }
-      res.render(`${customer_username}/content/hotproduct`, {
+      res.render(`${template}/content/hotproduct`, {
         contents: conten,
         allpage: arraypage,
         title: 'Sản phẩm mới về',
@@ -568,7 +568,7 @@ const renderhomepage = async function (req, res, language) {
   let homelang = '';
   let lang = 'vi';
   if (websiteinfo.website_url === hostname) {
-    var { customer_username } = websiteinfo;
+    var { template } = websiteinfo;
     if (!caches.hotproductcats[hostname] || caches.hotproductcats[hostname] == null) {
       var hotproductcats = await gethotproductcat(websiteinfo.customer_id, product_per_cat_home, websiteinfo.products_name_letters);
       caches.hotproductcats[hostname] = hotproductcats;
@@ -583,7 +583,7 @@ const renderhomepage = async function (req, res, language) {
       tranData = websiteinfo.detail.find((obj) => obj.lang == lang);
     }
     const cacheInfo = await caches.getCaches(caches, hostname, lang);
-    res.render(`${customer_username}/content/index`, {
+    res.render(`${template}/content/index`, {
       productcats: productcat,
       canonical: `${website_protocol}://${hostname}/${homelang}`,
       title: tranData && tranData.title ? tranData.title : websiteinfo.title,
@@ -625,7 +625,7 @@ const renderpage = async function (req, res, website_url, language = 'vi') {
   }
   const cacheInfo = await caches.getCaches(caches, hostname, language);
   var { customer_id } = websiteinfo;
-  var { customer_username } = websiteinfo;
+  var { template } = websiteinfo;
   let hotnews = caches.hotnews[hostname];
   const website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : 'http';
   newspages.getNewsPagesById(customer_id, website_url.content_id, (err, conten) => {
@@ -640,7 +640,7 @@ const renderpage = async function (req, res, website_url, language = 'vi') {
       tranData = conten.detail.find((obj) => obj.lang == language);
       hotnews = utils.filterDetailByLang(hotnews, language, 1);
     }
-    res.render(`${customer_username}/content/page`, {
+    res.render(`${template}/content/page`, {
       contents: conten,
       details: tranData || conten.detail[0],
       title: tranData && tranData.title ? tranData.title : conten.detail[0].title,
@@ -669,14 +669,14 @@ const render404page = async function (req, res, website_url, language = 'vi') {
   if (websiteinfo && websiteinfo.is_template && websiteinfo.is_template == 1) {
     istemplate = true;
   }
-  const { customer_username } = websiteinfo;
+  const { template } = websiteinfo;
   if (websiteinfo.multi_language == 1) {
     if (language != 'vi') {
       lang = language;
       homelang = language;
     }
   }
-  res.render(`${customer_username}/content/error404`, {
+  res.render(`${template}/content/error404`, {
     title: 'Error 404',
     description: '',
     keyword: '',
@@ -701,7 +701,7 @@ const rendernewcontentpage = async function (req, res, website_url, language = '
   if (websiteinfo && websiteinfo.is_template && websiteinfo.is_template == 1) {
     istemplate = true;
   }
-  const { customer_username } = websiteinfo;
+  const { template } = websiteinfo;
   var { customer_id } = websiteinfo;
   const website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : 'http';
   let hotnews = caches.hotnews[hostname];
@@ -717,7 +717,7 @@ const rendernewcontentpage = async function (req, res, website_url, language = '
         ratenews = utils.filterDetailByLang(ratenews, language, 1);
         hotnews = utils.filterDetailByLang(hotnews, language, 1);
       }
-      res.render(`${customer_username}/content/newscontent`, {
+      res.render(`${template}/content/newscontent`, {
         contents: conten,
         hotnews,
         ratenews,
@@ -726,7 +726,7 @@ const rendernewcontentpage = async function (req, res, website_url, language = '
         description: tranData && tranData.description ? tranData.description : conten.detail[0].description,
         keyword: tranData && tranData.keyword ? tranData.keyword : conten.detail[0].keyword,
         canonical: `${website_protocol}://${hostname}/${canonical}`,
-        orgimage: `${website_protocol}://${hostname}/static/${customer_username}/images/news/fullsize/${conten.image2}`,
+        orgimage: `${website_protocol}://${hostname}/static/${template}/images/news/fullsize/${conten.image2}`,
         layout: 'layout',
         language,
         lang: homelang,
@@ -750,7 +750,7 @@ const rendernewcatpage = async function (req, res, website_url, language = 'vi')
     istemplate = true;
   }
   var { customer_id } = websiteinfo;
-  var { customer_username } = websiteinfo;
+  var { template } = websiteinfo;
   var per_page = 18;
   var page = req.param('page', '1');
   const website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : 'http';
@@ -777,7 +777,7 @@ const rendernewcatpage = async function (req, res, website_url, language = 'vi')
     else {
       conten = utils.filterDetailByLang(conten, language, 1);
     }
-    res.render(`${customer_username}/content/newscat`, {
+    res.render(`${template}/content/newscat`, {
       contents: conten,
       hotnews: hotnews1,
       allpage: arraypage,
@@ -802,7 +802,7 @@ const renderproductcatpage = async function (req, res, website_url) {
   var websiteinfo = caches.websiteinfo[hostname];
   const cacheInfo = await caches.getCaches(caches, hostname);
   const { customer_id } = websiteinfo;
-  var { customer_username } = websiteinfo;
+  var { template } = websiteinfo;
   var per_page = websiteinfo.products_per_page ? websiteinfo.products_per_page : 24;
   const website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : 'http';
   const pageurl = req.headers.host + req.url;
@@ -853,7 +853,7 @@ const renderproductcatpage = async function (req, res, website_url) {
     };
     arraypage.push(temp);
   }
-  res.render(`${customer_username}/content/productscat`, {
+  res.render(`${template}/content/productscat`, {
     contents: countproduct,
     allpage: arraypage,
     newscatinfo: countproduct,
@@ -875,7 +875,7 @@ const renderproductdetailpage = async function (req, res, website_url) {
   var websiteinfo = caches.websiteinfo[hostname];
   const cacheInfo = await caches.getCaches(caches, hostname);
   const { customer_id } = websiteinfo;
-  var { customer_username } = websiteinfo;
+  const { template } = websiteinfo;
   const website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : 'http';
   let language = i18n.getLocale();
   if (language == 'vi') {
@@ -924,7 +924,7 @@ const renderproductdetailpage = async function (req, res, website_url) {
       if (conten.show == 1) {
         instock = 1;
       }
-      res.render(`${customer_username}/content/productdetail`, {
+      res.render(`${template}/content/productdetail`, {
         description: conten.detail[0].description,
         canonical: `${website_protocol}://${hostname}/${conten.seo_url}`,
         orgimage: `${website_protocol}://${hostname}/images/products/fullsize/${conten.image2}`,
@@ -950,7 +950,7 @@ const renderproductmoreinfocategorypage = async function (req, res, website_url)
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
   var { customer_id } = websiteinfo;
-  var { customer_username } = websiteinfo;
+  var { template } = websiteinfo;
   var mainmenu = caches.mainmenu[hostname];
   var productmenu = caches.productcat[hostname];
   var productmenu1 = caches.productmenu[hostname];
@@ -999,7 +999,7 @@ const renderproductmoreinfocategorypage = async function (req, res, website_url)
           };
           arraypage.push(temp);
         }
-        res.render(`${customer_username}/content/productmoreinfo`, {
+        res.render(`${template}/content/productmoreinfo`, {
           contents: countproduct,
           allpage: arraypage,
           newscatinfo: countproduct,
@@ -1228,19 +1228,19 @@ router.post('/registertouse', async (req, res, next) => {
       var phone = req.param('phone');
       var cont = `Tên Khách hàng:${name}<br>-Email:${email}<br>-Điện thoại: ${phone}`;
       const transporter = nodeMailer.createTransport({
-        host: 'smtp.coresender.com',
-        port: 465,
-        secure: true,
+        host: 'smtp.elasticemail.com',
+        port: 2525,
+        secure: false,
         auth: {
-          user: '2f7b9e54-3b07-4107-85ce-cb1a220d19a3',
-          pass: 'efe90ac3-263e-4e62-95ba-1f407d446779'
+          user: 'congtruqn@gmail.com',
+          pass: '708541B0547DF83A89CC6CDA4CCBF27D147B'
         },
         tls: {
           rejectUnauthorized: false
         }
       });
       const mailOptions = {
-        from: '"Khách hàng đăng ký dùng thử" <trutc@smartvas.com.vn>', // sender address
+        from: '"Khách hàng đăng ký dùng thử" <congtruqn@gmail.com>', // sender address
         to: 'congtruqn@gmail.com', // list of receivers
         subject: 'Khách hàng đăng ký', // Subject line
         text: cont, // plain text body
@@ -1446,19 +1446,19 @@ router.post('/addcustomercontact', (req, res, next) => {
   const content = req.param('content');
   var cont = `Tên Khách hàng:${name}<br>Email:${email}<br>Điện thoại: ${phone}<br>Nội dung: ${content}<br>`;
   const transporter = nodeMailer.createTransport({
-    host: 'smtp.coresender.com',
-    port: 465,
-    secure: true,
+    host: 'smtp.elasticemail.com',
+    port: 2525,
+    secure: false,
     auth: {
-      user: '2f7b9e54-3b07-4107-85ce-cb1a220d19a3',
-      pass: 'efe90ac3-263e-4e62-95ba-1f407d446779'
+      user: 'congtruqn@gmail.com',
+      pass: '708541B0547DF83A89CC6CDA4CCBF27D147B'
     },
     tls: {
       rejectUnauthorized: false
     }
   });
   const mailOptions = {
-    from: 'trutc@smartvas.com.vn', // sender address
+    from: 'congtruqn@gmail.com', // sender address
     to: websiteinfo.customer_email, // list of receivers
     subject: 'Khách hàng đăt hàng từ website', // Subject line
     text: cont, // plain text body
@@ -1532,19 +1532,19 @@ router.post('/addorder', (req, res, next) => {
         var cont = `Tên Khách hàng:${name}<br>-Email:${email}<br>-Điện thoại: ${phone}<br>Địa chỉ: ${address}<br>`;
         cont += products;
         const transporter = nodeMailer.createTransport({
-          host: 'smtp.coresender.com',
-          port: 465,
-          secure: true,
+          host: 'smtp.elasticemail.com',
+          port: 2525,
+          secure: false,
           auth: {
-            user: '2f7b9e54-3b07-4107-85ce-cb1a220d19a3',
-            pass: 'efe90ac3-263e-4e62-95ba-1f407d446779'
+            user: 'congtruqn@gmail.com',
+            pass: '708541B0547DF83A89CC6CDA4CCBF27D147B'
           },
           tls: {
             rejectUnauthorized: false
           }
         });
         const mailOptions = {
-          from: 'trutc@smartvas.com.vn', // sender address
+          from: 'congtruqn@gmail.com', // sender address
           to: websiteinfo.customer_email, // list of receivers
           subject: 'Khách hàng đăt hàng từ website', // Subject line
           text: cont, // plain text body

@@ -1,0 +1,35 @@
+{{#each productcats as |productcat|}}
+  <div class="row">
+    <div class="col-xs-12 col-sm-12">
+        <div class="list_product_content">
+           <div class="block-title">
+                {{#each productcat.detail as |productcatdetail|}}
+                    <h3><a href="/{{productcat.seo_url}}">{{{productcatdetail.name}}}</a></h3>
+                    <p class="viewall"><a href="{{productcat.seo_url}}">Xem tất cả</a></>
+                {{/each}}
+           </div>
+            <div class="cont">
+            <div class="row">
+              {{#each productcat.product as |listnews|}}
+                <div class="col-xs-6 col-sm-6 col-md-2 {{listnews.class}}">
+                  <div class="product_item">
+                      <div class="product_images">
+                          <a href="/{{listnews.seo_url}}"><img src="/static/{{listnews.image_path}}/medium/{{listnews.image}}" alt="{{listnews.alt}}"></a>
+                      </div>
+                      <div class="product_detail">
+                        <p class="product_name"><a href="/{{listnews.seo_url}}">{{{listnews.productname}}}</a></p>
+                        <div id="clear"></div>
+                          <div class="product_price"><p>{{listnews.pricebeauty}}₫</p></div>
+                          <div class="sale_pricebeauty"><p>{{listnews.sale_pricebeauty}}₫</p></div>
+                        <div id="clear"></div>
+                      </div>
+                  </div>
+                </div>
+              {{/each}}
+            </div>  
+           </div>
+
+        </div>  
+      </div>
+    </div>
+{{/each}}
