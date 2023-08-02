@@ -92,7 +92,7 @@ function rendercatsbyparent(customer_id, parent_id, listcat) {
 module.exports.rendermainmenu = async function (customer_id,lang) {
   return new Promise((resolve, reject) => {
     menu.getrootmenu(customer_id, async function (err, menuroot) {
-      var listcat = '<ul class="ul_mainmenu">';
+      var listcat = '<ul class="ul_mainmenu" id="nav">';
       for (var x in menuroot) {
         let tranData = menuroot[x].detail.find(obj => obj.lang == lang)?menuroot[x].detail.find(obj => obj.lang == lang):menuroot[x].detail.find(obj => obj.lang == 'vi')
         if(lang=='vi'){

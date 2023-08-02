@@ -1,21 +1,26 @@
 <div class="block">
-	<div class="menu_slider">
-		<div class="left_product_menu">
-			<div class="product_menu" id="product_menu">
-				{{> productmenuicon}}
-			</div>
-		</div>
-		<div class="slider">
+	<div class="menu_slider row">
+		<div class="slider col-lg-9">
 			{{>slider}}
+		</div>
+		<div class="ads col-lg-3">
+			<ul>
+				{{#each (filterAds advertises 'top') as |advertise|}}
+				<li>
+					<a href="#"><img src="{{../base_url}}/static/{{advertise.image_path}}"></a>
+				</li>
+				{{/each}}
+			</ul>
+			<div id="clear"></div>
 		</div>
 	</div>
 </div>
 <div class="block">
 	<div class="hot_product">
-		<div class="cdz-block-title">
-			<p class="b-title">Sản phẩm bán chạy</p>
+		<div class="custommenu-title-blog">
+			<p class="b-title">Sản phẩm hot</p>
 		</div>
-		<div>
+		<div class="row">
 			{{>hotproducts}}
 		</div>
 		<div id="clear"></div>

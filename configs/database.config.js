@@ -37,12 +37,16 @@ class databaseConnect {
   }
   async create() {
     await this.initialize()
-    if (process.env.NODE_ENV && process.env.NODE_ENV == "development") {
+    if (process.env.NODE_ENV && process.env.NODE_ENV == "local") {
       this.server.on("connection", (connection) => {
         console.log("new connection");
       });
       mongoose.connect(`mongodb://localhost/${process.env.WEBSITE_DB_NAME}`);
-    } else {
+    }
+    else if(process.env.NODE_ENV && process.env.NODE_ENV == "develop"){
+      mongoose.connect(`mongodb://localhost/${process.env.WEBSITE_DB_NAME}`);
+    }
+     else {
       const options = {
         user: process.env.MONGO_USER,
         pass: process.env.MONGO_PASSWORD,

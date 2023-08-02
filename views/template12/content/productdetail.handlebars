@@ -1,5 +1,5 @@
- <link rel="stylesheet" href="/layout/{{siteinfo.customer_username}}/css/images/pgwslider.min.css" type="text/css" media="screen" />
-<script type="text/javascript" src="/layout/{{siteinfo.customer_username}}/js/images/pgwslider.min.js"></script>
+ <link rel="stylesheet" href="/layout/{{siteinfo.template}}/css/images/pgwslider.min.css" type="text/css" media="screen" />
+<script type="text/javascript" src="/layout/{{siteinfo.template}}/js/images/pgwslider.min.js"></script>
 <div class="block">
 	<div class="left_menu">
 		<div id="product_menu" class="product_menu detail_menu">
@@ -26,7 +26,7 @@
 		<div class="product_detail">
 			<div class="product_detail_image">
 				<ul class="pgwSlider">
-                    <li><img class="mainimg" src="/static/{{siteinfo.customer_username}}/images/products/medium/{{contents.image}}" alt='' data-large-src="/static/{{siteinfo.customer_username}}/images/products/fullsize/{{contents.image}}"></li>
+                    <li><img class="mainimg" src="/static/{{siteinfo.customer}}/images/products/medium/{{contents.image}}" alt='' data-large-src="/static/{{siteinfo.customer}}/images/products/fullsize/{{contents.image}}"></li>
 					{{#each contents.list_images as |image|}}
 					<li><img src="{{image.image_path}}thumb/{{image.image}}" alt=''  data-large-src="{{image.image_path}}fullsize/{{image.image}}"></li>
                     {{/each}}

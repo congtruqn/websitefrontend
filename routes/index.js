@@ -55,8 +55,8 @@ router.get('/website-mau', async (req, res, next) => {
     };
     arraypage.push(temp);
   }
-  var { customer_username } = websiteinfo;
-  res.render(`${customer_username}/content/websitetemplate`, {
+  var { template } = websiteinfo;
+  res.render(`${template}/content/websitetemplate`, {
     title: 'Giao diện website mẫu, template website miễn phí',
     listtemplates: listTemplate,
     siteinfo: websiteinfo,
