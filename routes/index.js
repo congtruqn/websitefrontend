@@ -741,7 +741,7 @@ const rendernewcatpage = async function (req, res, website_url, language = 'vi')
   let homelang = language;
   var hostname = req.headers.host;
   const cacheInfo = await caches.getCaches(caches, hostname);
-  var websiteinfo = caches.websiteinfo[hostname];
+  const websiteinfo = caches.websiteinfo[hostname];
   if (language == 'vi') {
     homelang = '';
   }
@@ -885,8 +885,9 @@ const renderproductdetailpage = async function (req, res, website_url) {
   if (websiteinfo && websiteinfo.is_template && websiteinfo.is_template == 1) {
     istemplate = true;
   }
-  Productlists.getproductbyproductid(customer_id, website_url.content_id, async (err, conten) => {
-    Productlists.getrateproductlistscatcount(customer_id, conten.parent_id, conten.product_id, 8, (err, rateproducts) => {
+  const productInfo = await Productlists.getProductById(customer_id, website_url.content_id);
+
+  Productlists.getrateproductlistscatcount(customer_id, productInfo.parent_id, productInfo.product_id, 8, (err, rateproducts) => {
       for (var x in rateproducts) {
         var productiteam = JSON.parse(JSON.stringify(rateproducts[x]));
         var pricebeauty = String(productiteam.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
@@ -904,9 +905,9 @@ const renderproductdetailpage = async function (req, res, website_url) {
         }
         rateproducts[x] = productiteam;
       }
-      var procontent = JSON.parse(JSON.stringify(conten.detail[0]));
-      var product_details = conten.product_detail;
-      var { product_more_info } = conten;
+      var procontent = JSON.parse(JSON.stringify(productInfo.detail[0]));
+      var product_details = productInfo.product_detail;
+      var { product_more_info } = productInfo;
       for (var x in product_more_info) {
         if (product_more_info[x].status == 1) {
           product_more_info[x].status = undefined;
@@ -915,24 +916,24 @@ const renderproductdetailpage = async function (req, res, website_url) {
           product_more_info[x].status = undefined;
         }
       }
-      var pricebeauty = String(conten.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+      var pricebeauty = String(productInfo.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
       var islogin = undefined;
       var instock = undefined;
       if (req.user) {
         islogin = 1;
       }
-      if (conten.show == 1) {
+      if (productInfo.show == 1) {
         instock = 1;
       }
       res.render(`${template}/content/productdetail`, {
-        description: conten.detail[0].description,
-        canonical: `${website_protocol}://${hostname}/${conten.seo_url}`,
-        orgimage: `${website_protocol}://${hostname}/images/products/fullsize/${conten.image2}`,
-        contents: conten,
+        description: productInfo.detail[0].description,
+        canonical: `${website_protocol}://${hostname}/${productInfo.seo_url}`,
+        orgimage: `${website_protocol}://${hostname}/images/products/fullsize/${productInfo.image2}`,
+        contents: productInfo,
         product_details,
         price: pricebeauty,
         details: procontent,
-        title: conten.detail[0].title,
+        title: productInfo.detail[0].title,
         layout: 'layout',
         instock,
         product_more_info,
@@ -942,7 +943,6 @@ const renderproductdetailpage = async function (req, res, website_url) {
         istemplate,
         index: 'all',
         ...cacheInfo
-      });
     });
   });
 };
@@ -1288,7 +1288,7 @@ router.post('/gettrial', async (req, res, next) => {
   });
   res.send('1');
 });
-router.post('/addtocart', (req, res, next) => {
+router.post('/addtocart',async (req, res, next) => {
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
   const { customer_id } = websiteinfo;
@@ -1303,49 +1303,49 @@ router.post('/addtocart', (req, res, next) => {
   if (req.session.products) {
     listproducts = req.session.products;
   }
-  var product1 = req.param('productadd');
-  Productlists.getproductbyproductid(customer_id, product1, (err, product) => {
-    var pricebeauty = String(product.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-    var productincart = {
-      id: product.product_id,
-      product_id: product._id,
-      image: product.image,
-      image_path: product.image_path,
-      name: product.detail[0].name,
-      price: product.price,
-      product_total_price: product.price,
+  var product_id = req.param('productadd');
+
+  const productInfo = await getProductById(customer_id, product_id);
+  const pricebeauty = String(product.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+  var productincart = {
+      id: productInfo.product_id,
+      product_id: productInfo._id,
+      image: productInfo.image,
+      image_path: productInfo.image_path,
+      name: productInfo.detail[0].name,
+      price: productInfo.price,
+      product_total_price: productInfo.price,
       product_total_price_b: pricebeauty,
       pricebeauty,
       num: 1
-    };
-    if (listproducts.length == 0) {
+  };
+  if (listproducts.length == 0) {
       listproducts.push(productincart);
       req.session.products = listproducts;
-      req.session.total_price = (Number(total_price) + Number(product.price));
+      req.session.total_price = (Number(total_price) + Number(productInfo.price));
       var total_price_pricebeauty = String(req.session.total_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
       req.session.total_price_pricebeauty = total_price_pricebeauty;
       res.send(req.session.products);
-    }
-    else if (findObjectByKey(listproducts, product1) == -1) {
+  }
+  else if (findObjectByKey(listproducts, product_id) == -1) {
       listproducts.push(productincart);
       req.session.products = listproducts;
-      req.session.total_price = (Number(total_price) + Number(product.price));
+      req.session.total_price = (Number(total_price) + Number(productInfo.price));
       var total_price_pricebeauty = String(req.session.total_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
       req.session.total_price_pricebeauty = total_price_pricebeauty;
       res.send(req.session.products);
-    }
-    else {
-      var xx = findObjectByKey(listproducts, product1);
+  }
+  else {
+      var xx = findObjectByKey(listproducts, product_id);
       listproducts[xx].num = Number(listproducts[xx].num) + 1;
       listproducts[xx].product_total_price = listproducts[xx].price * listproducts[xx].num;
       listproducts[xx].product_total_price_b = String(listproducts[xx].product_total_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
       req.session.products = listproducts;
-      req.session.total_price = (Number(total_price) + Number(product.price) * (listproducts[xx].num - 1));
+      req.session.total_price = (Number(total_price) + Number(productInfo.price) * (listproducts[xx].num - 1));
       var total_price_pricebeauty = String(req.session.total_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
       req.session.total_price_pricebeauty = total_price_pricebeauty;
       res.send(req.session.products);
-    }
-  });
+  }
 });
 router.post('/updatecartnumber', (req, res, next) => {
   var product_id = req.body.id;
@@ -1440,10 +1440,10 @@ router.post('/addcustomercontact', (req, res, next) => {
   const hostname = req.headers.host;
   const websiteinfo = caches.websiteinfo[hostname];
   const nodeMailer = require('nodemailer');
-  const name = req.param('name');
-  const email = req.param('email');
-  const phone = req.param('phone');
-  const content = req.param('content');
+  const name = req.params('name');
+  const email = req.params('email');
+  const phone = req.params('phone');
+  const content = req.params('content');
   var cont = `Tên Khách hàng:${name}<br>Email:${email}<br>Điện thoại: ${phone}<br>Nội dung: ${content}<br>`;
   const transporter = nodeMailer.createTransport({
     host: 'smtp.elasticemail.com',
@@ -1476,30 +1476,30 @@ router.post('/addorder', (req, res, next) => {
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
   nodeMailer = require('nodemailer');
-  var name = req.param('name');
-  var email = req.param('email');
-  var phone = req.param('phone');
-  var address = req.param('address');
-  var note = req.param('note');
-  var province1 = req.param('province');
+  var name = req.params('name');
+  var email = req.params('email');
+  var phone = req.params('phone');
+  var address = req.params('address');
+  var note = req.params('note');
+  var province1 = req.params('province');
   var province = '';
   var temp1 = province1.split(';');
   if (temp1[1]) {
     province = temp1[1];
   }
-  var district1 = req.param('district');
+  var district1 = req.params('district');
   var district = '';
   var temp2 = district1.split(';');
   if (temp2[1]) {
     district = temp2[1];
   }
-  var ward1 = req.param('ward');
+  var ward1 = req.params('ward');
   var ward = '';
   var temp3 = ward1.split(';');
   if (temp3[1]) {
     ward = temp3[1];
   }
-  var shippingcod = req.param('shippingcod');
+  var shippingcod = req.params('shippingcod');
   var create_date = new Date().getTime();
   var products = '';
   var neworders = new listorders({

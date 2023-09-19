@@ -218,6 +218,7 @@ module.exports.gethotproductbycustomer = function (customer_id, count, products_
           if (productiteam.new == 0) {
             productiteam.new = undefined;
           }
+          productiteam.rating = productiteam?.rating || 0;
           countproduct[x] = productiteam;
         }
         resolve(countproduct);

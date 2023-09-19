@@ -1,5 +1,7 @@
- <link rel="stylesheet" href="/layout/{{siteinfo.template}}/css/images/pgwslider.min.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="/layout/{{siteinfo.template}}/css/images/pgwslider.min.css" type="text/css" media="screen" />
 <script type="text/javascript" src="/layout/{{siteinfo.template}}/js/images/pgwslider.min.js"></script>
+<script type="text/javascript" src="/js/rating_simple.js"></script>
+<link rel="stylesheet" href="/css/rating_simple.css" type="text/css" media="screen" />
 <div class="block">
 	<div class="left_menu">
 		<div id="product_menu" class="product_menu detail_menu">
@@ -73,6 +75,7 @@
 						</div>
 					{{else}}
 					{{/if}}
+					<input name="my_input" value="3" id="rating_simple" type="hidden">
 				</div>
 			</div>
 			<div id="clear"></div>
@@ -174,4 +177,23 @@ function Buynow(ID){
     });
 };
   
+</script>
+<script language="javascript" type="text/javascript">
+	function test(value){
+		$.ajax({
+		type: "POST",
+		url: '/api/rating',
+		data: {vote: value,productId:{{contents.product_id}} },
+		success: function (result) {
+		}
+		});
+    }
+$(function() {
+	$("#rating_simple").webwidget_rating_simple({
+	rating_star_length: '5',
+	rating_initial_value: `{{{contents.rating}}}`,
+	rating_function_name: 'test',
+	directory: 'images/'
+});
+});
 </script>

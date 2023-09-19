@@ -18,11 +18,15 @@
   <link rel="stylesheet" href="/layout/{{siteinfo.template}}/css/mmenu.css" />
   <link rel="stylesheet" href="/layout/{{siteinfo.template}}/css/slick.css" />
   <link rel="stylesheet" href="/layout/{{siteinfo.template}}/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://tns.vn/js/rating_simple.css" />
+
   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
   <script type="text/javascript" src="/layout/{{siteinfo.template}}/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="/layout/{{siteinfo.template}}/js/jcarousel.responsive.js"></script>
   <script type="text/javascript" src="/layout/{{siteinfo.template}}/js/jquery.jcarousel.min.js"></script>
   <script type="text/javascript" src="/layout/{{siteinfo.template}}/js/slick.js"></script>
+  <script type="text/javascript" src="https://tns.vn/js/rating_simple.js"></script>
+  
 
 
   <meta name="viewport" content="width=device-width">
@@ -169,16 +173,6 @@
     data: '',
     success: function (result) {
       document.getElementById('cart-total').innerHTML = result;
-    }
-  });
-</script>
-<script>
-  new Mmenu(document.querySelector('#menu'));
-  document.addEventListener('click', (evnt) => {
-    let anchor = evnt.target.closest('a[href^="#/"]');
-    if (anchor) {
-      alert('Thank you for clicking, but that\'s a demo link.');
-      evnt.preventDefault();
     }
   });
 </script>

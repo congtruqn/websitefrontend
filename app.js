@@ -24,14 +24,15 @@ const limiter = rateLimit({
 	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
 	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 })
-if(process.env.NODE_ENV!='development'){
+if(process.env.NODE_ENV!='local'){
   app.use(limiter)
 }
-var index = require('./routes/index');
-var systems = require('./models/systems'); 
-var caches = require('./models/cache');
+const index = require('./routes/index');
+const api = require('./routes/api');
+const systems = require('./models/systems'); 
+const caches = require('./models/cache');
 global.__basedir = __dirname;
-var i18n = require('i18n');
+const i18n = require('i18n');
 i18n.configure({
   locales: ['en', 'vi'],
   cookie: 'locale',
@@ -176,6 +177,7 @@ app.use(function (req, res, next) {
   next();
 });
 app.use('/', index);
+app.use('/api', api);
 var mongoose = require("mongoose");
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
