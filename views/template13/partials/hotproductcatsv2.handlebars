@@ -9,12 +9,6 @@
 <div class="row">
   <div class="col-xs-12 col-sm-12">
     <div class="cdz-block-content cdz-tabs-bg" style="background-image: url({{productcat.image}});min-height: 612px;">
-      <ul class="box-cate-link abs-dropdown">
-        <li class="item active"><a href="/{{productcat.seo_url}}">{{{productcat.detail.[0].name}}}</a></li>
-        {{#each productcat.list_child as |child_cat|}}
-          <li class="item"><a href="{{child_cat.seo_url}}">{{child_cat.child_name}}</a></li>
-        {{/each}}
-      </ul>
       <div class="cdz-tabs df-tabs">
         <div class="row">
           {{#each productcat.product as |productitem|}}
@@ -35,11 +29,11 @@
                 <p class="product_name"><a href="/{{productitem.seo_url}}">{{truncateString productitem.detail.[0].name 50}}</a></p>
                 <div id="clear"></div>
                 <div class="product_price">
-                  <p>{{productitem.pricebeauty}}₫</p>
+                  <p>{{formatCurrency productitem.price}}₫</p>
                 </div>
                 {{#if productitem.salepec}}
-                    <div class="sale_pricebeauty">
-                    <p>{{productitem.sale_pricebeauty}}₫</p>
+                  <div class="sale_pricebeauty">
+                    <p>{{formatCurrency productitem.sale_price}}₫</p>
                   </div>
                 {{/if}}
                 <div id="clear"></div>

@@ -80,15 +80,15 @@ module.exports.storeCaches = async function (caches,hostname,websitein,lang = 'v
         caches.footer[hostname] = footer1;
     }
     if (!caches.hotproducts[hostname]) {
-        let hotproducts = await systems.gethotproductbycustomer(websitein.customer_id, 10, websitein.products_name_letters);
+        let hotproducts = await systems.gethotproductbycustomer(websitein.customer_id, websitein.num_hot_products || 10, websitein.products_name_letters);
         caches.hotproducts[hostname] = hotproducts;
     }
     if (!caches.newproducts[hostname]) {
-        let newproducts = await systems.getnewproductbycustomer(websitein.customer_id, 10, websitein.products_name_letters);
+        let newproducts = await systems.getnewproductbycustomer(websitein.customer_id,  websitein.num_hot_products || 10, websitein.products_name_letters);
         caches.newproducts[hostname] = newproducts;
     }
     if (!caches.saleproducts[hostname]) {
-        let saleproducts = await systems.getSaleProductsbyCustomer(websitein.customer_id, 10, websitein.products_name_letters);
+        let saleproducts = await systems.getSaleProductsbyCustomer(websitein.customer_id,  websitein.num_hot_products || 10, websitein.products_name_letters);
         caches.saleproducts[hostname] = saleproducts;
     }
     if (!caches.productmoreinfos[hostname]) {

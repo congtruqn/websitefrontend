@@ -19,6 +19,8 @@
   <link rel="stylesheet" href="/layout/{{siteinfo.template}}/css/slick.css" />
   <link rel="stylesheet" href="/layout/{{siteinfo.template}}/css/font-awesome.min.css" />
   <link rel="stylesheet" href="https://tns.vn/js/rating_simple.css" />
+  <link rel="stylesheet" href="https://tns.vn/css/responsive-tabs.css" />
+  <link rel="stylesheet" href="https://tns.vn/css/mmenu.css" />
 
   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
   <script type="text/javascript" src="/layout/{{siteinfo.template}}/js/bootstrap.min.js"></script>
@@ -26,6 +28,8 @@
   <script type="text/javascript" src="/layout/{{siteinfo.template}}/js/jquery.jcarousel.min.js"></script>
   <script type="text/javascript" src="/layout/{{siteinfo.template}}/js/slick.js"></script>
   <script type="text/javascript" src="https://tns.vn/js/rating_simple.js"></script>
+  <script type="text/javascript" src="https://tns.vn/js/jquery.responsiveTabs.js"></script>
+  <script type="text/javascript" src="https://tns.vn/js/mmenu.js"></script>
   
 
 
@@ -155,12 +159,6 @@
   {{>mobilenavi}}
 </body>
 <script type="text/javascript">
-  $('.pro_detail').delegate('.list_size', 'click', function () {
-    $('.list_size').removeClass('sizeactive');
-    $(this).addClass('sizeactive');
-  });
-</script>
-<script type="text/javascript">
   function DoSubmitSingleExts() {
     var txt = $('#ime').val().trim();
     window.location = '/tim-kiem?key=' + txt.toLowerCase();
@@ -201,5 +199,14 @@
 
   }
 </script>
-
+<script>
+  new Mmenu( document.querySelector( '#menu' ) );
+			document.addEventListener( 'click', ( evnt ) => {
+				let anchor = evnt.target.closest( 'a[href^="#/"]' );
+				if ( anchor ) {
+					alert('Thank you for clicking, but that\'s a demo link.');
+					evnt.preventDefault();
+				}
+  });
+</script>
 </html>

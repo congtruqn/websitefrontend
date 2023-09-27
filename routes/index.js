@@ -871,8 +871,8 @@ const renderproductcatpage = async function (req, res, website_url) {
   });
 };
 const renderproductdetailpage = async function (req, res, website_url) {
-  var hostname = req.headers.host;
-  var websiteinfo = caches.websiteinfo[hostname];
+  const hostname = req.headers.host;
+  const websiteinfo = caches.websiteinfo[hostname];
   const cacheInfo = await caches.getCaches(caches, hostname);
   const { customer_id } = websiteinfo;
   const { template } = websiteinfo;
@@ -887,7 +887,7 @@ const renderproductdetailpage = async function (req, res, website_url) {
   }
   const productInfo = await Productlists.getProductById(customer_id, website_url.content_id);
 
-  Productlists.getrateproductlistscatcount(customer_id, productInfo.parent_id, productInfo.product_id, 8, (err, rateproducts) => {
+  Productlists.getrateproductlistscatcount(customer_id, productInfo.parent_id, productInfo.product_id, websiteinfo.num_of_rate_product || 8 , (err, rateproducts) => {
       for (var x in rateproducts) {
         var productiteam = JSON.parse(JSON.stringify(rateproducts[x]));
         var pricebeauty = String(productiteam.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
@@ -917,7 +917,7 @@ const renderproductdetailpage = async function (req, res, website_url) {
         }
       }
       var pricebeauty = String(productInfo.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-      var islogin = undefined;
+      let islogin = null;
       var instock = undefined;
       if (req.user) {
         islogin = 1;
@@ -1289,62 +1289,67 @@ router.post('/gettrial', async (req, res, next) => {
   res.send('1');
 });
 router.post('/addtocart',async (req, res, next) => {
-  var hostname = req.headers.host;
-  var websiteinfo = caches.websiteinfo[hostname];
-  const { customer_id } = websiteinfo;
-  var listproducts = [];
-  var total_price = 0;
-  if (req.session.total_price) {
-    total_price = req.session.total_price;
-  }
-  else {
-
-  }
-  if (req.session.products) {
-    listproducts = req.session.products;
-  }
-  var product_id = req.param('productadd');
-
-  const productInfo = await getProductById(customer_id, product_id);
-  const pricebeauty = String(product.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-  var productincart = {
-      id: productInfo.product_id,
-      product_id: productInfo._id,
-      image: productInfo.image,
-      image_path: productInfo.image_path,
-      name: productInfo.detail[0].name,
-      price: productInfo.price,
-      product_total_price: productInfo.price,
-      product_total_price_b: pricebeauty,
-      pricebeauty,
-      num: 1
-  };
-  if (listproducts.length == 0) {
-      listproducts.push(productincart);
-      req.session.products = listproducts;
-      req.session.total_price = (Number(total_price) + Number(productInfo.price));
-      var total_price_pricebeauty = String(req.session.total_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-      req.session.total_price_pricebeauty = total_price_pricebeauty;
-      res.send(req.session.products);
-  }
-  else if (findObjectByKey(listproducts, product_id) == -1) {
-      listproducts.push(productincart);
-      req.session.products = listproducts;
-      req.session.total_price = (Number(total_price) + Number(productInfo.price));
-      var total_price_pricebeauty = String(req.session.total_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-      req.session.total_price_pricebeauty = total_price_pricebeauty;
-      res.send(req.session.products);
-  }
-  else {
-      var xx = findObjectByKey(listproducts, product_id);
-      listproducts[xx].num = Number(listproducts[xx].num) + 1;
-      listproducts[xx].product_total_price = listproducts[xx].price * listproducts[xx].num;
-      listproducts[xx].product_total_price_b = String(listproducts[xx].product_total_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-      req.session.products = listproducts;
-      req.session.total_price = (Number(total_price) + Number(productInfo.price) * (listproducts[xx].num - 1));
-      var total_price_pricebeauty = String(req.session.total_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-      req.session.total_price_pricebeauty = total_price_pricebeauty;
-      res.send(req.session.products);
+  try {
+    const hostname = req.headers.host;
+    const websiteinfo = caches.websiteinfo[hostname];
+    const { customer_id } = websiteinfo;
+    const listproducts = [];
+    let total_price = 0;
+    if (req.session.total_price) {
+      total_price = req.session.total_price;
+    }
+    else {
+  
+    }
+    if (req.session.products) {
+      listproducts = req.session.products;
+    }
+    const product_id = req.param('productadd');
+  
+    const productInfo = await Productlists.getProductById(customer_id, product_id);
+    const pricebeauty = String(productInfo.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+    var productincart = {
+        id: productInfo.product_id,
+        product_id: productInfo._id,
+        image: productInfo.image,
+        image_path: productInfo.image_path,
+        name: productInfo.detail[0].name,
+        price: productInfo.price,
+        product_total_price: productInfo.price,
+        product_total_price_b: pricebeauty,
+        pricebeauty,
+        num: 1
+    };
+    if (listproducts.length == 0) {
+        listproducts.push(productincart);
+        req.session.products = listproducts;
+        req.session.total_price = (Number(total_price) + Number(productInfo.price));
+        var total_price_pricebeauty = String(req.session.total_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+        req.session.total_price_pricebeauty = total_price_pricebeauty;
+        res.send(req.session.products);
+    }
+    else if (findObjectByKey(listproducts, product_id) == -1) {
+        listproducts.push(productincart);
+        req.session.products = listproducts;
+        req.session.total_price = (Number(total_price) + Number(productInfo.price));
+        var total_price_pricebeauty = String(req.session.total_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+        req.session.total_price_pricebeauty = total_price_pricebeauty;
+        res.send(req.session.products);
+    }
+    else {
+        var xx = findObjectByKey(listproducts, product_id);
+        listproducts[xx].num = Number(listproducts[xx].num) + 1;
+        listproducts[xx].product_total_price = listproducts[xx].price * listproducts[xx].num;
+        listproducts[xx].product_total_price_b = String(listproducts[xx].product_total_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+        req.session.products = listproducts;
+        req.session.total_price = (Number(total_price) + Number(productInfo.price) * (listproducts[xx].num - 1));
+        var total_price_pricebeauty = String(req.session.total_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+        req.session.total_price_pricebeauty = total_price_pricebeauty;
+        res.send(req.session.products);
+    }
+  } catch (error) {
+    console.log(error);
+    res.json({statusCode: 500, message:'CANNOT_ADD_PRODUCT_TO_CART'})
   }
 });
 router.post('/updatecartnumber', (req, res, next) => {

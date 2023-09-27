@@ -7,7 +7,7 @@
           <a href="/{{productitem.seo_url}}"><img src="{{../base_url}}/static/{{productitem.image_path}}medium/{{productitem.image}}" alt={{productitem.alt}}></a>
           <ul class="cdz-product-labels">
             {{#if productitem.new}}
-              <li class="label-item new"><div class="label-content">New</div></li>
+              <li class="label-item new"><div class="label-content">Mới</div></li>
             {{/if}}
             {{#if productitem.salepec}}
               <li class="label-item sale"><div class="label-content">-{{productitem.salepec}}%</div></li>
@@ -15,19 +15,19 @@
           </ul>
         </div>
         <div class="product_detail">
-          <p class="product_name"><a href="/{{productitem.seo_url}}">{{truncateString productitem.detail.[0].name 50}}</a></p>
+          <p class="product_name"><a href="/{{productitem.seo_url}}">{{truncateString productitem.detail.[0].name 45}}</a></p>
           <div id="clear"></div>
-<div class="stars-rating">
-          <div class="star-rating">
-              <span class="star-{{productitem.rating}}"></span>
-          </div>
+          <div class="stars-rating">
+            <div class="star-rating">
+                <span class="star-{{productitem.rating}}"></span>
+            </div>
           </div>
           <div id="clear"></div>
           <div class="product_price">
-            <p>{{productitem.pricebeauty}}₫</p>
+            <p>{{formatCurrency productitem.price}}₫</p>
           </div>
           <div class="sale_pricebeauty">
-            <p>{{productitem.sale_pricebeauty}}₫</p>
+            <p>{{formatCurrency productitem.sale_price}}₫</p>
           </div>
           <div id="clear"></div>
         </div>
@@ -74,28 +74,4 @@
 
   });
 </script>
-    <script language="javascript" type="text/javascript">
-            function test(value){
-                alert("This rating's value is "+value);
-            }
-            $(function() {
-                $("#rating_simple1").webwidget_rating_simple({
-                    rating_star_length: '5',
-                    rating_initial_value: '',
-                    rating_function_name: '',//this is function name for click
-                    directory: 'Jquery-simple-rating-system-with-small-stars_files/'
-                });
-$("#rating_simple2").webwidget_rating_simple({
-                    rating_star_length: '10',
-                    rating_initial_value: '',
-                    rating_function_name: '',//this is function name for click
-                    directory: 'Jquery-simple-rating-system-with-small-stars_files/'
-                });
-$("#rating_simple3").webwidget_rating_simple({
-                    rating_star_length: '5',
-                    rating_initial_value: '4',
-                    rating_function_name: 'test',//this is function name for click
-                    directory: 'https://tns.vn/images'
-                });
-            });
-        </script>
+   

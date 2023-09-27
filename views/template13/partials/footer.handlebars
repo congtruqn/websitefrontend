@@ -1,39 +1,9 @@
 <div class="footer-container">
-  <div class="footer-content-top">
-    <div class="container">
-      {{>policies}}
-    </div>
-  </div>
-  <div class="footer-content-middle">
-    <div class="container">
-      <div class="col-sm-14">
-      <div class="row middle-top">
-        <div class="newsletter_control newsletter_item">
-            <span class="title">Đăng ký nhận tin khuyến mãi!</span>
-        </div>
-        <div class="newsletter_control">
-          <input name="email" type="email" id="newsletter" placeholder="Đăng ký nhận bản tin">
-        </div>
-        <div class="newsletter_control">
-          <button class="action subscribe primary" title="Subscribe" type="submit"><span>Đăng ký</span></button>
-        </div>        
-      </div>
-      </div>
-    </div>
-  </div>
-
   <div class="container">
     <div class="row">
-      {{#each sitefooter as |footer|}}
-      <div class="col-md-3 col-xs-6">
-        <span class="fmn">{{footer.footer_name}}</span>
-        {{#each footer.footer_child as |childfooter|}}
-        <p><a href="/{{childfooter.child_url}}">{{{childfooter.child_name}}}</a></p>
-        {{/each}}
-      </div>
-      {{/each}}
+
       <div class="col-md-4 col-sm-7 col-xs-12">
-        <span class="fmn">Liên hệ với chúng tôi</span>
+        <p class="fmn">Liên hệ với chúng tôi</p>
         <div class="footer_address">
           {{siteinfo.company_name}}
         </div>
@@ -51,12 +21,34 @@
           Email: {{siteinfo.customer_email}}
         </div>
       </div>
+
+      {{#each sitefooter as |footer|}}
+      <div class="col-md-3 col-xs-6">
+        <p class="fmn">{{footer.footer_name}}</p>
+        {{#each footer.footer_child as |childfooter|}}
+        <p><a href="/{{childfooter.child_url}}">{{{childfooter.child_name}}}</a></p>
+        {{/each}}
+      </div>
+      {{/each}}
+      <div class="col-md-4 col-sm-7 col-xs-12">
+        <div class="row newsletter_content">
+          <div class="newsletter-head">
+              <p class="title">Đăng ký bản tin</p>
+          </div>
+          <p>Đăng ký bản tin để nhận thông tin<br>về các chương trình khuyến mãi sớm nhất</p>
+          <div class="newsletter-form-wrap">
+            <input name="email" type="email" id="newsletter" placeholder="Đăng ký nhận bản tin" class="input-text email email-newsletter">
+            <button class="button btn-submit submit-newsletter" title="Subscribe" type="submit">Đăng ký</button>
+          </div>      
+        </div>
+      </div>
+
     </div>
     <div id="clear"></div>
   </div>
 </div>
 <div class="footer-content-bottom">
   <div class="container">
-    <p>© 2018 tns.vn</p>
+    <p>© 2023 <a href="https://tns.vn">tns.vn</a>. All rights reserved</p>
   </div>
 </div>

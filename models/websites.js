@@ -109,6 +109,9 @@ var websitesSchema = mongoose.Schema({
 	image_height_ratio:{
 		type: Number
 	},
+	image_news_height_ratio: {
+        type: Number,
+    },
 	products_per_cat_home:{
 		type: Number
 	},
@@ -119,6 +122,9 @@ var websitesSchema = mongoose.Schema({
 		type: Number
 	},
 	num_hot_products:{
+		type: Number
+	},
+	num_of_rate_product:{
 		type: Number
 	},
 	num_hot_news:{
