@@ -159,13 +159,23 @@ module.exports.countproductlistsbycat = async function(customer_id,cat_id){
 	const query = {customer_id:customer_id,'list_parent.parent_id': cat_id,show:1};
 	return productlists.count(query).exec();
 }
-module.exports.counthotproducts = function(customer_id,callback){
-	const query = {hot:1,show:1,customer_id:customer_id};
-	productlists.countDocuments(query, callback);
-}
+
 module.exports.countnewproducts = function(customer_id,callback){
 	const query = {new:1,show:1,customer_id:customer_id};
 	productlists.countDocuments(query, callback);
+}
+module.exports.countTopProducts = async function(customer_id, type){
+	//1 Sản phẩm hot
+	//2 Sản phẩm mới
+	//3 Sản phẩm giảm giá
+	let query = {hot:1,show:1,customer_id:customer_id};
+	if(type==2){
+		query = {new:1,show:1,customer_id:customer_id};
+	}
+	if(type==3){
+		query = {sale:1,show:1,customer_id:customer_id};
+	}
+	return await productlists.countDocuments(query).exec();
 }
 module.exports.getallproductbycat = function(cat_id,page,per_page,callback){
 	const query = {'list_parent.parent_id': cat_id};
@@ -175,9 +185,18 @@ module.exports.getallproductbycatshow = async function(customer_id,cat_id,page,p
 	const query = {customer_id:customer_id,'list_parent.parent_id': cat_id,show:1};
 	return await productlists.find(query).skip(per_page * (page - 1)).limit(per_page).sort({'rank': -1,'create_date': -1 ,'product_id': -1  }).exec();
 }
-module.exports.getallhotproductsbypage = function(customer_id,page,per_page,callback){
-	const query = {customer_id:customer_id,show:1,hot:1};
-	productlists.find(query, callback).skip(per_page * (page - 1)).limit(per_page).sort({'rank': -1,'create_date': -1 ,'product_id': -1  });
+module.exports.getAllTopProducts = async function( customer_id, page, per_page ,type ){
+	//1 Sản phẩm hot
+	//2 Sản phẩm mới
+	//3 Sản phẩm giảm giá
+	let query = { hot: 1,show: 1,customer_id: customer_id };
+	if(type==2){
+		query = { new: 1,show: 1,customer_id: customer_id };
+	}
+	if(type==3){
+		query = {sale: 1,show: 1,customer_id: customer_id };
+	}
+	return await productlists.find(query).skip(per_page * (page - 1)).limit(per_page).sort({'rank': -1,'create_date': -1 ,'product_id': -1  }).exec();
 }
 module.exports.getallnewproductsbypage = function(customer_id,page,per_page,callback){
 	var query = {customer_id:customer_id,show:1,new:1};

@@ -1,27 +1,18 @@
+
 <script type="text/javascript" src="/layout/js/jquery.validate.js"></script>
+<div class="breadcrumbs">
+	<div id="bread">
+		<ul class="items">
+			<li class="homes"><a href="/">Trang chủ</a></li>
+			<li class="homes"><a href="#">Giỏ hàng</a></li>
+		</ul>
+	</div>
+</div>
 <div class="block">
 	<div class="left_menu">
-		<div id="product_menu" class="product_menu detail_menu">
-    		{{> productmenu}}
-		</div>
-		<div class="new_product">
-			<div class="block_new_product">
-				{{>newproducts}}
-			</div>
-		</div>
+    	{{>left_slidebar}}
 	</div>
 	<div class="content_detail">
-		<div class="main_news">
-			<div class="breadcrumbs">
-				<div id="bread">
-					<ul class="items">
-						<li class="homes"><a href="/">Trang chủ</a></li>
-						<li class="homes"><a href="#">Giỏ hàng</a></li>
-					</ul>
-				</div>
-			
-			</div>
-		</div>
 		{{#if listproducts}}
 		<form class="cmxform" id="cusinfo" action="#" method="post">
 		<div class="shopping_cart">
@@ -101,7 +92,7 @@
 							{{#each listproducts as |page|}}
 									<li>
 										<div class="cart_image">
-											<img src="/static{{{page.image_path}}}thumb/{{{page.image}}}">
+											<img src="{{../base_url}}/static{{{page.image_path}}}thumb/{{{page.image}}}">
 										</div>
 										<div class="cart_detail">
 											<h5>{{{page.name}}}</h5>

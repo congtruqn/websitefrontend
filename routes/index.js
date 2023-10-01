@@ -27,7 +27,7 @@ const { storeProductCatCaches } = require('../models/cache');
 var User = require('../models/register');
 var province = require('../models/province');
 var productmoreinfo = require('../models/productmoreinfo');
-
+const { renderHomePage ,renderTopProducts } =  require('../models/renders');
 router.get('/sitemap.xml', (req, res) => {
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
@@ -225,7 +225,6 @@ router.get('/thankorder', async (req, res, next) => {
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
   var websiteinfo = caches.websiteinfo[hostname];
-  // eslint-disable-next-line camelcase
   const { template } = websiteinfo;
   const language = i18n.getLocale();
   let homelang = language;
@@ -305,104 +304,28 @@ router.get('/tim-kiem', async (req, res, next) => {
   });
 });
 router.get('/san-pham-ban-chay', async (req, res, next) => {
-  var hostname = req.headers.host;
-  var websiteinfo = caches.websiteinfo[hostname];
-  var per_page = websiteinfo.products_per_page;
-  var { template } = websiteinfo;
-  var { customer_id } = websiteinfo;
-  var mainmenu = caches.mainmenu[hostname];
-  var productmenu = caches.productcat[hostname];
-  var sitefooter = caches.footer[hostname];
-  var newproducts = caches.newproducts[hostname];
-  var productmoreinfos = caches.productmoreinfos[hostname];
-  var page = req.param('page', '1');
-  const policies = caches.policies[hostname] ? caches.policies[hostname] : [];
-  Productlists.counthotproducts(customer_id, (err, count) => {
-    Productlists.getallhotproductsbypage(customer_id, page, per_page, async (err, conten) => {
-      for (var x in conten) {
-        var productiteam = JSON.parse(JSON.stringify(conten[x]));
-        var pricebeauty = String(productiteam.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-        productiteam.pricebeauty = pricebeauty;
-        productiteam.alt = conten[x].detail[0].name;
-        conten[x] = productiteam;
-      }
-      var allpage = (count / per_page) + 1;
-      var arraypage = [];
-      for (var i = 1; i <= allpage; i++) {
-        var temp = {
-          pagecount: i,
-          seo_url: 'san-pham-ban-chay'
-        };
-        arraypage.push(temp);
-      }
-      res.render(`${template}/content/hotproduct`, {
-        contents: conten,
-        allpage: arraypage,
-        title: 'Sản phẩm bán chạy',
-        canonical: '/san-pham-moi',
-        description: 'catinfo.detail[0].description',
-        keyword: 'catinfo.detail[0].keyword',
-        layout: 'layout',
-        productmenu,
-        mainmenu,
-        siteinfo: websiteinfo,
-        sitefooter,
-        newproducts,
-        policies,
-        productmoreinfos
-      });
-    });
-  });
+  const language = i18n.getLocale();
+  let homelang = language;
+  if (language == 'vi') {
+    homelang = '';
+  }
+  renderTopProducts(req, res ,language , 1)
 });
 router.get('/san-pham-moi', async (req, res, next) => {
-  var hostname = req.headers.host;
-  var websiteinfo = caches.websiteinfo[hostname];
-  var per_page = websiteinfo.products_per_page;
-  var { template } = websiteinfo;
-  var { customer_id } = websiteinfo;
-  var mainmenu = caches.mainmenu[hostname];
-  var productmenu = caches.productcat[hostname];
-  var sitefooter = caches.footer[hostname];
-  var newproducts = caches.newproducts[hostname];
-  var productmoreinfos = caches.productmoreinfos[hostname];
-  var page = req.param('page', '1');
-  const policies = caches.policies[hostname] ? caches.policies[hostname] : [];
-  Productlists.countnewproducts(customer_id, (err, count) => {
-    Productlists.getallnewproductsbypage(customer_id, page, per_page, async (err, conten) => {
-      for (var x in conten) {
-        var productiteam = JSON.parse(JSON.stringify(conten[x]));
-        var pricebeauty = String(productiteam.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-        productiteam.pricebeauty = pricebeauty;
-        productiteam.alt = conten[x].detail[0].name;
-        conten[x] = productiteam;
-      }
-      var allpage = (count / per_page) + 1;
-      var arraypage = [];
-      for (var i = 1; i <= allpage; i++) {
-        var temp = {
-          pagecount: i,
-          seo_url: 'san-pham-moi'
-        };
-        arraypage.push(temp);
-      }
-      res.render(`${template}/content/hotproduct`, {
-        contents: conten,
-        allpage: arraypage,
-        title: 'Sản phẩm mới về',
-        canonical: '/san-pham-moi',
-        description: 'catinfo.detail[0].description',
-        keyword: 'catinfo.detail[0].keyword',
-        layout: 'layout',
-        productmenu,
-        mainmenu,
-        siteinfo: websiteinfo,
-        sitefooter,
-        newproducts,
-        policies,
-        productmoreinfos
-      });
-    });
-  });
+  const language = i18n.getLocale();
+  let homelang = language;
+  if (language == 'vi') {
+    homelang = '';
+  }
+  renderTopProducts(req, res ,language , 2)
+});
+router.get('/san-pham-khuyen-mai', async (req, res, next) => {
+  const language = i18n.getLocale();
+  let homelang = language;
+  if (language == 'vi') {
+    homelang = '';
+  }
+  renderTopProducts(req, res ,language , 3)
 });
 router.get('/getdistrictbyprovinces', (req, res, next) => {
   var provinceid = req.param('provinceid');
@@ -1029,7 +952,7 @@ const renderproductmoreinfocategorypage = async function (req, res, website_url)
 router.get('/', async (req, res) => {
   res.cookie('locale', 'vi');
   i18n.setLocale('vi');
-  renderhomepage(req, res, 'vi');
+  renderHomePage(req, res, 'vi');
 });
 router.get('/:seourl', async (req, res, next) => {
   var { seourl } = req.params;
@@ -1041,7 +964,7 @@ router.get('/:seourl', async (req, res, next) => {
     case 'en':
       res.cookie('locale', 'en');
       i18n.setLocale('en');
-      renderhomepage(req, res, i18n.getLocale());
+      renderHomePage(req, res, i18n.getLocale());
       break;
     case 'vi':
       res.cookie('locale', 'vi');
@@ -1136,54 +1059,6 @@ router.get('/:seourl1/:selurl2', async (req, res, next) => {
     }
   }
 });
-function gethotproductcat(customer_id, product_per_cat_home, products_name_letters) {
-  return new Promise((resolve, reject) => {
-    ProductCat.gethotrootproductcats(customer_id, async (err, productcat) => {
-      var productcatdetail = JSON.parse(JSON.stringify(productcat));
-      if (productcat) {
-        for (var x in productcat) {
-          var temp = await getproductbycatcout(customer_id, productcat[x].cat_id, product_per_cat_home, products_name_letters);
-          var productiteam = JSON.parse(JSON.stringify(temp));
-          productcatdetail[x].product = productiteam;
-        }
-        resolve(productcatdetail);
-      }
-      else {
-        reject('productcat null');
-      }
-    });
-  });
-}
-function getproductbycatcout(customer_id, cat_id, product_per_cat_home, products_name_letters) {
-  return new Promise((resolve, reject) => {
-    Productlists.getproductbycatcount(customer_id, cat_id, product_per_cat_home, (err, countproduct) => {
-      if (countproduct) {
-        for (var x in countproduct) {
-          var productiteam = JSON.parse(JSON.stringify(countproduct[x]));
-          var pricebeauty = String(productiteam.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-          var sale_pricebeauty = String(productiteam.sale_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
-          var productname = countproduct[x].detail[0].name;
-          if (productname.length > products_name_letters) {
-            productname = `${countproduct[x].detail[0].name.substring(0, products_name_letters)}...`;
-          }
-          productiteam.pricebeauty = pricebeauty;
-          productiteam.sale_pricebeauty = sale_pricebeauty;
-          var salepec = parseInt(((productiteam.sale_price - productiteam.price) / productiteam.sale_price) * 100);
-          productiteam.alt = countproduct[x].detail[0].name;
-          productiteam.productname = productname;
-          if (productiteam.sale == 1) {
-            productiteam.salepec = salepec;
-          }
-          countproduct[x] = productiteam;
-        }
-        resolve(countproduct);
-      }
-      else {
-        reject('productcat null');
-      }
-    });
-  });
-}
 
 function rendercatsbyparent(customer_id, parent_id, listcat) {
   return new Promise((resolve, reject) => {
