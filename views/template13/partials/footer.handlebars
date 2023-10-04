@@ -37,8 +37,10 @@
           </div>
           <p>Đăng ký bản tin để nhận thông tin<br>về các chương trình khuyến mãi sớm nhất</p>
           <div class="newsletter-form-wrap">
-            <input name="email" type="email" id="newsletter" placeholder="Đăng ký nhận bản tin" class="input-text email email-newsletter">
-            <button class="button btn-submit submit-newsletter" title="Subscribe" type="submit">Đăng ký</button>
+            <form class="cmxform" id="newsletters" method="post">
+              <input name="newsletter" type="email" id="newsletter" placeholder="Đăng ký nhận bản tin" class="input-text email email-newsletter">
+              <button class="button btn-submit submit-newsletter" title="Subscribe" type="submit">Đăng ký</button>
+            </form>
           </div>      
         </div>
       </div>
@@ -52,3 +54,49 @@
     <p>© 2023 <a href="https://tns.vn">tns.vn</a>. All rights reserved</p>
   </div>
 </div>
+<script>
+$().ready(function() {
+		// validate signup form on keyup and submit
+		$("#newsletters").validate({
+			rules: {
+				newsletter: {
+          required: true,
+					checkEmailExist: true,
+        }
+			},
+			messages: {
+				newsletter:
+        {
+          required: "Email không được để trống!",
+					checkEmailExist: "Email đã tồn tại!",
+        },
+			},
+			submitHandler: function(form) {
+				var email = document.getElementById("newsletter").value;
+		    $.ajax({
+		        url:"/api/subscribe",
+		          type: "POST",
+		          data:{email:email},
+		          success: function(response) {
+		            alert("Đăng ký nhận bản tin thành công!");
+		          }            
+		    });
+		  },
+		});
+		$.validator.addMethod("checkEmailExist", function(value, element) {
+      var isSuccess = false;
+		  $.ajax({
+   			    type: "GET",
+   	    	  url: '/api/validate-email?email='+value,
+            async: false,
+   	        success:function(result){
+              isSuccess = true;
+   	        },
+            error: function (xhr, ajaxOptions, thrownError) {
+              isSuccess = false;
+            }
+      });
+      return isSuccess;
+		}, "Email đã tồn tại!");
+});
+</script>

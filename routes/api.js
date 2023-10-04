@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const product = require('../models/productlists');
-const systems = require('../models/systems');
+//const systems = require('../models/systems');
 const caches = require('../models/cache');
+const newsletters = require('../models/newsletters');
 router.post('/rating',async function(req, res, next) {
   const hostname = req.headers.host;
   try {
@@ -18,6 +19,34 @@ router.post('/rating',async function(req, res, next) {
   } catch (error) {
     console.log(error);
     res.json({statusCode: 500, message:'CANNOT_UPDATE_RATING'})
+  }
+});
+router.post('/subscribe',async function(req, res, next) {
+  const hostname = req.headers.host;
+  try {
+    const websiteinfo = caches.websiteinfo[hostname];
+    const { customer_id } = websiteinfo;
+    const newItems = new newsletters({
+      email: req.body?.email,
+      name: req.body?.name,
+      customer_id: customer_id
+    });
+    const result = await newsletters.createNewsLetter(newItems);
+    res.json(result);
+  } catch (error) {
+    console.log(error);
+    res.json({statusCode: 500, message:'CANNOT_CREATE_NEWSLETTER'})
+  }
+});
+router.get('/validate-email',async function(req, res, next) {
+  const hostname = req.headers.host;
+  try {
+    const websiteinfo = caches.websiteinfo[hostname];
+    const { customer_id } = websiteinfo;
+    res.json({status: 'PASS'});
+  } catch (error) {
+    console.log(error);
+    res.json({statusCode: 500, message:'CANNOT_CREATE_NEWSLETTER'})
   }
 });
 module.exports = router;

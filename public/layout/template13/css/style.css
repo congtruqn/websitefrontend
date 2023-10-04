@@ -791,7 +791,20 @@ ul.rating li{
     font-size: 16px;
 }
 .fa-caret-right{position: absolute;right: 10px;top: 7px;color: #25B430}
-#addedproduct{background: #fff;text-align: justify;margin-top: 10px;text-align: left;position: absolute;left: -10px;padding: 10px; border: 1px solid #ddd;display: none;font-weight: bold;}
+#addedproduct{
+    background: #fff;
+    text-align: justify;
+    margin-top: 10px;
+    text-align: left;
+    padding: 10px;
+    border: 1px solid #ddd;
+    display: none;
+    font-weight: bold;
+    min-width: 200px;
+    position: absolute;
+    right: 0px;
+    top: 100%;
+}
 .shipping_type{text-align: center;}
 .info_title{margin-top: 20px;text-transform: uppercase;}
 .product_detail_moreinfo li{list-style: none;}
@@ -1076,6 +1089,11 @@ footer{
     border: 1px solid #eeeeee;
     padding: 7px 20px;
     max-width: 100%;
+}
+#newsletter-error{
+    display: table;
+    margin: auto;
+    font-size: 14px;
 }
 .newsletter-form-wrap .submit-newsletter {
     color: #fff;

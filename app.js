@@ -176,8 +176,8 @@ app.use(function (req, res, next) {
   res.locals.base_url = 'http://develop.tns.vn';
   next();
 });
-app.use('/', index);
 app.use('/api', api);
+app.use('/', index);
 var mongoose = require("mongoose");
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
