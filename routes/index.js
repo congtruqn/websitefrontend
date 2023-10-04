@@ -628,36 +628,36 @@ const rendernewcontentpage = async function (req, res, website_url, language = '
   var { customer_id } = websiteinfo;
   const website_protocol = websiteinfo.website_protocol ? websiteinfo.website_protocol : 'http';
   let hotnews = caches.hotnews[hostname];
-  NewsContents.getnewscontentbycontentid(customer_id, website_url.content_id, (err, conten) => {
-    NewsContents.getratenewcontentbycatcount(conten.parent_id, conten.content_id, 8, customer_id, (err, ratenews) => {
-      let tranData = null;
-      let canonical = conten.seo_url;
-      if (websiteinfo.multi_language == 1) {
-        if (language != 'vi') {
+  const newsInfo = await NewsContents.getNewsInfo(customer_id, website_url.content_id);
+  let listRateNews = await NewsContents.getRateNews( newsInfo.parent_id, newsInfo.content_id, 8, customer_id );
+
+  let tranData = null;
+  let canonical = newsInfo.seo_url;
+  if (websiteinfo.multi_language == 1) {
+      if (language != 'vi') {
           canonical = `${language}/${canonical}`;
-        }
-        tranData = conten.detail.find((obj) => obj.lang == language);
-        ratenews = utils.filterDetailByLang(ratenews, language, 1);
-        hotnews = utils.filterDetailByLang(hotnews, language, 1);
       }
-      res.render(`${template}/content/newscontent`, {
-        contents: conten,
-        hotnews,
-        ratenews,
-        details: tranData || conten.detail[0],
-        title: tranData && tranData.title ? tranData.title : conten.detail[0].title,
-        description: tranData && tranData.description ? tranData.description : conten.detail[0].description,
-        keyword: tranData && tranData.keyword ? tranData.keyword : conten.detail[0].keyword,
-        canonical: `${website_protocol}://${hostname}/${canonical}`,
-        orgimage: `${website_protocol}://${hostname}/static/${template}/images/news/fullsize/${conten.image2}`,
-        layout: 'layout',
-        language,
-        lang: homelang,
-        istemplate,
-        index: 'all',
-        ...cacheInfo
-      });
-    });
+      tranData = newsInfo.detail.find((obj) => obj.lang == language);
+      listRateNews = utils.filterDetailByLang(listRateNews, language, 1);
+      hotnews = utils.filterDetailByLang(hotnews, language, 1);
+  }
+
+  res.render(`${template}/content/newscontent`, {
+      contents: newsInfo,
+      hotnews,
+      ratenews: listRateNews,
+      details: tranData || newsInfo.detail[0],
+      title: tranData && tranData.title ? tranData.title : newsInfo.detail[0].title,
+      description: tranData && tranData.description ? tranData.description : newsInfo.detail[0].description,
+      keyword: tranData && tranData.keyword ? tranData.keyword : newsInfo.detail[0].keyword,
+      canonical: `${website_protocol}://${hostname}/${canonical}`,
+      orgimage: `${website_protocol}://${hostname}/static/${template}/images/news/fullsize/${newsInfo.image2}`,
+      layout: 'layout',
+      language,
+      lang: homelang,
+      istemplate,
+      index: 'all',
+      ...cacheInfo
   });
 };
 const rendernewcatpage = async function (req, res, website_url, language = 'vi') {
@@ -684,7 +684,10 @@ const rendernewcatpage = async function (req, res, website_url, language = 'vi')
     if (websiteinfo.multi_language == 1) {
       newsCatData = newcatinfo.detail.find((obj) => obj.lang == language);
     }
-    let [count, conten] = await Promise.all([countnewsbycat(newcatinfo.cat_id, customer_id), NewsContents.getnewsnontentsbycatcount(website_url.content_id, page, per_page, customer_id)]);
+    let [count, conten] = await Promise.all([
+      NewsContents.countNewsByCat(newcatinfo.cat_id, customer_id),
+      NewsContents.getnewsnontentsbycatcount(website_url.content_id, page, per_page, customer_id)
+    ]);
     var allpage = (count / per_page) + 1;
     var arraypage = [];
     for (var i = 1; i <= allpage; i++) {
@@ -733,7 +736,7 @@ const renderproductcatpage = async function (req, res, website_url) {
   if (!caches.productcatinfo[hostname] || !caches.productcatinfo[hostname].get(pageurl)) {
     const [count, catinfo, listproductsperpage] = await Promise.all([
       countproductlistsbycat(customer_id, website_url.content_id),
-      getproductcatinfo(customer_id, website_url.content_id),
+      ProductCat.getProductCatByCatId(customer_id, website_url.content_id),
       getallproductbycatshow(customer_id, website_url.content_id, page, per_page)
     ]);
     await storeProductCatCaches(hostname, caches, pageurl, count, listproductsperpage, catinfo);
@@ -1258,20 +1261,24 @@ function findObjectByKey(array, value) {
   return -1;
 }
 router.post('/removecartitem', (req, res, next) => {
-  var array = req.session.products;
-  var total_price = 0;
-  if (req.session.total_price) {
-    total_price = req.session.total_price;
+  try {
+    const array = req.session.products;
+    let total_price = 0;
+    if (req.session.total_price) {
+      total_price = req.session.total_price;
+    }
+    const id = req.params('id');
+    const listproducts = req.session.products;
+    const xx = findObjectByKey(listproducts, id);
+    total_price -= (listproducts[xx].price * listproducts[xx].num);
+    req.session.total_price = total_price;
+    const temp = removeArrayItemByAttr(array, 'id', id);
+    req.session.products = temp;
+    res.json({status: "SUCCESS"});
+  } catch (error) {
+    console.log(error);
+    res.json({statusCode: 500, message:'CANNOT_ADD_PRODUCT_TO_CART'})
   }
-  var id = req.param('id');
-  var listproducts = req.session.products;
-  var xx = findObjectByKey(listproducts, id);
-  total_price -= (listproducts[xx].price * listproducts[xx].num);
-  req.session.total_price = total_price;
-  var temp = removeArrayItemByAttr(array, 'id', id);
-  // req.session.destroy();
-  req.session.products = temp;
-  res.send('ok');
 });
 router.get('/thong-tin-khach-hang', (req, res, next) => {
   var listcat = '';
@@ -1291,30 +1298,6 @@ router.get('/thong-tin-khach-hang', (req, res, next) => {
     });
   });
 });
-function countnewsbycat(cat_id, customer_id) {
-  return new Promise((resolve, reject) => {
-    NewsContents.countnewscontentsbycat(cat_id, customer_id, (err, count) => {
-      if (count) {
-        resolve(count);
-      }
-      else {
-        resolve(0);
-      }
-    });
-  });
-}
-function getproductcatinfo(customer_id, cat_id) {
-  return new Promise((resolve, reject) => {
-    ProductCat.getproductcatsbycatid(customer_id, cat_id, (err, count) => {
-      if (count) {
-        resolve(count);
-      }
-      else {
-        reject('productcat null');
-      }
-    });
-  });
-}
 
 router.post('/addcustomercontact', (req, res, next) => {
   const hostname = req.headers.host;
@@ -1353,36 +1336,36 @@ router.post('/addcustomercontact', (req, res, next) => {
   res.send('ok');
 });
 router.post('/addorder', (req, res, next) => {
-  var hostname = req.headers.host;
-  var websiteinfo = caches.websiteinfo[hostname];
+  const hostname = req.headers.host;
+  const websiteinfo = caches.websiteinfo[hostname];
   nodeMailer = require('nodemailer');
-  var name = req.params('name');
-  var email = req.params('email');
-  var phone = req.params('phone');
-  var address = req.params('address');
-  var note = req.params('note');
-  var province1 = req.params('province');
-  var province = '';
-  var temp1 = province1.split(';');
+  const name = req.params('name');
+  const email = req.params('email');
+  const phone = req.params('phone');
+  const address = req.params('address');
+  const note = req.params('note');
+  const province1 = req.params('province');
+  const province = '';
+  const temp1 = province1.split(';');
   if (temp1[1]) {
     province = temp1[1];
   }
-  var district1 = req.params('district');
-  var district = '';
-  var temp2 = district1.split(';');
+  const district1 = req.params('district');
+  const district = '';
+  const temp2 = district1.split(';');
   if (temp2[1]) {
     district = temp2[1];
   }
-  var ward1 = req.params('ward');
-  var ward = '';
-  var temp3 = ward1.split(';');
+  const ward1 = req.params('ward');
+  const ward = '';
+  const temp3 = ward1.split(';');
   if (temp3[1]) {
     ward = temp3[1];
   }
-  var shippingcod = req.params('shippingcod');
-  var create_date = new Date().getTime();
-  var products = '';
-  var neworders = new listorders({
+  const shippingcod = req.params('shippingcod');
+  const create_date = new Date().getTime();
+  const products = '';
+  const neworders = new listorders({
     name,
     email,
     phone,

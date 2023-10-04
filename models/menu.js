@@ -96,29 +96,6 @@ module.exports.countmenu = function(callback){
 	var query = {};
 	menu.countDocuments(query, callback);
 }
-module.exports.countMaxProductCatID = function(callback){
-	var query = {};
-	menu.findOne(query,callback).sort({'cat_id': -1 });
-}
-module.exports.getMaxProductCatID =  function (callback) {
-	menu.countMaxProductCatID(function(err, productc) {
-		if(productc){
-			jsons = {
-	          maxordercode:productc.cat_id,
-	          ordercode:'HD000001',
-	       	}
-	
-			return callback(jsons);
-		}
-		else{
-			jsons = {
-	          maxordercode:1,
-	          ordercode:'HD000001',
-	       	}
-			return callback(jsons);
-		}
-  	});	
-}
 module.exports.getAllmenuByUser = function(userid,page,per_page,callback){
 	var query = {create_user: userid};
 	menu.find(query, callback).skip(per_page * (page - 1)).limit(per_page).sort({'menu_id': -1 });

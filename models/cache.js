@@ -1,5 +1,5 @@
 
-var systems = require('./systems'); 
+const systems = require('./systems');
 var websiteinfo = {}
 var hotnewcats = {}
 var productcat = {}
@@ -104,7 +104,7 @@ module.exports.storeCaches = async function (caches,hostname,websitein,lang = 'v
         caches.hotandnewproducts[hostname] = hotandnewproducts;
     }
     if (!caches.hotnews[hostname]) {
-        let hotnews = await systems.gethotnewsbycustomer(websitein.customer_id, websitein.num_hot_news);
+        let hotnews = await systems.news.getNewNews(websitein.customer_id, websitein.num_hot_news);
         caches.hotnews[hostname] = hotnews;
     }
     if (!caches.policies[hostname]) {

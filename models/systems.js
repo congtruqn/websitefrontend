@@ -347,18 +347,6 @@ module.exports.gettopnewscatsandcontent = function (customer_id, count, callback
     }
   });
 }
-module.exports.gethotnewsbycustomer = function (customer_id, count) {
-  return new Promise((resolve, reject) => {
-    NewsContents.getnewcontents(customer_id, count, function (err, news) {
-      if (news) {
-        resolve(news);
-      }
-      else {
-        resolve({});
-      }
-    });
-  })
-}
 module.exports.gethotandnewproductsbycustomer = function (customer_id, count) {
   return new Promise((resolve, reject) => {
     productlists.gethotandnewproducts(customer_id, count, function (err, countproduct) {
@@ -392,3 +380,4 @@ module.exports.testimonials = require('./testimonials');
 module.exports.socialmedias = require('./socialmedias');
 module.exports.newpages = require('./newspages');
 module.exports.partners = require('./partners');
+module.exports.news = require('./newscontents');

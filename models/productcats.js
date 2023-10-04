@@ -100,31 +100,15 @@ var productcatsSchema = mongoose.Schema({
 	},
 });
 var productcats = module.exports = mongoose.model('productcats', productcatsSchema);
-module.exports.getproductcatsById = function(id, callback){
-	var query = {_id:id};
-	productcats.findOne(query, callback);
-}
-module.exports.getproductcatsbycatid = function(customer_id,cat_id, callback){
-	var query = {cat_id:cat_id,customer_id:customer_id};
-	productcats.findOne(query, callback);
-}
-module.exports.getproductcatsparent = function(customer_id,cat_id, callback){
-	productcats.getproductcatsbycatid(customer_id,cat_id,function(err, productcat) {
- 		var query = {cat_id:productcat.parent_id};
-		productcats.findOne(query, callback);
-  	});
-}
-module.exports.getproductcatsparentnotthis = function(id,cat_id, callback){
-	productcats.getproductcatsbycatid(customer_id,cat_id,function(err, productcat) {
- 		var query = {cat_id:productcat.parent_id};
-		productcats.findOne(query, callback);
-  	});
+
+module.exports.getProductCatByCatId = async function(customerId, catId){
+	const query = {cat_id:catId,customer_id:customerId};
+	return await productcats.findOne(query).exec();
 }
 module.exports.getAllproductcats = function(customer_id,page,per_page,callback){
 	var query = {customer_id:customer_id};
 	productcats.find(query, callback).skip(per_page * (page - 1)).limit(per_page).sort({'create_date': -1 });
 }
-
 module.exports.getproductcatsbyparent = function(customer_id,parent,callback){
 	var query = {customer_id:customer_id,parent_id:parent};
 	productcats.find(query,callback).sort({'create_date': -1 });
@@ -141,45 +125,5 @@ module.exports.gethotproductcategory = function(customer_id,callback){
 	var query = {customer_id:customer_id,hot:1};
 	productcats.find(query, callback).sort({'rank': -1 });
 }
-module.exports.countproductcats = function(callback){
-	var query = {};
-	productcats.countDocuments(query, callback);
-}
 
-module.exports.countMaxProductCatID = function(callback){
-	var query = {};
-	productcats.findOne(query,callback).sort({'cat_id': -1 });
-}
-module.exports.getMaxProductCatID =  function (callback) {
-	productcats.countMaxProductCatID(function(err, productc) {
-		if(productc){
-			jsons = {
-	          maxordercode:productc.cat_id,
-	          ordercode:'HD000001',
-	       	}
-	
-			return callback(jsons);
-		}
-		else{
-			jsons = {
-	          maxordercode:1,
-	          ordercode:'HD000001',
-	       	}
-			return callback(jsons);
-		}
-  	});	
-}
-module.exports.getAllproductcatsByUser = function(userid,page,per_page,callback){
-	var query = {create_user: userid};
-	productcats.find(query, callback).skip(per_page * (page - 1)).limit(per_page).sort({'productcats_id': -1 });
-}
-module.exports.getproductcatsByDate = function(type,from_date,to_date,callback){
-	var query = {};
-	if(type===1||type===2||type===3){
-		query = {status:type};
-	}
-	else{
-		query = {};
-	}
-	productcats.find(query, callback).where("create_date").gte(from_date).lte(to_date);
-}
+
