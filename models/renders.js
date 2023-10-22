@@ -92,8 +92,8 @@ module.exports.renderHomePage = async function (req, res, language) {
 
 module.exports.renderTopProducts = async function (req, res, language, type) {
     //1 Sản phẩm hot
-	//2 Sản phẩm mới
-	//3 Sản phẩm giảm giá
+	  //2 Sản phẩm mới
+	  //3 Sản phẩm giảm giá
     const hostname = req.headers.host;
     const websiteinfo = caches.websiteinfo[hostname];
     const per_page = websiteinfo.products_per_page;

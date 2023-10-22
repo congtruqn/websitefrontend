@@ -78,7 +78,8 @@ $().ready(function() {
 		          type: "POST",
 		          data:{email:email},
 		          success: function(response) {
-		            alert("Đăng ký nhận bản tin thành công!");
+                toastr.success("Đăng ký nhận bản tin thành công!");
+
 		          }            
 		    });
 		  },
@@ -90,7 +91,12 @@ $().ready(function() {
    	    	  url: '/api/validate-email?email='+value,
             async: false,
    	        success:function(result){
-              isSuccess = true;
+              if(result?.statusCode == 200){
+                isSuccess = true;
+              }
+              else{
+                isSuccess = false;
+              }
    	        },
             error: function (xhr, ajaxOptions, thrownError) {
               isSuccess = false;
@@ -99,4 +105,21 @@ $().ready(function() {
       return isSuccess;
 		}, "Email đã tồn tại!");
 });
+toastr.options = {
+  "closeButton": true,
+  "newestOnTop": false,
+  "progressBar": true,
+  "positionClass": "toast-bottom-right",
+  "preventDuplicates": false,
+  "onclick": null,
+  "showDuration": "300",
+  "hideDuration": "1000",
+  "timeOut": "5000",
+  "extendedTimeOut": "1000",
+  "showEasing": "swing",
+  "hideEasing": "linear",
+  "showMethod": "fadeIn",
+  "hideMethod": "fadeOut"
+}
+
 </script>

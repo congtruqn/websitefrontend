@@ -40,10 +40,22 @@ router.post('/subscribe',async function(req, res, next) {
 });
 router.get('/validate-email',async function(req, res, next) {
   const hostname = req.headers.host;
+  const email = req.query.email;
   try {
     const websiteinfo = caches.websiteinfo[hostname];
     const { customer_id } = websiteinfo;
-    res.json({status: 'PASS'});
+    if(!email) res.json({statusCode: 400, message:'EMAIL_IS_EXIST'})
+    if(email){
+      const result = await newsletters.getNewsLetter(customer_id ,email);
+      if(result){
+        res.json({statusCode: 400, message:'EMAIL_IS_EXIST'})
+      }
+      else{
+        res.json({statusCode: 200,status: 'PASS'});
+      }
+    }
+    
+    
   } catch (error) {
     console.log(error);
     res.json({statusCode: 500, message:'CANNOT_CREATE_NEWSLETTER'})
