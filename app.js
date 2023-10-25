@@ -123,11 +123,11 @@ const db = new databaseConnect()
 db.create();
 
 app.use(async function(req, res, next) {
-  var hostname = req.headers.host;
+  const hostname = req.headers.host;
   		if (hostname.match(/^www/) !== null ) {
 			res.redirect(301,'http://' + hostname.replace(/^www\./, '') + req.url);
 		}
-  var lang = 'vi'
+  const lang = 'vi'
   if(req.url.length>=3){
     const expectLang  = req.url.substring(1,3)
     switch(expectLang){
@@ -141,23 +141,19 @@ app.use(async function(req, res, next) {
   }
   //await db.closeConnection();
   if(!caches.websiteinfo[hostname]||caches.websiteinfo[hostname]==null){
-    systems.getwebsiteinfo(hostname,async function(err, websitein){
-      if(websitein===null){
-        res.redirect(301, 'https://tns.vn');
-      }
-      if(websitein){
-        caches.websiteinfo[hostname] = websitein;
-        await caches.storeCaches(caches,hostname,websitein,lang)
-        app.engine('handlebars', exphbs({
-          partialsDir: __dirname + `/views/${websitein.template}/partials`,
-          layoutsDir:__dirname +`/views/${websitein.template}`,
-        }));
-        next();
-      }
-    });
+    const websiteInfo = await systems.getWebsiteByUrl(hostname);
+    if(!websiteInfo)
+      res.redirect(301, 'https://tns.vn');
+    caches.websiteinfo[hostname] = websiteInfo;
+    await caches.storeCaches(caches,hostname,websiteInfo,lang)
+    app.engine('handlebars', exphbs({
+          partialsDir: __dirname + `/views/${websiteInfo.template}/partials`,
+          layoutsDir:__dirname +`/views/${websiteInfo.template}`,
+    }));
+    next();
   }
   else{
-    let websitein = caches.websiteinfo[hostname];
+    const websitein = caches.websiteinfo[hostname];
     await caches.storeCaches(caches,hostname,websitein,lang);
     app.engine('handlebars', exphbs({
       partialsDir: __dirname + `/views/${websitein.template}/partials`,

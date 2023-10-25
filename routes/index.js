@@ -881,11 +881,11 @@ router.get('/', async (req, res) => {
   renderHomePage(req, res, 'vi');
 });
 router.get('/:seourl', async (req, res, next) => {
-  var { seourl } = req.params;
-  var hostname = req.headers.host;
-  var websiteinfo = caches.websiteinfo[hostname];
-  var { customer_id } = websiteinfo;
-  var { customer_username } = websiteinfo;
+  const { seourl } = req.params;
+  const hostname = req.headers.host;
+  const websiteinfo = caches.websiteinfo[hostname];
+  const { customer_id } = websiteinfo;
+  const { customer_username } = websiteinfo;
   switch (seourl) {
     case 'en':
       res.cookie('locale', 'en');
@@ -929,13 +929,13 @@ router.get('/:seourl', async (req, res, next) => {
   }
 });
 router.get('/:seourl1/:selurl2', async (req, res, next) => {
-  var { seourl1 } = req.params;
-  var seourl2 = req.params.selurl2;
-  var seourl = `${seourl1}/${seourl2}`;
-  var hostname = req.headers.host;
-  var websiteinfo = caches.websiteinfo[hostname];
-  var { customer_id } = websiteinfo;
-  var { customer_username } = websiteinfo;
+  const { seourl1 } = req.params;
+  const seourl2 = req.params.selurl2;
+  const seourl = `${seourl1}/${seourl2}`;
+  const hostname = req.headers.host;
+  const websiteinfo = caches.websiteinfo[hostname];
+  const { customer_id } = websiteinfo;
+  const { customer_username } = websiteinfo;
   let lang = 'vi';
   if (seourl1.length === 2) {
     lang = seourl1;

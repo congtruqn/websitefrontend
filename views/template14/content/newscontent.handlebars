@@ -1,0 +1,37 @@
+<div class="breadcrumbs">
+	<div id="bread">
+		<ul class="items">
+			<li class="homes"><a href="/">Trang chủ</a></li>
+			<li class="homes"><a href="/{{{contents.seo_url}}}">{{{details.name}}}</a></li>
+		</ul>
+	</div>
+</div>
+<div class="block">
+	<div class="left_menu">
+    	{{>left_slidebar}}
+	</div>
+	<div class="content_detail">
+		<div class="main_news">
+
+		</div>
+		<div class="news_detail">
+			{{{details.content}}}
+			<div class="rate_news">
+				<div class="product_content_title">
+					<div class="product_content_tit">
+						<div class="block-title">
+							<a>Bài viết liên quan</a>
+						</div>
+					</div>
+				</div>
+				<ul>
+				{{#each ratenews as |hotnew|}}
+					<li class="rate_news_item">
+						<a href="/{{hotnew.seo_url}}">{{{hotnew.detail.[0].name}}}</a>
+					</li>
+				{{/each}}
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

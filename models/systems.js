@@ -140,9 +140,9 @@ function renderrootmenuparent(customer_id, parent_id, listcat,lang = 'vi') {
     });
   });
 }
-module.exports.getwebsiteinfo = function (hostname, callback) {
-  var query = { website_url: hostname };
-  website.findOne(query, callback);
+module.exports.getWebsiteByUrl = async function (url) {
+  const query = { website_url: url };
+  return await website.findOne(query).exec();
 }
 module.exports.getfooterbycustomer = function (customer_id) {
   return new Promise((resolve, reject) => {

@@ -1,0 +1,49 @@
+{{#each productcats as |productcat|}}
+{{#if productcat.image_ads}}
+{{#if productcat.ads_url}}
+<div class="category_ads">
+  <a href="{{productcat.ads_url}}"><img src="{{productcat.image_ads}}" alt="ads"></a>
+</div>
+{{/if}}
+{{/if}}
+<div class="row">
+  <div class="col-xs-12 col-sm-12">
+    <div class="cdz-block-content cdz-tabs-bg" style="background-image: url({{productcat.image}});min-height: 612px;">
+      <div class="cdz-tabs df-tabs">
+        <div class="row">
+          {{#each productcat.product as |productitem|}}
+          <div class="col-xs-6 col-sm-6 col-md-2 {{productitem.class}}">
+            <div class="product_item">
+              <div class="product_images">
+                <a href="/{{productitem.seo_url}}"><img src="{{../../base_url}}/static{{productitem.image_path}}/medium/{{productitem.image}}" alt="{{productitem.alt}}"></a>
+                <ul class="cdz-product-labels">
+                  {{#if productitem.new}}
+                    <li class="label-item new"><div class="label-content">New</div></li>
+                  {{/if}}
+                  {{#if productitem.salepec}}
+                    <li class="label-item sale"><div class="label-content">-{{productitem.salepec}}%</div></li>
+                  {{/if}}
+                </ul>
+              </div>
+              <div class="product_detail">
+                <p class="product_name"><a href="/{{productitem.seo_url}}">{{truncateString productitem.detail.[0].name 50}}</a></p>
+                <div id="clear"></div>
+                <div class="product_price">
+                  <p>{{formatCurrency productitem.price}}₫</p>
+                </div>
+                {{#if productitem.salepec}}
+                  <div class="sale_pricebeauty">
+                    <p>{{formatCurrency productitem.sale_price}}₫</p>
+                  </div>
+                {{/if}}
+                <div id="clear"></div>
+              </div>
+            </div>
+          </div>
+          {{/each}}
+        </div>  
+      </div>
+    </div>
+  </div>
+</div>
+{{/each}}
