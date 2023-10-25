@@ -23,7 +23,7 @@
       </div>
 
       {{#each sitefooter as |footer|}}
-      <div class="col-md-3 col-xs-6">
+      <div class="col-md-3 col-sm-6 col-xs-12">
         <p class="fmn">{{footer.footer_name}}</p>
         {{#each footer.footer_child as |childfooter|}}
         <p><a href="/{{childfooter.child_url}}">{{{childfooter.child_name}}}</a></p>

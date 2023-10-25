@@ -167,6 +167,46 @@
 	.middle-top{width: 100%;}
 	.newsletter_control{width: 70%;margin: 0 5px;}
 	#newsletter{width: 100%;}
+	#navition{
+		background: #c09578;
+	}
+	.ads{
+		margin-top: 10px;
+	}
+	.mm-listitem__btn{
+		padding: 10px 20px !important;
+	}
+	.mm-listitem:after{
+		left: 0px !important;
+	}
+	.mm-menu{
+		background: #fff !important;
+	}
+	.mm-panel{
+		background: #fff !important;
+	}
+	.nav-pills>li.active>a{
+		background: #c09578 !important; 
+	}
+	.r-tabs-accordion-title{
+		background: #c09578;
+		padding: 5px 10px;
+		margin-bottom: 3px;
+	}
+	.r-tabs-accordion-title a{
+		color: #fff;
+		text-transform: uppercase;
+	}
+	.product_info{
+		margin: 20px 10px !important;
+	}
+	.product_detail .product_name a{
+		font-size: 14px !important; 
+	}
+	.hot_product_item_inner{
+		min-height: 315px;
+	}
+	.footer-container .container{text-align: center;}
 }
 
 @media (max-width: 768px) {
