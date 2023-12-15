@@ -1953,7 +1953,7 @@ pre code {
 
 @media (min-width:1200px) {
     .container {
-        width: 1360px
+        width: 1280px
     }
 }
 
@@ -2458,7 +2458,7 @@ pre code {
         width: 25%
     }
     .col-md-2 {
-        width: 20%
+        width: 16.66666667%
     }
     .col-md-1 {
         width: 8.33333333%

@@ -100,6 +100,7 @@
 	.class_fist{padding-right: 7px !important}
 	.class_end{padding-left: 7px !important}
 	.product_detail .product_name a{font-size: 12px;}
+	.col-xs-6{min-height: 240px;}
 	.fist_news_content img{width: 100%;}
 	.list_news_content{
 		border-top: 1px solid #ccc;
@@ -137,7 +138,7 @@
 		margin-top: 10px;
 	}
 	.content_right{width: 100%;}
-	.header-left{width: 50%;}
+	.header-left{width: 50%;margin: 25px 0 0 0px;}
 	.product_detail_image{width: 100%;border: 1px solid #ccc;}
 	.breadcrumbs li {
 		display: inline-block;
@@ -152,21 +153,6 @@
 	.addtocart{margin-top: 10px;width: 98%;}
 	#userNextStepBottom{width: 100%;margin-bottom: 10px;}
 	.cart_button_contin{margin-top: 20px;}
-	.left_product_menu{display: none;}
-	.menu_slider{height: auto;}
-	.slider{
-		width: 100%;
-		height: auto;
-	}
-	.abs-dropdown{display: none;}
-	.cdz-tabs{width: 100%;}
-	.service-banner-style02 .item{
-		padding: 7px;
-	}
-	.newsletter_item{display: none;}
-	.middle-top{width: 100%;}
-	.newsletter_control{width: 70%;margin: 0 5px;}
-	#newsletter{width: 100%;}
 }
 
 @media (max-width: 768px) {
@@ -185,10 +171,6 @@
 	}
 	.home-aboutus .thuonghieu {
 		font-size: 25px;
-	}
-	.product_menu_item a{
-		border: none;
-		padding: 0;
 	}
 }
 

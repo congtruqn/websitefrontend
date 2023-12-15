@@ -1,12 +1,10 @@
 <div class="block">
 	<div class="left_menu">
-		<div id="product_menu" class="product_menu detail_menu">
+		<div class="product_menu detail_menu">
     		{{> productmenu}}
 		</div>
-		<div class="new_product">
-			<div class="block_new_product">
-				{{>newproducts}}
-			</div>
+		<div class="newproductcont">
+			{{> newproducts}}
 		</div>
 	</div>
 	<div class="content_detail">
@@ -21,24 +19,8 @@
 			
 			</div>
 		</div>
-		<div class="news_detail">
+		<div class="product_detail">
 			{{{details.content}}}
-			<div class="rate_news">
-				<div class="product_content_title">
-					<div class="product_content_tit">
-						<div class="block-title">
-							<a>Bài viết liên quan</a>
-						</div>
-					</div>
-				</div>
-				<ul>
-				{{#each ratenews as |hotnew|}}
-					<li class="rate_news_item">
-						<a href="/{{hotnew.seo_url}}">{{{hotnew.detail.[0].name}}}</a>
-					</li>
-				{{/each}}
-				</ul>
-			</div>
 		</div>
 	</div>
 </div>

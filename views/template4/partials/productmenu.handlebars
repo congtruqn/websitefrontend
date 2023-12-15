@@ -1,11 +1,16 @@
 <div id="main_nav">
   <div id="smoothmenu1" class="ddsmoothmenu">
          <ul>
-            {{{productmenu1}}}
+            {{#each productmoreinfos as |productcat|}}
+                <li class="product_menu_item"><span><a href="#">{{{productcat.name}}}</a></span>
+                <ul>
+                    {{#each productcat.default_value as |infodetais|}}
+                        <li><span><a href="{{{infodetais.seo_url}}}">{{{infodetais.default_name}}}</a></span></li>
+                    {{/each}}
+                </ul>
+                </li>
+            {{/each}}
+            {{{productmenu}}}
         </ul>
     </div>
 </div>
-<script>
-    let he = document.getElementById('main_nav').offsetHeight
-    document.getElementById('product_menu').setAttribute("style","height:"+he+"px");
-</script>
