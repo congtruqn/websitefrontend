@@ -1,0 +1,37 @@
+version: 2.1
+
+jobs:
+  # deploy-dev:
+  #   machine:
+  #     image: ubuntu-2204:2023.07.2
+  #   steps:
+  #     - run:
+  #         name: Deploy Over SSH
+  #         command: |
+  #           echo ${CIRCLE_BRANCH}
+  #           ssh root@103.146.22.152 "cd ${APP_DEV_DIR}; git pull origin ${CIRCLE_BRANCH}; pm2 restart ${PM2_DEV_NAME}"
+
+  deploy-pro:
+    machine:
+      image: ubuntu-2204:2023.07.2
+    steps:
+      - run:
+          name: Deploy Over SSH
+          command: |
+            echo ${CIRCLE_BRANCH}
+            ssh root@103.146.22.152 "cd ${APP_PRODUCT_DIR}; git pull origin ${CIRCLE_BRANCH}; pm2 restart ${PM2_PRODUCT_NAME}"
+
+workflows:
+  # deploy-develop:
+  #   jobs:
+  #     - deploy-dev:
+  #         filters:
+  #           branches:
+  #             only: develop # only deploy on the main branch
+
+  deploy-production:
+    jobs:
+      - deploy-pro:
+          filters:
+            branches:
+              only: master # only deploy on the main branch
