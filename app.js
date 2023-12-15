@@ -9,7 +9,6 @@ var expressValidator = require('express-validator');
 var flash = require('connect-flash');
 var session = require('express-session');
 var passport = require('passport');
-var mongoose = require('mongoose');
 const rateLimit = require('express-rate-limit')
 const { createTunnel } = require('tunnel-ssh');
 const { databaseConnect } = require('./configs/database.config');
