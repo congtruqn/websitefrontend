@@ -136,7 +136,6 @@ app.use(async function(req, res, next) {
         break;
     }
   }
-  //await db.closeConnection();
   if(!caches.websiteinfo[hostname]||caches.websiteinfo[hostname]==null){
     const websiteInfo = await systems.getWebsiteByUrl(hostname);
     if(!websiteInfo)
