@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
-// User Schema
-var bannersSchema = mongoose.Schema({
+const mongoose = require('mongoose');
+require('../models/banner_elements');
+const bannersSchema = mongoose.Schema({
 	banner_name:{
 		type: String,
 	},
@@ -19,18 +19,11 @@ var bannersSchema = mongoose.Schema({
 	customer_id:{
 		type: Number,
 	},
-	
+	banner_elements: [{ type: mongoose.Schema.Types.ObjectId, ref: 'banner_elements' }]
 });
-var banners = module.exports = mongoose.model('banners', bannersSchema);
-module.exports.getbannersById = function(id, callback){
-	var query = {_id:id};
-	banners.findOne(query, callback);
+const banners = module.exports = mongoose.model('banner', bannersSchema);
+module.exports.getAllBanners = async function(customerId){
+	const query = { customer_id: customerId };
+	return await banners.find(query).populate('banner_elements').exec();;
 }
-module.exports.getAllbanners = function(page,per_page,callback){
-	var query = {};
-	banners.find(query, callback).skip(per_page * (page - 1)).limit(per_page).sort({'create_date': -1 });
-}
-module.exports.getbannerbycustomer = function(customer_id,callback){
-	var query = {customer_id:customer_id};
-	banners.find(query, callback);
-}
+

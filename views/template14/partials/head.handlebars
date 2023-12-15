@@ -1,30 +1,30 @@
 <div class="main-header">
-  <div class="header-left col-lg-3 col-sm-4 col-md-3 col-xs-7 col-ts-12">
-    <div id="logo">
-      <a href="/">
-        <img class="img-responsive" alt="Your Store" title="Giày đá bóng chính hãng" src="{{base_url}}/static/{{{siteinfo.customer}}}/images/systems/{{siteinfo.logo}}">
-      </a>
+  <div class="row">
+    <div class="header-left col-lg-4 col-sm-4 col-md-3 col-xs-7 col-ts-12">
+      <div class="header-top-right">
+        <ul>
+          <li><i class="fa fa-phone" aria-hidden="true"></i><a href="#">{{siteinfo.hotline}}</a>
+          </li>
+          <li><i class="icon-link fa fa-envelope" aria-hidden="true"></i><a href="#">{{siteinfo.customer_email}}</a></li>
+        </ul>
+      </div>
     </div>
-  </div>
-  <div class="center-block col-lg-7 col-sm-8 col-md-6 col-xs-5 col-ts-12">
-      <div class="search">
-          <div id="header-search">
-              <input type="text" name="search" value="" placeholder="Nhập sản phẩm cần tìm..." class="form-control input-lg" id="ime">
-              <button type="button" class="btn btn-default btn-lg header-search-btn" onclick="DoSubmitSingleExts();"><i class="fa fa-search"></i>
-              </button>
-          </div>         
-      </div>          
-  </div>
-  <div class="right-block col-lg-2">
-    <div class="cart fcart">
-      <div id="cart" class="btn-group">
-        <a href="#" onclick="location.href='/gio-hang';">
-          <span class="icon-c">
-            <i class="fa fa-shopping-bag"></i>
-          </span>
-          <span id="cart-total">0</span>
-        </a>
-        <div id="addedproduct">Sản phẩm đã được thêm vào giỏ hàng</div>
+    <div class="center-block col-lg-4 col-sm-8 col-md-6 col-xs-5 col-ts-12">
+      <div id="logo">
+          <img class="" alt="Your Store" title="Giày đá bóng chính hãng" src="{{base_url}}/static/{{{siteinfo.customer}}}/images/systems/{{siteinfo.logo}}">
+      </div>
+    </div>
+    <div class="right-block col-lg-4">
+      <div class="cart fcart">
+        <div id="cart" class="btn-group">
+          <a href="#" onclick="location.href='/gio-hang';">
+            <span class="icon-c">
+              <i class="fa fa-shopping-bag"></i>
+            </span>
+            <span id="cart-total">0</span>
+          </a>
+          <div id="addedproduct">Sản phẩm đã được thêm vào giỏ hàng</div>
+        </div>
       </div>
     </div>
   </div>

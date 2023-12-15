@@ -93,12 +93,15 @@
 #myModal p{font-size: 12px;}
 #myModal input {font-size: 12px;}
 #thank_register{display: none;}
-
-#nav{
-  margin:0;
-  padding:0;
+.desktop_menu_right{
+  width: 100%;
+  background: #fcfcfc;
+  display: flex;
   position: relative;
   z-index: 1000;
+}
+#nav{
+  margin: auto
 }
   
 #nav li a,#nav li {
@@ -112,7 +115,7 @@
   
 #nav li a {
   line-height: 41px;
-  padding:0 20px;
+  padding:5px 20px;
   text-decoration:none;
   margin:0;
   font-size:14px;

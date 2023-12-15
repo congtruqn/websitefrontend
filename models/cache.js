@@ -1,6 +1,6 @@
 
 const systems = require('./systems');
-var websiteinfo = {}
+var websiteinfo = []
 var hotnewcats = {}
 var productcat = {}
 var mainmenu = {}

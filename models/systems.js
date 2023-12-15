@@ -180,18 +180,6 @@ module.exports.gettemplates = function () {
     })
   })
 }
-module.exports.getbanner = function (customer_id) {
-  return new Promise((resolve, reject) => {
-    banners.getbannerbycustomer(customer_id, async function (err, banners) {
-      if (banners) {
-        resolve(banners);
-      }
-      else {
-        resolve([]);
-      }
-    });
-  });
-}
 module.exports.gethotproductbycustomer = function (customer_id, count, products_name_letters) {
   return new Promise((resolve, reject) => {
     productlists.gethotproducts(customer_id, count, function (err, countproduct) {
@@ -381,3 +369,4 @@ module.exports.socialmedias = require('./socialmedias');
 module.exports.newpages = require('./newspages');
 module.exports.partners = require('./partners');
 module.exports.news = require('./newscontents');
+module.exports.banners = require('./banners');

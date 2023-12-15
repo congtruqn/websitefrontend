@@ -10,12 +10,13 @@ var newspages = require('./newspages');
 var NewsContents = require('./newscontents');
 var NewsCats = require('./newscats');
 var Productlists = require('./productlists');
-const {countWebsitesTemplate, getAllWebsiteTemplateByPage } = require('./websites');
+const { getAllBanners } = require('../models/banners');
+const { countWebsitesTemplate, getAllWebsiteTemplateByPage } = require('./websites');
 
 module.exports.renderHomePage = async function (req, res, language) {
-    var hostname = req.headers.host;
-    var websiteinfo = caches.websiteinfo[hostname];
-    var product_per_cat_home = 0;
+    const hostname = req.headers.host;
+    const websiteinfo = caches.websiteinfo[hostname];
+    let product_per_cat_home = 0;
     if (websiteinfo && websiteinfo.products_per_cat_home) {
       product_per_cat_home = websiteinfo.products_per_cat_home;
     }
@@ -29,13 +30,12 @@ module.exports.renderHomePage = async function (req, res, language) {
     let cusbanner = [];
     const promises = [];
     if (hostname == 'template1.tns.com:3005' || hostname == 'tns.vn') {
-      promises.push(systems.testimonials.getTestimonialsByCustomer(3, websiteinfo.customer_id), systems.gettemplates(), systems.getbanner(websiteinfo.customer_id));
+      promises.push(systems.testimonials.getTestimonialsByCustomer(3, websiteinfo.customer_id), systems.gettemplates(), getAllBanners(websiteinfo.customer_id));
     }
     else {
-      promises.push([], [], systems.getbanner(websiteinfo.customer_id));
+      promises.push([], [], getAllBanners(websiteinfo.customer_id));
     }
     [testimonials, listtemplates, cusbanner] = await Promise.all(promises).catch((err) => {
-      console.log(err);
     });
     const hotproductcategory = caches.hotproductcategory[hostname];
     const hotandnewproducts = caches.hotandnewproducts[hostname];
@@ -45,7 +45,7 @@ module.exports.renderHomePage = async function (req, res, language) {
     let homelang = '';
     let lang = 'vi';
     if (websiteinfo.website_url === hostname) {
-      var { template } = websiteinfo;
+      const { template } = websiteinfo;
       if (!caches.hotproductcats[hostname] || caches.hotproductcats[hostname] == null) {
         var hotproductcats = await gethotproductcat(websiteinfo.customer_id, product_per_cat_home, websiteinfo.products_name_letters);
         caches.hotproductcats[hostname] = hotproductcats;

@@ -179,7 +179,6 @@ mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
-
 app.use(async function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
