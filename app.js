@@ -165,7 +165,7 @@ app.use(function (req, res, next) {
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
   res.locals.user = req.user || null;
-  res.locals.base_url = 'http://develop.tns.vn';
+  res.locals.base_url = process.env.FILE_URL || 'http://develop.tns.vn';
   next();
 });
 app.use('/api', api);
