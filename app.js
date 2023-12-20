@@ -123,8 +123,8 @@ app.use(async function(req, res, next) {
   const hostname = req.headers.host;
   		if (hostname.match(/^www/) !== null ) {
 			res.redirect(301,'http://' + hostname.replace(/^www\./, '') + req.url);
-		}
-  const lang = 'vi'
+	}
+  let lang = 'vi'
   if(req.url.length>=3){
     const expectLang  = req.url.substring(1,3)
     switch(expectLang){
