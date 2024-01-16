@@ -17,10 +17,11 @@
   <link rel="stylesheet" href="/layout/css/jcarousel.responsive.css" />
   <link rel="stylesheet" href="/layout/css/mmenu.css" />
   <link rel="stylesheet" href="/layout/css/font-awesome.min.css" />
-  <link rel="stylesheet" href="/layout/js/rating_simple.css" />
+  <link rel="stylesheet" href="/layout/css/rating_simple.css" />
   <link rel="stylesheet" href="/layout/css/responsive-tabs.css" />
   <link rel="stylesheet" href="/layout/css/mmenu.css" />
   <link rel="stylesheet" href="/layout/css/toastr.min.css" />
+  <link href="/layout/css/aos.css" rel="stylesheet">
 
   <script type="text/javascript" src="/layout/js/jquery-1.10.1.min.js"></script>
   <script type="text/javascript" src="/layout/js/bootstrap.min.js"></script>
@@ -31,7 +32,7 @@
   <script type="text/javascript" src="/layout/js/mmenu.js"></script>
   <script type="text/javascript" src="/layout/js/jquery.validate.js"></script>
   <script type="text/javascript" src="/layout/js/toastr.min.js"></script>
-
+  <script type="text/javascript" src="/layout/js/aos.js"></script>
 
   <meta name="viewport" content="width=device-width">
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
@@ -70,9 +71,15 @@
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
   </script>
+
 </head>
 
 <body>
+  <script>
+    AOS.init({
+ initClassName: false,
+    });
+  </script>
   {{#if istemplate}}
   <div id="istemplate">
     <div class="istemplate_left">

@@ -298,7 +298,6 @@ ul.rating li{
 .nav-pills li ul li{list-style: none;border-top: 1px solid #eee;padding: 6px 0 6px 10px;}
 .nav-pills li ul li a{color: #23527c;font-size: 12px !important;}
 .nav-pills li ul li:first-child{margin-top: 7px;}
-#slider{width: 1060px;float: right;overflow: hidden;position: relative;margin-top: 10px;}
 .hot_product_cat{
     width: 79%;
     float: right;
@@ -311,9 +310,7 @@ ul.rating li{
     padding-bottom: 12px;
     margin-bottom: 20px;
 }
-.viewall{float: right;width: 30%;text-align: right;padding: 7px 10px;}
 .productcat_name{width: 70%;float: left;font-size: 15px;font-weight: normal}
-.viewall a{font-style: italic;color: #43b728 !important;text-transform: capitalize !important;font-size: 11px !important;font-weight: 400 !important;}
 .productcat_title h2{font-size: 14px;text-transform: uppercase;padding: 0 7px;font-weight: 500;color: #333}
 .product_item{background: #fff;margin-bottom: 10px;border: 1px solid #eee;}
 .product_item .product_detail{padding: 7px;}
@@ -325,11 +322,59 @@ ul.rating li{
 .new_product .ad{
     padding: 1px;
 }
+.product_cat_content{
+    background: #fff;
+    position: relative;
+}
+.elementor-background-overlay{
+    text-align: center;
+    background-color: transparent;
+    background-image: linear-gradient(180deg, #FFFFFF00 0%, #1E1E1E 100%);
+    opacity: 0.6;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+.elementor-button{
+    border: 1px solid #ccc;
+    border-radius: 100px;
+    padding: 8px 16px 8px 16px;
+}
+.product_cat_title{
+    position: absolute;
+    top: 230px;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+}
+.product_cat_title a{color: #fff;}
+.elementor-background-overlay1{
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    background-color: #1e1e1e;
+    opacity: 0.5;
+    transition: background 0.3s, border-radius 0.3s, opacity 0.3s
+}
+.product_cat_title h3{
+    font-size: 22px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+.product_cat_content img{
+    width: 100%;
+}
 .new_product .ad img{width: 100%;}
 .block_new_product{
     margin: 10px 0;
     background: #fff;
     border-radius:2px;
+}
+.product_cat_content{
+    margin-top: -30px;
 }
 .newproducttitle{
     color: #fff;

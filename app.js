@@ -192,7 +192,6 @@ if (process.env.NODE_ENV && process.env.NODE_ENV == 'local') {
     srcAddr: '0.0.0.0',
     srcPort: 27017,
     dstAddr: '127.0.0.1',
-    
     dstPort: 27017
   };
   createTunnel(tunnelOptions, serverOptions, sshOptions, forwardOptions).then(([server, conn], error) => {
