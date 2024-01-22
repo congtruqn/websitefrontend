@@ -1094,7 +1094,7 @@ router.post('/addtocart',async (req, res, next) => {
     const hostname = req.headers.host;
     const websiteinfo = caches.websiteinfo[hostname];
     const { customer_id } = websiteinfo;
-    const listproducts = [];
+    let listproducts = [];
     let total_price = 0;
     if (req.session.total_price) {
       total_price = req.session.total_price;
