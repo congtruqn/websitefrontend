@@ -962,8 +962,10 @@ footer .footer-top {
 }
 footer{
     font-size: 12px;
-    background: #fafafa;
+    background-image: url(../images/line-footer.png);
     padding-top: 60px;
+    background-color: #3F37C9;
+    color: #fff;
 }
 .footer-container .fmn{
     font-size: 16px;
@@ -974,9 +976,10 @@ footer{
     margin-top: 10px;
     text-transform: uppercase;
     font-family: 'Roboto';
+    color: #fff;
 }
 .footer_address{
-    font-size: 13px;
+    font-size: 15px;
     line-height: 32px;
 }
 .facebook_like{overflow: hidden;display: block;margin: 15px 0;}
@@ -1058,7 +1061,7 @@ footer{
     margin: 0;
 }
 .footer a {
-    color: #191919;
+    color: #fff;
     line-height: 32px;
     padding-top: 5px;
     padding-bottom: 5px;
@@ -1086,7 +1089,7 @@ footer{
 .newsletter-form-wrap .submit-newsletter {
     color: #fff;
     width: 80%;
-    background: #c09578;
+    background: #050141;
     height: 56px;
     line-height: 56px;
     padding: 0 15px;
@@ -1094,7 +1097,7 @@ footer{
     letter-spacing: 0.1em;
     border: none;
     text-align: center;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 600;
 }
 .footer-content-middle .title {
@@ -1107,9 +1110,9 @@ footer{
     text-align: center;
 }
 .newsletter_content p{
-    font-size: 13px;
+    font-size: 15px;
     margin-bottom: 20px;
-    color: #555;
+    color: #fff;
 }
 .newsletter-head .title{
 	font-size: 16px;
@@ -1119,6 +1122,7 @@ footer{
 	position: relative;
 	margin-top: 11px;
 	font-family: 'Roboto';
+    color: #fff;
 }
 .footer-content-bottom {
     padding: 20px 0 15px;
@@ -1267,3 +1271,45 @@ footer{
 .product_detail_description{
     margin-top: 5px;
 }
+.testimonial_bg{
+    background-image: url(../images/Rectangle-17.png);
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: #f7f7f7;
+    margin: 20px 0 0 0;
+    padding: 40px 0;
+}
+.testimonial_bl{
+    margin: 0 -15px;
+}
+.block_testimonials{
+    margin: 0 -15px;
+}
+.testimonial_item{
+    box-shadow: 0px 10px 40px 0px rgba(29.999999999999996, 29.999999999999996, 29.999999999999996, 0.07);
+    transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;
+    margin: 0px 15px 0px 15px;
+    background: #fff;
+    padding: 32px 32px 32px 32px;
+}
+.elementor-image-box-wrapper{
+    text-align: left;
+    padding: 20px 0;
+}
+.elementor-image-box-img{
+    width: 30%;
+    margin-right: 15px;
+    display: inline-block;
+}
+.elementor-image-box-img img {
+    border-radius: 100px;
+    transition-duration: 0.3s;
+    max-width: 100%;
+    float: left;
+}
+.elementor-image-box-content {
+    width: 60%;
+    float: right;
+}
+.elementor-image-box-title{font-size: 17px; font-weight: 600;}

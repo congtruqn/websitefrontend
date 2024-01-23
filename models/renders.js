@@ -33,7 +33,7 @@ module.exports.renderHomePage = async function (req, res, language) {
       promises.push(systems.testimonials.getTestimonialsByCustomer(3, websiteinfo.customer_id), systems.gettemplates(), getAllBanners(websiteinfo.customer_id));
     }
     else {
-      promises.push([], [], getAllBanners(websiteinfo.customer_id));
+      promises.push(systems.testimonials.getTestimonialsByCustomer(3, websiteinfo.customer_id), [], getAllBanners(websiteinfo.customer_id));
     }
     [testimonials, listtemplates, cusbanner] = await Promise.all(promises).catch((err) => {
     });

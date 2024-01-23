@@ -169,7 +169,7 @@
 }
 #nav li ul li,#nav li ul li a {
     float:none;
-    min-width: 150px; /* submenu item minimal width */
+    min-width: 220px; /* submenu item minimal width */
     line-height: 40px;
     border-right: 0;
     text-shadow: none;
