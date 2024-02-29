@@ -77,12 +77,12 @@ var hbs = exphbs.create({
   extname: '.hbs'
 });
 app.use(function(req, res, next) {
-  hbs.handlebars.registerHelper('formatCurrency', function(value) {
+  hbs.handlebars.registerHelper('formatCurrency', function (value = 0, currency = '₫') {
     if(value){
-      return value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+      return `${value.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")}${currency}` ;
     }
-    else{
-      return 'Please call'
+    else {
+      return i18n.__('please_call');
     }
   });
   next();
