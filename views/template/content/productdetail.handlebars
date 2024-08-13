@@ -111,9 +111,9 @@
 	                      </div>
 	                      <div class="product_detail">
 							<p class="product_name"><a href="/{{rateproduct_item.seo_url}}">{{truncateString rateproduct_item.detail.[0].name 50}}</a></p>
-	                        <div class="product_price"><p>{{formatCurrency rateproduct_item.price}}₫</p></div>
+	                        <div class="product_price"><p>{{formatCurrency rateproduct_item.price '₫'}}</p></div>
 							{{#if rateproduct_item.salepec}}
-								<p class="product_sale_price">{{formatCurrency rateproduct_item.sale_price}}₫</p>
+								<p class="product_sale_price">{{formatCurrency rateproduct_item.sale_price '₫'}}</p>
 							{{/if}}
 							<div id="clear"></div>
 	                      </div>

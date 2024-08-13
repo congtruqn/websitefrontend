@@ -22,10 +22,10 @@
                         
                         <div class="product_price">
                           {{#if listnews.price}}
-                          	<p class="s_price">Giá: {{formatCurrency listnews.price}}₫</p>
+                          	<p class="s_price">Giá: {{formatCurrency listnews.price '₫'}}</p>
                           {{/if}}
                           {{#if listnews.sale_price}}
-									          <p class="s_true_price">Giá: {{formatCurrency listnews.sale_price}} ₫</p>
+									          <p class="s_true_price">Giá: {{formatCurrency listnews.sale_price '₫'}}</p>
                           {{/if}}
                         </div>
                       </div>

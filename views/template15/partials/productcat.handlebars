@@ -1,0 +1,21 @@
+<div class="product_cat_content row">
+{{#each productcats as |productcat|}}
+  <div class="product_cat_item  col-xs-6 col-sm-6 col-md-4" style="z-index: 999999;">
+    <div class="product_cat_content"  data-aos="fade-up" dat-aos-delay="500" data-aos-offset="200" data-aos-mirror="true">
+      <div class="elementor-background-overlay"></div>
+      <img src="{{../base_url}}/static/{{productcat.image}}" alt={{productcat.name}}>
+      <div class="product_cat_title">
+          <h3><a href="/{{productcat.seo_url}}">{{{productcat.detail.[0].name}}}</a></h3>
+          <a class="elementor-button elementor-button-link elementor-size-sm elementor-animation-float" href="/{{productcat.seo_url}}">
+            <span class="elementor-button-content-wrapper">
+              <span class="elementor-button-icon elementor-align-icon-right">
+                <i aria-hidden="true" class="fas fa-arrow-right"></i>
+              </span>
+              <span class="elementor-button-text">Chi tiết</span>
+            </span>
+          </a>
+      </div>
+    </div>
+  </div>
+{{/each}}
+</div>

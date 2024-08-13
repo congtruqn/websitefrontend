@@ -19,10 +19,10 @@
 								<a href="/{{products.seo_url}}">{{truncateString products.detail.[0].name 47}}</a>
 								<div class="s_product_price">
 									{{#if products.price}}
-										<p class="s_price">Giá: {{formatCurrency products.price}}₫</p>
+										<p class="s_price">Giá: {{formatCurrency products.price '₫'}}</p>
 									{{/if}}
 									{{#if products.sale_price}}
-									<p class="s_true_price">Giá: {{formatCurrency products.sale_price}} Đ</p>
+									<p class="s_true_price">Giá: {{formatCurrency products.sale_price '₫'}}</p>
 									{{/if}}
 								</div>
 							</div>
