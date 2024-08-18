@@ -31,6 +31,12 @@ body {
     width: 1200px;
     margin: auto;
     padding: 0 15px;
+   margin-bottom: 10px;
+}
+#bread .items{
+    border-bottom: 1px solid #ccc ;
+    padding: 0 0 10px 0;
+    margin-bottom: 10px;
 }
 .cont-header{
     background: #fff;
@@ -548,7 +554,7 @@ ul.rating li{
     position: relative;
 }
 .content_detail {
-    width: 76%;
+    width: 74%;
     float: right;
 }
 .product_content img{height: auto !important;}
@@ -569,12 +575,20 @@ ul.rating li{
 .product_detail_image{width: 35%;float: left;}
 .product_detail_image li{list-style: none;}
 .product_detail_image img{width: 100% !important;}
+.product_cat_breadcrumb{
+    padding:10px 0;
+    margin: 0;
+}
+.product_item_breadcrumb{
+    height: 35px;
+    padding: 0;
+    margin: 0;
+}
 .breadcrumbs li {
     display: inline-block;
 }
 .breadcrumbs{
     padding: 20px 0;
-    margin-top: 40px;
 }
 .breadcrumbs li strong {
     outline: medium none;
@@ -586,9 +600,11 @@ ul.rating li{
 }
 .breadcrumbs li + li:before {
     padding: 0 10px 0 12px;
-    content: "\f101";
+    content: ">";
     font-family: 'FontAwesome';
     font-weight: 400;
+    color: #888;
+    font-size: 13px;
 }
 .breadcrumbs li a, .breadcrumbs li strong {
     line-height: 24px;
@@ -683,7 +699,7 @@ ul.rating li{
 .product_cat {
     width:1200px;
     margin: auto;
-    padding: 15px;
+    padding: 10px;
 }
 .cat_image img{width: 100%;}
 .cat_image{height: 210px;overflow: hidden;}
@@ -1256,9 +1272,18 @@ footer{
 .product_category ul li{
     list-style: none;
 }
-.product_category .product_menu_item a{
+.product_category .product_menu_item{
+    padding: 6px 0;
     border-bottom: 1px solid #f1f1f1;
+}
+.product_category .product_menu_item a{
+    font-size: 14px;
     color: #555;
+    width: 100%;
+    font-weight: bold;
+}
+.product_category .product_menu_item span{
+    width: 100%;
 }
 .product_category .product_menu_item ul{
     display: none;
@@ -1285,13 +1310,11 @@ footer{
     margin-top: 5px;
 }
 .testimonial_bg{
-    background-image: url(../images/Rectangle-17.png);
     background-position: top left;
     background-repeat: no-repeat;
     background-size: contain;
     background-color: #f7f7f7;
     margin: 20px 0 0 0;
-    padding: 40px 0;
 }
 .testimonial_bl{
     margin: 0 -15px;
@@ -1334,15 +1357,4 @@ footer{
 }
 .product_cat_content{
     overflow: hidden;
-}
-.product_cat_breadcrumb{
-    background: url(../images/hero-shop.jpg) center center;
-    height: 200px;
-    padding: 0;
-    margin: 0;
-}
-.product_item_breadcrumb{
-    height: 35px;
-    padding: 0;
-    margin: 0;
 }

@@ -1,16 +1,17 @@
-<div class="breadcrumbs">
+<div class="breadcrumbs product_cat_breadcrumb">
 	<div id="bread">
 		<ul class="items">
-			<li class="homes"><a href="/">Trang chủ</a></li>
-			<li class="homes"><a href="#">Giỏ hàng</a></li>
+			<li class="item home"><a href="/">Trang chủ</a></li>
+			<li class="item product"><strong>Giỏ hàng</strong></li>
 		</ul>
 	</div>
 </div>
-<div class="block">
+<div class="page_block">
 	<div class="left_menu">
     	{{>left_slidebar}}
 	</div>
 	<div class="content_detail">
+
 		{{#if listproducts}}
 		<form class="cmxform" id="cusinfo" action="#" method="post">
 		<div class="shopping_cart">
@@ -162,7 +163,6 @@
 				</div>
 			</div>
 		</div>
-		</div>
 		</form>
 		{{else}}
 					 <div>
@@ -171,7 +171,9 @@
 					</div>
 		{{/if}}
 	</div>
+	</div>
 </div>
+
 <script>
 $().ready(function() {
 	var totalmonney = document.getElementById("totalmonney").innerHTML
