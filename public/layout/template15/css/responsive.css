@@ -1,9 +1,15 @@
 @media (max-width: 1200px) {
     .container {
-        width: 1200px !important;
+        width: 100%;
     }
 }
 @media (max-width: 1025px) {
+	.ul_mainmenu{
+		display: none;
+	}
+	.page_block{
+		width: 100%;
+	}
 	#top {
 		display: none;
 	}

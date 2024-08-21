@@ -147,7 +147,7 @@ router.get('/login', (req, res, next) => {
   });
 });
 router.get('/clearcache', (req, res, next) => {
-  var hostname = req.headers.host;
+  const hostname = req.headers.host;
   caches.productcat[hostname] = null;
   caches.hotnewcats[hostname] = null;
   caches.websiteinfo[hostname] = null;

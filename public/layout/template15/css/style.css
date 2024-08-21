@@ -3,7 +3,7 @@
     padding: 0;
 }
 .container {
-    width: 1200px !important;
+    width: 1200px;
 }
 body {
     background: #fff none repeat scroll 0 0;
