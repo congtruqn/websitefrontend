@@ -139,7 +139,7 @@ app.use(async function(req, res, next) {
   if(!caches.websiteinfo[hostname]||caches.websiteinfo[hostname]==null){
     const websiteInfo = await systems.getWebsiteByUrl(hostname);
     if(!websiteInfo)
-      res.redirect(301, 'https://softnests.com');
+      //res.redirect(301, 'https://softnests.com');
     caches.websiteinfo[hostname] = websiteInfo;
     await caches.storeCaches(caches,hostname,websiteInfo,lang)
     app.engine('handlebars', exphbs({
