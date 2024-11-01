@@ -29,7 +29,7 @@ module.exports.renderHomePage = async function (req, res, language) {
     let testimonials = [];
     let cusbanner = [];
     const promises = [];
-    if (hostname == 'template1.tns.com:3005' || hostname == 'tns.vn') {
+    if (hostname == 'template1.tns.com:3005' || hostname == 'softnests.vn') {
       promises.push(systems.testimonials.getTestimonialsByCustomer(3, websiteinfo.customer_id), systems.gettemplates(), getAllBanners(websiteinfo.customer_id));
     }
     else {
