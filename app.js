@@ -139,7 +139,7 @@ app.use(async function(req, res, next) {
   if(!caches.websiteinfo[hostname]||caches.websiteinfo[hostname]==null){
     const websiteInfo = await systems.getWebsiteByUrl(hostname);
     if(!websiteInfo)
-      res.redirect(301, 'https://softnests.vn');
+      res.redirect(301, 'https://softnests.com');
     caches.websiteinfo[hostname] = websiteInfo;
     await caches.storeCaches(caches,hostname,websiteInfo,lang)
     app.engine('handlebars', exphbs({
@@ -165,7 +165,7 @@ app.use(function (req, res, next) {
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
   res.locals.user = req.user || null;
-  res.locals.base_url = process.env.FILE_URL || 'http://develop.softnests.vn';
+  res.locals.base_url = process.env.FILE_URL || 'http://develop.softnests.com';
   next();
 });
 app.use('/api', api);
