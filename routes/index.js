@@ -1268,26 +1268,26 @@ router.post('/addorder', (req, res, next) => {
   const address = req.params('address');
   const note = req.params('note');
   const province1 = req.params('province');
-  const province = '';
+  let province = '';
   const temp1 = province1.split(';');
   if (temp1[1]) {
     province = temp1[1];
   }
   const district1 = req.params('district');
-  const district = '';
+  let district = '';
   const temp2 = district1.split(';');
   if (temp2[1]) {
     district = temp2[1];
   }
   const ward1 = req.params('ward');
-  const ward = '';
+  let ward = '';
   const temp3 = ward1.split(';');
   if (temp3[1]) {
     ward = temp3[1];
   }
   const shippingcod = req.params('shippingcod');
   const create_date = new Date().getTime();
-  const products = '';
+  let products = '';
   const neworders = new listorders({
     name,
     email,
