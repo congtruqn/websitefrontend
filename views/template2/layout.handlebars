@@ -8,7 +8,11 @@
   <meta property="og:description" content="{{description}}">
   <meta property="og:image" content="{{orgimage}}">
   <link rel="canonical" href="{{canonical}}">
-
+  {{#if istemplate}}
+			<meta name="robots" content="NOINDEX">
+	{{else}}
+			<meta content="INDEX,FOLLOW" name="robots">
+	{{/if}}
 	<link rel="stylesheet" href="/layout/{{siteinfo.template}}/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="/layout/{{siteinfo.template}}/css/style.css" />
   <link rel="stylesheet" href="/layout/{{siteinfo.template}}/css/addon.css" />
@@ -28,7 +32,6 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
 
   <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500&subset=vietnamese">
-  <meta content="INDEX,FOLLOW" name="robots">
   <meta name="copyright" content="Giayfutsal.com.vn - Giày đá bóng chính hãng">
   <meta name="author" content="Giayfutsal.com.vn - Giày đá bóng chính hãng">
   <meta http-equiv="audience" content="General">

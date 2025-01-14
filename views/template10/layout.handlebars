@@ -29,9 +29,12 @@
   <meta name="viewport" content="width=device-width">
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
   <link rel="sitemap" type="application/xml" title="Sitemap" href="/layout/{{siteinfo.template}}/sitemap.xml">
-  <link type="text/css" rel="stylesheet"
-    href="https://fonts.googleapis.com/css?family=Roboto:400,500&subset=vietnamese">
-  <meta content="INDEX,FOLLOW" name="robots">
+  <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500&subset=vietnamese">
+  {{#if istemplate}}
+			<meta name="robots" content="NOINDEX">
+	{{else}}
+			<meta content="INDEX,FOLLOW" name="robots">
+	{{/if}}
   <link rel="shortcut icon" href="/static/{{siteinfo.template}}/images/favicon.ico">
   <meta name="copyright" content="{{title}}">
   <meta name="author" content="{{title}}">

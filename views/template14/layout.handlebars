@@ -36,10 +36,14 @@
 
   <meta name="viewport" content="width=device-width">
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Open+Sans:ital,wght@0,400;1,300;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;1,100;1,300;1,400;1,500&display=swap" rel="stylesheet">
-  <meta content="INDEX,FOLLOW" name="robots">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Open+Sans:ital,wght@0,400;1,300;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;1,100;1,300;1,400;1,500&display=swap" rel="stylesheet">
+  {{#if istemplate}}
+			<meta name="robots" content="NOINDEX">
+	{{else}}
+			<meta content="INDEX,FOLLOW" name="robots">
+	{{/if}}
   <meta name="copyright" content="Giayfutsal.com.vn - Giày đá bóng chính hãng">
   <meta name="author" content="Giayfutsal.com.vn - Giày đá bóng chính hãng">
   <meta http-equiv="audience" content="General">
