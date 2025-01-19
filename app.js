@@ -1,4 +1,5 @@
 var express = require('express');
+var compression = require('compression')
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -9,6 +10,7 @@ var expressValidator = require('express-validator');
 var flash = require('connect-flash');
 var session = require('express-session');
 var passport = require('passport');
+
 const rateLimit = require('express-rate-limit')
 const { createTunnel } = require('tunnel-ssh');
 const { databaseConnect } = require('./configs/database.config');
@@ -16,7 +18,7 @@ var app = express();
 var port = process.env.PORT || 3005;
 app.set('port', port);
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
-
+app.use(compression());
 const limiter = rateLimit({
 	windowMs: 60 * 1000, // 1 minutes
 	max: 200, // Limit each IP to 2000 requests per `window` (here, per 1 minutes)
