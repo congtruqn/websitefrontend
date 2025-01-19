@@ -178,7 +178,7 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
 
-if (process.env.NODE_ENV && process.env.NODE_ENV == 'develop') {
+if (process.env.NODE_ENV && process.env.NODE_ENV != 'production') {
   const options = {
     user: process.env.MONGO_USER,
     pass: process.env.MONGO_PASSWORD,
