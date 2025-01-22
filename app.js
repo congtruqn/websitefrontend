@@ -184,7 +184,7 @@ if (process.env.NODE_ENV && process.env.NODE_ENV != 'production') {
     keepAliveInitialDelay: 300000,
     useNewUrlParser: true
   };
-  mongoose.connect("mongodb://" + process.env.DB_URL + "/website_dev");
+  mongoose.connect("mongodb://" + process.env.DB_URL + "/website_dev", options);
 }
 else {
   const options = {
