@@ -12,8 +12,6 @@ var session = require('express-session');
 var passport = require('passport');
 
 const rateLimit = require('express-rate-limit')
-const { createTunnel } = require('tunnel-ssh');
-const { databaseConnect } = require('./configs/database.config');
 var app = express();
 var port = process.env.PORT || 3005;
 app.set('port', port);
