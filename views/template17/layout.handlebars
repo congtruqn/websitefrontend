@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <title>{{title}}</title>
+  <meta name="keyword" content="">
+  <meta content="{{description}}" name="description">
+  <meta property="og:title" content="{{title}}">
+  <meta property="og:description" content="{{description}}">
+  <meta property="og:image" content="{{orgimage}}">
+  <link rel="canonical" href="{{canonical}}">
+  {{#if istemplate}}
+			<meta name="robots" content="NOINDEX">
+	{{else}}
+			<meta content="INDEX,FOLLOW" name="robots">
+	{{/if}}
+  <link rel="stylesheet" href="https://softnests.com/layout/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/layout/{{siteinfo.template}}/css/style.css" />
+  <link rel="stylesheet" href="/layout/{{siteinfo.template}}/css/addon.css" />
+  <link rel="stylesheet" href="/layout/{{siteinfo.template}}/css/responsive.css" />
+  <link rel="stylesheet" href="https://softnests.com/layout/css/jcarousel.responsive.css" />
+  <link rel="stylesheet" href="https://softnests.com/layout/css/mmenu.css" />
+  <link rel="stylesheet" href="https://softnests.com/layout/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://softnests.com/layout/css/rating_simple.css" />
+  <link rel="stylesheet" href="https://softnests.com/layout/css/responsive-tabs.css" />
+  <link rel="stylesheet" href="https://softnests.com/layout/css/mmenu.css" />
+  <link rel="stylesheet" href="https://softnests.com/layout/css/toastr.min.css" />
+  <link href="https://softnests.com/layout/css/aos.css" rel="stylesheet">
+
+  <script type="text/javascript" src="https://softnests.com/layout/js/jquery-1.10.1.min.js"></script>
+  <script type="text/javascript" src="https://softnests.com/layout/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://softnests.com/layout/js/jcarousel.responsive.js"></script>
+  <script type="text/javascript" src="https://softnests.com/layout/js/jquery.jcarousel.min.js"></script>
+  <script type="text/javascript" src="https://softnests.com/layout/js/rating_simple.js"></script>
+  <script type="text/javascript" src="https://softnests.com/layout/js/jquery.responsiveTabs.js"></script>
+  <script type="text/javascript" src="https://softnests.com/layout/js/mmenu.js"></script>
+  <script type="text/javascript" src="https://softnests.com/layout/js/jquery.validate.js"></script>
+  <script type="text/javascript" src="https://softnests.com/layout/js/toastr.min.js"></script>
+  <script type="text/javascript" src="https://softnests.com/layout/js/aos.js"></script>
+
+  <meta name="viewport" content="width=device-width">
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+  
+  <meta name="copyright" content="Giayfutsal.com.vn - Giày đá bóng chính hãng">
+  <meta name="author" content="Giayfutsal.com.vn - Giày đá bóng chính hãng">
+  <meta http-equiv="audience" content="General">
+  <meta name="resource-type" content="Document">
+  <meta name="distribution" content="Global">
+  <meta name="revisit-after" content="1 days">
+  <meta name="GENERATOR" content="Giayfutsal.com.vn - Giày đá bóng chính hãng">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta property="og:site_name" content="Giayfutsal.com.vn">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="vi_VN">
+  <meta name="RATING" content="GENERAL">
+  <meta charset="utf-8">
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-78751937-1']);
+    _gaq.push(['_trackPageview']);
+    (function () {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+  <script>(function (d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/vi_VN/all.js#xfbml=1&appId=670934746292134";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
+
+</head>
+
+<body>
+  <script>
+    AOS.init({
+ initClassName: false,
+    });
+  </script>
+  {{#if istemplate}}
+  <div id="istemplate">
+    <div class="istemplate_left">
+      <img src="/images/logo2_small.png">
+    </div>
+    <div class="istemplate_right">
+        <a href="http://softnests.com/templateregister?template={{siteinfo.template}}" class="big-link" data-reveal-id="myModal" data-animation="fade">{{i18n "register_to_use"}}</a>
+    </div>
+    <div id="clear"></div>
+  </div>
+  {{/if}}
+  <div class="wrapper">
+    <header>
+      <div id="top_mobile">
+        <div class="container">
+          <div class="header-top-left">
+            <p class="hotline"><i class="fa fa-phone"></i> <a href="tel:+84903392491"> Hotline: {{siteinfo.hotline}}</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="cont-header">
+        <div class="container">
+          {{>head}}
+        </div>
+      </div>
+    </header>
+
+    <div class="content" id="content">
+        {{{body}}}
+    </div>
+    <footer class="footer">
+      {{>footer}}
+    </footer>
+  </div> <!-- /container -->
+  {{>mobilenavi}}
+</body>
+<script type="text/javascript">
+  function DoSubmitSingleExts() {
+    var txt = $('#ime').val().trim();
+    window.location = '/tim-kiem?key=' + txt.toLowerCase();
+  };
+</script>
+<script type="text/javascript">
+  $.ajax({
+    dataType: "json",
+    url: '/getcart',
+    data: '',
+    success: function (result) {
+      document.getElementById('cart-total').innerHTML = result;
+    }
+  });
+</script>
+<script type="text/javascript">
+  function sent() {
+    var name = document.getElementById('name').value;
+    var phone = document.getElementById('phone').value;
+    var email = document.getElementById('email').value;
+    var dataString = 'name=' + name + '&email=' + email + '&phone=' + phone;
+    //alert(dataString);
+    if (email == "" || phone == "" || name == "") {
+      alert('Bạn vui lòng nhập đầy đủ thông tin');
+    }
+    else {
+      $.ajax({
+        type: "POST",
+        url: '/registertouse?' + dataString,
+        data: { email: email },
+        success: function (result) {
+          document.getElementById("register_info").style.display = "none";
+          document.getElementById("thank_register").style.display = "block";
+          //alert(result);
+        }
+      });
+    }
+
+  }
+</script>
+<script>
+  new Mmenu( document.querySelector( '#menu' ) );
+			document.addEventListener( 'click', ( evnt ) => {
+				let anchor = evnt.target.closest( 'a[href^="#/"]' );
+				if ( anchor ) {
+					alert('Thank you for clicking, but that\'s a demo link.');
+					evnt.preventDefault();
+				}
+  });
+</script>
+</html>

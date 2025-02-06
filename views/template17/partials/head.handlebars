@@ -1,0 +1,39 @@
+<div class="main-header">
+  <div class="row">
+    <div class="col-md-2 col-sm-2 col-xs-12">
+      <div id="logo">
+          <img class="" alt="Your Store" title="Giày đá bóng chính hãng" src="{{base_url}}/static/{{{siteinfo.customer}}}/images/systems/{{siteinfo.logo}}">
+      </div>
+    </div>
+    <div class="header-left col-lg-7 col-md-7">
+              <div id="navition">
+            <div class="desktop_menu_right">
+              <div class="container">
+                <a href="#menu" class="mobimenuicon"><span></span></a>
+                {{>mainmenu}}
+              </div>
+            </div>
+        </div>
+              <div class="block-search">
+          <div id="header-search">
+              <input type="text" name="search" value="" placeholder="Nhập sản phẩm cần tìm..." class="form-control input-lg" id="ime">
+              <button type="button" class="btn btn-default btn-lg header-search-btn" onclick="DoSubmitSingleExts();"><i class="fa fa-search"></i>
+              </button>
+          </div>         
+      </div> 
+    </div>
+    <div class="right-block col-lg-3 col-md-3">
+      <div class="cart fcart">
+        <div id="cart" class="btn-group">
+          <a href="#" onclick="location.href='/gio-hang';">
+            <span class="icon-c">
+              
+            </span>
+            <span id="cart-total">0</span>
+          </a>
+          <div id="addedproduct">Sản phẩm đã được thêm vào giỏ hàng</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

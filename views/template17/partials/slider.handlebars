@@ -1,0 +1,54 @@
+<link rel="stylesheet" type="text/css" href="/layout/css/navstylechange.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="/layout/css/settings.css" media="screen" />
+<script type="text/javascript" src="/layout/js/jquery.themepunch.plugins.min.js"></script>
+<script type="text/javascript" src="/layout/js/jquery.themepunch.revolution.min.js"></script>
+<div class="tp-banner-container">
+  <div class="tp-banner" >
+      <ul>
+          {{#each banners as |banner|}}
+            <li data-transition="fade" data-slotamount="7" data-masterspeed="1500">
+              <img src="{{../base_url}}/static/{{banner.image_path}}"   alt="slidebg1"  data-bgfit="cover" data-bgposition="center top" data-bgrepeat="no-repeat">
+              {{#each banner.banner_elements as |element|}}
+                {{#if element.type}}
+                  <div class="tp-caption customin"
+                    data-x="{{element.data_x}}"
+                    data-y="{{element.data_y}}"
+                    data-customin="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0;scaleY:0;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
+                    data-speed="{{element.data_speed}}"
+                    data-start="{{element.data_start}}"
+                    data-easing="{{element.data_easing}}"
+                    data-endspeed="{{element.data_endspeed}}"
+                    style="z-index: 3"><h1 style="text-align: center;font-size:{{{element.font_size}}}px;color:{{element.color}};line-height:{{element.line_height}}px; font-weight:{{element.font_weight}}">{{{element.text}}}</h1>
+                  </div>
+                {{else}}
+                  <div class="tp-caption customin"
+                    data-x="{{element.data_x}}"
+                    data-y="{{element.data_y}}"
+                    data-customin="x:0;y:0;z:0;rotationX:0;rotationY:0;rotationZ:0;scaleX:0;scaleY:0;skewX:0;skewY:0;opacity:0;transformPerspective:600;transformOrigin:50% 50%;"
+                    data-speed="{{element.data_speed}}"
+                    data-start="{{element.data_start}}"
+                    data-easing="{{element.data_easing}}"
+                    data-endspeed="{{element.data_endspeed}}"
+                    style="z-index: 3"><img src="{{../../base_url}}/static{{element.image_path}}" alt="banner item">
+                  </div>           
+                {{/if}}
+                
+              {{/each}}
+            </li>
+          {{/each}}
+      </ul>
+      <div class="tp-bannertimer"></div>
+  </div>
+</div>
+<script type="text/javascript">
+  var revapi;
+  jQuery(document).ready(function() {
+  revapi = jQuery('.tp-banner').revolution(
+    {
+      delay:500,
+      startheight: 400,
+      hideThumbs:10,
+      fullWidth:"on",
+    });
+  }); //ready
+</script>

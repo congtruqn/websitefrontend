@@ -1,0 +1,62 @@
+<div class="breadcrumbs">
+	<div id="bread">
+		<ul class="items">
+			<li class="item home"><a href="/">Trang chủ</a></li>
+			<li class="item product"><strong>Tìm kiếm</strong></li>
+		</ul>
+	</div>
+</div>
+<div class="block">
+	<div class="left_menu">
+    	{{>left_slidebar}}
+	</div>
+	<div class="product_cat">
+		<div class="product_content">
+			<div class="row">
+			<div class="row">
+				{{#each contents as |productitem|}}
+				<div class="hot_product_item col-xs-6 col-sm-6 col-md-3">
+					<div class="hot_product_item_inner">
+					<div class="product_images">
+						<a href="/{{productitem.seo_url}}"><img src="{{../base_url}}/static/{{productitem.image_path}}medium/{{productitem.image}}" alt={{productitem.alt}}></a>
+						<ul class="cdz-product-labels">
+						{{#if productitem.new}}
+							<li class="label-item new"><div class="label-content">Mới</div></li>
+						{{/if}}
+						{{#if productitem.salepec}}
+							<li class="label-item sale"><div class="label-content">-{{productitem.salepec}}%</div></li>
+						{{/if}}
+						</ul>
+					</div>
+					<div class="product_detail">
+						<p class="product_name"><a href="/{{productitem.seo_url}}">{{truncateString productitem.detail.[0].name 45}}</a></p>
+						<div id="clear"></div>
+						<div class="stars-rating">
+						<div class="star-rating">
+							<span class="star-{{productitem.rating}}"></span>
+						</div>
+						</div>
+						<div id="clear"></div>
+						<div class="product_price">
+							<p>{{formatCurrency productitem.price '₫'}}</p>
+						</div>
+						<div class="sale_pricebeauty">
+							<p>{{formatCurrency productitem.sale_price '₫'}}</p>
+						</div>
+						<div id="clear"></div>
+					</div>
+					</div>
+				</div>
+				{{/each}}
+			</div>
+				<div class="content_page">
+					<ul>
+					{{#each allpage as |page|}}
+						<li><a href="/{{{page.seo_url}}}?page={{page.pagecount}}">{{{page.pagecount}}}</a></li>
+					{{/each}}
+					</ul>
+				</div>
+				<div id="clear"></div>				
+		</div>
+	</div>
+</div>
