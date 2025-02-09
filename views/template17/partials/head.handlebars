@@ -6,21 +6,19 @@
       </div>
     </div>
     <div class="header-left col-lg-7 col-md-7">
-              <div id="navition">
-            <div class="desktop_menu_right">
-              <div class="container">
-                <a href="#menu" class="mobimenuicon"><span></span></a>
-                {{>mainmenu}}
-              </div>
-            </div>
-        </div>
-              <div class="block-search">
+        <div class="block-search">
           <div id="header-search">
               <input type="text" name="search" value="" placeholder="Nhập sản phẩm cần tìm..." class="form-control input-lg" id="ime">
               <button type="button" class="btn btn-default btn-lg header-search-btn" onclick="DoSubmitSingleExts();"><i class="fa fa-search"></i>
               </button>
           </div>         
-      </div> 
+        </div>
+        <div id="navition">
+            <div class="desktop_menu_right">
+                <a href="#menu" class="mobimenuicon"><span></span></a>
+                {{>mainmenu}}
+            </div>
+        </div>
     </div>
     <div class="right-block col-lg-3 col-md-3">
       <div class="cart fcart">

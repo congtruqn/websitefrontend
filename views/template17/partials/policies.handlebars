@@ -2,10 +2,17 @@
   <ul>
   {{#each policies as |policy_item|}}
   <li class="col-xs-6 col-sm-6 col-md-3 item">
-    <p class="item-icon">
-      <span class="{{policy_item.icon_font}}"></span>
-    </p>
-    <p>{{policy_item.name}}</p>
+    <div class="boxServiceImage">
+      {{#if policy_item.icon_font}}
+						<span class="{{policy_item.icon_font}}"></span>
+			{{else}}
+						<img src="{{../base_url}}/static{{policy_item.icon}}">
+			{{/if}}
+    </div>
+    <div class="boxServiceContent">
+      <h4 class="boxServiceTitle">{{policy_item.name}}</h4>
+      <p class="boxServiceDesc">{{policy_item.name}}</p>
+    </div>
   </li>
   {{/each}}
   </ul>

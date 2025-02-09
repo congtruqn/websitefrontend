@@ -112,9 +112,21 @@
   padding:5px 20px;
   text-decoration:none;
   margin:0;
-  font-size:15px;
+  font-size: 14px;
   font-weight: 600;
   text-transform:uppercase;
+}
+#nav li .have-child:after {
+  content: url(../images/down-chevron.png);
+  font-family: 'simple-line-icons';
+  margin-left: 5px;
+  line-height: 2;
+}
+#nav li:first-child a{
+  padding-left: 0px;
+}
+#nav li ul li:first-child a{
+  padding-left: 20px !important;
 }
 #nav li ul {
   z-index: 1000;
@@ -137,7 +149,7 @@
   display:block;
 } /* show submenu on hover */
 #navigation, #nav li ul li, #nav li ul li a{
-  background: #cbcbcb;
+  background: #fff;
 }
 #nav li a:hover, #nav li ul li,#nav li ul li a,#nav li ul li a:hover  {
   color: #5ea201; 
@@ -165,13 +177,15 @@
 #nav li ul li,#nav li ul li a {
     float:none;
     min-width: 220px; /* submenu item minimal width */
-    line-height: 40px;
+    line-height: 30px;
     border-right: 0;
     text-shadow: none;
     display:block;
-    font-size: 14px;
+    font-size: 13px;
     font-weight:400;
     text-transform:inherit;
+    font-weight: 600;
+    border-bottom: 1px solid #ddd;
 } /* Submenu item */
   
 #nav li ul li {

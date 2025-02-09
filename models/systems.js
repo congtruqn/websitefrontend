@@ -94,14 +94,19 @@ module.exports.rendermainmenu = async function (customer_id,lang) {
     menu.getrootmenu(customer_id, async function (err, menuroot) {
       var listcat = '<ul class="ul_mainmenu" id="nav">';
       for (var x in menuroot) {
+        const listcat1 = await renderrootmenuparent(customer_id, menuroot[x].cat_id, '', lang);
+        let haveChild = '';
+        if (listcat1) {
+          haveChild = 'have-child'
+        }
         let tranData = menuroot[x].detail.find(obj => obj.lang == lang)?menuroot[x].detail.find(obj => obj.lang == lang):menuroot[x].detail.find(obj => obj.lang == 'vi')
         if(lang=='vi'){
-          listcat = listcat + '<li class="mainmenu_item"><span><a href="/' + menuroot[x].link + '">' + tranData.name + '</a></span>';
+          listcat = listcat + '<li class="mainmenu_item"><span><a class = "'+haveChild+'"  href="/' + menuroot[x].link + '">' + tranData.name + '</a></span>';
         }
         else{
           listcat = listcat + '<li class="mainmenu_item"><span><a href="/'+lang+'/' + menuroot[x].link + '">' + tranData.name + '</a></span>';
         }
-        var listcat1 = await renderrootmenuparent(customer_id, menuroot[x].cat_id, '',lang);
+        
         listcat = listcat + listcat1;
         listcat = listcat + '</li>';
       }
