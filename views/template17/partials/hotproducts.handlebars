@@ -1,83 +1,63 @@
-
-<section class="regular slider1">
-  <div class="elementor-widget-container">
-    <div class="elementor-heading-title elementor-size-default">Sản phẩm mới</div>
+    
+<div class="rokan-product-heading rokan-onsale-heading">
+  <h2>Sản phẩm <span class="sup-title">Hot</span></h2>
+  <div class="slider_nav">
+    <div class="am-next"></div>
+    <div class="am-prev"></div>
   </div>
-  <div class="row">
-  {{#each hotproducts as |productitem|}}
-  <div  class="col-xs-6 col-sm-6 col-md-3 {{listnews.class}}">
-    <div class="hot_product_item">
-      <div class="hot_product_item_inner">
-        <div class="product_images">
-          <a href="/{{productitem.seo_url}}"><img src="{{../base_url}}/static/{{productitem.image_path}}medium/{{productitem.image}}" alt={{productitem.alt}}></a>
-          <ul class="cdz-product-labels">
-            {{#if productitem.new}}
-              <li class="label-item new"><div class="label-content">Mới</div></li>
-            {{/if}}
-            {{#if productitem.salepec}}
-              <li class="label-item sale"><div class="label-content">-{{productitem.salepec}}%</div></li>
-            {{/if}}
-          </ul>
-        </div>
-        <div class="product_detail">
-          <p class="product_name"><a href="/{{productitem.seo_url}}">{{truncateString productitem.detail.[0].name 45}}</a></p>
-          <div id="clear"></div>
-          <div class="stars-rating">
-            <div class="star-rating">
-                <span class="star-{{productitem.rating}}"></span>
-            </div>
-          </div>
-          <div id="clear"></div>
-          <div class="product_price">
-            <p>{{formatCurrency productitem.price '₫'}}</p>
-          </div>
-          {{#if productitem.sale}}
-              <div class="sale_pricebeauty"><p>{{formatCurrency productitem.sale_price '₫'}}</p></div>
-          {{/if}}
-          <div id="clear"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  {{/each}}
-  </div>
-</section>
-<script type="text/javascript">
-  $(document).on('ready', function () {
-    $(".regular").slick({
-      dots: false,
-      infinite: false,
-      slidesToShow: 5,
-      slidesToScroll: 3,
-      autoplay: true,
-      autoplaySpeed: 2000,
-      responsive: [
-        {
-          breakpoint: 1024,
-          settings: {
-            slidesToShow: 3,
-            slidesToScroll: 3,
-            infinite: true,
-            dots: true
-          }
-        },
-        {
-          breakpoint: 600,
-          settings: {
-            slidesToShow: 2,
-            slidesToScroll: 2
-          }
-        },
-        {
-          breakpoint: 480,
-          settings: {
-            slidesToShow: 2,
-            slidesToScroll: 2
-          }
-        }
-      ]
-    });
-
-  });
+</div>
+<div class="owl-carousel owl-theme">
+        {{#each hotproducts as |productitem|}}
+              <div class="slider-item">
+                <div class="product_images">
+                  <a href="/{{productitem.seo_url}}"><img src="{{../base_url}}/static/{{productitem.image_path}}medium/{{productitem.image}}" alt={{productitem.alt}}></a>
+                  <ul class="cdz-product-labels">
+                    {{#if productitem.new}}
+                      <li class="label-item new"><div class="label-content">Mới</div></li>
+                    {{/if}}
+                    {{#if productitem.salepec}}
+                      <li class="label-item sale"><div class="label-content">-{{productitem.salepec}}%</div></li>
+                    {{/if}}
+                  </ul>
+                </div>
+                					<div class="product_detail">
+						<p class="product_name"><a href="/{{productitem.seo_url}}">{{truncateString productitem.detail.[0].name 45}}</a></p>
+						<div id="clear"></div>
+						<div class="stars-rating">
+						<div class="star-rating">
+							<span class="star-{{productitem.rating}}"></span>
+						</div>
+						</div>
+						<div id="clear"></div>
+						<div class="product_price">
+							<p class="sale_price">{{formatCurrency productitem.price '₫'}}</p>
+              <p class="sale_off_price">{{formatCurrency productitem.sale_price '₫'}}</p>
+						</div>
+						<div id="clear"></div>
+					</div>
+              </div>
+            {{/each}}
+</div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" ></script>
+    <script>
+$(document).ready(function(){
+  $('.owl-carousel').owlCarousel({
+loop:true,
+autoplay : 3000,
+margin:20,
+nav:true,
+navText: [$('.am-next'),$('.am-prev')],
+responsive:{
+    0:{
+        items:2
+    },
+    600:{
+        items:2
+    },
+    1000:{
+        items:5
+    }
+}
+})
+});
 </script>
-   

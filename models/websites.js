@@ -124,6 +124,9 @@ var websitesSchema = mongoose.Schema({
 	num_hot_products:{
 		type: Number
 	},
+	num_new_products: {
+		type: Number
+	},
 	num_of_rate_product:{
 		type: Number
 	},

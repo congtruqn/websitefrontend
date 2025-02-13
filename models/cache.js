@@ -84,7 +84,7 @@ module.exports.storeCaches = async function (caches,hostname,websitein,lang = 'v
         caches.hotproducts[hostname] = hotproducts;
     }
     if (!caches.newproducts[hostname]) {
-        let newproducts = await systems.getnewproductbycustomer(websitein.customer_id,  websitein.num_hot_products || 10, websitein.products_name_letters);
+        let newproducts = await systems.getnewproductbycustomer(websitein.customer_id,  websitein.num_new_products || 8, websitein.products_name_letters);
         caches.newproducts[hostname] = newproducts;
     }
     if (!caches.saleproducts[hostname]) {
@@ -100,7 +100,7 @@ module.exports.storeCaches = async function (caches,hostname,websitein,lang = 'v
         caches.list_products_by_more_info[hostname] = productmoreinfos;
     }
     if (!caches.hotandnewproducts[hostname]) {
-        let hotandnewproducts = await systems.gethotandnewproductsbycustomer(websitein.customer_id, websitein.num_hot_products);
+        let hotandnewproducts = await systems.gethotandnewproductsbycustomer(websitein.customer_id, websitein.num_new_products);
         caches.hotandnewproducts[hostname] = hotandnewproducts;
     }
     if (!caches.hotnews[hostname]) {

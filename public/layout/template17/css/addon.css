@@ -280,3 +280,46 @@
   -o-transform: scale(1);
   transform: scale(1);
 }
+.owl-nav{
+  position: absolute;
+  top: -55px;
+  right: 0px;
+  background: #fff;
+  margin-left: 5px;
+  padding-left: 5px;
+  display: flex;
+}
+.owl-prev,
+.owl-next{
+  height: 32px;
+  width: 32px;
+  border-radius: 3px;
+  background-color: #ebebeb !important;
+  margin-left: 5px;
+}
+.owl-prev:hover,
+.owl-next:hover{
+  background-color: #5ea201 !important;
+}
+.am-prev:hover:before,
+.am-next:hover:before{
+  color: #fff !important;
+}
+.owl-dots{
+  position: absolute;
+  top: 7px;
+  right: 0px;
+}
+.owl-next{
+
+}
+.am-prev::before{
+  font-family: "FontAwesome";
+  content: "\f105" !important;
+  color: #999 !important;
+}
+.am-next::before{
+  font-family: "FontAwesome";
+  content: "\f104" !important;
+  color: #999 !important;
+}

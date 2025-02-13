@@ -3,6 +3,11 @@
         width: 100%;
     }
 }
+@media (min-width: 992px) {
+    .col-md-2 {
+        width: 20% !important;
+    }
+}
 @media (max-width: 1025px) {
 	.ul_mainmenu{
 		display: none;
