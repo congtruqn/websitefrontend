@@ -52,7 +52,32 @@ body {
     display: block;
 }
 .fcart{
-    padding: 25px 15px;
+    padding: 25px 15px 14px 15px;
+}
+.d-flex{
+    display: flex;
+    float: right;
+    text-align: left;
+}
+.contacinfo-phone p{
+    font-size: 11px;
+    color: #a7a7a7;
+    line-height: 10px;
+}
+.contacinfo-phone label{
+    font-weight: 600;
+}
+.contacinfo-phone.contactinfo-item .wrap {
+    margin-left: 10px;
+}
+.contacinfo-phone.contactinfo-item .image_hotline {
+    display: block;
+    max-width: 100%;
+    height: 35px;
+    width: 35px;
+    background-color: #5ea201;
+    -webkit-mask: url(../images/hotline_icon.svg) no-repeat 100% 100%;
+    mask: url(../images/hotline_icon.svg);
 }
 #cart-total{
     position: absolute;top: -3px;left: 25px;font-size: 12px;
@@ -528,14 +553,13 @@ ul.rating li{
     background: #fff;
 }
 .hot_product_item .product_images img{width: 100%;}
-.hot_product_item .product_detail .product_name,.product_item .product_detail .product_name{line-height: 17px;padding-bottom: 4px;margin-bottom: 3px;min-height: 48px;}
+
 .hot_product_item .product_detail .product_price,.product_item .product_detail .product_price{
     width: 50%;
     float: left;
     padding-right: 3px;
 }
 .hot_product_item .product_detail .sale_pricebeauty,.product_item .product_detail .sale_pricebeauty{
-    line-height: 17px;
     float: right;
     width: 50%;
     text-align: left;
@@ -543,12 +567,10 @@ ul.rating li{
 }
 .hot_product_item .product_detail .sale_pricebeauty p,.product_item .product_detail .sale_pricebeauty p{color: #aaa; text-decoration: line-through;font-size: 12px;margin-top: 5px;}
 .hot_product_item .product_detail .product_name a,.product_item .product_detail .product_name a{
-    font-size: 15px;
-    color: #333;
+    font-size: 13px;
+    color: #5ea201;
     font-weight: 600;
-    line-height: 22px;
 }
-.hot_product_item .product_detail .product_price ,.product_item .product_detail .product_price p{color: #c09578;font-size: 14px;font-weight: 600;text-align: right;}
 .list_news_content{
     position: relative;
     height: 220px;
@@ -958,6 +980,9 @@ ul.rating li{
     -o-transform: translateX(-50%);
     transform: translateX(-50%);
 }
+.hot_new{
+    padding-bottom: 30px;
+}
 .hot_news_detail{
     text-align: left;
     padding: 10px 0;
@@ -969,28 +994,23 @@ ul.rating li{
 .hot_news_img img{
     width: 100%;
 }
-.hot_news_detail .hot_news_name{
-    font-size: 16px;
-    color: #333;
-    margin-bottom: 15px;
-    position: relative;
-    padding-bottom: 10px;
-}
 .hot_news_detail .hot_news_name::before {
     content: '';
     position: absolute;
-    left: 0;
+    left: 10;
     bottom: 0;
-    border-bottom: 2px solid #c09578;
-    width: 40px;
+    border-bottom: 2px solid #5ea201;
+    width: 50px;
 }
 .hot_news_detail .hot_news_name , .hot_news_detail .hot_news_name a{
     color: #282828;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
+    min-height: 50px;
 }
 .hot_news_desc{
     color: #6e7370;
+    font-size: 12px;
 }
 .item-inner {
     border: 1px solid #e9eaec;
@@ -1038,68 +1058,23 @@ footer .footer-top {
 }
 footer{
     font-size: 12px;
-    background-image: url(../images/line-footer.png);
-    padding-top: 60px;
-    background-color: #3F37C9;
-    color: #fff;
+    padding-top: 30px;
 }
 .footer-container .fmn{
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
     margin-bottom: 6px;
     line-height: 24px;
     position: relative;
     margin-top: 10px;
     text-transform: uppercase;
-    font-family: 'Roboto';
-    color: #fff;
 }
 .footer_address{
-    font-size: 15px;
+    font-size: 13px;
     line-height: 32px;
 }
 .facebook_like{overflow: hidden;display: block;margin: 15px 0;}
 .newletter-title{font-size: 17px;font-weight: 500;padding: 5px 15px;}
-#form_subscribe {
-    float: left;
-    position: relative;
-    text-align: center;
-    width: 100%;
-}
-#subscribe_email {
-    background: #fff;
-    border: 0;
-    font-size: 13px;
-    color: #999999;
-    display: block;
-    padding: 0 120px 0 10px;
-    height: 35px;
-    width: 100%;
-    float: left;
-    margin: 0;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -khtml-border-radius: 5px;
-}
-#form_subscribe .btn {
-    background: #ff911d;
-    border: medium none;
-    border-radius: 0 15x 15x 0;
-    -moz-border-radius: 0 5px 5px 0;
-    -webkit-border-radius: 0 5px 5px 0;
-    -khtml-border-radius: 0 5px 5px 0;
-    color: #ffffff;
-    font-size: 14px;
-    font-weight: 400;
-    height: 35px;
-    line-height: 37px;
-    padding: 0 15px;
-    position: absolute;
-    right: 0;
-    text-transform: capitalize;
-    top: 0;
-}
 .service-banner-style02 .item {
     text-align: center;
     font-size: 14px;
@@ -1135,13 +1110,11 @@ footer{
 }
 .service-banner-style02 {
     text-align: center;
-    margin: 0;
+    margin: 20px 0 0 0 !important;
     border: 1px solid #ebebeb;
     padding-right: 10px;
     padding-left: 10px;
     border-radius: 3px;
-    margin-top: 20px;
-
     background: #fff;
 }
 .boxServiceImage {
@@ -1172,11 +1145,18 @@ footer{
     fill: #5ea201;
 }
 .footer a {
-    color: #fff;
     line-height: 32px;
     padding-top: 5px;
     padding-bottom: 5px;
     font-size: 13px;
+    color: #333;
+}
+.footer-container ul li{
+    list-style: square;
+    margin-left: 15px;
+}
+.footer-container ul li a{
+    color: #666;
 }
 .newsletter-form-wrap .input-text {
     width: 80%;
@@ -1439,4 +1419,95 @@ footer{
 }
 .product_cat_content{
     overflow: hidden;
+}
+.velaNewsletterFooter {
+    padding: 45px 0px 25px;
+    border-bottom: 1px solid rgb(235, 235, 235);
+    background: rgb(94, 162, 1);
+}
+.velaNewsletterFooter .velaContentTitle {
+    width: 37%;
+    display: inline-block;
+    float: left;
+    text-align: left;
+    padding-left: 70px;
+    position: relative;
+    margin: 0px 0px 10px;
+}
+.velaNewsletterFooter .velaContentTitle::before {
+    content: "";
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 51px;
+    height: 51px;
+    background-color: rgb(255, 255, 255);
+    mask: url(../images/newletter_icon.svg);
+}
+.velaNewsletterFooter .velaFooterTitle {
+    color: rgb(255, 255, 255);
+    margin: 0px;
+    padding: 0px;
+    font-size: 22px;
+    text-transform: capitalize;
+    letter-spacing: -1px;
+}
+.velaNewsletterFooter .newsletterDescription {
+    color: rgb(255, 255, 255);
+}
+.velaNewsletterFooter .velaContentForm {
+    width: 44%;
+    float: left;
+}
+.newsletter-footer {
+    text-align: center;
+    position: relative;
+    display: flex;
+}
+.newsletter-footer::before {
+    content: "";
+    display: table;
+    clear: both;
+}
+.newsletter-footer input[type="email"] {
+    color: rgb(136, 136, 136);
+    font-family: Rubik, sans-serif;
+    font-weight: 400;
+    margin-bottom: 15px;
+    font-size: 14px;
+    height: 50px;
+    padding-left: 30px;
+    width: 395px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: rgb(235, 235, 235);
+    border-image: initial;
+    background: rgb(255, 255, 255);
+    border-radius: 30px 0px 0px 30px;
+}
+.newsletter-footer button.action, .newsletter-footer button.action:hover {
+    color: rgb(255, 255, 255);
+    height: 50px;
+    text-transform: capitalize;
+    font-size: 14px;
+    font-weight: 500;
+    background: rgb(94, 162, 1);
+    border-width: medium;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+    margin: 0px;
+    padding: 0px 50px;
+    border-radius: 0px 30px 30px 0px;
+    color: rgb(255, 255, 255);
+    background: rgb(34, 34, 34);
+}
+.velaNewsletterFooter .control {
+    width: 70%;
+    flex: 1 1 0%;
+    float: left;
+}
+.newsletter-footer .actions {
+    float: left;
+    margin-left: -2px;
 }

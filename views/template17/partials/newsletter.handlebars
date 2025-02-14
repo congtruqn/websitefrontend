@@ -1,50 +1,17 @@
-<div class="footer-container">
-  <div class="container">
-    <div class="row">
-
-      <div class="col-xs-12 col-sm-12 col-md-6 flex-end">
-        <div class="col-xs-12 col-sm-6">
-          <img class="" alt="Your Store" title="Giày đá bóng chính hãng" src="{{base_url}}/static/{{{siteinfo.customer}}}/images/systems/{{siteinfo.logo}}" width="230">
-        </div>
-        <p class="fmn">Liên hệ với chúng tôi</p>
-        <div class="footer_address">
-          {{siteinfo.company_name}}
-        </div>
-        <div class="footer_address">
-          <i class="fa fa-map-marker" aria-hidden="true"></i>
-          Địa chỉ: {{siteinfo.customer_address}}
-        </div>
-        <div class="footer_address">
-          <i class="fa fa-phone" aria-hidden="true"></i>
-          Điện thoại: {{siteinfo.customer_phone}}
-        </div>
-
-        <div class="footer_address">
-          <i class="fa fa-envelope" aria-hidden="true"></i>
-          Email: {{siteinfo.customer_email}}
-        </div>
-      </div>
-
-      {{#each sitefooter as |footer|}}
-      <div class="col-md-3 col-sm-6 col-xs-12">
-        <p class="fmn">{{footer.footer_name}}</p>
-        <ul>
-        {{#each footer.footer_child as |childfooter|}}
-        <li><a href="/{{childfooter.child_url}}">{{{childfooter.child_name}}}</a></li>
-        {{/each}}
-        </ul>
-      </div>
-      {{/each}}
-
-    </div>
-    <div id="clear"></div>
-  </div>
+<div class="velaContent velaContentTitle">
+	<h4 class="velaFooterTitle">Đăng ký nhận tin khuyến mãi</h4>
+	<div class="newsletterDescription">Nhận thông tin khuyến mãi sớm nhất qua email</div>
 </div>
-<div class="footer-content-bottom">
-  <div class="container">
-    <p>© 2023 <a href="https://softnests.com">softnests.com</a>. All rights reserved</p>
-  </div>
+<div class="velaContent velaContentForm">
+	<div class="newsletter-footer">
+		<form class="cmxform" id="newsletters" method="post">
+			<div class="control"><input name="newsletter" type="email" id="newsletter" placeholder="Đăng ký nhận bản tin" class="input-text email email-newsletter"></div>
+			<div class="actions"><button class="button btn-submit submit-newsletter action" title="Subscribe" type="submit">Đăng ký</button></div>
+			
+		</form>
+	</div> 
 </div>
+
 <script>
 $().ready(function() {
 		// validate signup form on keyup and submit
