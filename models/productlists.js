@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const mongoose = require("mongoose")
-// User Schema
+require('../models/product_comments');
 const productlistsSchema = mongoose.Schema({
 	product_id:{
 		type: Number,
@@ -133,12 +133,13 @@ const productlistsSchema = mongoose.Schema({
 	votes:{
 		type: Number,
 	},
+	product_comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'product_comments' }]
 });
 const productlists = module.exports = mongoose.model('productlists', productlistsSchema);
 
 module.exports.getProductById = async function(customer_id,id){
 	const query = {customer_id:customer_id,product_id:id};
-	return await productlists.findOne(query).exec();
+	return await productlists.findOne(query).populate('product_comments').exec();
 }
 
 module.exports.findproductbykey = function(key,customer_id,callback){
@@ -244,4 +245,7 @@ module.exports.getproductsbymoreinfo = function(customer_id,num,moreinfo_id,call
 }
 module.exports.updateRating = async function(customerId,productId,rating,ratings,votes){
 	return productlists.findOneAndUpdate({customer_id: customerId, product_id:productId} , {rating: rating ,ratings: ratings, votes: votes}).exec();
+}
+module.exports.addReview = async function(customerId, productId, reviewId){
+	return productlists.findOneAndUpdate({customer_id: customerId, _id: productId } , { $push: { product_comments: reviewId } }).exec();
 }

@@ -101,7 +101,7 @@
       <div id="top_mobile">
         <div class="container">
           <div class="header-top-left">
-            <p class="hotline"><i class="fa fa-phone"></i> <a href="tel:+84903392491"> Hotline: {{siteinfo.hotline}}</a>
+            <p class="hotline"><i class="fa fa-phone"></i> <a href="tel:{{siteinfo.hotline}}"> Hotline: {{siteinfo.hotline}}</a>
             </p>
           </div>
         </div>
@@ -126,6 +126,34 @@
     </footer>
   </div> <!-- /container -->
   {{>mobilenavi}}
+
+<div class="hotline-footer">
+   <div class="left">
+      <a href="https://zalo.me/{{siteinfo.hotline}}" id="linkzalo" target="_blank" rel="noopener noreferrer"><img src="/images/zalo2.webp">Chat Zalo ngay</a>
+   </div>
+   <div class="right">
+      <a href="tel:{{siteinfo.hotline}}"><img src="/images/call.webp">Gọi ngay</a>
+   </div>
+   <div class="clearboth"></div>
+</div>
+<div class="hal">
+   <div class="halitem">
+      <div class="halbg" style="background: #dd3333"></div>
+      <div class="halcontent" style="background: #dd3333">Gọi ngay</div>
+      <div class="halimg" style="background: #dd3333"><a href="tel:{{siteinfo.hotline}}"><img
+         src="/images/call.webp" alt="Gọi cho Gift One"></a></div>
+      <p></p>
+   </div>
+   <div class="halitem">
+      <div class="halbg" style="background: #2196F3"></div>
+      <div class="halcontent" style="background: #2196F3">Chat Zalo ngay</div>
+      <div class="halimg" style="background: #2196F3"><a href="https://zalo.me/{{siteinfo.hotline}}"><img
+         src="/images/zalo2.webp" alt="Chat Zalo"></a></div>
+      <p></p>
+   </div>
+   <p></p>
+</div>
+
 </body>
 <script type="text/javascript">
   function DoSubmitSingleExts() {

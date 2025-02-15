@@ -24,6 +24,6 @@ const bannersSchema = mongoose.Schema({
 const banners = module.exports = mongoose.model('banner', bannersSchema);
 module.exports.getAllBanners = async function(customerId){
 	const query = { customer_id: customerId };
-	return await banners.find(query).populate('banner_elements').exec();;
+	return await banners.find(query).populate('banner_elements').exec();
 }
 

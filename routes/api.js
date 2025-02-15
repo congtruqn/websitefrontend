@@ -4,6 +4,26 @@ const product = require('../models/productlists');
 //const systems = require('../models/systems');
 const caches = require('../models/cache');
 const newsletters = require('../models/newsletters');
+const productComment = require('../models/product_comments');
+router.post('/addreview', async function (req, res, next) {
+  const hostname = req.headers.host;
+  try {
+    const websiteinfo = caches.websiteinfo[hostname];
+    const { customer_id } = websiteinfo;
+    const newElement = new productComment({
+      name: req.body.nickname || '',
+      content: req.body.content || '',
+      rate: req.body.rate || 5,
+      productlist: req.body.productId,
+    });
+    const result = await productComment.createReview(newElement);
+    await product.addReview(customer_id,req?.body?.productId, result?._id);
+    res.json(result);
+  } catch (error) {
+    console.log(error);
+    res.json({statusCode: 500, message:'CANNOT_UPDATE_RATING'})
+  }
+});
 router.post('/rating',async function(req, res, next) {
   const hostname = req.headers.host;
   try {
@@ -38,6 +58,7 @@ router.post('/subscribe',async function(req, res, next) {
     res.json({statusCode: 500, message:'CANNOT_CREATE_NEWSLETTER'})
   }
 });
+
 router.get('/validate-email',async function(req, res, next) {
   const hostname = req.headers.host;
   const email = req.query.email;
@@ -54,8 +75,6 @@ router.get('/validate-email',async function(req, res, next) {
         res.json({statusCode: 200,status: 'PASS'});
       }
     }
-    
-    
   } catch (error) {
     console.log(error);
     res.json({statusCode: 500, message:'CANNOT_CREATE_NEWSLETTER'})

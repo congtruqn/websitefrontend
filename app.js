@@ -23,6 +23,8 @@ const limiter = rateLimit({
 	standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
 	legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 })
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({limit: '50mb'}));
 if(process.env.NODE_ENV!='local'){
   app.use(limiter)
 }
