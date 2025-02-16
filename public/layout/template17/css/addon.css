@@ -328,7 +328,7 @@
 
 .hal { position:fixed;
   right:0px;
-  bottom:90px;
+  bottom:20px;
   width:90px;
   z-index:9999;}
 .halitem {position: relative;

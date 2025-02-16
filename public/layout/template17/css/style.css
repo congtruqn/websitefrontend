@@ -589,19 +589,19 @@ ul.rating li{
 
 .mobimenuicon{
     display: none;
-    width: 50px;
-    height: 44px;
-    padding: 14px;
+    width: 45px;
+    height: 38px;
+    padding: 10px;
     float: left;
 }
 .mobimenuicon::before, .mobimenuicon::after {
     content: '';
     display: block;
-    background: #fff;
+    background: #333;
     height: 2px;
 }
 .mobimenuicon span {
-    background: #fff;
+    background: #333;
     display: block;
     height: 2px;
     margin: 6px 0;
@@ -1712,4 +1712,7 @@ ol.commentlist li .comment-text .description img{
 .form-group{
     display: block;
     overflow: hidden;
+}
+.main-header{
+    position: relative;
 }
