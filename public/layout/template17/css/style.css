@@ -481,15 +481,17 @@ ul.rating li{
     font-weight: 500;
 }
 .new_product_images{float: left;width: 30%;}
+.new_product_images img{
+    width: 90%;
+}
 .new_product_detail{width: 67%;float: right;}
 .newproductcont ul li{list-style: none;}
 .newproductcont ul li:last-child .new_product_item{border: none;}
 
-.new_product_item{padding: 15px 0px;border-bottom: 1px solid #f1f1f1;overflow: hidden;}
-.new_product_item .product_price p{width: 55%;float: left;text-align: left;color: #c09578;font-weight: 500;}
+.new_product_item{padding: 10px 0px;border-bottom: 1px solid #f1f1f1;overflow: hidden;}
 .new_product_item .sale_pricebeauty{width: 45%;float: right;}
 .new_product_item .sale_pricebeauty p{color:#333;font-size: 11px;text-decoration: line-through;}
-.new_product_item .new_product_name a{color: #666;font-weight: 500;}
+.new_product_item .new_product_name a{color: #5ea201;font-weight: 600; font-size: 12px;}
 .hot_product_item{
     display: block;
     overflow: hidden;
@@ -530,7 +532,7 @@ ul.rating li{
 }
 .product_price .sale_off_price{
     font-weight: 500;
-    font-size: 13px;
+    font-size: 12px;
     text-decoration: line-through;
 }
 .product_content{
@@ -606,10 +608,21 @@ ul.rating li{
 }
 .left_menu{
     float: left;
-    width: 270px;
+    width: 250px;
     border-radius: 2px;
     min-height: 270px;
     position: relative;
+}
+.content_detail_news{
+    margin-left: 270px;
+    margin-bottom: 20px;
+}
+.content_detail_news li{
+    list-style: outside;
+    margin-left: 15px;
+}
+.content_detail_news h1,.content_detail_news h2,.content_detail_news h3{
+    margin-bottom: 5px;
 }
 .product_content img{height: auto !important;}
 .product_content li{list-style: inside;}
@@ -928,30 +941,16 @@ ul.rating li{
     top: 100%;
 }
 .shipping_type{text-align: center;}
-.info_title{margin-top: 20px;text-transform: uppercase;}
+.info_title{text-transform: uppercase;}
 .product_detail_moreinfo li{list-style: none;}
 .product_detail_moreinfo li .more_info_detail{color:#111;}
 .more_info_price{font-weight: 500;}
 .cart_button_buy{float: left;margin-top: 10px;}
 .cart_button_contin{float: right;margin-top: 15px;}
-.cart_button_contin a{color: #ff5e00;}
+.cart_button_contin a{color: #5ea201; font-weight: 600; font-size: 13px;}
 #userNextStepBottom{
-    border-radius: 3px;
-    font-size: 14px;
-    height: 35px;
-    padding: 0 30px;
-    position: relative;
-    text-transform: uppercase;
-    vertical-align: top;
-    background: #fd6e1d;
-    background: -webkit-gradient(linear,0% 0%,0% 100%,from(#fd6e1d),to(#f59000));
-    background: -webkit-linear-gradient(top,#f59000,#fd6e1d);
-    border-color: #ff3c45;
-    font-weight: 500;
-    color: #ffffff;
-    border: 0px solid #ff3c45;
-    cursor: pointer;
-    display: inline-block;
+    background-color: #5ea201;
+    border: none;
 }
 .category_ads{margin: 15px 0;}
 .category_ads img{width: 100%;}
@@ -1336,8 +1335,7 @@ footer{
     }
 }
 .widget .widgettitle {
-    font-size: 15px;
-    font-family: 'Roboto';
+    font-size: 14px;
     text-transform: uppercase;
     font-weight: 600;
     padding-bottom: 15px;
@@ -1349,21 +1347,21 @@ footer{
 .widget .widgettitle::before {
     content: "";
     width: 32px;
-    border-top: 1px solid #333;
+    border-top: 2px solid #5ea201;
     position: absolute;
     display: inline-block;
     left: 0;
-    top: 6px;
+    top: 8px;
 }
 .widget .widgettitle::after {
     content: "";
     width: 18px;
-    border-top: 1px solid #333;
+    border-top: 2px solid #5ea201;
     position: absolute;
     display: inline-block;
     margin-right: 10px;
     left: 0;
-    top: 10px;
+    top: 12px;
 }
 .sidebar-details .widget {
     position: relative;
@@ -1376,7 +1374,7 @@ footer{
     border-bottom: 1px solid #f1f1f1;
 }
 .product_category .product_menu_item a{
-    font-size: 14px;
+    font-size: 13px;
     color: #555;
     width: 100%;
     font-weight: bold;
@@ -1697,7 +1695,11 @@ ol.commentlist li .comment-text strong {
 ol.commentlist li .comment-text .description{
     font-size: 12px;
 }
-.star-rating {
+ol.commentlist li .comment-text .description img{
+    width: 120px;
+    margin-top: 5px;
+}
+.star-rating1 {
     float: right;
     overflow: hidden;
     position: relative;
@@ -1706,4 +1708,8 @@ ol.commentlist li .comment-text .description{
 .user_rating{
     line-height: 1;
     height: 0px !important;
+}
+.form-group{
+    display: block;
+    overflow: hidden;
 }

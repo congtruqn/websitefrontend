@@ -139,7 +139,10 @@ const productlists = module.exports = mongoose.model('productlists', productlist
 
 module.exports.getProductById = async function(customer_id,id){
 	const query = {customer_id:customer_id,product_id:id};
-	return await productlists.findOne(query).populate('product_comments').exec();
+	return await productlists.findOne(query).populate({
+		path: 'product_comments',
+		match: { isActive: true }
+	}).exec();
 }
 
 module.exports.findproductbykey = function(key,customer_id,callback){

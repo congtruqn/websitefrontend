@@ -15,13 +15,11 @@
               45}}</a></p>
           <div id="clear"></div>
           <div class="product_price">
-            <p>{{formatCurrency productitem.price '₫'}}</p>
+            <p class="sale_price">{{formatCurrency productitem.price '₫'}}</p>
+            {{#if productitem.salepec}}
+              <p class="sale_off_price">{{formatCurrency productitem.sale_price '₫'}}</p>
+            {{/if}}
           </div>
-          {{#if productitem.salepec}}
-          <div class="sale_pricebeauty">
-            <p>{{formatCurrency productitem.sale_price '₫'}}</p>
-          </div>
-          {{/if}}
           <div id="clear"></div>
         </div>
       </div>

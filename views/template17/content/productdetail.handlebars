@@ -139,7 +139,7 @@
 								</div>
 								<div class="comment-text">
 									<div class="stars-rating user_rating">
-										<div class="star-rating">
+										<div class="star-rating star-rating1">
 											<span class="star-{{comments.rate}}"></span>
 										</div>
 									</div>
@@ -148,7 +148,7 @@
 									</p>
 									<div class="description"><p>{{comments.content}}</p></div>
 									{{#if comments.image_path}}
-										<div class="description"><img src="{{base_url}}/{{comments.image_path}}" alt="review"></div>
+										<div class="description"><img src="{{../base_url}}{{comments.image_path}}" alt="review"></div>
 									{{/if}}
 									
 								</div>
@@ -344,7 +344,7 @@ toastr.options = {
   "closeButton": true,
   "newestOnTop": false,
   "progressBar": true,
-  "positionClass": "toast-bottom-right",
+  "positionClass": "toast-top-center",
   "preventDuplicates": false,
   "onclick": null,
   "showDuration": "300",
