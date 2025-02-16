@@ -147,6 +147,10 @@
 										<strong class="woocommerce-review__author">{{comments.name}} </strong>
 									</p>
 									<div class="description"><p>{{comments.content}}</p></div>
+									{{#if comments.image_path}}
+										<div class="description"><img src="{{base_url}}/{{comments.image_path}}"></div>
+									{{/if}}
+									
 								</div>
 							</div>
 						</li>						
@@ -183,7 +187,7 @@
 					<label class="label">  </label>
 					<div class="control">
 						<div id="image_result"></div>
-						<input value="3" id="image_result1" type="hidden">
+						<input value="" id="image_result1" type="hidden">
 					</div>
 				</div>
 				<div class="field">

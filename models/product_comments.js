@@ -15,7 +15,13 @@ const productCommentSchema = mongoose.Schema({
     },
     rate:{
 		type: Number,
-	},
+    },
+    customer_id: {
+        type: Number,
+    },
+    isActive:{
+        type: Boolean,
+    },
     productlist: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'productlists',

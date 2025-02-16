@@ -1,14 +1,45 @@
-var ProductCat = require('../models/productcats');
-var NewsContents = require('../models/newscontents');
-var NewsCats = require('../models/newscats');
-var ProductCat = require('../models/productcats');
-var Seourls = require('../models/seourl');
-var banners = require('../models/banners');
-var website = require('../models/websites');
-var menu = require('../models/menu');
-var footer = require('../models/footer');
-var productlists = require('../models/productlists');
-var productmoreinfo = require('../models/productmoreinfo');
+const ProductCat = require('../models/productcats');
+const NewsCats = require('../models/newscats');
+const Seourls = require('../models/seourl');
+const website = require('../models/websites');
+const menu = require('../models/menu');
+const footer = require('../models/footer');
+const productlists = require('../models/productlists');
+const productmoreinfo = require('../models/productmoreinfo');
+let fs = require('fs');
+const sharp = require('sharp');
+const allowedExtension = [
+  'image/jpeg',
+  'image/jpg',
+  'image/png',
+  'image/gif',
+  'image/bmp',
+  'image/webp',
+  'image/svg+xml',
+]
+module.exports.validateImageType = function (type) {
+  if (allowedExtension.indexOf(type) > -1) {
+      return true
+  } else {
+      return false
+  }
+}
+module.exports.createImage = function (imagePath, imageData, width, ratio) {
+  try {
+      let height = ratio * width
+      const uri = imageData.split(';base64,').pop()
+      let out = fs.createWriteStream(imagePath)
+      let imgBuffer = Buffer.from(uri, 'base64');
+      sharp(imgBuffer).resize(Math.round(width), Math.round(height), {
+          kernel: sharp.kernel.nearest,
+          fit: 'contain',
+          background: { r: 255, g: 255, b: 255, alpha: 0},
+      }).webp({ lossless: true, quality: 100 }).pipe(out);
+  } catch (err) {
+      console.log(err)
+  }
+}
+
 module.exports.gethotproductcat = function (customer_id) {
   return new Promise((resolve, reject) => {
     var listcat = '';

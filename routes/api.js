@@ -5,6 +5,11 @@ const product = require('../models/productlists');
 const caches = require('../models/cache');
 const newsletters = require('../models/newsletters');
 const productComment = require('../models/product_comments');
+const { createImage, validateImageType } = require('../models/systems');
+const uploaddir = process.env.UPLOAD_DIR || 'E:/PROJECT/websites';
+const { v4: uuidv4 } = require('uuid');
+let fs = require('fs');
+const fsx = require("fs-extra");
 router.post('/addreview', async function (req, res, next) {
   const hostname = req.headers.host;
   try {
@@ -15,9 +20,24 @@ router.post('/addreview', async function (req, res, next) {
       content: req.body.content || '',
       rate: req.body.rate || 5,
       productlist: req.body.productId,
+      customer_id: customer_id,
+      isActive: false,
     });
+    if (req.body.image) {
+      const mimeType = req.body.image.match(/[^:]\w+\/[\w-+\d.]+(?=;|,)/)?.[0];
+      let imageName = uuidv4() + '.' + 'webp';
+      if (!validateImageType(mimeType)) throw new Error("Định dạng không được hỗ trợ");
+      const newPath = uploaddir + '/' + websiteinfo.customer + '/images/medias/'
+      if (!fs.existsSync(newPath)) {
+          fsx.ensureDirSync(newPath)
+      }
+      let ratio = websiteinfo.image_height_ratio ? websiteinfo.image_height_ratio: 0.7;
+      createImage(newPath + imageName, req.body.image, 360, ratio);
+      newElement.image = imageName;
+      newElement.image_path = '/' + websiteinfo.customer + '/images/medias/'+ imageName;
+    }
     const result = await productComment.createReview(newElement);
-    await product.addReview(customer_id,req?.body?.productId, result?._id);
+    await product.addReview(customer_id,req.body.productId, result?._id);
     res.json(result);
   } catch (error) {
     console.log(error);
