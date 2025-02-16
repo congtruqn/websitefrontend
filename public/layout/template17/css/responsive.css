@@ -266,11 +266,17 @@
 	.mm-menu{
 		background: #fff !important;
 	}
+	.mm-listitem__text{
+		padding-left: 10px !important;
+	}
 	.mm-panel{
 		background: #fff !important;
 	}
+	.mm-listview li:first-child{
+	}
 	.nav-pills>li.active>a{
-		background: #c09578 !important; 
+		background: #5ea201 !important;
+		padding-left: 10px;
 	}
 	.r-tabs-accordion-title{
 		background: #c09578;
