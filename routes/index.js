@@ -477,7 +477,6 @@ router.get('/getshippingcod', (req, res, next) => {
     };
     request(options, (err, res1, body) => {
       const json = JSON.parse(body);
-      console.log(json);
       if (json.data) {
         var temp = json.data.total;
         res.send(temp.toString());
@@ -1307,7 +1306,6 @@ router.post('/addorder', (req, res, next) => {
   if (temp1[1]) {
     province = temp1[1];
   }
-  console.log(req.body.district);
   const district11 = req.body.district;
   let district = '';
   const temp2 = req.body.district.split(';');
