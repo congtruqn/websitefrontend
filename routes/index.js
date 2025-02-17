@@ -398,7 +398,7 @@ router.get('/getshippingcod', (req, res, next) => {
   }
 
   var temp1 = {
-    shop_id: 102838,
+    shop_id: 2859838,
     from_district: 1457,
     to_district: Number(districtid)
   };
@@ -409,7 +409,7 @@ router.get('/getshippingcod', (req, res, next) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Token: '7b0a7cf5-7c86-11eb-9035-ae038bcc764b'
+      Token: 'd1e6c9ab-fcd6-11eb-bbbe-5ae8dbedafcf'
     },
     body: raw1
   };
@@ -441,8 +441,8 @@ router.get('/getshippingcod', (req, res, next) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Token: '8df4cc58-7c87-11eb-9035-ae038bcc764b',
-        ShopId: 102838
+        Token: 'd1e6c9ab-fcd6-11eb-bbbe-5ae8dbedafcf',
+        ShopId: 2859838
       },
       body: raw
     };

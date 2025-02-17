@@ -133,6 +133,18 @@ const productlistsSchema = mongoose.Schema({
 	votes:{
 		type: Number,
 	},
+	weight: {
+        type: Number,
+    },
+    length: {
+        type: Number,
+    },
+    height: {
+        type: Number,
+    },
+    width: {
+        type: Number,
+    },
 	product_comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'product_comments' }]
 });
 const productlists = module.exports = mongoose.model('productlists', productlistsSchema);
