@@ -217,11 +217,12 @@ function removeitem(id){
 				type: "POST",
 		        data:{id:id},
 		        success: function(response) {
+					window.location.href = '/gio-hang';
 		            if(response=="ok"){
 		            	window.location.href = '/gio-hang';
 		            }
 		            else{
-		            	alert("Có lổi trong quá trình đặt hàng!");
+		            	//alert("Có lổi trong quá trình đặt hàng!");
 		        	}    
 		        }            
 		    });

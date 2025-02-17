@@ -339,7 +339,7 @@ router.get('/getdistrictbyprovinces', (req, res, next) => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Token: '8df4cc58-7c87-11eb-9035-ae038bcc764b'
+      Token: 'd1e6c9ab-fcd6-11eb-bbbe-5ae8dbedafcf'
     },
     body: raw
   };
@@ -367,7 +367,7 @@ router.get('/getwardbydistrict', (req, res, next) => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Token: '8df4cc58-7c87-11eb-9035-ae038bcc764b'
+      Token: 'd1e6c9ab-fcd6-11eb-bbbe-5ae8dbedafcf'
     },
     body: raw
   };
@@ -392,11 +392,25 @@ router.get('/getshippingcod', (req, res, next) => {
   }
   var wardid1 = req.param('wardid');
   var temp1 = wardid1.split(';');
-  var wardid = 471009;
+  var wardid = null;
   if (Number(temp1[0]) != NaN) {
-    wardid = Number(temp[0]);
+    wardid = Number(temp1[0]);
   }
-
+  const listproduct = req.session.products;
+  const item = [];
+  let weight = 0;
+  for (let index = 0; index < listproduct.length; index++) {
+    const element = listproduct[index];
+    item.push({
+      name: element.name|| 'TEST',
+      quantity: element.num || 1,
+      height: element.height || 10,
+      weight: element.weight || 100,
+      length: element.length || 10,
+      width: element.width || 10
+    })
+    weight = weight + Number(element.weight);
+  }
   var temp1 = {
     shop_id: 2859838,
     from_district: 1457,
@@ -415,39 +429,55 @@ router.get('/getshippingcod', (req, res, next) => {
   };
   request(options1, (err, res1, body) => {
     const json = JSON.parse(body);
-    var serviceid = 0;
-    if (body.data) {
+    
+    let serviceid = 0;
+    let service_type_id = 0;
+    if (json.data) {
       serviceid = json.data[0].service_id;
+      service_type_id = json.data[0].service_type_id;
     }
     else {
       serviceid = 0;
     }
-    var temp = {
-      from_district_id: Number(websiteinfo.from_district_id),
+    // var temp = {
+    //   from_district_id: Number(websiteinfo.from_district_id),
+    //   service_id: Number(serviceid),
+    //   service_type_id: null,
+    //   to_district_id: Number(districtid),
+    //   to_ward_code: wardid,
+    //   height: 10,
+    //   length: 10,
+    //   weight: 200,
+    //   width: 10,
+    //   insurance_value: 0,
+    //   coupon: null
+    // };
+    const data = {
       service_id: Number(serviceid),
-      service_type_id: null,
+      service_type_id: service_type_id,
+      from_district_id: null,
+      from_ward_code :null,
       to_district_id: Number(districtid),
-      to_ward_code: wardid,
-      height: 10,
-      length: 10,
-      weight: 200,
-      width: 10,
-      insurance_value: 0,
-      coupon: null
-    };
-    var raw = JSON.stringify(temp);
+      to_ward_code:`${wardid}`,
+      insurance_value:0,
+      coupon: null,
+      weight: weight,
+      items: item,
+    }
+    const raw = JSON.stringify(data);
     const options = {
       url: 'https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee',
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Token: 'd1e6c9ab-fcd6-11eb-bbbe-5ae8dbedafcf',
-        ShopId: 2859838
+        ShopId: 1929043
       },
       body: raw
     };
     request(options, (err, res1, body) => {
       const json = JSON.parse(body);
+      console.log(json);
       if (json.data) {
         var temp = json.data.total;
         res.send(temp.toString());
@@ -1110,16 +1140,20 @@ router.post('/addtocart',async (req, res, next) => {
     const productInfo = await Productlists.getProductById(customer_id, product_id);
     const pricebeauty = String(productInfo.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
     var productincart = {
-        id: productInfo.product_id,
-        product_id: productInfo._id,
-        image: productInfo.image,
-        image_path: productInfo.image_path,
-        name: productInfo.detail[0].name,
-        price: productInfo.price,
-        product_total_price: productInfo.price,
-        product_total_price_b: pricebeauty,
-        pricebeauty,
-        num: 1
+      id: productInfo.product_id,
+      product_id: productInfo._id,
+      image: productInfo.image,
+      image_path: productInfo.image_path,
+      name: productInfo.detail[0].name,
+      price: productInfo.price,
+      poduct_total_price: productInfo.price,
+      product_total_price_b: pricebeauty,
+      pricebeauty,
+      width: productInfo.width || 10,
+      weight: productInfo.weight || 1000,
+      height: productInfo.height || 10,
+      length: productInfo.length || 10,
+      num: 1
     };
     if (listproducts.length == 0) {
         listproducts.push(productincart);
@@ -1190,10 +1224,10 @@ router.post('/removecartitem', (req, res, next) => {
     if (req.session.total_price) {
       total_price = req.session.total_price;
     }
-    const id = req.params('id');
+    const id = req.param('id');
     const listproducts = req.session.products;
     const xx = findObjectByKey(listproducts, id);
-    total_price -= (listproducts[xx].price * listproducts[xx].num);
+    total_price -= (listproducts[xx]?.price * listproducts[xx]?.num);
     req.session.total_price = total_price;
     const temp = removeArrayItemByAttr(array, 'id', id);
     req.session.products = temp;
