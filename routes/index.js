@@ -1054,7 +1054,7 @@ router.post('/registertouse', async (req, res, next) => {
 
     }
     else {
-      var name = req.param('name');
+      var name = req.query.name;
       var email = req.param('email');
       var phone = req.param('phone');
       var cont = `Tên Khách hàng:${name}<br>-Email:${email}<br>-Điện thoại: ${phone}`;
@@ -1296,30 +1296,31 @@ router.post('/addorder', (req, res, next) => {
   const hostname = req.headers.host;
   const websiteinfo = caches.websiteinfo[hostname];
   nodeMailer = require('nodemailer');
-  const name = req.params('name');
-  const email = req.params('email');
-  const phone = req.params('phone');
-  const address = req.params('address');
-  const note = req.params('note');
-  const province1 = req.params('province');
+  const name = req.body.name;
+  const email = req.body.email;
+  const phone = req.body.phone;
+  const address = req.body.address;
+  const note = req.body.note;
+  const province1 = req.body.province;
   let province = '';
   const temp1 = province1.split(';');
   if (temp1[1]) {
     province = temp1[1];
   }
-  const district1 = req.params('district');
+  console.log(req.body.district);
+  const district11 = req.body.district;
   let district = '';
-  const temp2 = district1.split(';');
+  const temp2 = req.body.district.split(';');
   if (temp2[1]) {
     district = temp2[1];
   }
-  const ward1 = req.params('ward');
+  const ward1 = req.body.ward;
   let ward = '';
   const temp3 = ward1.split(';');
   if (temp3[1]) {
     ward = temp3[1];
   }
-  const shippingcod = req.params('shippingcod');
+  const shippingcod = req.body.shippingcod;
   const create_date = new Date().getTime();
   let products = '';
   const neworders = new listorders({
