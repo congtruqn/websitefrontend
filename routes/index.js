@@ -150,6 +150,7 @@ router.get('/clearcache', (req, res, next) => {
   const hostname = req.headers.host;
   caches.productcat[hostname] = null;
   caches.hotnewcats[hostname] = null;
+  caches.hotnews[hostname] = null;
   caches.websiteinfo[hostname] = null;
   caches.mainmenu[hostname] = null;
   caches.hotproducts[hostname] = null;
@@ -1306,7 +1307,6 @@ router.post('/addorder', (req, res, next) => {
   if (temp1[1]) {
     province = temp1[1];
   }
-  const district11 = req.body.district;
   let district = '';
   const temp2 = req.body.district.split(';');
   if (temp2[1]) {
