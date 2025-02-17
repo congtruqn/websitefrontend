@@ -404,10 +404,10 @@ router.get('/getshippingcod', (req, res, next) => {
     item.push({
       name: element.name|| 'TEST',
       quantity: element.num || 1,
-      height: element.height || 10,
+      height: element.height || 1,
       weight: element.weight || 100,
-      length: element.length || 10,
-      width: element.width || 10
+      length: element.length || 1,
+      width: element.width || 1
     })
     weight = weight + Number(element.weight);
   }
