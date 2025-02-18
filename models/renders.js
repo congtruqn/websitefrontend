@@ -53,7 +53,6 @@ module.exports.renderHomePage = async function (req, res, language) {
       var productcat = caches.hotproductcats[hostname];
       let tranData =  websiteinfo.detail.find((obj) => obj.lang == 'vi');
       const title = tranData.title ? tranData.title : websiteinfo.title;
-      console.log(title);
       if (websiteinfo.multi_language == 1) {
         if (language != 'vi') {
           lang = language;
