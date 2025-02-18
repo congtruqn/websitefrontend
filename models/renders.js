@@ -51,7 +51,9 @@ module.exports.renderHomePage = async function (req, res, language) {
         caches.hotproductcats[hostname] = hotproductcats;
       }
       var productcat = caches.hotproductcats[hostname];
-      let tranData =  websiteinfo.detail.find((obj) => obj.lang == 'vi');;
+      let tranData =  websiteinfo.detail.find((obj) => obj.lang == 'vi');
+      const title = tranData.title ? tranData.title : websiteinfo.title;
+      console.log(title);
       if (websiteinfo.multi_language == 1) {
         if (language != 'vi') {
           lang = language;
@@ -63,9 +65,9 @@ module.exports.renderHomePage = async function (req, res, language) {
       res.render(`${template}/content/index`, {
         productcats: productcat,
         canonical: `${website_protocol}://${hostname}/${homelang}`,
-        title: tranData && tranData.title ? tranData.title : websiteinfo.title,
-        description: tranData && tranData.description ? tranData.description : websiteinfo.description,
-        keyword: tranData && tranData.keyword ? tranData.keyword : websiteinfo.keyword,
+        title: title,
+        description: tranData.description ? tranData.description : websiteinfo.description,
+        keyword: tranData.keyword ? tranData.keyword : websiteinfo.keyword,
         banners: cusbanner,
         layout: 'layout',
         list_products_by_more_info,
