@@ -51,7 +51,7 @@ module.exports.renderHomePage = async function (req, res, language) {
         caches.hotproductcats[hostname] = hotproductcats;
       }
       var productcat = caches.hotproductcats[hostname];
-      let tranData = {};
+      let tranData =  websiteinfo.detail.find((obj) => obj.lang == 'vi');;
       if (websiteinfo.multi_language == 1) {
         if (language != 'vi') {
           lang = language;

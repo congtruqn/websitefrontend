@@ -214,6 +214,10 @@ module.exports.getAllTopProducts = async function( customer_id, page, per_page ,
 	}
 	return await productlists.find(query).skip(per_page * (page - 1)).limit(per_page).sort({'rank': -1,'create_date': -1 ,'product_id': -1  }).exec();
 }
+module.exports.getAllProducts = async function( customer_id ){
+	let query = { show: 1, customer_id: customer_id };
+	return await productlists.find(query).exec();
+}
 module.exports.getallnewproductsbypage = function(customer_id,page,per_page,callback){
 	var query = {customer_id:customer_id,show:1,new:1};
 	productlists.find(query, callback).skip(per_page * (page - 1)).limit(per_page).sort({'rank': -1,'create_date': -1 ,'product_id': -1  });
