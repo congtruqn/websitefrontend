@@ -5,6 +5,7 @@ const product = require('../models/productlists');
 const caches = require('../models/cache');
 const newsletters = require('../models/newsletters');
 const productComment = require('../models/product_comments');
+const priceMapping = require('../models/price_mappings');
 const { createImage, validateImageType } = require('../models/systems');
 const uploaddir = process.env.UPLOAD_DIR || 'E:/PROJECT/websites';
 const { v4: uuidv4 } = require('uuid');
@@ -136,7 +137,14 @@ router.get('/createxml', async function (req, res) {
     console.log(error);
     res.json({statusCode: 500, message:'CANNOT_CREATE_XML'})
   }
-
-  
+});4
+router.get('/price-mapping',async function(req, res, next) {
+  try {
+    const result = await priceMapping.getPriceMapping('67a8b934a0a84b9e7a6bd686');
+    res.json(result);
+  } catch (error) {
+    console.log(error);
+    res.json({statusCode: 500, message:'CANNOT_CREATE_NEWSLETTER'})
+  }
 });
 module.exports = router;

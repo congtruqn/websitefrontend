@@ -47,7 +47,10 @@
 						<div class="pro_detail">
 							<ul>
 							{{#each list_detail.detail_value as |value|}}
-								<li class="list_size">{{{value.value}}}</li>
+								<li class="list_size_{{@../index}} {{#unless @index}}sizeactive{{/unless}}">
+									<input type="radio" id="a25" name="{{list_detail._id}}" {{#unless @index}}checked="checked"{{/unless}}/>
+									<label for="{{value.value_id}}">{{{value.value}}}</label>
+								</li>
 							{{/each}}
 							</ul>
 						</div>
@@ -207,11 +210,27 @@ $(document).ready(function() {
 });
 </script>
 <script type="text/javascript">
-$('.pro_detail').delegate('.list_size','click', function(){
-  $('.list_size').removeClass('sizeactive');
+$('.pro_detail').delegate('.list_size_0','click', function(){
+  $(`.list_size_0`).removeClass('sizeactive');
+  $(this).addClass('sizeactive');
+});
+$('.pro_detail').delegate('.list_size_1','click', function(){
+  $(`.list_size_1`).removeClass('sizeactive');
   $(this).addClass('sizeactive');
 });
 function addToCart(ID){
+	const detaillenght = {{product_details.length}};
+	const data = {{{json product_details}}};
+	for (let i = 0; i < data.length; i++) {
+		const temp = data[i];
+		console.log(temp._id)
+	}
+	if(detaillenght == 0){
+		return true;
+	}
+	else{
+		return false;
+	}
     var productcount = 1;
     var productadd = 1;
     var datastring =  'productcount='+productcount+'&productadd='+ID;

@@ -785,14 +785,28 @@ ul.rating li{
 .pro_detail ul li{
     list-style: none;
     border:1px solid #ccc;
-    padding: 4px 4px;
+    padding: 6px 6px;
     display: inline;
     font-size: 13px;
     color: #444;
     margin:1px;
     cursor: pointer;
-
+    position: relative;
+    margin-left: 3px;
 }
+.pro_detail input {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    cursor: pointer;
+  }
+.pro_detail input[type="radio"] {
+    opacity: 0.01;
+    z-index: 100;
+  }
 .product_detail_description{
     margin-top: 15px;
     color: #666;

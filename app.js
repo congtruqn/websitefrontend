@@ -120,7 +120,12 @@ app.use(function(req, res, next) {
   });
   next();
 });
-
+app.use(function(req, res, next) {
+  hbs.handlebars.registerHelper('json', function(value) {
+    return JSON.stringify(value);
+  });
+  next();
+});
 app.use(async function(req, res, next) {
   const hostname = req.headers.host;
   	if (hostname.match(/^www/) !== null ) {
