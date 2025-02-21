@@ -29,8 +29,8 @@ const priceMappingSchema = mongoose.Schema({
 })
 const priceMapping = (module.exports = mongoose.model('price_mappings', priceMappingSchema))
 
-module.exports.getPriceMapping = async function (product_id) {
+module.exports.getPriceMapping = async function (product_id, value_ids) {
     if (!ObjectId.isValid(product_id)) return {}
-    let query = { product_id: product_id, value_ids: ['67aeeb55783d7436b1376533','67b53d3572703f35505d614c'] }
-    return await priceMapping.findOneAndRemove(query).exec()
+    let query = { productlist: product_id, value_ids: value_ids }
+    return await priceMapping.findOne(query).exec()
 }

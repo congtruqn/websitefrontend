@@ -138,9 +138,11 @@ router.get('/createxml', async function (req, res) {
     res.json({statusCode: 500, message:'CANNOT_CREATE_XML'})
   }
 });4
-router.get('/price-mapping',async function(req, res, next) {
+router.post('/price-mapping', async function (req, res, next) {
+  const productlist = req.body.productId;
+  const value_ids = req.body.value_ids;
   try {
-    const result = await priceMapping.getPriceMapping('67a8b934a0a84b9e7a6bd686');
+    const result = await priceMapping.getPriceMapping(productlist, value_ids);
     res.json(result);
   } catch (error) {
     console.log(error);

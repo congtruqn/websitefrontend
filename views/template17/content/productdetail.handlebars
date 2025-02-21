@@ -26,7 +26,7 @@
 					<h1>{{{details.name}}}</h1>
 					<input name="my_input" value="3" id="rating_simple" type="hidden">
 					<p class="product_detail_description">{{{details.desc}}}</p>
-					<p class="price">{{{price}}} ₫</p>
+					<p class="price" id="price">{{{price}}} ₫</p>
 					{{islogin}}
 					{{#if instock}}
 						<p class="instock">Tình trạng:<span> Còn hàng<span></p>
@@ -48,7 +48,7 @@
 							<ul>
 							{{#each list_detail.detail_value as |value|}}
 								<li class="list_size_{{@../index}} {{#unless @index}}sizeactive{{/unless}}">
-									<input type="radio" id="a25" name="{{list_detail._id}}" {{#unless @index}}checked="checked"{{/unless}}/>
+									<input type="radio" id="a25"  value="{{value.value_id}}" name="{{list_detail._id}}" {{#unless @index}}checked="checked"{{/unless}} onclick="changePrice()"/>
 									<label for="{{value.value_id}}">{{{value.value}}}</label>
 								</li>
 							{{/each}}
@@ -245,8 +245,8 @@ function addToCart(ID){
         else{
 			var aaa = $("#cart-total").html();
 			$('#cart-total').html(Number(aaa)+1);
-           $("#addedproduct").slideDown("slow");
-		   $("#addedproduct").slideToggle(2000);
+        	$("#addedproduct").slideDown("slow");
+			$("#addedproduct").slideToggle(2000);
         }
       }
     });
@@ -299,10 +299,8 @@ $(function() {
 });
 async function converImageToBase64(inputId) {
   let image = $('#'+inputId)[0]['files']
-
   if (image && image[0]) {
     const reader = new FileReader();
-
     return new Promise(resolve => {
       reader.onload = ev => {
         resolve(ev.target.result)
@@ -315,6 +313,37 @@ async function proccessData() {
 	const image = await converImageToBase64('asd');
 	document.getElementById("image_result").innerHTML = `<img src="${image}">`;
 	document.getElementById("image_result1").value = image
+}
+function changePrice() {
+	const detaillenght = {{product_details.length}};
+	const data = {{{json product_details}}};
+	const value_ids = [];
+	for (let i = 0; i < data.length; i++) {
+		const temp = data[i];
+		const a = document.querySelector("input[type='radio'][name='"+temp._id+"']:checked").value;
+		value_ids.push(a.toString())
+	}
+	if(value_ids?.length){
+		$.ajax({
+			url:"/api/price-mapping",
+			type: "POST",
+			data:{
+				value_ids: value_ids,
+				productId:`{{{contents._id}}}`,
+			},
+			success: function(response) {
+				let price = response?.price.toString();
+				if(price){
+					price = price.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,') +' ₫';
+					$('#price').html(price);
+				}
+				
+				console.log(response);
+				//toastr.success("Gửi đánh giá thành công!");
+			}            
+		});
+	}
+
 }
 $().ready(function() {
 	$("#submit_review").validate({
