@@ -1352,7 +1352,81 @@ router.post('/addorder', (req, res, next) => {
     customer_id: websiteinfo.customer_id
   });
   listorders.createlistorders(neworders, (err, producttypess) => {
+
+    let html = `<!DOCTYPE html>
+                    <html>
+                    <head>
+                        <meta charset="utf-8" />
+                        <style type="text/css">
+                        table {
+                            background: white;
+                            border-radius:3px;
+                            border-collapse: collapse;
+                            height: auto;
+                            max-width: 900px;
+                            padding:5px;
+                            width: 100%;
+                            animation: float 5s infinite;
+                        }
+                        th {
+                            border-bottom: 4px solid #9ea7af;
+                            border-left: 1px solid #C1C3D1;
+                            font-size:14px;
+                            font-weight: 300;
+                            padding:10px;
+                            text-align:center;
+                            vertical-align:middle;
+                        }
+                        tr {
+                            border-top: 1px solid #C1C3D1;
+                            border-bottom: 1px solid #C1C3D1;
+                            border-left: 1px solid #C1C3D1;
+                            font-size:16px;
+                            font-weight:normal;
+                        }
+                        tr:hover td {
+                            background:#4E5066;
+                            color:#FFFFFF;
+                            border-top: 1px solid #22262e;
+                        }
+                        td {
+                            background:#FFFFFF;
+                            padding:10px;
+                            text-align:left;
+                            vertical-align:middle;
+                            font-weight:300;
+                            font-size:13px;
+                            border-right: 1px solid #C1C3D1;
+                        }
+                        </style>
+                    </head>
+                    <body>
+                    <h4> Thông tin đặt hàng.</h4>
+
+                    <h5> Họ và tên: ${name}.</h5>
+
+                    <h5> Địa chỉ: ${address} - ${ward} - ${district} - ${province}.</h5>
+
+                    <h5> Điện thoại: ${phone}.</h5>
+
+                    <h5> Ghi chú: ${customer_note}.</h5>
+
+                    <h4> Thông tin đặt hàng.</h4>
+                        <table>
+                        <thead>
+                            <tr style="border: 1px solid #1b1e24;">
+                            <th>Key</th>
+                            <th>Field 1</th>
+                            <th>Field 2</th>
+                            <th>Field 3</th>
+                            <th>Field 4</th>
+                            </tr>
+                        </thead> 
+                        <tbody>`;
+
+    const listproducts = [];
     for (var i in req.session.products) {
+      
       var list_product = {
         product_id: req.session.products[i].product_id,
         product_name: req.session.products[i].name,
@@ -1361,39 +1435,47 @@ router.post('/addorder', (req, res, next) => {
         product_total_price: req.session.products[i].product_total_price,
         count: req.session.products[i].num
       };
-      products = `Tên sản phẩm :${req.session.products[i].name}<br>`;
-      products = `${products}Giá sản phẩm :${req.session.products[i].price}<br>`;
-      listorders.editlistorders(producttypess._id, { $push: { list_products: list_product } }, (err, companys) => {
-        var cont = `Tên Khách hàng:${name}<br>-Email:${email}<br>-Điện thoại: ${phone}<br>Địa chỉ: ${address}<br>`;
-        cont += products;
-        const transporter = nodeMailer.createTransport({
-          host: 'smtp.elasticemail.com',
-          port: 2525,
-          secure: false,
-          auth: {
-            user: 'congtruqn@gmail.com',
-            pass: '708541B0547DF83A89CC6CDA4CCBF27D147B'
-          },
-          tls: {
-            rejectUnauthorized: false
-          }
-        });
-        const mailOptions = {
-          from: 'congtruqn@gmail.com', // sender address
-          to: websiteinfo.customer_email, // list of receivers
-          subject: 'Khách hàng đăt hàng từ website', // Subject line
-          text: cont, // plain text body
-          html: cont // html body
-        };
-        transporter.sendMail(mailOptions, (error, info) => {
-          if (error) {
-            return console.log(error);
-          }
-          console.log('Message %s sent: %s', info.messageId, info.response);
-        });
-      });
+      listproducts.push(list_product)
+      html = html + `<tr>
+      <td>${req.session.products[i].name}</td>
+      <td>${req.session.products[i].details}</td>
+      <td>${req.session.products[i].price}</td>
+      <td>${req.session.products[i].num}</td>
+      <td>${req.session.products[i].product_total_price}</td>
+      </tr>`
     }
+    listorders.editlistorders(producttypess._id, { $push: { list_products: listproducts } }, (err, companys) => {
+    });
+    html = html + `</tbody></table>
+                    <br>
+                    </body>
+                    </html>`
     req.session.destroy();
+    const transporter = nodeMailer.createTransport({
+      host: 'smtp.elasticemail.com',
+      port: 2525,
+      secure: false,
+      auth: {
+        user: 'congtruqn@gmail.com',
+        pass: '708541B0547DF83A89CC6CDA4CCBF27D147B'
+      },
+      tls: {
+        rejectUnauthorized: false
+      }
+    });
+    const mailOptions = {
+      from: 'congtruqn@gmail.com', // sender address
+      to: websiteinfo.customer_email, // list of receivers
+      subject: 'Khách hàng đăt hàng từ website', // Subject line
+      text: html, // plain text body
+      html: html // html body
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return console.log(error);
+      }
+      console.log('Message %s sent: %s', info.messageId, info.response);
+    });
   });
   res.send('ok');
 });
