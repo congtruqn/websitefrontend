@@ -27,6 +27,7 @@
 					<input name="my_input" value="3" id="rating_simple" type="hidden">
 					<p class="product_detail_description">{{{details.desc}}}</p>
 					<p class="price" id="price">{{{price}}} ₫</p>
+					<input type="hidden" id="hidden_price" value="{{{price}}}"> 
 					{{islogin}}
 					{{#if instock}}
 						<p class="instock">Tình trạng:<span> Còn hàng<span></p>
@@ -49,7 +50,7 @@
 							{{#each list_detail.detail_value as |value|}}
 								<li class="list_size_{{@../index}} {{#unless @index}}sizeactive{{/unless}}">
 									<input type="radio" id="a25"  value="{{value.value_id}}" name="{{list_detail._id}}" {{#unless @index}}checked="checked"{{/unless}} onclick="changePrice()"/>
-									<label for="{{value.value_id}}">{{{value.value}}}</label>
+									<label for="{{value.value_id}}" id="label_{{value.value_id}}">{{{value.value}}}</label>
 								</li>
 							{{/each}}
 							</ul>
@@ -218,6 +219,10 @@ $('.pro_detail').delegate('.list_size_1','click', function(){
   $(`.list_size_1`).removeClass('sizeactive');
   $(this).addClass('sizeactive');
 });
+$('.pro_detail').delegate('.list_size_2','click', function(){
+  $(`.list_size_2`).removeClass('sizeactive');
+  $(this).addClass('sizeactive');
+});
 function addToCart(ID){
 	const detaillenght = {{product_details.length}};
 	const data = {{{json product_details}}};
@@ -252,13 +257,31 @@ function addToCart(ID){
     });
 };
 function Buynow(ID){
+	const detaillenght = {{product_details.length}};
+	const data = {{{json product_details}}};
+	const details = [];
+	const price = document.getElementById("hidden_price").value;
+	for (let i = 0; i < data.length; i++) {
+		const temp = data[i];
+		const a = document.querySelector("input[type='radio'][name='"+temp._id+"']:checked").value;
+		console.log(a)
+		//value_ids.push(a.toString())
+		const a1 = document.getElementById(`label_${a}`).innerHTML;
+		details.push(a1.toString())
+	}
+	//console.log(details)
+	//return false;
     var productcount = 1;
     var productadd = 1;
     var datastring =  'productcount='+productcount+'&productadd='+ID;
     $.ajax({
       type: "POST",
       url: '/addtocart?'+datastring,
-      data: {id: ID},
+      data: {
+		id: ID,
+		price: price,
+		details: details,
+	  },
       success: function (result) {
         if(result==1){
           alert('Sản phẩm trong kho không đủ!');
@@ -281,14 +304,44 @@ function Buynow(ID){
 		}
 		});
     }
-$(function() {
-	$("#rating_simple").webwidget_rating_simple({
-	rating_star_length: '5',
-	rating_initial_value: `{{{contents.rating}}}`,
-	rating_function_name: 'test',
-	directory: 'images/'
-});
-});
+	$(function() {
+		const detaillenght = {{product_details.length}};
+		const data = {{{json product_details}}};
+		const value_ids = [];
+		for (let i = 0; i < data.length; i++) {
+			const temp = data[i];
+			const a = document.querySelector("input[type='radio'][name='"+temp._id+"']:checked").value;
+			value_ids.push(a.toString())
+		}
+		if(value_ids?.length){
+			$.ajax({
+				url:"/api/price-mapping",
+				type: "POST",
+				data:{
+					value_ids: value_ids,
+					productId:`{{{contents._id}}}`,
+				},
+				success: function(response) {
+					let price = response?.price?.toString();
+					if(price){
+						document.getElementById('hidden_price').value = price.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+						price = price.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,') +' ₫';
+						$('#price').html(price);
+					}
+				}            
+			});
+		}
+	});
+
+	$(function() {
+		$("#rating_simple").webwidget_rating_simple({
+			rating_star_length: '5',
+			rating_initial_value: `{{{contents.rating}}}`,
+			rating_function_name: 'test',
+			directory: 'images/'
+		});
+	});
+
 $(function() {
 	$("#rating_simple1").webwidget_rating_simple({
 	rating_star_length: '5',
@@ -311,7 +364,7 @@ async function converImageToBase64(inputId) {
 }
 async function proccessData() {
 	const image = await converImageToBase64('asd');
-	document.getElementById("image_result").innerHTML = `<img src="${image}">`;
+	document.getElementById("image_result").innerHTML = `<img src="${image}" alt="image">`;
 	document.getElementById("image_result1").value = image
 }
 function changePrice() {
@@ -332,14 +385,12 @@ function changePrice() {
 				productId:`{{{contents._id}}}`,
 			},
 			success: function(response) {
-				let price = response?.price.toString();
+				let price = response?.price?.toString();
 				if(price){
+					document.getElementById('hidden_price').value = price.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
 					price = price.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,') +' ₫';
 					$('#price').html(price);
 				}
-				
-				console.log(response);
-				//toastr.success("Gửi đánh giá thành công!");
 			}            
 		});
 	}

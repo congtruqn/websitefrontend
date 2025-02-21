@@ -28,6 +28,7 @@ var User = require('../models/register');
 var province = require('../models/province');
 var productmoreinfo = require('../models/productmoreinfo');
 const { renderHomePage ,renderTopProducts } =  require('../models/renders');
+const { uuidV4 } = require('mongodb/lib/core/utils');
 router.get('/sitemap.xml', (req, res) => {
   var hostname = req.headers.host;
   var websiteinfo = caches.websiteinfo[hostname];
@@ -430,7 +431,7 @@ router.get('/getshippingcod', (req, res, next) => {
   };
   request(options1, (err, res1, body) => {
     const json = JSON.parse(body);
-    
+    console.log(json);
     let serviceid = 0;
     let service_type_id = 0;
     if (json.data) {
@@ -440,19 +441,6 @@ router.get('/getshippingcod', (req, res, next) => {
     else {
       serviceid = 0;
     }
-    // var temp = {
-    //   from_district_id: Number(websiteinfo.from_district_id),
-    //   service_id: Number(serviceid),
-    //   service_type_id: null,
-    //   to_district_id: Number(districtid),
-    //   to_ward_code: wardid,
-    //   height: 10,
-    //   length: 10,
-    //   weight: 200,
-    //   width: 10,
-    //   insurance_value: 0,
-    //   coupon: null
-    // };
     const data = {
       service_id: Number(serviceid),
       service_type_id: service_type_id,
@@ -478,6 +466,7 @@ router.get('/getshippingcod', (req, res, next) => {
     };
     request(options, (err, res1, body) => {
       const json = JSON.parse(body);
+      console.log(json);
       if (json.data) {
         var temp = json.data.total;
         res.send(temp.toString());
@@ -1125,6 +1114,7 @@ router.post('/addtocart',async (req, res, next) => {
     const websiteinfo = caches.websiteinfo[hostname];
     const { customer_id } = websiteinfo;
     let listproducts = [];
+    const details = req.body.details;
     let total_price = 0;
     if (req.session.total_price) {
       total_price = req.session.total_price;
@@ -1136,37 +1126,42 @@ router.post('/addtocart',async (req, res, next) => {
       listproducts = req.session.products;
     }
     const product_id = req.param('productadd');
-  
+    let price = req.body.price || 0;
+    if (price) {
+      price = Number(price.replace(/[,]/g, ''));
+    }
     const productInfo = await Productlists.getProductById(customer_id, product_id);
-    const pricebeauty = String(productInfo.price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+    const pricebeauty = String(price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
     var productincart = {
       id: productInfo.product_id,
       product_id: productInfo._id,
       image: productInfo.image,
       image_path: productInfo.image_path,
       name: productInfo.detail[0].name,
-      price: productInfo.price,
-      poduct_total_price: productInfo.price,
+      price: price,
+      poduct_total_price: price,
       product_total_price_b: pricebeauty,
       pricebeauty,
       width: productInfo.width || 10,
       weight: productInfo.weight || 1000,
       height: productInfo.height || 10,
       length: productInfo.length || 10,
-      num: 1
+      details: details,
+      num: 1,
+      pid: Math.floor(Math.random() * 1000) + 1,
     };
     if (listproducts.length == 0) {
         listproducts.push(productincart);
         req.session.products = listproducts;
-        req.session.total_price = (Number(total_price) + Number(productInfo.price));
+        req.session.total_price = (Number(total_price) + price);
         var total_price_pricebeauty = String(req.session.total_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
         req.session.total_price_pricebeauty = total_price_pricebeauty;
         res.send(req.session.products);
     }
-    else if (findObjectByKey(listproducts, product_id) == -1) {
+    else if (findObjectByKey(listproducts, product_id, details) == -1) {
         listproducts.push(productincart);
         req.session.products = listproducts;
-        req.session.total_price = (Number(total_price) + Number(productInfo.price));
+        req.session.total_price = (Number(total_price) + price);
         var total_price_pricebeauty = String(req.session.total_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
         req.session.total_price_pricebeauty = total_price_pricebeauty;
         res.send(req.session.products);
@@ -1177,7 +1172,7 @@ router.post('/addtocart',async (req, res, next) => {
         listproducts[xx].product_total_price = listproducts[xx].price * listproducts[xx].num;
         listproducts[xx].product_total_price_b = String(listproducts[xx].product_total_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
         req.session.products = listproducts;
-        req.session.total_price = (Number(total_price) + Number(productInfo.price) * (listproducts[xx].num - 1));
+        req.session.total_price = (Number(total_price) + price * (listproducts[xx].num - 1));
         var total_price_pricebeauty = String(req.session.total_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
         req.session.total_price_pricebeauty = total_price_pricebeauty;
         res.send(req.session.products);
@@ -1189,6 +1184,7 @@ router.post('/addtocart',async (req, res, next) => {
 });
 router.post('/updatecartnumber', (req, res, next) => {
   var product_id = req.body.id;
+  const details = req.body.details;
   var { num } = req.body;
   var listproducts = [];
   var total_price = 0;
@@ -1197,7 +1193,7 @@ router.post('/updatecartnumber', (req, res, next) => {
   }
   if (req.session.products) {
     listproducts = req.session.products;
-    var xx = findObjectByKey(listproducts, product_id);
+    var xx = findObjectByKey(listproducts, product_id, details);
     total_price -= (listproducts[xx].price * listproducts[xx].num);
     listproducts[xx].num = num;
     listproducts[xx].product_total_price = listproducts[xx].price * num;
@@ -1209,11 +1205,28 @@ router.post('/updatecartnumber', (req, res, next) => {
     res.send(req.session.products);
   }
 });
-function findObjectByKey(array, value) {
+function findObjectByKey(array, value , details = null) {
   for (var i = 0; i < array.length; i++) {
-    if (array[i].id == Number(value)) {
-      return i;
+    if (!details) {
+      if (array[i].id == Number(value)) {
+        return i;
+      }
     }
+    else {
+      if (array[i].id == Number(value) && JSON.stringify(array[i].details) == JSON.stringify(details)) {
+        return i;
+      }
+    }
+  }
+  return -1;
+}
+function findObjectByKeyNew(array, value ) {
+  for (var i = 0; i < array.length; i++) {
+    
+    if (array[i].pid == Number(value)) {
+        return i;
+      }
+    
   }
   return -1;
 }
@@ -1224,12 +1237,15 @@ router.post('/removecartitem', (req, res, next) => {
     if (req.session.total_price) {
       total_price = req.session.total_price;
     }
-    const id = req.param('id');
+    const id = req.body.id;
+    const pid = req.body.pid;
+    //const details = req.body.details;
     const listproducts = req.session.products;
-    const xx = findObjectByKey(listproducts, id);
+    const xx = findObjectByKeyNew(listproducts, pid);
     total_price -= (listproducts[xx]?.price * listproducts[xx]?.num);
     req.session.total_price = total_price;
-    const temp = removeArrayItemByAttr(array, 'id', id);
+    req.session.total_price_pricebeauty = String(req.session.total_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+    const temp = removeArrayItemByAttr(array, 'pid', pid);
     req.session.products = temp;
     res.json({status: "SUCCESS"});
   } catch (error) {

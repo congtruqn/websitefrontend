@@ -91,14 +91,18 @@
 										</div>
 										<div class="cart_detail">
 											<h5>{{{page.name}}}</h5>
-
-											<p style="display: none;" id="product_id{{page.id}}">{{{page.product_id}}}</p>
-											<p style="display: none;" id="product_num{{page.id}}">{{{page.num}}}</p>
-											<p style="display: none;" id="product_total_price{{page.id}}">{{{page.product_total_price}}}</p>
+											<div class="details">
+											{{#each page.details as |details|}}
+											<label>{{{details}}}</label>
+											{{/each}}
+											</div>
+											<p style="display: none;" id="product_id{{page.pid}}">{{{page.product_id}}}</p>
+											<p style="display: none;" id="product_num{{page.pid}}">{{{page.num}}}</p>
+											<p style="display: none;" id="product_total_price{{page.pid}}">{{{page.product_total_price}}}</p>
 											<div class="cart_detail_item">
-												<input id="numproduct" type="number" min="1" value="{{page.num}}" placeholder="Pick a number" onchange="myFunction('{{page.product_id}}','{{page.price}}',this.value,'{{page.id}}')"/>
-												<p class="price1" id ="price1{{page.id}}">{{{page.product_total_price_b}}} Đ</p>
-												<div class="cart_trash"><a href="#" onclick="removeitem('{{page.id}}')"><i class="fa fa-trash"></i></a></div>
+												<input id="numproduct" type="number" min="1" value="{{page.num}}" placeholder="Pick a number" onchange="myFunction('{{page.id}}','{{page.price}}',this.value,'{{page.pid}}',{{ json page.details}})"/>
+												<p class="price1" id ="price1{{page.pid}}">{{{page.product_total_price_b}}} Đ</p>
+												<div class="cart_trash"><a href="#" onclick="removeitem('{{page.pid}}', {{ json page.details}})"><i class="fa fa-trash"></i></a></div>
 											</div>
 
 										</div>
@@ -172,20 +176,22 @@
 
 <script>
 $().ready(function() {
-	var totalmonney = document.getElementById("totalmonney").innerHTML
+	var totalmonney = document.getElementById("totalmonney")?.innerHTML
 	var totoalpay_b = String(totalmonney).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
 	$('#total_pay').html(totoalpay_b);
 });
-function myFunction(id,price,num,pid){
+function myFunction(id,price,num,pid, details){
+	console.log(pid);
 	var totalmonney = document.getElementById("totalmonney").innerHTML;
-	var product_num = document.getElementById("product_num"+pid).innerHTML;
+	const product_num = document.getElementById("product_num"+pid).innerHTML;
+	console.log(product_num);
 	var shippingcod_hid = document.getElementById("shippingcod_hid").innerHTML;
 	var allprice = Number(price)*Number(num);
 	var allprice1 = Number(price)*Number(num-Number(product_num));
 	var allprice_beat = String(allprice).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,') + 'Đ';
 	var total_price = Number(allprice1) + Number(totalmonney);
 	if(product_num>num){
-		var slicepride = Number(price)*(Number(product_num)-num)
+		var slicepride = Number(price)*(Number(product_num)-num);
 		total_price = Number(totalmonney) - Number(slicepride);
 	}
 	$("#product_num"+pid).html(num);
@@ -206,16 +212,16 @@ function myFunction(id,price,num,pid){
 	$.ajax({
 		url:"/updatecartnumber",
 			type: "POST",
-		    data:{id:pid,num:num},
+		    data:{id:id,num:num, details: details},
 		    success: function(response) { 
 		}            
 	});
 }
-function removeitem(id){
+function removeitem(pid, details){
 		    $.ajax({
 		        url:"/removecartitem",
 				type: "POST",
-		        data:{id:id},
+		        data:{pid:pid, details: details},
 		        success: function(response) {
 					window.location.href = '/gio-hang';
 		            if(response=="ok"){
