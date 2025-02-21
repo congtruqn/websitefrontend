@@ -782,19 +782,16 @@ ul.rating li{
     background: #189eff !important;
 }
 .choise_size{border-bottom: 1px solid #ddd;padding: 3px 0;margin:7px 0; }
-.pro_detail ul{
-    display: flex;
-}
 .pro_detail ul li{
     list-style: none;
     border:1px solid #ccc;
     padding: 3px 8px;
     font-size: 13px;
     color: #444;
-    margin:1px;
+    margin:3px;
     cursor: pointer;
     position: relative;
-    margin-left: 3px;
+    display: inline-block;
 }
 .pro_detail input {
     display: block;
