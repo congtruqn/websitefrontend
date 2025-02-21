@@ -1125,7 +1125,7 @@ router.post('/addtocart',async (req, res, next) => {
     if (req.session.products) {
       listproducts = req.session.products;
     }
-    const product_id = req.param('productadd');
+    const product_id = req.body.id;
     let price = req.body.price || 0;
     if (price) {
       price = Number(price.replace(/[,]/g, ''));
@@ -1167,12 +1167,12 @@ router.post('/addtocart',async (req, res, next) => {
         res.send(req.session.products);
     }
     else {
-        var xx = findObjectByKey(listproducts, product_id);
+        var xx = findObjectByKey(listproducts, product_id, details);
         listproducts[xx].num = Number(listproducts[xx].num) + 1;
         listproducts[xx].product_total_price = listproducts[xx].price * listproducts[xx].num;
         listproducts[xx].product_total_price_b = String(listproducts[xx].product_total_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
         req.session.products = listproducts;
-        req.session.total_price = (Number(total_price) + price * (listproducts[xx].num - 1));
+        req.session.total_price = (Number(total_price) + price);
         var total_price_pricebeauty = String(req.session.total_price).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
         req.session.total_price_pricebeauty = total_price_pricebeauty;
         res.send(req.session.products);

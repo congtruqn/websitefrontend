@@ -61,10 +61,12 @@
 							<button id="product-addtocart-button" class="single_add_to_cart_button button" title="Add to Cart" type="submit" onclick="addToCart({{{contents.product_id}}})">
 								<span>Thêm vào giỏ hàng</span>
 							</button>
+							
 							<button id="product-buynow" class="single_buy_now_button buy_now" title="Add to Cart" type="submit" onclick="Buynow({{{contents.product_id}}})">
 								<span>Mua ngay</span>
 							</button>
 						</div>
+						<div id="addedproduct1">Sản phẩm đã được thêm vào giỏ hàng</div>
 					{{else}}
 					{{/if}}
 					
@@ -226,34 +228,38 @@ $('.pro_detail').delegate('.list_size_2','click', function(){
 function addToCart(ID){
 	const detaillenght = {{product_details.length}};
 	const data = {{{json product_details}}};
+	const details = [];
+	const price = document.getElementById("hidden_price").value;
 	for (let i = 0; i < data.length; i++) {
 		const temp = data[i];
-		console.log(temp._id)
-	}
-	if(detaillenght == 0){
-		return true;
-	}
-	else{
-		return false;
+		const a = document.querySelector("input[type='radio'][name='"+temp._id+"']:checked").value;
+		const a1 = document.getElementById(`label_${a}`).innerHTML;
+		details.push(a1.toString())
 	}
     var productcount = 1;
     var productadd = 1;
-    var datastring =  'productcount='+productcount+'&productadd='+ID;
+    var datastring =  'productcount='+productcount;
     $.ajax({
-      type: "POST",
-      url: '/addtocart?'+datastring,
-      data: {id: ID},
-      success: function (result) {
-        if(result==1){
-          alert('Sản phẩm trong kho không đủ!');
-        }
-        else{
-			var aaa = $("#cart-total").html();
-			$('#cart-total').html(Number(aaa)+1);
-        	$("#addedproduct").slideDown("slow");
-			$("#addedproduct").slideToggle(2000);
-        }
-      }
+    	type: "POST",
+    	url: '/addtocart?'+datastring,
+    	data: {
+			id: ID,
+			price: price,
+			details: details,
+		},
+		success: function (result) {
+			if(result==1){
+			alert('Sản phẩm trong kho không đủ!');
+			}
+			else{
+				var aaa = $("#cart-total").html();
+				$('#cart-total').html(Number(aaa)+1);
+				$("#addedproduct").slideDown("slow");
+				$("#addedproduct").slideToggle(2000);
+				$("#addedproduct1").slideDown("slow");
+				$("#addedproduct1").slideToggle(2000);
+			}
+		}
     });
 };
 function Buynow(ID){
@@ -264,13 +270,9 @@ function Buynow(ID){
 	for (let i = 0; i < data.length; i++) {
 		const temp = data[i];
 		const a = document.querySelector("input[type='radio'][name='"+temp._id+"']:checked").value;
-		console.log(a)
-		//value_ids.push(a.toString())
 		const a1 = document.getElementById(`label_${a}`).innerHTML;
 		details.push(a1.toString())
 	}
-	//console.log(details)
-	//return false;
     var productcount = 1;
     var productadd = 1;
     var datastring =  'productcount='+productcount+'&productadd='+ID;
