@@ -405,7 +405,7 @@ router.get('/getshippingcod', (req, res, next) => {
     const element = listproduct[index];
     item.push({
       name: element.name|| 'TEST',
-      quantity: element.num || 1,
+      quantity: Number(element.num) || 1,
       height: element.height || 1,
       weight: element.weight || 100,
       length: element.length || 1,
