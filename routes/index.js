@@ -1336,7 +1336,7 @@ router.post('/addorder', (req, res, next) => {
   }
   const shippingcod = req.body.shippingcod;
   const create_date = new Date().getTime();
-  let products = '';
+  const amount = String(Number(req.session.total_price) + Number(shippingcod)).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
   const neworders = new listorders({
     name,
     email,
@@ -1349,7 +1349,8 @@ router.post('/addorder', (req, res, next) => {
     district,
     ward,
     customer_note: note,
-    customer_id: websiteinfo.customer_id
+    customer_id: websiteinfo.customer_id,
+    amount: amount,
   });
   listorders.createlistorders(neworders, (err, producttypess) => {
 
@@ -1409,17 +1410,17 @@ router.post('/addorder', (req, res, next) => {
 
                     <h5> Điện thoại: ${phone}.</h5>
 
-                    <h5> Ghi chú: ${customer_note}.</h5>
+                    <h5> Ghi chú: ${note}.</h5>
 
                     <h4> Thông tin đặt hàng.</h4>
                         <table>
                         <thead>
                             <tr style="border: 1px solid #1b1e24;">
-                            <th>Key</th>
-                            <th>Field 1</th>
-                            <th>Field 2</th>
-                            <th>Field 3</th>
-                            <th>Field 4</th>
+                            <th>Tên sản phẩm</th>
+                            <th></th>
+                            <th>Giá</th>
+                            <th>Số lượng</th>
+                            <th>Thành tiền</th>
                             </tr>
                         </thead> 
                         <tbody>`;
@@ -1432,6 +1433,7 @@ router.post('/addorder', (req, res, next) => {
         product_name: req.session.products[i].name,
         product_price: req.session.products[i].price,
         product_image: req.session.products[i].image,
+        value_names: req.session.products[i].details,
         product_total_price: req.session.products[i].product_total_price,
         count: req.session.products[i].num
       };
@@ -1439,14 +1441,24 @@ router.post('/addorder', (req, res, next) => {
       html = html + `<tr>
       <td>${req.session.products[i].name}</td>
       <td>${req.session.products[i].details}</td>
-      <td>${req.session.products[i].price}</td>
+      <td>${req.session.products[i].pricebeauty} Đ</td>
       <td>${req.session.products[i].num}</td>
-      <td>${req.session.products[i].product_total_price}</td>
+      <td>${req.session.products[i].product_total_price_b} Đ</td>
       </tr>`
     }
     listorders.editlistorders(producttypess._id, { $push: { list_products: listproducts } }, (err, companys) => {
     });
-    html = html + `</tbody></table>
+    html = html + `
+    <tr>
+      <td colspan="4">Phí giao hàng</td>
+      <td>${String(shippingcod).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,')}</td>
+    </tr>
+    <tr>
+      <td colspan="4">Tổng cộng</td>
+      <td>${amount} Đ</td>
+    </tr>
+    <tr></tr>
+    </tbody></table>
                     <br>
                     </body>
                     </html>`
@@ -1464,9 +1476,9 @@ router.post('/addorder', (req, res, next) => {
       }
     });
     const mailOptions = {
-      from: 'congtruqn@gmail.com', // sender address
+      from: `"Thông tin đặt hàng " ${websiteinfo.website_url} <congtruqn@gmail.com>`, // sender address
       to: websiteinfo.customer_email, // list of receivers
-      subject: 'Khách hàng đăt hàng từ website', // Subject line
+      subject: `Đơn hàng từ website ${websiteinfo.website_url}`, // Subject line
       text: html, // plain text body
       html: html // html body
     };

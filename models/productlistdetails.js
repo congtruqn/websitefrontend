@@ -20,13 +20,12 @@ var productlistdetailSchema = mongoose.Schema({
 		parent_id: String,
 		parent_url: String,
 	}],
+	customer_id: {
+        type: Number,
+    },
 });
 var productlistdetail = module.exports = mongoose.model('productlistdetails', productlistdetailSchema);
-module.exports.dellproductlistdetail = function(id,callback){
-	productlistdetail.findByIdAndRemove(id, function(err, user) {
-  	if (err) throw err;
-	});
-}
+
 module.exports.getAllproductlistdetail = function(page,per_page,callback){
 	var query = {};
 	productlistdetail.find(query, callback).skip(per_page * (page - 1)).limit(per_page);

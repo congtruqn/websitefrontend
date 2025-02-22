@@ -33,6 +33,7 @@ var ProductsordersSchema = mongoose.Schema({
      	detail_value: String,
      	product_detail_id:String
 	}],
+	value_names: [{ type: String }],
 	create_date:{
 		type: Number	
 	},

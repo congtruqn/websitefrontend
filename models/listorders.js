@@ -22,8 +22,8 @@ var listordersSchema = mongoose.Schema({
 		product_id: String,
 		product_name: String,
      	product_price: String,
-     	product_size: String,
-     	product_image: String,
+		product_image: String,
+		value_names: [{ type: String }],
 		count: Number
 	}],
 	saleoff_money:{
@@ -32,11 +32,11 @@ var listordersSchema = mongoose.Schema({
 	total_money:{
 		type: Number
 	},
-	shipping_money:{
+	shipping_fee:{
 		type: Number
 	},
-	money_to_pay:{
-		type: Number
+	amount:{
+		type: String
 	},
 	status:{
 		type: Number
