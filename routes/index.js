@@ -1053,7 +1053,7 @@ router.post('/registertouse', async (req, res, next) => {
         secure: false,
         auth: {
           user: 'congtruqn@gmail.com',
-          pass: '708541B0547DF83A89CC6CDA4CCBF27D147B'
+          pass: process.env.EMAIL_PASS,
         },
         tls: {
           rejectUnauthorized: false
@@ -1287,7 +1287,7 @@ router.post('/addcustomercontact', (req, res, next) => {
     secure: false,
     auth: {
       user: 'congtruqn@gmail.com',
-      pass: '708541B0547DF83A89CC6CDA4CCBF27D147B'
+      pass: process.env.EMAIL_PASS,
     },
     tls: {
       rejectUnauthorized: false
@@ -1457,7 +1457,7 @@ router.post('/addorder', (req, res, next) => {
       secure: false,
       auth: {
         user: 'congtruqn@gmail.com',
-        pass: '708541B0547DF83A89CC6CDA4CCBF27D147B'
+        pass: process.env.EMAIL_PASS,
       },
       tls: {
         rejectUnauthorized: false
