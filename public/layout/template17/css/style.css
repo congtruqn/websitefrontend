@@ -799,10 +799,7 @@ ul.rating li{
 .pro_detail input[type="radio"]  {
     display: block;
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+
     cursor: pointer;
     width: 100%;
   }
