@@ -1747,3 +1747,12 @@ ol.commentlist li .comment-text .description img{
 .main-header{
     position: relative;
 }
+.shipping_type{
+    position: relative;
+    display: block;
+}
+.shipping_type input[type="radio"]  {
+    margin-left: 48%;
+    cursor: pointer;
+    width: 20px;
+  }
