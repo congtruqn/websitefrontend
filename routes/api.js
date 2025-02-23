@@ -105,14 +105,14 @@ router.get('/createxml', async function (req, res) {
   const hostname = req.headers.host;
   try {
     const websiteinfo = caches.websiteinfo[hostname];
-    const { customer_id } = websiteinfo;
+    const { customer_id, website_url } = websiteinfo;
     const listproducts = await product.getAllProducts(customer_id);
     var myDate = new Date();
     let date = ("0" + myDate.getDate()).slice(-2);
     let month = ("0" + (myDate.getMonth() + 1)).slice(-2);
     let year = myDate.getFullYear();
     var curent_date = year + "-" + month + "-" + date + "T12:00:00Z";
-    var xml = '<?xml version="1.0"?><feed xmlns="http://www.w3.org/2005/Atom" xmlns:g="http://base.google.com/ns/1.0"><title>Zaloda</title><link rel="self" href="https://zaloda.vn/"/><updated>'+curent_date+'</updated>';
+    var xml = '<?xml version="1.0"?><feed xmlns="http://www.w3.org/2005/Atom" xmlns:g="http://base.google.com/ns/1.0"><title>' + websiteinfo.detail?.[0]?.title+'</title><link rel="self" href="https://'+website_url+'/"/><updated>'+curent_date+'</updated>';
     for (var x in listproducts) {
         xml = xml + '<entry>'
         xml = xml + '<g:id>'+listproducts[x].product_id+'</g:id>';
@@ -120,8 +120,8 @@ router.get('/createxml', async function (req, res) {
         xml = xml + '<g:title>'+title+'</g:title>';
         var desc =  listproducts[x].detail[0].description.replace(/&/g, "-");
         xml = xml + '<g:description>'+desc+'</g:description>';
-        xml = xml + '<g:link>https://zaloda.vn/'+listproducts[x].seo_url+'</g:link>';
-        xml = xml + '<g:image_link>https://zaloda.vn/static/images/products/fullsize/'+listproducts[x].image+'</g:image_link>';
+        xml = xml + '<g:link>https://'+website_url+'/'+listproducts[x].seo_url+'</g:link>';
+        xml = xml + '<g:image_link>'+process.env.FILE_URL+'/static'+listproducts[x].image_path+'fullsize/'+listproducts[x].image+'</g:image_link>';
         xml = xml + '<g:condition>new</g:condition>';
         xml = xml + '<g:availability>in stock</g:availability>';
         xml = xml + '<g:price>'+listproducts[x].price+' VND</g:price>';
