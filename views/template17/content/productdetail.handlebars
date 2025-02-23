@@ -49,8 +49,8 @@
 							<ul>
 							{{#each list_detail.detail_value as |value|}}
 								<li class="list_size_{{@../index}} {{#unless @index}}sizeactive{{/unless}}">
-									<input type="radio"  value="{{value.value_id}}" id="radio_{{value.value_id}}" name="{{list_detail._id}}" {{#unless @index}}checked="checked"{{/unless}}/>
-									<label for="{{value.value_id}}" id="label_{{value.value_id}}"  onclick="changePrice({{value.value_id}})">{{{value.value}}}</label>
+									<input type="radio" value="{{value.value_id}}" id="radio_{{{value.value_id}}}" name="{{list_detail._id}}" {{#unless @index}}checked="checked"{{/unless}}/>
+									<label for="{{value.value_id}}" id="label_{{value.value_id}}"  onclick="changePrice('{{{value.value_id}}}')">{{{value.value}}}</label>
 								</li>
 							{{/each}}
 							</ul>
