@@ -121,7 +121,7 @@ router.get('/createxml', async function (req, res) {
         var desc =  listproducts[x].detail[0].description.replace(/&/g, "-");
         xml = xml + '<g:description>'+desc+'</g:description>';
         xml = xml + '<g:link>https://'+website_url+'/'+listproducts[x].seo_url+'</g:link>';
-        xml = xml + '<g:image_link>'+process.env.FILE_URL+'/static'+listproducts[x].image_path+'fullsize/'+listproducts[x].image+'</g:image_link>';
+        xml = xml + '<g:image_link>'+website_url+'/static'+listproducts[x].image_path+'fullsize/'+listproducts[x].image+'</g:image_link>';
         xml = xml + '<g:condition>new</g:condition>';
         xml = xml + '<g:availability>in stock</g:availability>';
         xml = xml + '<g:price>'+listproducts[x].price+' VND</g:price>';
