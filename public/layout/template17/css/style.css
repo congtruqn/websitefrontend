@@ -806,9 +806,8 @@ ul.rating li{
     cursor: pointer;
   }
 .pro_detail input[type="radio"] {
-    opacity: 0.01;
-    z-index: 100;
-  }
+    opacity: 0;
+}
 .product_detail_description{
     margin-top: 15px;
     color: #666;
