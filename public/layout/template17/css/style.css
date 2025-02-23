@@ -796,7 +796,7 @@ ul.rating li{
     position: relative;
     display: inline-block;
 }
-.pro_detail input {
+.pro_detail input[type="radio"]  {
     display: block;
     position: absolute;
     top: 0;
@@ -804,6 +804,7 @@ ul.rating li{
     right: 0;
     bottom: 0;
     cursor: pointer;
+    width: 100%;
   }
 .pro_detail input[type="radio"] {
     opacity: 1;
