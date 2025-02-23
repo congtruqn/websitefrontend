@@ -173,6 +173,7 @@ router.get('/clearcache', (req, res, next) => {
   caches.listproductsperpage[hostname] = null;
   caches.productcatinfo[hostname] = null;
   caches.hotpage[hostname] = null;
+  caches.footer[hostname] = null;
   res.send('ok');
 });
 router.get('/lien-he', async (req, res, next) => {
