@@ -2,6 +2,19 @@
 <script type="text/javascript" src="/js/pgwslider.min.js"></script>
 <script type="text/javascript" src="/js/rating_simple.js"></script>
 <link rel="stylesheet" href="/css/rating_simple.css" type="text/css" media="screen" />
+<script>
+dataLayer.push({
+  'dr_event_type' : 'view_item',
+  'dr_value' : {{{contents.price}}},
+  'dr_items' : [
+    {
+      'id': {{{contents.product_id}}}, 
+      'google_business_vertical': 'retail'
+    }
+  ],
+  'event':'dynamic_remarketing'
+});
+</script>
 <div class="breadcrumbs product_item_breadcrumb">
 	<div id="bread">
 		<ul class="items">
