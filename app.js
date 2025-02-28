@@ -129,7 +129,7 @@ app.use(function(req, res, next) {
 app.use(async function(req, res, next) {
   const hostname = req.headers.host;
   	if (hostname.match(/^www/) !== null ) {
-			res.redirect(301,'http://' + hostname.replace(/^www\./, '') + req.url);
+			res.send('Website is not available now');
 	  }
   let lang = 'vi'
   if(req.url.length>=3){
@@ -146,7 +146,7 @@ app.use(async function(req, res, next) {
   if(!caches.websiteinfo[hostname]||caches.websiteinfo[hostname]==null){
     const websiteInfo = await systems.getWebsiteByUrl(hostname);
     if(!websiteInfo)
-      res.redirect(301, 'https://softnests.com');
+      res.sent(301, 'https://softnests.com');
     caches.websiteinfo[hostname] = websiteInfo;
     await caches.storeCaches(caches,hostname,websiteInfo,lang)
     app.engine('handlebars', exphbs({
