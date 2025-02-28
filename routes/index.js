@@ -1061,7 +1061,7 @@ router.post('/registertouse', async (req, res, next) => {
         }
       });
       const mailOptions = {
-        from: '"Khách hàng đăng ký dùng thử" <congtruqn@gmail.com>', // sender address
+        from: '"Khách hàng đăng ký dùng thử" <tru.tran@softnests.com>', // sender address
         to: 'congtruqn@gmail.com', // list of receivers
         subject: 'Khách hàng đăng ký', // Subject line
         text: cont, // plain text body
@@ -1095,7 +1095,7 @@ router.post('/gettrial', async (req, res, next) => {
     }
   });
   const mailOptions = {
-    from: '"Thiết kế web dùng thử " <admin@smartsign.com.vn>', // sender address
+    from: '"Thiết kế web dùng thử " <tru.tran@softnests.com>', // sender address
     to: 'congtruqn@gmail.com', // list of receivers
     subject: 'Khách hàng đăng ký dùng thử', // Subject line
     text: cont, // plain text body
@@ -1477,7 +1477,7 @@ router.post('/addorder', (req, res, next) => {
       }
     });
     const mailOptions = {
-      from: `"Thông tin đặt hàng " ${websiteinfo.website_url} <congtruqn@gmail.com>`, // sender address
+      from: `"Thông tin đặt hàng " ${websiteinfo.website_url} <tru.tran@softnests.com>`, // sender address
       to: websiteinfo.customer_email, // list of receivers
       subject: `Đơn hàng từ website ${websiteinfo.website_url}`, // Subject line
       text: html, // plain text body
