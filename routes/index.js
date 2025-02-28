@@ -1049,7 +1049,7 @@ router.post('/registertouse', async (req, res, next) => {
       var phone = req.param('phone');
       var cont = `Tên Khách hàng:${name}<br>-Email:${email}<br>-Điện thoại: ${phone}`;
       const transporter = nodeMailer.createTransport({
-        host: 'smtp.elasticemail.com',
+        host: 'smtp-pulse.com',
         port: 2525,
         secure: false,
         auth: {
@@ -1283,7 +1283,7 @@ router.post('/addcustomercontact', (req, res, next) => {
   const content = req.params('content');
   var cont = `Tên Khách hàng:${name}<br>Email:${email}<br>Điện thoại: ${phone}<br>Nội dung: ${content}<br>`;
   const transporter = nodeMailer.createTransport({
-    host: 'smtp.elasticemail.com',
+    host: 'smtp-pulse.com',
     port: 2525,
     secure: false,
     auth: {
@@ -1465,7 +1465,7 @@ router.post('/addorder', (req, res, next) => {
                     </html>`
     req.session.destroy();
     const transporter = nodeMailer.createTransport({
-      host: 'smtp.elasticemail.com',
+      host: 'smtp-pulse.com',
       port: 2525,
       secure: false,
       auth: {
