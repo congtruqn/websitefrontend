@@ -146,7 +146,7 @@ app.use(async function(req, res, next) {
   if(!caches.websiteinfo[hostname]||caches.websiteinfo[hostname]==null){
     const websiteInfo = await systems.getWebsiteByUrl(hostname);
     if(!websiteInfo)
-      res.sent(301, 'https://softnests.com');
+      res.send('Website is not available now');
     caches.websiteinfo[hostname] = websiteInfo;
     await caches.storeCaches(caches,hostname,websiteInfo,lang)
     app.engine('handlebars', exphbs({
