@@ -145,15 +145,17 @@ app.use(async function(req, res, next) {
   }
   if(!caches.websiteinfo[hostname]||caches.websiteinfo[hostname]==null){
     const websiteInfo = await systems.getWebsiteByUrl(hostname);
-    if(!websiteInfo)
+    if (!websiteInfo) {
       res.send('Website is not available now');
-    caches.websiteinfo[hostname] = websiteInfo;
-    await caches.storeCaches(caches,hostname,websiteInfo,lang)
-    app.engine('handlebars', exphbs({
-          partialsDir: __dirname + `/views/${websiteInfo.template}/partials`,
-          layoutsDir:__dirname +`/views/${websiteInfo.template}`,
-    }));
-    next();
+    } else {
+      caches.websiteinfo[hostname] = websiteInfo;
+      await caches.storeCaches(caches,hostname,websiteInfo,lang)
+      app.engine('handlebars', exphbs({
+            partialsDir: __dirname + `/views/${websiteInfo.template}/partials`,
+            layoutsDir:__dirname +`/views/${websiteInfo.template}`,
+      }));
+      next();
+    }
   }
   else{
     const websitein = caches.websiteinfo[hostname];
