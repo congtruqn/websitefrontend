@@ -129,7 +129,8 @@ app.use(function(req, res, next) {
 app.use(async function(req, res, next) {
   const hostname = req.headers.host;
   	if (hostname.match(/^www/) !== null ) {
-			res.send('Website is not available now');
+      res.send('Website is not available now');
+      return;
 	  }
   let lang = 'vi'
   if(req.url.length>=3){
@@ -147,6 +148,7 @@ app.use(async function(req, res, next) {
     const websiteInfo = await systems.getWebsiteByUrl(hostname);
     if (!websiteInfo) {
       res.send('Website is not available now');
+      return;
     } else {
       caches.websiteinfo[hostname] = websiteInfo;
       await caches.storeCaches(caches,hostname,websiteInfo,lang)
