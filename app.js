@@ -128,7 +128,7 @@ app.use(function(req, res, next) {
 });
 app.use(async function(req, res, next) {
   const hostname = req.headers.host;
-  	if (hostname.match(/^www/) !== null ) {
+  	if (hostname?.match(/^www/) !== null ) {
       res.send('Website is not available now');
       return;
 	  }
