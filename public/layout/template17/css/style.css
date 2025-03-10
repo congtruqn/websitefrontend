@@ -1755,4 +1755,7 @@ ol.commentlist li .comment-text .description img{
     margin-left: 48%;
     cursor: pointer;
     width: 20px;
-  }
+}
+iframe{
+    width: 100% !important;
+}
