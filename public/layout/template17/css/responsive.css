@@ -351,6 +351,9 @@
 		border: none;
 		padding: 0;
 	}
+	iframe{
+		width: 100% !important;
+	}
 }
 
 @media (max-width: 415px) {
