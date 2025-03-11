@@ -1756,3 +1756,12 @@ ol.commentlist li .comment-text .description img{
     cursor: pointer;
     width: 20px;
 }
+.shipping{
+    display: flex;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+.shipping img{
+    margin-right: 5px;
+    height: 30px;
+}
