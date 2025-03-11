@@ -626,9 +626,6 @@ ul.rating li{
 }
 .product_content img{height: auto !important;}
 .product_content li{list-style: inside;}
-.product_content h1{font-size: 16px;font-weight: 500;}
-.product_content h2{font-size: 15px;font-weight: 500;}
-.product_content h3{font-size: 14px;font-weight: 500;}
 .thank_order img{width: 50% !important;}
 .detail_menu{width: 100% !important;}
 .product_image{width: 35%;float: left;}
@@ -1766,3 +1763,9 @@ ol.commentlist li .comment-text .description img{
     height: 30px;
     margin-top: -3px;
 }
+b, strong{
+    font-weight: 600 !important;
+}
+.product_content h1{font-size: 19px;font-weight: 600;}
+.product_content h2{font-size: 17px;font-weight: 600;}
+.product_content h3{font-size: 15px;font-weight: 600;}
