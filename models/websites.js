@@ -76,6 +76,9 @@ var websitesSchema = mongoose.Schema({
 	image_path:{
 		type: String
 	},
+	ico_path:{
+		type: String
+	},
 	type:{
 		type: String
 	},
