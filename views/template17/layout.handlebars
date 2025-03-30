@@ -77,7 +77,7 @@
   });
 </script>
 
-<!-- Event snippet for Hotline1 conversion page
+<!-- Event snippet for Hotline conversion page
 In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
 <script>
 function gtag_report_conversion(url) {
@@ -87,13 +87,12 @@ function gtag_report_conversion(url) {
     }
   };
   gtag('event', 'conversion', {
-      'send_to': 'AW-16897689923/t-0RCLDxh7EaEMOSufk-',
+      'send_to': 'AW-16897689923/NpEJCMbphbEaEMOSufk-',
       'event_callback': callback
   });
   return false;
 }
 </script>
-
 
 </head>
 
@@ -114,7 +113,7 @@ function gtag_report_conversion(url) {
       <div id="top_mobile">
         <div class="container">
           <div class="header-top-left">
-            <p class="hotline"><i class="fa fa-phone"></i> <a href="tel:{{siteinfo.hotline}}"> Hotline: {{siteinfo.hotline}}</a>
+            <p class="hotline"><i class="fa fa-phone"></i> <a  onclick="return gtag_report_conversion('tel:{{siteinfo.hotline}}');" href="tel:{{siteinfo.hotline}}"> Hotline: {{siteinfo.hotline}}</a>
             </p>
           </div>
         </div>
@@ -145,7 +144,7 @@ function gtag_report_conversion(url) {
       <a href="https://zalo.me/{{siteinfo.hotline}}" id="linkzalo" target="_blank" rel="noopener noreferrer"><img src="/images/zalo2.webp">Chat Zalo ngay</a>
    </div>
    <div class="right">
-      <a href="tel:{{siteinfo.hotline}}"><img src="/images/call.webp">Gọi ngay</a>
+      <a onclick="return gtag_report_conversion('tel:{{siteinfo.hotline}}');" href="tel:{{siteinfo.hotline}}"><img src="/images/call.webp">Gọi ngay</a>
    </div>
    <div class="clearboth"></div>
 </div>
