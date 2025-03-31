@@ -24,6 +24,7 @@ var listproductsperpage = []
 var productcatinfo = []
 var hotpage = {}
 var partners = {}
+var address = {}
 module.exports = {
     websiteinfo,
     hotnewcats,
@@ -49,6 +50,7 @@ module.exports = {
     productcatinfo,
     hotpage,
     partners,
+    address,
 }
 module.exports.storeCaches = async function (caches,hostname,websitein,lang = 'vi') {
     if (!caches.productcat[hostname]) {
@@ -127,6 +129,10 @@ module.exports.storeCaches = async function (caches,hostname,websitein,lang = 'v
         let partners = await systems.partners.getPartnerByCustomer(websitein.customer_id)
         caches.partners[hostname] = partners;
     }
+    if (!caches.address[hostname]) {
+        const address = await systems.address.getAddressByCustomer(websitein.customer_id)
+        caches.address[hostname] = address;
+    }
 }
 module.exports.getCaches = async function (caches,hostname,lang = 'vi') {
     let mainmenu = caches.mainmenu[hostname].get(lang)
@@ -145,7 +151,8 @@ module.exports.getCaches = async function (caches,hostname,lang = 'vi') {
         advertises : caches.advertises[hostname]?caches.advertises[hostname]:[],
         saleproducts : caches.saleproducts[hostname]?caches.saleproducts[hostname]:[],
         hotpage:caches.hotpage[hostname]?caches.hotpage[hostname]:[],
-        partners:caches.partners[hostname]?caches.partners[hostname]:[],
+        partners: caches.partners[hostname] ? caches.partners[hostname] : [],
+        address: caches.address[hostname]? caches.address[hostname]: [],
     }
 }
 module.exports.storeProductCatCaches = async function (hostname,caches,url,productcatcount,listproductsperpage,productcatinfo) {

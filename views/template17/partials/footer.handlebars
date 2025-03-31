@@ -40,6 +40,15 @@
 
     </div>
     <div id="clear"></div>
+    <div class="footer-list-address">
+      {{#each address as |address_item|}}
+          <div class="footer_address">
+            <i class="fa fa-map-marker" aria-hidden="true"></i>
+            <b>{{address_item.name}}</b> : {{address_item.address}}  -  <i class="fa fa-phone" aria-hidden="true"></i> <b>Điện thoại</b>:  {{address_item.phone}}
+          </div>
+      {{/each}}
+    </div>
+    <div id="clear"></div>
   </div>
 </div>
 <div class="footer-content-bottom">

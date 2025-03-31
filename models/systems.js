@@ -404,5 +404,6 @@ module.exports.testimonials = require('./testimonials');
 module.exports.socialmedias = require('./socialmedias');
 module.exports.newpages = require('./newspages');
 module.exports.partners = require('./partners');
+module.exports.address = require('./address');
 module.exports.news = require('./newscontents');
 module.exports.banners = require('./banners');
