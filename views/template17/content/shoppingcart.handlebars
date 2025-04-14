@@ -277,7 +277,11 @@ $().ready(function() {
 		$("#cusinfo").validate({
 			rules: {
 				name: "required",
-				phone: "required",
+				phone: {
+					required: true,
+					maxlength: 10,
+					minlength: 10,
+				},
 				district:"required",
 				ward: {
 					required: true,
