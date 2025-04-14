@@ -309,12 +309,22 @@ $().ready(function() {
 				var district = document.getElementById("district").value;
 				var ward = document.getElementById("ward").value;
 				var note = document.getElementById("note").value;
+				var totalmonney = document.getElementById("totalmonney").innerHTML;
 		        $.ajax({
 		            url:"/addorder",
 		            type: "POST",
 		            data:{shippingcod:shippingcod,name:name,phone:phone,email:email,address:address,province:province,district:district,ward:ward,note:note},
 		            success: function(response) {
 		            	if(response=="ok"){
+							gtag('event', 'conversion', {
+								'send_to': 'AW-16897689923/_OhgCJC3z6MaEMOSufk-',
+								'value': Number(totalmonney),
+								'currency': 'VND',
+								'transaction_id': new Date().getTime(),
+								'user_data': {
+									'phone_number': phone.replace(/(0|84|^\+84)/,"+84"),
+								},
+							});
 		            		window.location.href = '/thankorder';
 		            	}
 		            	else{
