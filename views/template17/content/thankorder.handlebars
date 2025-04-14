@@ -1,3 +1,17 @@
+<!-- Event snippet for Lượt mua hàng conversion page -->
+<script>
+	const totalmonney = localStorage.getItem("totalmonney");
+	const phone = localStorage.getItem("phone");
+				gtag('event', 'conversion', {
+								'send_to': 'AW-16897689923/_OhgCJC3z6MaEMOSufk-',
+								'value': Number(totalmonney),
+								'currency': 'VND',
+								'transaction_id': new Date().getTime(),
+								'user_data': {
+									'phone_number': phone.replace(/(0|84|^\+84)/,"+84"),
+								},
+							});
+</script>
 
 <div class="container">
 <div class="block">

@@ -316,15 +316,9 @@ $().ready(function() {
 		            data:{shippingcod:shippingcod,name:name,phone:phone,email:email,address:address,province:province,district:district,ward:ward,note:note},
 		            success: function(response) {
 		            	if(response=="ok"){
-							gtag('event', 'conversion', {
-								'send_to': 'AW-16897689923/_OhgCJC3z6MaEMOSufk-',
-								'value': Number(totalmonney),
-								'currency': 'VND',
-								'transaction_id': new Date().getTime(),
-								'user_data': {
-									'phone_number': phone.replace(/(0|84|^\+84)/,"+84"),
-								},
-							});
+							localStorage.setItem("totalmonney", totalmonney);
+							localStorage.setItem("phone", phone);
+		
 		            		window.location.href = '/thankorder';
 		            	}
 		            	else{
