@@ -3,7 +3,7 @@
 	const totalmonney = localStorage.getItem("totalmonney");
 	const phone = localStorage.getItem("phone");
 				gtag('event', 'conversion', {
-								'send_to': 'AW-16897689923/_OhgCJC3z6MaEMOSufk-',
+								'send_to': '{{siteinfo.gtag_id}}',
 								'value': Number(totalmonney),
 								'currency': 'VND',
 								'transaction_id': new Date().getTime(),

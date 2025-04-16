@@ -15,6 +15,7 @@
 	{{else}}
 			<meta content="INDEX,FOLLOW" name="robots">
 	{{/if}}
+  {{{siteinfo.scripts}}}
   <link rel="stylesheet" href="https://softnests.com/layout/css/bootstrap.min.css" />
   <link rel="stylesheet" href="/layout/{{siteinfo.template}}/css/style.css" />
   <link rel="stylesheet" href="/layout/{{siteinfo.template}}/css/addon.css" />
@@ -22,7 +23,7 @@
   <link rel="stylesheet" href="/layout/css/jcarousel.responsive.css" />
   <link rel="stylesheet" href="https://softnests.com/layout/css/mmenu.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
-  <meta name="google-site-verification" content="NAmzfwWrlsKxBIBNA6qZPqhgEXnvkpyiahy6emrdtQU" />
+  {{!-- <meta name="google-site-verification" content="NAmzfwWrlsKxBIBNA6qZPqhgEXnvkpyiahy6emrdtQU" /> --}}
   <link rel="stylesheet" href="https://softnests.com/layout/css/font-awesome.min.css" />
   <link rel="stylesheet" href="https://softnests.com/layout/css/rating_simple.css" />
   {{!-- <link rel="stylesheet" href="https://softnests.com/layout/css/responsive-tabs.css" /> --}}
@@ -59,40 +60,6 @@
   <meta property="og:locale" content="vi_VN">
   <meta name="RATING" content="GENERAL">
   <meta charset="utf-8">
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-16897689923"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'AW-16897689923');
-</script>
-<!-- Event snippet for Lượt mua hàng (1) conversion page -->
-<script>
-  gtag('event', 'conversion', {
-      'send_to': 'AW-16897689923/eX9DCJzWvKQaEMOSufk-',
-      'transaction_id': ''
-  });
-</script>
-
-<!-- Event snippet for Hotline1 conversion page
-In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
-<script>
-function gtag_report_conversion(url) {
-  var callback = function () {
-    if (typeof(url) != 'undefined') {
-      window.location = url;
-    }
-  };
-  gtag('event', 'conversion', {
-      'send_to': 'AW-16897689923/t-0RCLDxh7EaEMOSufk-',
-      'event_callback': callback
-  });
-  return false;
-}
-</script>
 
 
 </head>

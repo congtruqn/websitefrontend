@@ -142,6 +142,12 @@ var websitesSchema = mongoose.Schema({
 	multi_language:{
 		type: Number
 	},
+	scripts:{
+		type: String
+	},
+	gtag_id:{
+		type: String
+	},
 });
 var websites = module.exports = mongoose.model('listwebsites', websitesSchema);
 module.exports.getwebsitesById = function(id, callback){
